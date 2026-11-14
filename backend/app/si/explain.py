@@ -96,6 +96,9 @@ def explain(inputs: dict, client: Any = None) -> dict:
             messages=build_messages(inputs),
             response_format={"type": "json_object"},
             temperature=0,
+            max_tokens=4096,
+            # Eustella reasoning off: faster and keeps reasoning text out of the JSON reply.
+            extra_body={"chat_template_kwargs": {"enable_thinking": False}},
         )
         content = resp.choices[0].message.content or ""
     except Exception as e:  # any provider/network failure becomes an honest error state
