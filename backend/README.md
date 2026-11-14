@@ -14,16 +14,17 @@ uv run pytest
 uv run uvicorn app.main:app --reload
 ```
 
-## Deploy (Render + Neon main)
+## Deploy (Vercel + Neon main)
 
-`render.yaml` at the repo root defines the API service (free plan, Frankfurt). Migrations run on every start; seeding is a one-off.
+The API runs as a Vercel Function (FastAPI preset, entrypoint `app/main.py`, region `fra1`). `vercel.json` raises the time limit to 30 s for SI calls; `.vercelignore` keeps `.env*`, tests, seed data and migrations out of the upload. Migrations and seeding are one-off commands run locally against Neon.
 
 1. Migrate and seed Neon `main` once, from your machine, with its URLs in `backend/.env.main` (gitignored). Quote the values (`DATABASE_URL="..."`): the URLs contain `&`, which the shell otherwise treats as a command separator and silently falls back to `.env` (dev):
    `set -a; . ./.env.main; set +a; uv run alembic upgrade head && uv run python -m app.ingest.load`
-2. In Render: New → Blueprint → this repo. Enter `DATABASE_URL`, `DATABASE_URL_DIRECT` (Neon `main`) and `EUSTELLA_API_KEY`.
-3. Check `https://<service>.onrender.com/health`, then point the frontend at that URL.
+2. From `backend/`: `npx vercel login`, then `npx vercel link --yes --project cargo-passport-api`.
+3. Add production variables: `DATABASE_URL` (Neon `main`, pooled), `EUSTELLA_API_KEY`, `CORS_ORIGINS`, e.g. `npx vercel env add EUSTELLA_API_KEY production`.
+4. Deploy: `npx vercel deploy --prod`. Check `https://<project>.vercel.app/health`.
 
-The free plan sleeps after inactivity; the first request afterwards takes about a minute. Open the API shortly before a demo.
+After schema changes, run `alembic upgrade head` against Neon `main` before deploying.
 
 ## Configuration
 
