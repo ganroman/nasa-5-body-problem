@@ -2,10 +2,10 @@
 
 How to build the cargo → component → environment → evidence screen ([build plan §2 and §4](../docs/build-plan.md#2-the-complete-user-journey)) on top of this API. Full endpoint list: [README](README.md#api). Interactive docs: `<API_URL>/docs`.
 
-- **Base URL:** `http://localhost:8000` locally (`uv run uvicorn app.main:app --reload` in `backend/`), the Render URL once deployed. Keep it in one constant.
+- **Base URL:** `http://localhost:8000` locally (`uv run uvicorn app.main:app --reload` in `backend/`), the Vercel URL (`https://<project>.vercel.app`) once deployed. Keep it in one constant.
 - **CORS:** the API accepts requests from `https://ganroman.github.io` and `http://localhost:8000`. Tell the backend owner if the page is served from another origin.
 - **Units in requests and responses:** O₂ as a fraction (`0.21`), pressure kPa, airflow m/s. Convert for display: O₂ × 100 → %, airflow × 100 → cm/s.
-- **Cold start:** the free Render plan sleeps when idle; the first request can take about a minute. Show a loading state.
+- **Cold start:** the first request after an idle period can take a few seconds while the function starts. Show a loading state.
 
 ## 1. Load the pickers
 

@@ -1,6 +1,6 @@
 # Cargo Passport API
 
-Backend for the Cargo Passport dashboard (see [build plan](../docs/build-plan.md)). FastAPI + SQLAlchemy 2 + Alembic on Neon Postgres. The frontend is served from GitHub Pages; this API is deployed separately (Render), because Pages cannot run a server or keep the SI key secret.
+Backend for the Cargo Passport dashboard (see [build plan](../docs/build-plan.md)). FastAPI + SQLAlchemy 2 + Alembic on Neon Postgres. The frontend is served from GitHub Pages; this API is deployed separately (Vercel), because Pages cannot run a server or keep the SI key secret.
 
 ## Setup
 
