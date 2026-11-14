@@ -4,13 +4,13 @@ Summary for **Flame in Freefall** · 14 November 2026
 
 Compare environments by their physical conditions, the materials and activities inside them, and the help available when something goes wrong. **Gravity, total pressure, oxygen concentration, and airflow are the starting dimensions** for comparing combustion research. A shared destination alone does not establish that two environments have similar fire behaviour.
 
-This document proposes dimensions based on the six environment notes below and the [research brief](../research-brief.md). It does not establish mission specifications or safety limits. Values absent from those notes remain **unknown**, rather than being filled with Earth or ISS defaults.
+This document proposes dimensions based on the six space-environment notes below, the four Earth profiles based on [Earth use cases](../earth-use-cases.md) and its submarine research references, and the [research brief](../research-brief.md). It does not establish mission specifications or safety limits. The Earth profiles use explicitly labelled estimates for representative scenarios. Space-environment evidence gaps remain separate; planning estimates do not establish operating limits.
 
 ## 1. Environments covered
 
 Gravity here describes the conditions experienced by objects inside the habitat. Orbital microgravity is free fall, not an absence of planetary gravity. Surface values are approximate fractions of Earth's gravity (`g`).
 
-| Environment and source | Gravity regime | Outside environment | Cabin pressure / oxygen | Planning context in the existing notes |
+| Environment and source | Gravity regime | Outside environment | Interior pressure / oxygen | Context in the existing notes |
 |---|---|---|---|---|
 | [International Space Station (ISS)](iss.md) | Microgravity | Low Earth orbit, roughly 400 km altitude; near-vacuum | About 101 kPa / roughly 21% O₂ (nominal cabin values) | Operating, continuously occupied laboratory with recurring crew and cargo flights. |
 | [NASA lunar surface base](lunar-base-nasa.md) | Partial gravity, about 0.17g | Lunar vacuum and surface dust | Unknown / unknown | Planned surface infrastructure; configuration and occupation depend on development stage. |
@@ -18,6 +18,10 @@ Gravity here describes the conditions experienced by objects inside the habitat.
 | [Lunar Gateway](lunar-gateway.md) | Microgravity | Space vacuum | Unknown / unknown | Earlier architecture, with visits and unattended periods; the note records a pause in its current form. |
 | [NASA Martian surface base](martian-base-nasa.md) | Partial gravity, about 0.38g | Thin, mostly CO₂ atmosphere and surface dust | Unknown / unknown | Surface-habitat and rover studies, not an operational base. |
 | [NASA Mars orbital habitat](martian-orbital-station-nasa.md) | Microgravity, unless artificial gravity is specified | Space vacuum | Unknown / unknown | Could be a transit habitat temporarily in orbit; a separate permanent station is not established. |
+| [Aircraft cabins and cargo holds](earth/aircraft.md) | Approximately 1g in ordinary flight | Earth atmosphere; altitude and flight phase vary | Estimated 75–85 kPa / 20.9% O₂ in cruise | Card A: proposed item-evidence comparison for cabin installations and cargo shipments; method plus potentially relevant data. |
+| [Power plants and battery storage](earth/power-plants-and-battery-storage.md) | Approximately 1g | Low-altitude temperate site; cooled indoor battery room | Estimated 95–103 kPa / 20.9% O₂ | Card B: battery modules and racks through installation, operation and maintenance; method only. |
+| [Schools and public buildings](earth/schools-and-public-buildings.md) | Approximately 1g | Local weather and building surroundings | Estimated 95–103 kPa / 20.9% O₂ | Card C: furniture, panels and devices in occupied buildings; method plus potentially relevant smoke-detection data. |
+| [Submarines](earth/submarines.md) | Approximately 1g | Surrounding water; pressure and temperature depend on depth and location | Estimated interior 95–105 kPa / 20–21% O₂; separate from external water pressure | Proposed extension from FLEX and DAFT Earth-benefit references; method plus potentially relevant research data. |
 
 Outside conditions must not be used as cabin conditions. A breathable Mars habitat contains oxygen even though the surrounding atmosphere is mostly CO₂. Similarly, lunar vacuum does not describe the air inside a lunar workshop.
 
@@ -45,6 +49,48 @@ The following values come from [the ISS research note](iss.md), including its no
 
 **Cabin conditions are not experiment conditions.** An ISS combustion chamber can use a different gas mixture, pressure, and airflow from the surrounding cabin. Compare each investigation's recorded test conditions with the destination environment; do not assign 21% O₂ and 101 kPa to every ISS experiment. Saffire experiments took place in departed Cygnus vehicles, not in the occupied ISS cabin.
 
+
+### Earth dimension profiles
+
+These profiles describe representative scenarios for the three settings in [Earth use cases](../earth-use-cases.md) and the submarine extension. Use the estimates below as initial comparison inputs. Each linked profile adds a concrete inventory, occupancy and protection scenario. All four environments experience approximately 1g; their estimates do not make microgravity results directly transferable.
+
+#### Estimated physical baselines
+
+The following **analyst-selected planning estimates** provide initial inputs for comparing evidence. They are plausible scenarios, not measurements, statistical ranges for an industry, equipment ratings or safety limits. The linked profiles give the basis and limitations for each estimate.
+
+| Dimension | Aircraft in cruise | Cooled battery room | Occupied classroom | Submarine occupied compartment |
+|---|---|---|---|---|
+| Gravity | ≈1g (9.81 m/s²) | ≈1g (9.81 m/s²) | ≈1g (9.81 m/s²) | ≈1g (9.81 m/s²) |
+| Interior pressure, absolute | 75–85 kPa | 95–103 kPa, low-altitude site | 95–103 kPa, low-altitude site | 95–105 kPa, assumed near-atmospheric interior |
+| O₂, dry-gas volume fraction | 20.9% | 20.9% | 20.9% | 20–21% |
+| O₂ partial pressure, derived | 15.7–17.8 kPa | 19.9–21.5 kPa | 19.9–21.5 kPa | 19.0–22.1 kPa |
+| Local air speed | Cabin 0.05–0.3 m/s; sheltered hold 0.01–0.1 m/s | Room 0.05–0.3 m/s; forced-air rack passage 0.5–2 m/s | Occupied zone 0.05–0.2 m/s | Occupied zone 0.05–0.3 m/s |
+| Air temperature | Cabin 18–26 °C; conditioned hold 5–25 °C | 18–30 °C | 18–27 °C | 18–28 °C |
+| Relative humidity | Cabin 10–30%; hold scenario 10–50% | 30–60% | 30–60% | 40–70% |
+| Illustrative dimensions, length × width × height | Cabin section 10 × 4 × 2.2 m; hold section 5 × 3 × 1.5 m | Room 10 × 6 × 3 m; rack envelope 1 × 1 × 2 m | Classroom 8 × 7 × 3 m | Compartment envelope 6 × 4 × 2.2 m |
+| Derived geometric volume | Cabin section ≈88 m³; hold section ≈22.5 m³ | Room 180 m³; rack envelope 2 m³ | Room 168 m³ | Compartment envelope ≈52.8 m³ |
+
+**Basis:** the aircraft pressure range is a rounded cruise scenario around the use-case source's approximately 76 kPa reference. The two land-based rooms assume a low-altitude location; the submarine assumes a normally controlled, air-filled pressure hull. The temperature, humidity and airflow bands are selected comparison assumptions, with no claim that every installation stays within them. Geometries are invented example spaces, not measured layouts or whole-facility sizes. Volumes are length × width × height; curvature, equipment and contents reduce free gas volume.
+
+Oxygen partial pressures use pressure × oxygen fraction and are rounded to one decimal place. For submarines, the bounds combine 95 kPa with 20% and 105 kPa with 21%; they are an assumed envelope, not observed coupled states. These calculations use a dry-gas approximation; a humid-gas calculation must account for water-vapour pressure. For ordinary air, assume approximately 78% N₂, 0.9% argon and trace gases; the submarine scenario uses 0.5% CO₂ and 0.9% argon with N₂ as the balance (77.6–78.6%), an assumed mixture rather than an exposure recommendation.
+
+Use separate scenarios for stopped fans, smoke or battery off-gassing, failed cooling, aircraft ground handling or depressurisation, and submarine atmosphere-control failures. Interior air temperature is not battery temperature, local speed is not an air-change rate, and external water pressure is not submarine cabin pressure. Fire-protection capacity, evacuation times and rescue availability still require actual installation records.
+
+
+#### Additional fields for Earth comparisons
+
+Use the existing physical dimensions above and below. Add the following details to distinguish the Earth use cases without changing what counts as evidence:
+
+| Field | What to record | Why it matters |
+|---|---|---|
+| **Applicable rules and approval records** | Jurisdiction, adopted edition, item/installation category, document identifier and verification status | Aircraft, stationary storage, buildings and submarines follow different requirements. A linked rule is not proof of compliance. |
+| **Battery energy and configuration** | Chemistry, stored energy in kWh, state of charge in %, cell/module/rack level, charging state and isolation | Extends the existing ignition-state dimension: evidence for a cell does not automatically cover a rack or packaged shipment. The linked profiles specify illustrative item energies and states of charge; these are scenario inputs, not installation inventories. |
+| **Installed assembly and test configuration** | Tested components, mounting, backing, joints, spacing, enclosure and differences from actual installation | Makes the distinction between a tested product and the system containing it explicit. |
+| **Occupant assistance and emergency access** | Occupancy schedule, assistance needs, accessible exits, crew or responder access and response constraints | Extends crew/refuge dimensions to passengers, students, visitors and facility workers. |
+| **Transfer type and evidence gaps** | Method, data or both; investigation identifier, matched conditions and unresolved differences | Prevents an Earth-benefit statement from being read as validation of a particular item or installation. |
+
+The source identifies aircraft material and dangerous-goods rules, NFPA 855 for storage, and construction-product records and NFPA 101 for buildings. Their current scope and local applicability have not been independently checked here. Submarine operator, naval or civilian requirements also remain unverified and depend on the selected vessel and jurisdiction. These profiles neither certify items nor prescribe suppression systems.
+
 ## 2. Core physical dimensions
 
 These are proposed fields to record for each relevant space, such as a living area, workshop, cargo compartment, rover, or airlock.
@@ -62,7 +108,7 @@ These are proposed fields to record for each relevant space, such as a living ar
 
 **Illustrative calculation, not a mission specification:** 21% O₂ at 100 kPa and 30% O₂ at 70 kPa both give an oxygen partial pressure of 21 kPa. They still have different oxygen concentrations and total pressures; equal partial pressure does not establish equal flammability or safety.
 
-The research brief's elevated-oxygen lunar scenario (at least 30% O₂ and at most 10.2 psi, approximately 70.3 kPa) can be recorded as a **scenario range**. It is not a verified atmosphere for any of the six environments, and those inequalities do not define a single operating point.
+The research brief's elevated-oxygen lunar scenario (at least 30% O₂ and at most 10.2 psi, approximately 70.3 kPa) can be recorded as a **scenario range**. It is not a verified atmosphere for any of the six space environments, and those inequalities do not define a single operating point.
 
 ## 3. Additional dimensions worth recording
 
@@ -124,6 +170,6 @@ For an initial comparison, prioritize **space and operating state, gravity, pres
 
 Matching these dimensions helps explain why a study is relevant. It does not certify a material or system for a destination. The existing research brief reports a gap in direct partial-gravity combustion data in the reviewed PSI collection; an unknown condition or an untested gravity regime must remain visible.
 
-**Scope and limitations:** This is a synthesis of the repository's environment research, not a fresh verification of mission plans or engineering specifications. It proposes comparison dimensions without assigning unsupported numerical values. Rocket and propellant combustion remain outside the project's stated scope.
+**Scope and limitations:** This is a synthesis of the repository's environment research, not a fresh verification of mission plans or engineering specifications. It distinguishes sourced values from explicitly selected Earth scenario estimates. Rocket and propellant combustion remain outside the project's stated scope.
 
 *SI disclosure: compiled with AI assistance from the linked repository research notes.*
