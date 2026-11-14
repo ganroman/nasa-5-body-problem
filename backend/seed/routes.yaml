@@ -125,7 +125,7 @@
 - id: R12
   from_env: earth-logistics
   to_env: martian-orbital-station-nasa
-  status: supported
+  status: study
   prototype_status: reference
   cargo_types: [supplies, reserves, equipment, science, infrastructure]
   possible_cargo: "Food, water and gas reserves, medicine, tools, spares, experiments and expedition-support hardware."
@@ -135,7 +135,7 @@
 - id: R13
   from_env: martian-orbital-station-nasa
   to_env: earth-logistics
-  status: supported
+  status: study
   prototype_status: reference
   cargo_types: [returns]
   possible_cargo: "Selected samples, research materials and hardware for examination."
@@ -145,7 +145,7 @@
 - id: R14
   from_env: earth-logistics
   to_env: martian-base-nasa
-  status: supported
+  status: study
   prototype_status: reference
   cargo_types: [infrastructure, supplies, reserves, equipment, science]
   possible_cargo: "Predeployed habitats / rovers, power, communications and ascent equipment; food, medicine, clothing, reserves, tools and spares."
@@ -155,7 +155,7 @@
 - id: R15
   from_env: martian-orbital-station-nasa
   to_env: martian-base-nasa
-  status: supported
+  status: study
   prototype_status: reference
   cargo_types: [supplies, science, equipment]
   possible_cargo: "Expedition supplies, instruments and equipment."
@@ -165,7 +165,7 @@
 - id: R16
   from_env: martian-base-nasa
   to_env: martian-orbital-station-nasa
-  status: supported
+  status: study
   prototype_status: reference
   cargo_types: [returns]
   possible_cargo: "Selected sealed rock, soil and atmospheric samples; experiments and equipment."

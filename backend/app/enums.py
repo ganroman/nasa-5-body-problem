@@ -82,6 +82,7 @@ class EnvMaturity(StrEnum):
 
 class RouteStatus(StrEnum):
     supported = "supported"
+    study = "study"  # agency study concept, not a planned service (e.g. Mars routes)
     historical = "historical"
     hypothetical = "hypothetical"
 

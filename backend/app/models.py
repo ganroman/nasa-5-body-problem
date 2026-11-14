@@ -365,6 +365,7 @@ class Route(Base):
     status: Mapped[RouteStatus] = mapped_column(enum_col(RouteStatus))
     description: Mapped[str | None] = mapped_column(Text)
     possible_cargo: Mapped[str | None] = mapped_column(Text)
+    cargo_types: Mapped[list[str]] = mapped_column(ARRAY(String(40)), default=list)
 
     sources: Mapped[list[Source]] = relationship(secondary=route_sources)
 
