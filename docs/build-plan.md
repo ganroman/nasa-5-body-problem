@@ -2,7 +2,7 @@
 
 **Team Five-Body Problem · 14 November 2026**
 
-This is the consolidated implementation plan. It supersedes the product scope in the earlier [concept draft](concept-draft.md) and [cargo proposal](cargo-passport.md), while retaining them as discussion history. It incorporates the team’s latest cargo direction, passport + boundary interaction, [source catalogue](../data/data-sources-catalog.md), and [cargo journeys and environment references](../environments/cargo-journes.md). This document specifies work to build; it does not claim these capabilities or scientific validations already exist.
+This is the consolidated implementation plan. It supersedes the product scope in the earlier [concept draft](concept-draft.md) and [cargo proposal](cargo-passport.md), while retaining them as discussion history. It incorporates the team’s latest cargo direction, passport + boundary interaction, [source catalogue](../data/data-sources-catalog.md), and [cargo journeys and environment references](environments/cargo-journes.md). This document specifies work to build; it does not claim these capabilities or scientific validations already exist.
 
 ## 1. What we are building
 
@@ -48,7 +48,7 @@ Use a simple first layer that a nontechnical visitor understands, with source de
 
 A use-state change updates the scenario context and which documented configuration is being assessed. Do not invent numerical effects of stowage, operation, charging or maintenance. An intended state can be recorded even when evidence is missing; expose missing battery–charger, heat-generation, enclosure or maintenance information as gaps.
 
-Use the [environment references](../environments/cargo-journes.md#sources-and-limits) to distinguish microgravity transit/orbital settings, lunar surface gravity and Martian surface gravity. Rover and workshop transitions may change surroundings or item condition without changing gravity. Do not copy lunar cabin values into Gateway, Mars or another programme’s habitat. The references do not establish complete cabin specifications; unsupported values remain unknown unless explicitly entered as scenario assumptions.
+Use the [environment references](environments/cargo-journes.md#sources-and-limits) to distinguish microgravity transit/orbital settings, lunar surface gravity and Martian surface gravity. Rover and workshop transitions may change surroundings or item condition without changing gravity. Do not copy lunar cabin values into Gateway, Mars or another programme’s habitat. The references do not establish complete cabin specifications; unsupported values remain unknown unless explicitly entered as scenario assumptions.
 
 ## 4. Main screen
 

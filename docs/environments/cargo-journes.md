@@ -2,7 +2,7 @@
 
 For our Flame in Freefall challenge, cargo traffic matters because the same item encounters different fire conditions as it moves—and as people unpack, charge, repair or use it. A tool that travels powered off inside a container presents a different assessment from that tool charging beside supplies in a breathable habitat.
 
-This extends the team's existing [cargo passport concept](../docs/cargo-passport.md). The scenarios below are illustrative research cases, not confirmed mission routes or safety findings.
+This extends the team's existing [cargo passport concept](../cargo-passport.md). The scenarios below are illustrative research cases, not confirmed mission routes or safety findings.
 
 ## Possible cargo journeys
 
@@ -29,7 +29,7 @@ A Moon-to-Mars supply route could also be explored, but it requires assumptions 
 | **R23 · ISS → NASA lunar base** | NASA's 2026 surface plan describes deliveries through lunar payload services and cargo-capable landers; it does not identify the ISS as a cargo departure point. A 2017 paper proposes a generic Earth–ISS–Moon system, without establishing a NASA-base service. [W2][W5] | Hypothetical onward shipment of equipment after ISS use. Requires an identified lunar transfer vehicle and lander; a Gateway stop is not assumed. |
 | **R24 · ISS → China-led ILRS** | The official ILRS description identifies Earth, lunar-orbit and surface sections, with Earth–Moon round-trip transport. It does not identify an ISS connection. Its lunar-orbit section is not NASA's Gateway. [W4] | Hypothetical cross-program transfer of an instrument or spare. Transport, interfaces, receiving-program agreement and acceptance are unresolved. |
 
-**What the evidence does support:** Earth → Gateway logistics in the earlier architecture (R04); Gateway ↔ lunar surface expedition transfers in that architecture (R06/R07); and planned Earth → lunar surface deliveries (R08/R10). NASA announced its intention to pause Gateway in its current form on 24 March 2026, so the earlier Gateway routes remain historical planning references. [W1][W2] The existing [Gateway note](../docs/environments/lunar-gateway.md) explains the lander transfers.
+**What the evidence does support:** Earth → Gateway logistics in the earlier architecture (R04); Gateway ↔ lunar surface expedition transfers in that architecture (R06/R07); and planned Earth → lunar surface deliveries (R08/R10). NASA announced its intention to pause Gateway in its current form on 24 March 2026, so the earlier Gateway routes remain historical planning references. [W1][W2] The existing [Gateway note](lunar-gateway.md) explains the lander transfers.
 
 **Why similar search results can mislead:** NASA's ISAAC project tested robots on the ISS and simulated cargo movement between Gateway and a docked vehicle. That is technology development, not an ISS-to-Gateway shipment. [W3] Likewise, a spacecraft family serving both destinations does not establish a flight between them. “Low Earth orbit” also does not necessarily mean a stop at the ISS.
 
@@ -86,14 +86,14 @@ This is a proposed demonstration for the team's existing cargo-passport concept,
 
 The scenario discussion also uses the repository's existing research:
 
-- [Cargo passport](../docs/cargo-passport.md)
-- [Challenge research brief](../docs/research-brief.md)
-- [NASA lunar surface base](../docs/environments/lunar-base-nasa.md)
-- [China's planned lunar base](../docs/environments/lunar-base-china.md)
-- [Lunar Gateway](../docs/environments/lunar-gateway.md)
-- [Martian surface base](../docs/environments/martian-base-nasa.md)
-- [Martian orbital habitat](../docs/environments/martian-orbital-station-nasa.md)
-- [International Space Station](../docs/environments/iss.md)
+- [Cargo passport](../cargo-passport.md)
+- [Challenge research brief](../research-brief.md)
+- [NASA lunar surface base](lunar-base-nasa.md)
+- [China's planned lunar base](lunar-base-china.md)
+- [Lunar Gateway](lunar-gateway.md)
+- [Martian surface base](martian-base-nasa.md)
+- [Martian orbital habitat](martian-orbital-station-nasa.md)
+- [International Space Station](iss.md)
 
 The ISS-to-lunar route review above checks selected public sources; other scenarios were not exhaustively reverified, and cargo volumes were not calculated. These scenarios organize evidence for review and do not establish flight acceptance or operational safety.
 
