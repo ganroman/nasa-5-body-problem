@@ -33,6 +33,16 @@ Every PSI record has a "Research Impacts/Earth Benefits" field (`data/combustion
 | Screening new materials' flammability; "performance-based material selection" | PSI-62, BASS (PSI-26) | [e9xp-ex83](https://doi.org/10.60555/e9xp-ex83), [58h4-dy80](https://doi.org/10.60555/58h4-dy80) | Yes |
 | "Novel designs of future coal power plants" | ACME Flame Design (PSI-10) | [w4zy-bt45](https://doi.org/10.60555/w4zy-bt45) | **No**: efficiency and emissions, not fire safety |
 
+### What the challenge itself names
+
+The challenge statement lists Earth spin-offs as an optional extra: **fine water-mist extinguishers, smoke detectors and firefighter gear** (see the [research brief](research-brief.md#the-ask)). These are the Earth angles with the strongest backing, because the challenge names them directly:
+
+- **Smoke detectors** connect to SAME, SAME-R and PSI-115 above, and fit Card C (schools and public buildings) and Card A (aircraft cabins and cargo holds).
+- **Fine water-mist extinguishers** are the spin-off the challenge names for suppression. FLEX tested suppression by diluting the atmosphere with CO₂ and helium, not with water mist, so treat it as a related line of research, not the source of the spin-off.
+- **Firefighter gear** has no direct PSI link in the tables we parsed.
+
+### A point from BASS that applies on Earth
+
 BASS's record also makes a point that applies on Earth: NASA's standard material test (NASA-STD-6001 Test 1) "segregates material based on 1-g behavior without consideration of low gravity effects." In other words, a material's pass/fail result depends on the conditions it was tested in. That is the passport's core idea.
 
 ---
@@ -48,7 +58,7 @@ BASS's record also makes a point that applies on Earth: NASA's standard material
 | What changes | Cabin pressure: transport aircraft must keep cabin pressure altitude at or below 8,000 ft in normal operation (14 CFR 25.841(a)), roughly 0.75 atm. The [research brief](research-brief.md) gives planned lunar habitats as ≤0.69 atm. The cabin is enclosed and you cannot evacuate in flight. Cargo holds carry mixed shipments, including lithium batteries. |
 | Existing system | **Cabin materials:** 14 CFR 25.853 and Appendix F to Part 25 (burn tests; heat release and smoke tests for some large interior parts). **Cargo batteries:** ICAO dangerous-goods rules. Since 1 April 2016, stand-alone lithium-ion batteries (UN 3480) are banned as cargo on passenger aircraft and must ship at ≤30% state of charge. Later amendments extended the 30% limit to batteries packed with equipment. |
 | PSI link | **Data + method.** FLEX names "high-altitude aircraft" as an Earth benefit, and its 274 tests include 103 at about 0.7 atm (quick parse of `PSI-69_Experimental_table_FLEX.csv`). SAME/SAME-R smoke data relates to cabin and cargo smoke detection. Limits: FLEX burns fuel droplets, not cabin materials; the PSI tests are in microgravity, aircraft are in 1g. |
-| Real incidents | **Swissair 111 (1998):** electrical arcing ignited the metallized PET cover on insulation blankets. The fire spread across them, and the TSB concluded that "aircraft certification standards for material flammability were inadequate." These blankets had passed the certification tests of the time. **UPS Flight 6 (2010):** the GCAA concluded with "reasonable certainty" that a fire started in cargo containing lithium batteries; some battery shipments were not properly declared. |
+| Real incidents | **Swissair 111 (1998):** electrical arcing ignited the metallized PET cover on insulation blankets. The fire spread across them, and the TSB concluded that "aircraft certification standards for material flammability were inadequate," because they allowed materials that could ignite and sustain a fire. **UPS Flight 6 (2010):** a cargo fire brought down a 747 near Dubai. According to the FAA's summary, the flight carried "more than 80,000 lithium-type batteries"; at least three shipments "should have been declared as hazardous materials," and "no hazardous material had been declared on board." |
 | What the passport adds | ✍️ TEAM |
 | Limits | Aircraft fire safety is already heavily regulated. The passport would organise and compare evidence; it cannot certify. Do not claim microgravity data predicts 1g aircraft fires. |
 
@@ -107,7 +117,7 @@ Use the top card in the 2-minute local pitch. Mention the others in the submissi
 - [ ] 14 CFR 25.853 and Appendix F: exact current wording and which tests apply to which parts (eCFR).
 - [ ] Whether the Appendix F tests are run at ambient lab conditions (would strengthen the "tested conditions ≠ flight conditions" point).
 - [ ] ICAO Technical Instructions: current lithium battery rules (only 2016 news and later working papers were checked).
-- [ ] UPS Flight 6: read the GCAA final report directly; the "81,000 batteries" figure on Wikipedia is unconfirmed.
+- [ ] UPS Flight 6: confirm the cause statement in the GCAA final report (the FAA summary confirms the battery count and the undeclared shipments).
 - [ ] NFPA 855: current scope text and thresholds (vendor figures were not confirmed).
 - [ ] Moss Landing: the cause, from the final investigation if published.
 - [ ] Grenfell: the Inquiry's own conclusions on system-level testing (Phase 2 report, executive summary).
@@ -122,7 +132,7 @@ Use the top card in the 2-minute local pitch. Mention the others in the submissi
 - [14 CFR 25.841, Cornell LII](https://www.law.cornell.edu/cfr/text/14/25.841); [2023 FAA amendment, Federal Register](https://www.govinfo.gov/content/pkg/FR-2023-06-15/html/2023-12454.htm)
 - [14 CFR 25.853, eCFR](https://www.ecfr.gov/current/title-14/chapter-I/subchapter-C/part-25/subpart-D/subject-group-ECFR1e1f52030ba4797/section-25.853); [Appendix F to Part 25, Cornell LII](https://www.law.cornell.edu/cfr/text/14/appendix-F_to_part_25)
 - [Swissair 111 investigation report, executive summary (TSB)](https://www.tsb.gc.ca/eng/medias-media/fiches-facts/a98h0003/sum_a98h0003.html); [TSB Recommendation A99-07](https://tsb-bst.gc.ca/eng/recommandations-recommendations/aviation/1999/rec-a9907.html); [TSB Recommendation A03-01](https://bst.gc.ca/eng/recommandations-recommendations/aviation/2003/rec-a0301.html)
-- [FAA Lessons Learned: N571UP (UPS 6)](https://www.faa.gov/lessons_learned/transport_airplane/accidents/N571UP); [AIN on the GCAA report](https://oldain.ainonline.com/aviation-news/air-transport/2013-07-29/ups-fire-safety-steps-respond-2010-crash)
+- [FAA Lessons Learned: N571UP (UPS 6)](https://www.faa.gov/lessons_learned/transport_airplane/accidents/N571UP)
 - [ICAO passenger-aircraft lithium battery ban (In Compliance)](https://incompliancemag.com/lithium-ion-battery-shipments-to-be-banned-from-passenger-aircraft/); [IFALPA position on lithium batteries in air cargo](https://www.ifalpa.org/media/4156/25pos01-energy-content-of-lithium-batteries-in-air-cargo.pdf)
 
 **Power plants and energy storage**
