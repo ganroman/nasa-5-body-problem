@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Material Passport · Evidence beyond Earth</title>
+<style>
+  :root { --bg:#f5f7fa; --card:#fff; --fg:#14202e; --muted:#5b6878; --line:#d8dee6;
+          --match:#1e7a46; --match-bg:#e3f4ea; --diff:#a14a0b; --diff-bg:#fbeadb;
+          --unk:#5b6878; --unk-bg:#eceff3; --accent:#1f5fe0; }
+  * { box-sizing:border-box; }
+  body { margin:0; font:14px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; background:var(--bg); color:var(--fg); }
+  .banner { background:#fff4c2; color:#5c4500; padding:8px 16px; font-weight:600; text-align:center; }
+  header { padding:16px; border-bottom:1px solid var(--line); background:var(--card); }
+  header h1 { margin:0; font-size:20px; }
+  header p { margin:4px 0 0; color:var(--muted); }
+  main { display:grid; grid-template-columns:280px 1fr; gap:16px; padding:16px; max-width:1200px; margin:0 auto; }
+  @media (max-width:800px) { main { grid-template-columns:1fr; } }
+  section, aside > div { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:14px; margin-bottom:16px; }
+  h2 { font-size:15px; margin:0 0 10px; }
+  h3 { font-size:14px; margin:0 0 6px; }
+  label { display:block; font-weight:600; margin:10px 0 4px; }
+  select { width:100%; padding:6px; font:inherit; }
+  .toggle { display:flex; gap:6px; }
+  .toggle button { flex:1; padding:8px; border:1px solid var(--line); background:#fff; border-radius:6px; cursor:pointer; font:inherit; }
+  .toggle button.on { background:var(--accent); color:#fff; border-color:var(--accent); }
+  .cond { list-style:none; padding:0; margin:8px 0 0; }
+  .cond li { display:flex; justify-content:space-between; border-bottom:1px dashed var(--line); padding:4px 0; }
+  .cond small, .src { color:var(--muted); font-size:12px; }
+  .chip { display:inline-block; padding:1px 8px; border-radius:999px; font-size:12px; margin:2px 4px 2px 0; }
+  .m { background:var(--match-bg); color:var(--match); }
+  .d { background:var(--diff-bg); color:var(--diff); }
+  .u { background:var(--unk-bg); color:var(--unk); }
+  .badge { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.04em; padding:2px 6px; border-radius:4px; }
+  .b-meas { background:#e3ecfd; color:#1f4fb8; }
+  .b-hyp { background:#f1e6fb; color:#6b2fa0; }
+  .b-ana { background:#eceff3; color:#3d4856; }
+  .coverage { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:10px; }
+  .cov { border:1px solid var(--line); border-radius:6px; padding:10px; }
+  .cov b { display:block; font-size:13px; }
+  .cov.gap { border-color:var(--diff); background:var(--diff-bg); }
+  .card { border:1px solid var(--line); border-radius:6px; padding:10px; margin-bottom:10px; }
+  .card .top { display:flex; justify-content:space-between; gap:8px; flex-wrap:wrap; }
+  .rank { font-weight:700; color:var(--accent); }
+  details { margin-top:6px; }
+  summary { cursor:pointer; color:var(--accent); }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th, td { text-align:left; padding:6px; border-bottom:1px solid var(--line); }
+  th { cursor:pointer; color:var(--muted); font-weight:600; user-select:none; }
+  th:hover { color:var(--fg); }
+  tr.sel { background:#eef3fd; }
+  .finding { border-left:3px solid var(--accent); padding:6px 10px; margin-bottom:10px; background:#fafbfd; }
+  .limit { color:var(--diff); font-size:13px; }
+  .assess { border:2px dashed #b48fd6; border-radius:8px; padding:12px; background:#fbf7fe; }
+  .muted { color:var(--muted); }
+  code { font-size:12px; }
+
+  :root { --bg:#eeeae2; --fg:#263c38; --muted:#60716a; --line:#d5d9cd; --accent:#285e50; }
+  header { padding:32px max(24px, calc((100vw - 1320px)/2)); background:#e4e9df; }
+  header h1 { font:clamp(32px,4vw,54px)/1.08 Georgia,serif; letter-spacing:-1.5px; max-width:780px; }
+  header p { max-width:660px; font-size:16px; margin-top:14px; }
+  main { max-width:1360px; grid-template-columns:310px minmax(0,1fr); padding:24px; gap:24px; }
+  aside > div, section { border-radius:3px; padding:20px; }
+  .passport { border-top:5px solid var(--accent); background:#faf9f3; }
+  .eyebrow { font:11px ui-monospace,monospace; letter-spacing:2px; text-transform:uppercase; }
+  #passport-name { font:30px/1.1 Georgia,serif; margin:14px 0; }
+  .passport-number { border-top:1px dashed var(--line); padding-top:12px; font:12px ui-monospace,monospace; }
+  .control { width:100%; accent-color:var(--accent); }
+  output { float:right; font-variant-numeric:tabular-nums; }
+  button { font:inherit; cursor:pointer; }
+  button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible { outline:3px solid #a14a0b; outline-offset:3px; }
+  .download { width:100%; padding:12px; background:var(--accent); color:white; border:0; margin-top:14px; }
+  .map-title { font:28px Georgia,serif; margin:0 0 8px; }
+  #evidence-map { width:100%; display:block; background:#fafbf7; border:1px solid var(--line); }
+  .legend { display:flex; flex-wrap:wrap; gap:16px; font-size:12px; margin:12px 0; }
+  .map-summary { padding:12px; background:#edf1e9; border-left:3px solid var(--accent); }
+  footer { max-width:1312px; margin:0 auto; padding:12px 24px 30px; color:var(--muted); font-size:12px; }
+  table button { border:0; padding:0; background:none; color:var(--accent); text-align:left; }
+  main > *, section, aside { min-width:0; }
+  .passport-number { overflow-wrap:anywhere; }
+  .table-wrap { overflow:auto; }
+  @media(max-width:800px) { main { grid-template-columns:1fr; padding:14px; } header { padding:24px; } }
+  @media print { .banner { display:block; } .download, input, .toggle { display:none; } main { display:block; } }
+</style>
+</head>
+<body>
+<div class="banner">MOCK WITH DUMMY DATA. Values, findings and outcomes are placeholders, not NASA results.</div>
+<header>
+  <div class="eyebrow">Material Passport / interactive concept</div><h1>The material travels.<br>Does the evidence?</h1><p>Take a tested material from transit to the Moon. Explore how changing the cabin changes the evidence you can use.</p>
+</header>
+
+<main>
+  <aside>
+    <div class="passport">
+      <div class="eyebrow">Experimental evidence passport</div>
+      <h2 id="passport-name"></h2>
+      <label for="material">Choose a material</label>
+      <select id="material" onchange="render()"></select>
+      <p class="src">All five material configurations in this dummy dataset. Full NASA inventory is not loaded.</p>
+      <p id="passport-meta"></p>
+      <div class="passport-number">RESEARCH BRIEF · NOT A SAFETY CERTIFICATE</div>
+      <button class="download" onclick="downloadPassport()">Download evidence passport ↓</button>
+      <p class="src" id="download-status" role="status"></p>
+    </div>
+    <div>
+      <h2>Where are you taking it?</h2>
+      <div class="toggle">
+        <button id="btn-transit" class="on" aria-pressed="true" onclick="setSetting('transit')">Transit</button>
+        <button id="btn-lunar" aria-pressed="false" onclick="setSetting('lunar')">Lunar habitat</button>
+      </div>
+      <p id="destination" class="src"></p>
+      <label for="oxygen">Oxygen <output id="oxygen-value"></output></label>
+      <input class="control" id="oxygen" type="range" min="14" max="40" step="0.5" value="21" oninput="render()">
+      <label for="pressure">Pressure <output id="pressure-value"></output></label>
+      <input class="control" id="pressure" type="range" min="40" max="110" step="1" value="101" oninput="render()">
+      <label for="airflow">Airflow <output id="airflow-value"></output></label>
+      <input class="control" id="airflow" type="range" min="0" max="30" step="1" value="10" oninput="render()">
+      <ul class="cond" id="conditions"></ul>
+      <p class="src">Exploratory scenarios, not spacecraft specifications. Transit preset: ISS-like reference; lunar preset: challenge reference. Airflow is assumed. Sliders edit your scenario; destination sets gravity.</p>
+    </div>
+    <div>
+      <h2>How ranking works</h2>
+      <p class="muted" style="margin:0">Each test is compared with the setting on 5 conditions. Match = +2, differs = −1, unknown = 0. Unknown is <b>not</b> counted as a mismatch.</p>
+    </div>
+  </aside>
+
+  <div>
+    <section>
+      <div class="eyebrow">Explore the boundary of evidence</div>
+      <h2 class="map-title">How far does the research travel?</h2>
+      <p class="muted">Move the controls. Your scenario moves; experimental observations stay where they were measured.</p>
+      <svg id="evidence-map" viewBox="0 0 720 290" role="img" aria-labelledby="map-label map-description"></svg>
+      <div class="legend"><span>● Dummy experimental record (hover for details)</span><span>◇ Your selected scenario</span></div>
+      <p class="src">Oxygen × pressure projection only. Gravity and airflow are compared below. No continuous tested region, physical boundary or prediction is implied. Records without pressure appear in the unknown lane.</p>
+      <div id="map-summary" class="map-summary" aria-live="polite"></div>
+    </section>
+    <section>
+      <h2>Evidence coverage for this setting</h2>
+      <div class="coverage" id="coverage"></div>
+    </section>
+
+    <section>
+      <h2>Inside the passport <span class="badge b-meas">Dummy observations</span></h2>
+      <div id="ranked"></div>
+    </section>
+
+    <section>
+      <h2>What can the evidence tell us?</h2>
+      <div id="findings"></div>
+    </section>
+
+    <section id="assess-wrap">
+      <h2>Beyond the measurements</h2>
+      <div id="assess"></div>
+    </section>
+
+    <section>
+      <h2>Browse the mock material inventory</h2>
+      <p class="src" style="margin-top:0">Click a column to sort. Click a row to select the material.</p>
+      <div class="table-wrap"><table>
+        <thead><tr>
+          <th onclick="sortBy('name')">Material</th>
+          <th onclick="sortBy('records')">Test records</th>
+          <th onclick="sortBy('o2max')">O₂ range tested</th>
+          <th onclick="sortBy('findings')">Placeholder findings</th>
+          <th onclick="sortBy('inv')">Investigations</th>
+        </tr></thead>
+        <tbody id="mat-table"></tbody>
+      </table></div>
+    </section>
+  </div>
+</main><footer>Concept mock · SI-assisted design and code. Placeholder findings are not verified scientific claims. No live SI or prediction model is connected. Downloads retain these limitations.</footer>
+
+<script>
+// ---------- DUMMY DATA (structure only; values are placeholders) ----------
+const SETTINGS = {
+  transit: { label:'Transit spacecraft', o2:21, pressure:1.0, airflowMin:0, airflowMax:30, gravity:0,
+    show:[['O₂','~21%','Researcher\'s Guide (ISS air)'],['Pressure','1 atm','Researcher\'s Guide'],
+          ['Ventilation','0–30 cm/s','Researcher\'s Guide'],['Gravity','microgravity','—']] },
+  lunar: { label:'Lunar habitat', o2:30, pressure:0.69, airflowMin:0, airflowMax:30, gravity:0.17,
+    show:[['O₂','≥30%','Challenge text'],['Pressure','≤10.2 psi (0.69 atm)','Challenge text'],
+          ['Ventilation','0–30 cm/s (assumed)','Assumption'],['Gravity','1/6 g','—']] }
+};
+
+const DOI = { 'BASS':'10.60555/58h4-dy80', 'BASS-II':'10.60555/4qc4-de67', 'SAFFIRE-I':'10.60555/0t15-1z43',
+              'SAFFIRE-II':'10.60555/2chp-m469', 'SAFFIRE-III':'10.60555/040q-4h36', 'ACME BRE':'10.60555/vb93-3y72' };
+
+// pressure:null / o2:null = not recorded in the source table -> "unknown"
+const TESTS = [
+  { id:'B2-07', inv:'BASS-II', material:'PMMA thin film', o2:21.2, pressure:null, airflow:10, gravity:0, outcome:'Flame spread observed (dummy)' },
+  { id:'B2-11', inv:'BASS-II', material:'PMMA thin film', o2:18.0, pressure:null, airflow:5,  gravity:0, outcome:'Extinguished after 40 s (dummy)' },
+  { id:'B2-19', inv:'BASS-II', material:'PMMA thin film', o2:22.0, pressure:null, airflow:25, gravity:0, outcome:'Steady spread (dummy)' },
+  { id:'B-31',  inv:'BASS',    material:'PMMA thin film', o2:null, pressure:null, airflow:null, gravity:0, outcome:'Not in table; see publications (dummy)' },
+  { id:'B2-40', inv:'BASS-II', material:'PMMA rod',       o2:20.5, pressure:null, airflow:15, gravity:0, outcome:'Flame spread observed (dummy)' },
+  { id:'B2-44', inv:'BASS-II', material:'PMMA rod',       o2:16.5, pressure:null, airflow:8,  gravity:0, outcome:'No sustained flame (dummy)' },
+  { id:'S1-S1', inv:'SAFFIRE-I',  material:'SIBAL fabric', o2:21.6, pressure:1.0, airflow:20, gravity:0, outcome:'Burn time 420 s (dummy)' },
+  { id:'S3-S2', inv:'SAFFIRE-III',material:'SIBAL fabric', o2:null, pressure:1.0, airflow:30, gravity:0, outcome:'Not in table (dummy)' },
+  { id:'B2-60', inv:'BASS-II', material:'SIBAL fabric',   o2:21.0, pressure:null, airflow:12, gravity:0, outcome:'Flame spread observed (dummy)' },
+  { id:'S2-2',  inv:'SAFFIRE-II', material:'Silicone',    o2:22.1, pressure:1.0, airflow:20, gravity:0, outcome:'No significant spread (dummy)' },
+  { id:'S2-9',  inv:'SAFFIRE-II', material:'Nomex',       o2:21.5, pressure:1.0, airflow:20, gravity:0, outcome:'Limited spread (dummy)' },
+];
+
+// High-O2 analogue (gas burner emulating solids) -- shown separately, never ranked as material evidence
+const ANALOGUES = [
+  { id:'BRE-0208', inv:'ACME BRE', o2:'21 / 26.5 / 40%', note:'Gas burner emulating a burning solid. Different fuel configuration; not a material certification. (dummy)' }
+];
+
+const FINDINGS = {
+  'PMMA thin film': [
+    { text:'[Placeholder finding] For thin PMMA in the tested range, flame spread changed with airflow.', cat:'Measured',
+      excerpt:'"…placeholder excerpt from the source…"', loc:'Researcher\'s Guide p. 18 (placeholder locator)',
+      applies:{o2:[17,22], gravity:0}, limit:'Tested near 17–22% O₂ in microgravity only.' },
+    { text:'[Placeholder finding] Applying nitrogen to some flames strengthened them by drawing in oxygen.', cat:'Measured',
+      excerpt:'"…placeholder excerpt…"', loc:'Researcher\'s Guide p. 22 (placeholder locator)',
+      applies:{o2:[17,22], gravity:0}, limit:'Observed for specific BASS geometries; not a general suppression rule.' },
+    { text:'[Placeholder finding] Earth-based flammability test results may not be conservative in microgravity.', cat:'Measured',
+      excerpt:'"…placeholder excerpt…"', loc:'Researcher\'s Guide p. 22–23 (placeholder locator)',
+      applies:{o2:[0,100], gravity:0}, limit:'Statement about test method margins, not about this material at lunar conditions.' },
+  ],
+  'SIBAL fabric': [
+    { text:'[Placeholder finding] Large fabric samples burned for minutes in concurrent flow.', cat:'Measured',
+      excerpt:'"…placeholder excerpt…"', loc:'Saffire-I publication (placeholder DOI section)',
+      applies:{o2:[21,22], gravity:0}, limit:'Single atmosphere (~21.5% O₂) and one flow speed.' },
+  ],
+};
+
+const ASSESS = {
+  'PMMA thin film': { hypothesis:'[Placeholder] Higher O₂ and some gravity-driven flow could change spread behavior compared with the transit tests. Direction and size are not established by this dataset.',
+    inputs:'Measured transit tests above; high-O₂ analogue (ACME BRE).',
+    unknowns:'Partial-gravity flow, 30%+ O₂ for solids, reduced pressure.',
+    test:'[Placeholder] Burn thin PMMA at 30% O₂, 0.69 atm, at lunar gravity, across 5–30 cm/s airflow.' }
+};
+
+// ---------- LOGIC ----------
+let setting = 'transit';
+let sortKey = 'records', sortDir = -1;
+const materials = [...new Set(TESTS.map(t => t.material))];
+
+function compare(t, s) {
+  const dims = [];
+  dims.push(['Material', 'm', 'selected']);
+  if (t.o2 == null) dims.push(['O₂', 'u', 'not recorded']);
+  else { const d = +(t.o2 - s.o2).toFixed(1); dims.push(['O₂', Math.abs(d) <= 1.5 ? 'm' : 'd', Math.abs(d) <= 1.5 ? `${t.o2}%` : `${d > 0 ? '+' : ''}${d} pts`]); }
+  if (t.pressure == null) dims.push(['Pressure', 'u', 'not recorded']);
+  else dims.push(['Pressure', Math.abs(t.pressure - s.pressure) < 0.05 ? 'm' : 'd', `${t.pressure} atm`]);
+  if (t.airflow == null) dims.push(['Airflow', 'u', 'not recorded']);
+  else dims.push(['Airflow', t.airflow >= s.airflowMin && t.airflow <= s.airflowMax ? 'm' : 'd', `${t.airflow} cm/s`]);
+  dims.push(['Gravity', t.gravity === s.gravity ? 'm' : 'd', t.gravity === 0 ? 'microgravity' : `${t.gravity} g`]);
+  const score = dims.reduce((a, [, k]) => a + (k === 'm' ? 2 : k === 'd' ? -1 : 0), 0);
+  return { dims, score };
+}
+
+function setSetting(s) {
+  setting = s;
+  document.getElementById('btn-transit').classList.toggle('on', s === 'transit');
+  document.getElementById('btn-lunar').classList.toggle('on', s === 'lunar');
+  for (const key of ['transit','lunar']) document.getElementById('btn-' + key).setAttribute('aria-pressed', key === s);
+  document.getElementById('oxygen').value = SETTINGS[s].o2;
+  document.getElementById('pressure').value = s === 'lunar' ? 70 : 101;
+  document.getElementById('airflow').value = 10;
+  render();
+}
+
+function render() {
+  const s = currentScenario();
+  const mat = document.getElementById('material').value;
+  renderPassport(mat, s);
+
+  document.getElementById('conditions').innerHTML =
+    s.show.map(([k, v, src]) => `<li><span>${k}</span><span><b>${v}</b> <small>${src}</small></span></li>`).join('');
+
+  const tests = TESTS.filter(t => t.material === mat).map(t => ({ ...t, ...compare(t, s) }))
+                     .sort((a, b) => b.score - a.score);
+
+  // coverage
+  const o2Known = tests.filter(t => t.o2 != null);
+  const o2Cov = o2Known.filter(t => Math.abs(t.o2 - s.o2) <= 1.5).length;
+  const gCov = tests.filter(t => t.gravity === s.gravity).length;
+  const o2Unknown = tests.length - o2Known.length;
+  document.getElementById('coverage').innerHTML = `
+    <div class="cov ${o2Cov ? '' : 'gap'}"><b>O₂ coverage</b>${o2Cov} of ${o2Known.length} records with recorded O₂ match ${s.o2}% (±1.5 points)<br><small class="muted">${o2Unknown} record(s) with O₂ unknown</small></div>
+    <div class="cov ${gCov ? '' : 'gap'}"><b>Gravity coverage</b>${gCov} of ${tests.length} records at ${setting === 'lunar' ? 'lunar gravity' : 'microgravity'}</div>
+    <div class="cov"><b>High-O₂ analogue</b>${s.o2 >= 26 ? ANALOGUES.map(a => `${a.inv}: ${a.o2} <span class="badge b-ana">Analogue</span>`).join('') : '<span class="muted">Different fuel configuration; not direct material evidence</span>'}</div>`;
+
+  // ranked tests
+  document.getElementById('ranked').innerHTML = tests.length ? tests.map((t, i) => `
+    <div class="card">
+      <div class="top"><span><span class="rank">#${i + 1}</span> <b>${t.inv}</b> · test ${t.id} · ${t.material}</span><span class="muted">score ${t.score}</span></div>
+      <div>${t.dims.map(([k, c, v]) => `<span class="chip ${c}">${k}: ${v}</span>`).join('')}</div>
+      <div><b>Outcome:</b> ${t.outcome}</div>
+      <details><summary>Open source</summary>
+        <div class="src">Raw source row (dummy): <code>${JSON.stringify({ id: t.id, material: t.material, o2: t.o2, airflow: t.airflow })}</code><br>
+        Investigation DOI: <a href="https://doi.org/${DOI[t.inv]}" target="_blank" rel="noopener">${DOI[t.inv]}</a></div>
+      </details>
+    </div>`).join('') : '<p class="muted">No test records for this material.</p>';
+
+  // findings
+  const fs = FINDINGS[mat] || [];
+  document.getElementById('findings').innerHTML = fs.length ? fs.map(f => {
+    const applies = s.o2 >= f.applies.o2[0] && s.o2 <= f.applies.o2[1] && s.gravity === f.applies.gravity;
+    return `<div class="finding">
+      <span class="badge b-meas">${f.cat}</span> ${applies ? '<span class="chip u">O₂ / gravity overlap only; other conditions unverified</span>' : '<span class="chip d">outside tested conditions</span>'}
+      <p style="margin:6px 0">${f.text}</p>
+      <div class="src">Excerpt: ${f.excerpt} · ${f.loc}</div>
+      <div class="limit">Limit: ${f.limit}</div></div>`;
+  }).join('') : '<p class="muted">No applicable finding in our curated sources yet.</p>';
+
+  // assessment (lunar only)
+  const a = ASSESS[mat];
+  document.getElementById('assess-wrap').hidden = false;
+  document.getElementById('assess').innerHTML = a ? `
+    <div class="assess">
+      <span class="badge b-hyp">Qualitative hypothesis</span> <b>Preliminary assessment, unvalidated for selected conditions</b>
+      <p>${a.hypothesis}</p>
+      <div class="src"><b>Based on:</b> ${a.inputs}<br><b>Unknown:</b> ${a.unknowns}</div>
+      <p style="margin-bottom:0"><b>Test needed:</b> ${a.test}</p><p class="src">This fixed placeholder is not recalculated for slider changes. No quantitative model is connected.</p>
+    </div>` : '<p class="muted">No assessment yet. Closest evidence is listed above.</p>';
+
+  renderTable(mat);
+}
+
+function renderTable(selected) {
+  const rows = materials.map(m => {
+    const ts = TESTS.filter(t => t.material === m);
+    const o2s = ts.map(t => t.o2).filter(v => v != null);
+    return { name: m, records: ts.length, o2min: o2s.length ? Math.min(...o2s) : null, o2max: o2s.length ? Math.max(...o2s) : -1,
+             findings: (FINDINGS[m] || []).length, inv: [...new Set(ts.map(t => t.inv))].join(', ') };
+  }).sort((a, b) => (a[sortKey] > b[sortKey] ? 1 : a[sortKey] < b[sortKey] ? -1 : 0) * sortDir);
+  document.getElementById('mat-table').innerHTML = rows.map(r => `
+    <tr class="${r.name === selected ? 'sel' : ''}" style="cursor:pointer" onclick="pick('${r.name}')">
+      <td><button onclick="pick('${r.name}')">${r.name}</button></td><td>${r.records}</td>
+      <td>${r.o2max < 0 ? '<span class="muted">unknown</span>' : `${r.o2min}–${r.o2max}%`}</td>
+      <td>${r.findings || '<span class="muted">0</span>'}</td><td>${r.inv}</td></tr>`).join('');
+}
+
+function sortBy(k) { sortDir = sortKey === k ? -sortDir : -1; sortKey = k; renderTable(document.getElementById('material').value); }
+function pick(m) { document.getElementById('material').value = m; render(); }
+
+
+function currentScenario() {
+  const o2 = Number(document.getElementById('oxygen').value);
+  const pressureKpa = Number(document.getElementById('pressure').value);
+  const airflow = Number(document.getElementById('airflow').value);
+  return {...SETTINGS[setting], o2, pressure:pressureKpa/101.325, pressureKpa,
+    airflowMin:airflow, airflowMax:airflow,
+    show:[['Gravity', setting === 'lunar' ? '1/6 g' : 'microgravity', 'Destination reference']]};
+}
+function renderPassport(mat, s) {
+  const ts = TESTS.filter(t => t.material === mat);
+  document.getElementById('passport-name').textContent = mat;
+  document.getElementById('passport-meta').textContent = `${ts.length} dummy records · ${new Set(ts.map(t=>t.inv)).size} investigations`;
+  document.getElementById('destination').textContent = `${s.label} · editable scenario`;
+  document.getElementById('oxygen-value').textContent = `${s.o2}%`;
+  document.getElementById('pressure-value').textContent = `${s.pressureKpa} kPa`;
+  document.getElementById('airflow-value').textContent = `${s.airflowMin} cm/s`;
+  const x = o => 65+(o-14)/26*590;
+  const y = p => 225-(p-40)/70*190;
+  let plot = '<title id="map-label">Experimental evidence and selected scenario</title><desc id="map-description">Dummy records plotted by oxygen and pressure. Unknown pressure records are separated. The diamond is an unmeasured user scenario.</desc>';
+  for(const o of [14,21,30,40]) plot += `<path d="M${x(o)} 25V225" stroke="#dce1d6"/><text x="${x(o)}" y="245" text-anchor="middle" font-size="12" fill="#60716a">${o}%</text>`;
+  for(const p of [40,70,101,110]) plot += `<path d="M65 ${y(p)}H655" stroke="#dce1d6"/><text x="55" y="${y(p)+4}" text-anchor="end" font-size="12" fill="#60716a">${p}</text>`;
+  plot += '<text x="65" y="16" font-size="12" fill="#60716a">Pressure · kPa</text><text x="655" y="280" text-anchor="end" font-size="12" fill="#60716a">Oxygen concentration</text><text x="10" y="267" font-size="10" fill="#60716a">Unknown P</text>';
+  for(const t of ts.filter(t=>t.o2 != null)) {
+    plot += `<circle cx="${x(t.o2)}" cy="${t.pressure == null ? 263 : y(t.pressure*101.325)}" r="6" fill="#285e50" stroke="white" stroke-width="2"><title>${t.id} · ${t.o2}% O₂ · ${t.pressure == null ? 'pressure unknown' : (t.pressure*101.325).toFixed(1)+' kPa'} · dummy</title></circle>`;
+  }
+  const sx=x(s.o2), sy=y(s.pressureKpa);
+  plot += `<path d="M${sx} ${sy-9}l9 9-9 9-9-9Z" fill="#c17638" stroke="#75441e" stroke-width="2"><title>Your scenario — not an experimental observation</title></path>`;
+  document.getElementById('evidence-map').innerHTML=plot;
+  const known=ts.filter(t=>t.o2!=null);
+  const max=known.length ? Math.max(...known.map(t=>t.o2)) : null;
+  document.getElementById('map-summary').textContent = (max !== null && s.o2 > max ? `Selected oxygen is ${(s.o2-max).toFixed(1)} percentage points above the highest recorded value for this material in the mock. ` : 'Oxygen alone cannot establish applicability. ') + (setting==='lunar' ? 'No lunar-gravity observations in this mock. ' : '') + `${ts.filter(t=>t.pressure==null).length} records have unknown pressure. This is an evidence comparison, not a safety verdict.`;
+}
+function downloadPassport() {
+  const mat=document.getElementById('material').value, s=currentScenario();
+  const records=TESTS.filter(t=>t.material===mat).map(t=>({...t, comparison:compare(t,s), investigationSource:'https://doi.org/'+DOI[t.inv]}));
+  const passport={title:'Material evidence passport', disclaimer:'MOCK WITH DUMMY DATA. Not NASA results, material approval or safety advice.', material:mat,
+    scenario:{destination:s.label, oxygenPercent:s.o2, pressureKpa:s.pressureKpa, airflowCmPerS:s.airflowMin, gravityG:s.gravity},
+    method:'Illustrative ranking only: +2 match, -1 differs, 0 unknown; oxygen tolerance 1.5 percentage points, pressure tolerance 0.05 atm; exact airflow. Not a safety score.',
+    records, placeholderFindings:FINDINGS[mat]||[], preliminaryAssessment:ASSESS[mat]||null,
+    limitations:['Findings and outcomes are placeholders, not verified evidence.','Assessment is fixed placeholder text, not computed for this scenario.','No prediction model or live SI connected.','No continuous boundary or partial-gravity estimate established.'],
+    attribution:'SI-assisted design and code'};
+  const url=URL.createObjectURL(new Blob([JSON.stringify(passport,null,2)],{type:'application/json'}));
+  const a=document.createElement('a'); a.href=url; a.download='material-passport-'+mat.toLowerCase().replaceAll(' ','-')+'.json'; a.click();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  document.getElementById('download-status').textContent='Downloaded scenario, records, sources and limitations as JSON.';
+}
+
+document.getElementById('material').innerHTML = materials.map(m => `<option>${m}</option>`).join('');
+render();
+</script>
+</body>
+</html>

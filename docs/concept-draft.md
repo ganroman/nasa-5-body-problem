@@ -7,9 +7,23 @@
 
 ## The concept in one sentence
 
-> A **habitat materials engineer** selects a material and cabin conditions. The dashboard ranks relevant NASA combustion evidence, explains what transfers to that design, and identifies what still needs testing. Where a defensible model exists, it also presents a clearly labelled preliminary assessment of behavior under untested conditions.
+> **A material passport that shows how far its experimental evidence travels as you change the environment.**
 
-The traveler is the person in the story. The user is the person working the dashboard.
+A habitat materials engineer picks a tested material and opens its passport: NASA experiments, measured conditions and supported findings. They switch between transit and a lunar habitat, or adjust oxygen, pressure and airflow. The dashboard updates which evidence remains relevant and explains what changed.
+
+**The material travels. Does the evidence?**
+
+We explore the **boundary of available evidence**, not the boundary between safe and unsafe. The passport is a research briefing, not a safety certificate. The traveler remains the person in the presentation story; the engineer is the person working the dashboard.
+
+## The main screen: three connected parts
+
+| Part | Purpose |
+|---|---|
+| Material passport | What material is this, and what has NASA learned about it? |
+| Environment controls | Where are we taking it, and under which conditions? |
+| Evidence map | Which experiments support this scenario, which differ, and what remains unknown? |
+
+The passport supplies the memorable metaphor, the boundary explorer supplies the interaction, and the downloaded scenario passport supplies the takeaway. Ranking supports this experience rather than being its headline feature.
 
 ## Open decisions for the team
 
@@ -21,22 +35,31 @@ The traveler is the person in the story. The user is the person working the dash
 
 One complete path:
 
-1. **Select the setting:** spacecraft in transit, or a lunar habitat. - I would say the dashboard should have both. We should have enouph data from data sources.
-2. **See the conditions, each with its source (changed)**, labelled as assumed mission conditions:
-   - Transit: about 21% O₂, 1 atm, ventilation 0–30 cm/s, microgravity *(Researcher's Guide: ISS air and ventilation range)*
-   - Lunar habitat: 30% O₂ or more, 10.2 psi (0.69 atm) or less, 1/6 g *(challenge text)*
-3. **Choose a material:** solid-material flame spread first, using materials that NASA actually tested: PMMA (acrylic), SIBAL cotton-fiberglass fabric, silicone, Nomex *(BASS, BASS-II, Saffire)* - here we must use all materials that tested already - dashboard will allow us to sort it.
-4. **Get a ranked evidence briefing:** tests ranked by how closely their conditions match (material, O₂, pressure, airflow, gravity), with the ranking criteria visible.
-5. **Open the evidence:** the source test rows, and the finding with its page number or DOI.
-6. **Explore an untested environment:** where supported, open a preliminary assessment with the model, assumptions, measured inputs and limitations visible. Otherwise show the closest evidence and the unanswered research question.
+1. **Open a material passport:** browse, filter and sort all tested solid materials represented in our source data. Preserve original material names and distinguish formulations, coatings and sample geometries. Clearly label records whose conditions or findings have not yet been processed.
+2. **Compare both environments:** transit spacecraft and lunar habitat are supported scenarios. Switching destinations keeps the selected material and changes the reference conditions:
+   - Transit: an ISS-like reference of about 21% O₂, 101 kPa and microgravity; ventilation reference 0–30 cm/s *(Researcher's Guide; verify applicability and source locator)*.
+   - Lunar habitat: a reference scenario of 30% O₂, about 70 kPa and 1/6 g, based on the challenge's ≥30% O₂ and ≤10.2 psi envelope. Airflow is assumed, not a measured lunar-habitat specification.
+3. **Explore the conditions:** adjust oxygen, pressure and airflow. Show values and units, distinguish user-selected values from sourced presets, and update the comparison and map together. Destination sets the gravity regime.
+4. **Watch the evidence change:** show experimental points at their measured conditions while the selected scenario moves. Rank relevant records by material, O₂, pressure, airflow and gravity, with criteria and unknown values visible.
+5. **Read the interpretation:** explain one supported finding, what matches, what differs and what remains unresolved. Open the source test rows and source excerpts with page/section locators and investigation DOIs.
+6. **Explore an untested environment:** show a preliminary assessment only where supported, with its model or reasoning, assumptions and limitations visible. Otherwise show the closest evidence and unanswered research question.
+7. **Download the scenario passport:** leave with the selected material and conditions, supporting evidence, differences and next validation question.
 
+### Evidence-map rules
 
+Plot actual experimental points, not synthetic measurements. A two-dimensional view (for example oxygen × pressure) must state that other dimensions still affect applicability. Show records with missing coordinates separately, or disclose how many cannot be plotted; never place missing values at zero.
+
+Do not draw a continuous “tested territory” around scattered observations unless its interpretation is scientifically justified. Proximity on the map is not proof of applicability. Preliminary model estimates may appear as a separately labelled overlay only when supported by the assessment requirements below; measurements, estimates and the user's scenario must remain distinguishable.
+
+### The takeaway: a passport for the selected scenario
+
+The download contains material identity and configuration, selected cabin conditions and their provenance, relevant records and findings, condition differences and unknowns, a preliminary assessment where supported, and the next validation question, all with sources. It must describe the current selection, not a stale preset. Retain uncertainty, limitations and SI disclosure in the exported artifact. The existing mock uses JSON; the scientific content and traceability matter more than adding another export format.
 
 Each result answers three questions:
 
 | Question | What the dashboard shows | Where it comes from **(changed)** |
 |---|---|---|
-| What did NASA test? | Material, atmosphere, airflow, gravity | Normalized test-conditions table |
+| What did NASA test? | Material, atmosphere, pressure, airflow, gravity | Normalized test-conditions table |
 | Why is it relevant here? | What matches and what differs, e.g. "airflow matches · O₂ +9 points · gravity differs" | Computed in code from the two condition sets |
 | What can we conclude? | A cited finding and an explicit limit on where it applies | Curated findings table (guide pages, publication DOIs) |
 
@@ -70,7 +93,7 @@ Use separate, verified coverage statements rather than “0 of ~270 tests match�
 
 Show exact counts, denominators and counting rules in details after normalization. Missing conditions are **unknown**, not mismatches. Coverage statements describe this dataset, not all combustion research. FM2 can appear as research context only after its current status and planned measurements are verified.
 
-The ending is useful evidence plus a next validation question, rather than an empty result list.
+The ending is a downloadable scenario passport: useful evidence, explicit limits and a next validation question. The selected scenario moves while measured observations stay fixed, making the gap something the user explores.
 
 ## Preliminary assessment for untested environments
 
@@ -102,7 +125,9 @@ Before displaying a quantitative estimate:
 
 Start from the team's own theme, **"variables change, processes stay"**, and tighten the scientific claim:
 
-> **[Rewrite in the team's own words.]** Draft: "The questions travel with you. The answers depend on the environment."
+> **The material travels. Does the evidence?**
+
+The original theme remains the motivation: the same fire-safety questions follow the traveler, while the evidence supporting their answers changes with the environment.
 
 Prevention, detection and suppression stay the organizing questions. Flame behavior and the right response can change a lot with gravity, atmosphere and airflow.
 
@@ -113,7 +138,9 @@ Prevention, detection and suppression stay the organizing questions. Flame behav
 | Decision | Choice |
 |---|---|
 | Environments | Transit spacecraft and lunar habitat; Mars deferred |
-| Core | Tests ranked by condition match, with cited interpretation and a quantified gap |
+| Core | Material passport + interactive evidence-boundary explorer, supported by ranked records and cited interpretation |
+| Material inventory | All tested solid materials in the source data discoverable; processing completeness visible |
+| Takeaway | Downloadable passport for the selected scenario, including sources, limitations and next validation question |
 | Main scientific thread | Solid-material flame spread: BASS, BASS-II, Saffire, with ACME BRE as the high-O₂ proxy |
 | Suppression | Deferred until the primary evidence path works |
 | Untested conditions | Preliminary qualitative assessment first; quantitative estimates only with a verified suitable model |
@@ -122,22 +149,31 @@ Prevention, detection and suppression stay the organizing questions. Flame behav
 
 **Deferred:** activity-risk percentages, live monitoring, power plants, generated emergency protocols, and Mars. The data supports an evidence briefing. It doesn't support accident probabilities or operational instructions. One role is enough for the demo.
 
-## The 30-second video (changed)
+## The 30-second video
 
 | Time | Shows / says |
 |---|---|
-| 0–3 s | "We're Five-Body Problem, for the Flame in Freefall challenge." |
-| 3–11 s | "Preparing [a scientist / a habitat design] for the Moon: which fire research applies?" Select transit and PMMA. Relevant experiments appear with one verified, material-specific finding. |
-| 11–21 s | Switch to the lunar habitat. Show separate oxygen and gravity coverage gaps, direct material evidence and a high-oxygen analogue. Label any projected behavior as preliminary and unvalidated. |
-| 21–30 s | Open a source. "[Name] shows what we know, what we can provisionally infer, and what we still need to test." |
+| 0–4 s | “Take this material to the Moon.” Open its passport, with team/product identification on screen. |
+| 4–11 s | Reveal one surprising, verified NASA finding and its source under the transit reference conditions. |
+| 11–21 s | Switch to the lunar habitat and adjust cabin conditions. The scenario moves; measured points stay fixed. Explain the changed evidence applicability, including oxygen and gravity gaps. |
+| 21–26 s | “The material travels. Does the evidence?” Show the closest relevant evidence and next validation question. |
+| 26–30 s | Download the scenario passport with findings, differences, limitations and sources. |
 
-**Success:** a user can name the most relevant tests, explain one supported finding, and point to one unresolved gap in under a minute.
+**Success:** within a minute, a user can explain one supported finding, identify how a changed condition affects evidence applicability, distinguish measurement from assessment, and download the corresponding passport.
 
 ## First-build acceptance
 
-One material, two sourced environment presets, three verified findings and a working evidence-to-source path come first. Choose the material after confirming its source conditions and findings. Expand toward 15–25 findings only after this path works. Keep all 24 investigations discoverable through metadata, while labelling the smaller subset with normalized comparisons.
+The dashboard exposes the full tested-solid-material inventory from our sources, with processing completeness visible. Build and verify the end-to-end path using one material first, two sourced environment presets and three verified findings; then extend normalized comparisons across the inventory. Expand toward 15–25 findings after the path works. Keep all 24 investigations discoverable through metadata, distinguishing those with detailed normalized comparisons.
 
-A user must be able to distinguish a measurement from an estimate or hypothesis, inspect the ranking inputs including unknown values, and open the supporting source. No numerical projection is required for this first path.
+Acceptance checks:
+
+- Switching transit/lunar preserves the material and updates the scenario, comparisons and coverage together.
+- Oxygen, pressure and airflow controls update the displayed conditions and evidence comparison; relevant plot coordinates move while experimental points remain fixed.
+- Missing coordinates remain unknown; the map states its dimensional limits and implies no continuous tested region or safety boundary.
+- A user can inspect ranking criteria and sources, and distinguish observations, estimates and hypotheses.
+- The downloaded passport contains the currently selected material and conditions, evidence, source references, limitations and next validation question. Unsupported assessments are explicitly absent rather than invented.
+
+No numerical projection is required for this first path. The current [dashboard mock](../prototype/dashboard-mock.html) demonstrates the interaction using clearly labelled dummy records and placeholder findings; real-source integration and verification remain required.
 
 ## Build plan
 
@@ -145,8 +181,8 @@ A user must be able to distinguish a measurement from an estimate or hypothesis,
 |---|---|---|
 | A | Normalize the first material’s solid-test records and relevant BRE records; expand solids next, defer FLEX | Sat 17:00 |
 | B | First three verified findings with excerpts and applicability; expand toward 15–25 | Sat 17:00 |
-| C | Ranking and difference logic; coverage counts | Sat 20:00 |
-| D | UI path, with a skeleton deployed early | Skeleton by Sat 19:00 |
+| C | Ranking and difference logic, coverage counts and scenario-passport export | Sat 20:00 |
+| D | Passport, environment controls and experimental-point map; skeleton deployed early | Skeleton by Sat 19:00 |
 | C + E | SI explanations with per-sentence citations | Overnight |
 | E | Demo script, video, submission text, SI disclosure | Sun 12:00–18:00 |
 | All | Feature freeze Sun 12:00 · submit by Sun 21:00 | |
@@ -158,7 +194,8 @@ A user must be able to distinguish a measurement from an estimate or hypothesis,
 | Findings extraction takes longer than planned | Start with three source-verified findings for the chosen material; expand after the complete path works |
 | Unit parsing errors in the normalized table | Show the raw source row next to every normalized value |
 | The SI states something the sources don't support | Use approved findings with supporting excerpts and applicability; say “No applicable finding in our curated sources” where needed |
-| Judges see "search with filters" | Lead the demo with the "matches / differs" card and the gap number, not with search |
+| Judges see "search with filters" | Lead with the material journey, moving scenario and downloaded passport; ranking supports the experience |
+| Map suggests an unsupported safety boundary | Plot discrete observations, disclose missing coordinates and other dimensions; label model overlays separately |
 | Gap numbers are wrong | Recount after normalization; distinguish records from tests and unknowns from mismatches; show counting rules |
 | Preliminary estimates look like experiments or safety advice | Separate measured/model/hypothesis categories; show assumptions and validation limits; defer numerical output without a suitable model |
 
@@ -173,4 +210,4 @@ A user must be able to distinguish a measurement from an estimate or hypothesis,
 
 ## SI disclosure (draft)
 
-"The concept originated in the team's brainstorm (recordings of 14 Nov, in the repo). SI (Claude) was used to organize the brainstorm, check data feasibility, review the concept, and edit wording. The data normalization scripts were written with SI assistance. All findings shown in the app cite NASA sources."
+"The concept originated in the team's brainstorm (recordings of 14 Nov, in the repo). SI tools (Claude and Codex) were used to organize the brainstorm, check data feasibility, review the concept, and edit wording. The data normalization scripts were written with SI assistance. The passport and boundary-explorer framing and prototype were developed with SI assistance. Production findings must cite their sources; the current mock uses explicitly labelled dummy data and placeholder findings."
