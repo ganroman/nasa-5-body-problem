@@ -94,4 +94,5 @@ Values below are stored as NULL/unknown until someone checks the source. Fix the
 - The submarine CO₂ value is stored as an `estimate`, although the doc calls it a modelling assumption.
 
 **SI**
-- Check that Eustella accepts `response_format=json_object`, and review one real answer by hand against its excerpts.
+- Live test passed (2026-11-14): Eustella accepts JSON mode; one answer for the portable instrument's enclosure was checked sentence by sentence against its records. Re-check after any change to the prompt or the record text in `app/scenario.py`.
+- Eustella is a closed beta: 20 requests/minute for the whole organisation, 2 in parallel. Explanations are cached; demo from prepared scenarios.
