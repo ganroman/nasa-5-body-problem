@@ -129,3 +129,10 @@ def test_toxicity_unassessed_even_with_fire_evidence_and_assembly_gap():
     cov2 = coverage(results, assessments={("bat", "toxicity"): "evidence_found"}, assembly_evidence={"fire": 1})
     assert cov2["toxicity"]["components"][1]["status"] == "evidence_found"
     assert cov2["fire"]["assembly"]["status"] == "evidence_found"
+
+
+def test_curated_assessment_cannot_override_fire():
+    results = [{"component_id": "c1", "name": "Enclosure", "ranked": []}]
+    cov = coverage(results, assessments={("c1", "fire"): "evidence_found", (None, "fire"): "evidence_found"})
+    assert cov["fire"]["components"][0]["status"] == "gap"
+    assert cov["fire"]["assembly"]["status"] == "gap"

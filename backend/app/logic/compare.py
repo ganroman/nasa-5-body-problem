@@ -193,7 +193,8 @@ def coverage(
 
     component_results: [{"component_id", "name", "ranked": rank(...) output}].
     assessments: explicit curated statuses keyed (component_id, hazard); component_id None is the
-      assembly. These are the only way toxicity/biological leave `unassessed`.
+      assembly. Ignored for fire, which is always computed. These are the only way
+      toxicity/biological leave `unassessed`.
     assembly_evidence: {hazard: number of assembly-level evidence items}.
     """
     assessments = assessments or {}
@@ -208,7 +209,8 @@ def coverage(
             if hazard == Hazard.fire:
                 for r in cr.get("ranked", []):
                     counts[r["evidence_class"]] += 1
-            explicit = assessments.get((cid, hazard))
+            # Fire status is always computed from comparisons (team decision); curated input covers other hazards.
+            explicit = assessments.get((cid, hazard)) if hazard != Hazard.fire else None
             if explicit is not None:
                 status, reason = AssessmentStatus(explicit), "explicit assessment input"
             elif hazard != Hazard.fire:
@@ -221,7 +223,7 @@ def coverage(
                 status, reason = AssessmentStatus.gap, "no fire observations for this component"
             comps.append({"component_id": cid, "name": cr.get("name"), "status": status, "counts": counts, "reason": reason})
 
-        explicit = assessments.get((None, hazard))
+        explicit = assessments.get((None, hazard)) if hazard != Hazard.fire else None
         n_asm = assembly_evidence.get(hazard, 0)
         if explicit is not None:
             assembly = {"status": AssessmentStatus(explicit), "evidence_count": n_asm, "reason": "explicit assessment input"}
