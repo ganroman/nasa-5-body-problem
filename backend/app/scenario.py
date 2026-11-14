@@ -7,11 +7,11 @@ so all three always show the same numbers (build-plan section 7).
 from decimal import Decimal
 from typing import Any
 
-from sqlalchemy import or_, select
+from sqlalchemy import func, or_, select
 from sqlalchemy.orm import Session
 
 from app.enums import Dimension, Hazard
-from app.logic.compare import TOLERANCES, coverage, effective_conditions, rank
+from app.logic.compare import TOLERANCES, compare_observation, coverage, effective_conditions, evidence_class, rank
 from app.models import (
     CargoConfig,
     CargoItem,
@@ -19,6 +19,8 @@ from app.models import (
     EnvironmentCondition,
     Finding,
     FindingLink,
+    Investigation,
+    MaterialLabel,
     Observation,
     ReviewStatus,
     Source,
@@ -207,8 +209,10 @@ def _obs_excerpt(o: dict[str, Any], evidence_class: str, class_reason: str) -> s
     if evidence_class == "analogue":
         fuel = (o.get("raw") or {}).get("Fuel Bottle")
         subject = f"gas-burner analogue (fuel: {fuel or 'not recorded'}), not a solid material"
-    else:
+    elif o.get("material_id"):
         subject = f"material {o['material_id']}"
+    else:
+        subject = f"material label '{o.get('raw_label') or 'blank'}' as written in the source (not linked to a material identity)"
     parts = [
         f"evidence class {evidence_class} ({class_reason})",
         f"test method {o['test_method']}",
@@ -297,3 +301,94 @@ def si_inputs(result: dict[str, Any], cargo: dict[str, Any], component_index: in
         "sources": sources,
         **({"question": question} if question else {}),
     }
+
+
+MAX_TOOL_RECORDS = 10
+
+
+def si_tools(session: Session, result: dict[str, Any], component_index: int) -> list[dict[str, Any]]:
+    """Read-only lookups the SI may call. Each returns records in the same deterministic text
+    format as the evidence bundle, so the model can only restate recorded values."""
+    comp = result["components"][component_index]
+    scenario = {Dimension(d): c["effective"] for d, c in result["conditions"].items()}
+    gravity = result["environment"]["gravity_regime"]
+
+    def obs_record(o: Observation, raw_label: str | None) -> dict[str, Any]:
+        od = {**row_dict(o, OBSERVATION_FIELDS), "raw_label": raw_label}
+        cls, reason = evidence_class(comp, od)
+        texts = [c["text"] for c in compare_observation(scenario, gravity, od).values()]
+        src = session.get(Source, o.source_id)
+        return {
+            "source_id": f"obs-{o.id}",
+            "excerpt": _obs_excerpt(od, cls, reason) + " Compared with the scenario: " + "; ".join(texts) + ".",
+            "locator": f"{src.title if src else o.source_id}, {o.locator}",
+        }
+
+    def search_observations(material_id: str | None = None, investigation: str | None = None,
+                            o2_min_percent: float | None = None, o2_max_percent: float | None = None,
+                            gravity_regime: str | None = None) -> list[dict[str, Any]]:
+        q = select(Observation, MaterialLabel.raw_label).outerjoin(MaterialLabel, Observation.label_id == MaterialLabel.id)
+        q = q.where(Observation.hazard == Hazard.fire)
+        if material_id:
+            q = q.where(Observation.material_id == material_id)
+        if investigation:
+            q = q.where(Observation.investigation_accession == investigation.upper())
+        if o2_min_percent is not None:
+            q = q.where(Observation.o2_max >= o2_min_percent / 100)
+        if o2_max_percent is not None:
+            q = q.where(Observation.o2_min <= o2_max_percent / 100)
+        if gravity_regime:
+            q = q.where(Observation.gravity_regime == gravity_regime)
+        total = session.scalar(select(func.count()).select_from(q.subquery()))
+        rows = session.execute(q.order_by(Observation.id).limit(MAX_TOOL_RECORDS)).all()
+        records = [obs_record(o, label) for o, label in rows]
+        return {"records": records, "note": f"showing {len(records)} of {total} matching records"}
+
+    def get_source(source_id: str) -> list[dict[str, Any]]:
+        src = session.get(Source, source_id)
+        if src is None:
+            return []
+        inv = session.scalar(select(Investigation).where(Investigation.source_id == source_id))
+        parts = [f"{src.kind}: {src.title}"]
+        if src.doi:
+            parts.append(f"DOI {src.doi}")
+        if inv:
+            parts += [f"investigation {inv.accession} ({inv.acronym or 'no acronym'})", f"objective: {inv.objective}",
+                      f"hardware: {inv.hardware}", f"normalization: {inv.normalization_status}"]
+        return [{"source_id": src.id, "excerpt": "; ".join(p for p in parts if p) + ".", "locator": src.url or src.id}]
+
+    def list_findings(material_id: str) -> list[dict[str, Any]]:
+        return [
+            {"source_id": f"finding-{f['id']}", "excerpt": f"{f['excerpt']} (limits: {f['limits']})", "locator": f["locator"]}
+            for f in _findings_for(session, {material_id})
+        ]
+
+    opt = lambda t: {"type": [t, "null"]}  # noqa: E731
+    return [
+        {
+            "name": "search_observations",
+            "description": "Find recorded fire test records. Filters combine with AND. Returns at most 10 records with "
+                           "their recorded values and a comparison with the current scenario.",
+            "parameters": {"type": "object", "properties": {
+                "material_id": {**opt("string"), "description": "Material identity id, e.g. pmma-cast-sheet"},
+                "investigation": {**opt("string"), "description": "PSI accession, e.g. PSI-26 (BASS), PSI-98 (Saffire-I)"},
+                "o2_min_percent": {**opt("number"), "description": "Records whose O2 range reaches at least this %"},
+                "o2_max_percent": {**opt("number"), "description": "Records whose O2 range starts at or below this %"},
+                "gravity_regime": {**opt("string"), "enum": ["earth", "microgravity", "lunar", "martian", None]},
+            }},
+            "fn": search_observations,
+        },
+        {
+            "name": "get_source",
+            "description": "Details of one source by its id (e.g. psi-26-bass): title, DOI and, for PSI investigations, "
+                           "objective and hardware.",
+            "parameters": {"type": "object", "properties": {"source_id": {"type": "string"}}, "required": ["source_id"]},
+            "fn": get_source,
+        },
+        {
+            "name": "list_findings",
+            "description": "Verified curated findings for a material id, with excerpt, locator and limits.",
+            "parameters": {"type": "object", "properties": {"material_id": {"type": "string"}}, "required": ["material_id"]},
+            "fn": list_findings,
+        },
+    ]

@@ -143,3 +143,59 @@ def test_explain_cached_does_not_store_rejected():
     session = FakeSession()
     out = si.explain_cached(session, INPUTS, FakeClient(reply(("Bad.", ["nope"]))))
     assert out["status"] == "rejected" and session.rows == []
+
+
+class ToolClient:
+    """Returns scripted messages in order: tool calls first, then a final JSON reply."""
+
+    def __init__(self, *messages):
+        self.messages, self.calls = list(messages), []
+        self.chat = SimpleNamespace(completions=SimpleNamespace(create=self._create))
+
+    def _create(self, **kw):
+        self.calls.append(kw)
+        return SimpleNamespace(choices=[SimpleNamespace(message=self.messages.pop(0))])
+
+
+def tool_call(name, args, id="c1"):
+    return SimpleNamespace(content="", tool_calls=[SimpleNamespace(id=id, function=SimpleNamespace(name=name, arguments=json.dumps(args)))])
+
+
+def final(text):
+    return SimpleNamespace(content=text, tool_calls=None)
+
+
+LOOKUP = {
+    "name": "search_observations", "description": "d", "parameters": {"type": "object", "properties": {}},
+    "fn": lambda **kw: [{"source_id": "obs-7", "excerpt": "O2 30%.", "locator": "t#row=7"}],
+}
+
+
+def test_tool_records_become_citable():
+    client = ToolClient(tool_call("search_observations", {"o2_min_percent": 30}), final(reply(("A test reached 30% O2.", ["obs-7"]))))
+    out = si.explain(INPUTS, client, tools=[LOOKUP])
+    assert out["status"] == "ok" and out["cited_source_ids"] == ["obs-7"]
+    assert out["tool_records"][0]["source_id"] == "obs-7"
+    assert client.calls[1]["messages"][-1]["role"] == "tool"
+
+
+def test_ids_never_returned_are_still_rejected():
+    client = ToolClient(tool_call("search_observations", {}), final(reply(("Made up.", ["obs-999"]))))
+    assert si.explain(INPUTS, client, tools=[LOOKUP])["status"] == "rejected"
+
+
+def test_tool_rounds_are_capped_and_last_round_forbids_tools():
+    msgs = [tool_call("search_observations", {}, id=f"c{i}") for i in range(si.MAX_TOOL_ROUNDS)]
+    client = ToolClient(*msgs, final(reply(("A test reached 30% O2.", ["obs-7"]))))
+    out = si.explain(INPUTS, client, tools=[LOOKUP])
+    assert out["status"] == "ok"
+    assert len(client.calls) == si.MAX_TOOL_ROUNDS + 1
+    assert "tools" not in client.calls[-1] and client.calls[-1]["response_format"] == {"type": "json_object"}
+
+
+def test_bad_tool_arguments_go_back_to_the_model():
+    bad = {**LOOKUP, "fn": lambda **kw: (_ for _ in ()).throw(TypeError("unexpected argument"))}
+    client = ToolClient(tool_call("search_observations", {"nope": 1}), final(reply(("Flame spread was observed at 21% O2.", ["psi-bass-1"]))))
+    out = si.explain(INPUTS, client, tools=[bad])
+    assert out["status"] == "ok"
+    assert "error" in json.loads(client.calls[1]["messages"][-1]["content"])

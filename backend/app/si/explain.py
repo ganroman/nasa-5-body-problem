@@ -5,6 +5,11 @@ Inputs (dict, JSON-serialisable):
   comparisons: computed comparison results (list/dict), produced by app.logic
   sources: [{"source_id": str, "excerpt": str, "locator": str}]
   question: optional user question (str)
+
+Optional tools: read-only lookups ([{"name", "description", "parameters", "fn"}]) the model may call
+to fetch more records. `fn(**args)` returns records shaped like `sources` (or {"records", "note"});
+their ids become citable.
+Citations are still validated against records the backend actually supplied or returned.
 """
 
 import hashlib
@@ -19,6 +24,7 @@ from app.models import SIExplanation
 
 NO_FINDING = "No applicable finding in our curated sources."
 TIMEOUT_S = 30.0
+MAX_TOOL_ROUNDS = 3  # each round is one provider request; Eustella allows 20/min for the whole org
 
 SYSTEM_PROMPT = f"""You explain fire-safety evidence for one cargo item in the Cargo Passport tool.
 
@@ -32,6 +38,7 @@ Rules, all mandatory:
 7. Distinguish measured observations from requirements or guidance when the excerpts do.
 8. A sentence citing several sources must be true of every one of them; otherwise write separate sentences.
 9. Use technical terms exactly as written in the excerpts; do not expand or rename abbreviations.
+10. If tools are available, you may call them to look up more records; records they return may be cited like supplied sources. Use them only when the supplied sources do not answer the question. If a tool note says results were truncated, do not generalise beyond the records returned.
 
 Respond with a single JSON object and nothing else:
 {{"sentences": [{{"text": "<one sentence>", "source_ids": ["<supplied source id>"]}}]}}"""
@@ -75,7 +82,47 @@ def _redact(text: str, secret: str | None) -> str:
     return text.replace(secret, "[redacted]") if secret else text
 
 
-def explain(inputs: dict, client: Any = None) -> dict:
+def _run(client: Any, model: str, messages: list[dict], tools: list[dict], allowed: set[str], fetched: list[dict]) -> str:
+    """Chat loop. Tool results add their record ids to `allowed` and records to `fetched`; the last round forbids tools."""
+    by_name = {t["name"]: t for t in tools}
+    specs = [{"type": "function", "function": {k: t[k] for k in ("name", "description", "parameters")}} for t in tools]
+    common = dict(model=model, temperature=0, max_tokens=4096,
+                  # Eustella reasoning off: faster and keeps reasoning text out of the JSON reply.
+                  extra_body={"chat_template_kwargs": {"enable_thinking": False}})
+    for round_ in range(MAX_TOOL_ROUNDS + 1):
+        if specs and round_ < MAX_TOOL_ROUNDS:
+            resp = client.chat.completions.create(messages=messages, tools=specs, **common)
+        else:
+            resp = client.chat.completions.create(messages=messages, response_format={"type": "json_object"}, **common)
+        msg = resp.choices[0].message
+        calls = getattr(msg, "tool_calls", None) or []
+        if not calls or not specs or round_ == MAX_TOOL_ROUNDS:
+            return msg.content or ""
+        messages.append({"role": "assistant", "content": msg.content or "", "tool_calls": [
+            {"id": c.id, "type": "function", "function": {"name": c.function.name, "arguments": c.function.arguments}}
+            for c in calls]})
+        for c in calls:
+            messages.append({"role": "tool", "tool_call_id": c.id, "content": json.dumps(_call_tool(by_name, c, allowed, fetched))})
+    return ""
+
+
+def _call_tool(by_name: dict, call: Any, allowed: set[str], fetched: list[dict]) -> dict:
+    tool = by_name.get(call.function.name)
+    if tool is None:
+        return {"error": f"unknown tool {call.function.name}"}
+    try:
+        args = json.loads(call.function.arguments or "{}")
+        out = tool["fn"](**args)
+    except Exception as e:  # bad arguments from the model go back to it as an error, not a crash
+        return {"error": f"{type(e).__name__}: {e}"}
+    # A tool returns a list of records, or {"records": [...], "note": "..."} to add context (e.g. truncation).
+    records = out["records"] if isinstance(out, dict) else out
+    allowed.update(r["source_id"] for r in records)
+    fetched += [r for r in records if r not in fetched]
+    return out if isinstance(out, dict) else {"records": records}
+
+
+def explain(inputs: dict, client: Any = None, tools: list[dict] | None = None) -> dict:
     s = get_settings()
     missing = [n for n in ("si_base_url", "si_api_key", "si_model") if not getattr(s, n)]
     if missing:
@@ -93,16 +140,8 @@ def explain(inputs: dict, client: Any = None) -> dict:
 
     try:
         client = client or OpenAI(base_url=s.si_base_url, api_key=s.si_api_key, timeout=TIMEOUT_S, max_retries=1)
-        resp = client.chat.completions.create(
-            model=s.si_model,
-            messages=build_messages(inputs),
-            response_format={"type": "json_object"},
-            temperature=0,
-            max_tokens=4096,
-            # Eustella reasoning off: faster and keeps reasoning text out of the JSON reply.
-            extra_body={"chat_template_kwargs": {"enable_thinking": False}},
-        )
-        content = resp.choices[0].message.content or ""
+        fetched: list[dict] = []
+        content = _run(client, s.si_model, build_messages(inputs), tools or [], allowed, fetched)
     except Exception as e:  # any provider/network failure becomes an honest error state
         return {"status": "error", "reason": _redact(f"provider error: {type(e).__name__}: {e}", s.si_api_key)}
 
@@ -127,6 +166,7 @@ def explain(inputs: dict, client: Any = None) -> dict:
             "invalid_source_ids": invalid,
             "uncited_sentence_indexes": uncited,
             "sentences": sentences,
+            "tool_records": fetched,
             "model": s.si_model,
         }
 
@@ -135,18 +175,19 @@ def explain(inputs: dict, client: Any = None) -> dict:
         "status": "ok",
         "sentences": [{"text": x["text"], "source_ids": list(x.get("source_ids") or [])} for x in sentences],
         "cited_source_ids": cited,
+        "tool_records": fetched,
         "model": s.si_model,
     }
 
 
-def explain_cached(session: Any, inputs: dict, client: Any = None) -> dict:
+def explain_cached(session: Any, inputs: dict, client: Any = None, tools: list[dict] | None = None) -> dict:
     model = get_settings().si_model or ""
-    key = cache_key(inputs, model)
+    key = cache_key({**inputs, "_tools": sorted(t["name"] for t in tools or [])}, model)
     row = session.scalar(select(SIExplanation).where(SIExplanation.cache_key == key))
     if row is not None:
         return {**row.output, "cached": True}
 
-    result = explain(inputs, client)
+    result = explain(inputs, client, tools)
     if result["status"] == "ok":
         # shortcut: concurrent identical misses can hit the unique cache_key; catch IntegrityError if traffic grows.
         session.add(

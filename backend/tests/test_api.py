@@ -118,3 +118,20 @@ def test_export_matches_compare_and_reopens(client):
     assert passport["conditions"]["o2_fraction"]["effective"] == compared["conditions"]["o2_fraction"]["effective"]
     assert passport["limitations"] and passport["si_disclosure"]
     assert client.get("/passports/not-a-uuid").status_code == 404
+
+
+def test_si_tools_search_and_source_lookup(client):
+    from app import scenario as sc
+    from app.db import get_session as real_get_session
+
+    session = next(app.dependency_overrides[real_get_session]())
+    cargo = sc.seeded_cargo(session, "portable-science-instrument")
+    result = sc.compute(session, cargo, SCENARIO_ISS)
+    tools = {t["name"]: t["fn"] for t in sc.si_tools(session, result, 0)}
+    found = tools["search_observations"](investigation="PSI-26")
+    bass = found["records"]
+    assert found["note"] == f"showing {len(bass)} of 121 matching records"
+    assert 0 < len(bass) <= sc.MAX_TOOL_RECORDS and all(r["source_id"].startswith("obs-") for r in bass)
+    assert "not linked to a material identity" in bass[0]["excerpt"]
+    assert "PSI-26" in tools["get_source"]("psi-26-bass")[0]["excerpt"]
+    assert tools["get_source"]("nope") == []
