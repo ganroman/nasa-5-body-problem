@@ -1,0 +1,24 @@
+# Curated findings (models.Finding). Intentionally empty: no repo doc quotes a primary source
+# verbatim, and excerpts are never paraphrased or invented. Add entries only with an excerpt
+# copied exactly from the source (or from a repo doc that quotes it), starting as draft.
+#
+# Shape of one entry:
+# - id: bass-pmma-sphere-extinction        # stable slug
+#   claim: "..."                           # what the excerpt supports, in one sentence
+#   excerpt: "..."                         # verbatim text from the source
+#   locator: "p. 12, Table 2"
+#   source_id: psi-26-bass                 # sources.yaml id or PSI pattern psi-<n>-<slug>
+#   hazard: fire                           # fire | toxicity | biological
+#   topic: prevention                      # prevention | detection | suppression | general
+#   applies_o2_min: null                   # volume fraction 0..1
+#   applies_o2_max: null
+#   applies_pressure_kpa_min: null
+#   applies_pressure_kpa_max: null
+#   applies_airflow_ms_min: null
+#   applies_airflow_ms_max: null
+#   applies_gravity_regime: null           # earth | microgravity | lunar | martian | unknown
+#   limits: "..."                          # where the finding does NOT apply
+#   review_status: draft                   # draft until a person verifies it
+#   reviewed_by: null
+#   material_ids: []                       # optional links (models.FindingLink)
+[]
