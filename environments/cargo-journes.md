@@ -65,6 +65,7 @@ This discussion uses the repository's existing research:
 - [Lunar Gateway](../docs/environments/lunar-gateway.md)
 - [Martian surface base](../docs/environments/martian-base-nasa.md)
 - [Martian orbital habitat](../docs/environments/martian-orbital-station-nasa.md)
+- [International Space Station](../docs/environments/iss.md)
 
 Current mission plans were not independently verified for this discussion, and cargo volumes were not calculated. These scenarios organize evidence for review and do not establish flight acceptance or operational safety.
 
