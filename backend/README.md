@@ -27,6 +27,23 @@ All configuration comes from environment variables (`.env` locally, the host's s
 
 Neon project `cargo-passport`: branch `dev` for development and migrations, `main` for the deployed app.
 
+## API
+
+Interactive docs at `/docs` when the server runs. Internal units in requests: O₂ as a fraction (0.30), pressure kPa, airflow m/s.
+
+| Method & path | Purpose |
+|---|---|
+| `GET /health` | Liveness and database check |
+| `GET /environments`, `/environments/{id}` | Environments with per-space conditions and provenance |
+| `GET /routes`, `/materials`, `/investigations`, `/sources/{id}` | Reference data |
+| `GET /cargo`, `/cargo/{slug}` | Seeded mock cargo items |
+| `POST /scenarios/compare` | `{cargo_slug | cargo, scenario}` → conditions, ranked evidence per component, coverage per hazard, sources, tolerances, limitations |
+| `POST /scenarios/explain` | Same body + `component_index`, `hazard`, `question` → grounded SI explanation (`ok`, `unavailable`, `rejected` or `error`) plus the cited records |
+| `POST /passports/export`, `GET /passports/{id}` | Store and reopen an immutable passport snapshot built from the same computation as compare |
+| `POST /shares`, `GET /shares/{slug}`, `PUT /shares/{slug}` | Anonymous share links. `POST` returns an `edit_token` once; `PUT` needs it in `X-Edit-Token` and saves a new config version |
+
+`scenario` is `{environment_id, space="cabin", use_state, route_id?, overrides: {dimension: value}}`. Gravity cannot be overridden; it follows the environment.
+
 ## Layout
 
 | Path | What it does |
@@ -36,6 +53,8 @@ Neon project `cargo-passport`: branch `dev` for development and migrations, `mai
 | `app/ingest/psi.py` | Reads `data/investigations/*.json` and six PSI tables (BASS, BASS-II, Saffire I–III, ACME BRE) into row dicts |
 | `app/ingest/seed_yaml.py` | Validates the curated YAML in `seed/`, including cross-references |
 | `app/ingest/load.py` | Upserts everything into the database (`python -m app.ingest.load`) |
+| `app/api.py` | Routes and request validation |
+| `app/scenario.py` | Builds comparisons, coverage, SI inputs and export content from the database; one code path for all three |
 | `app/logic/compare.py` | Scenario vs. observation comparison, evidence class, ranking and per-hazard coverage. Pure functions |
 | `app/si/explain.py` | Grounded SI explanation: every sentence must cite a supplied source id; results cached in `si_explanations` |
 | `alembic/versions/` | Migrations. Generate with `uv run alembic revision --autogenerate -m "..."` |

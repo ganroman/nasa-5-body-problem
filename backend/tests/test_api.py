@@ -1,0 +1,120 @@
+"""End-to-end API tests against the configured database (needs seed data loaded).
+
+Each test runs inside a transaction that is rolled back, so nothing persists.
+"""
+
+import pytest
+from fastapi.testclient import TestClient
+from sqlalchemy import create_engine
+from sqlalchemy.orm import Session
+
+from app.config import get_settings
+from app.db import get_session
+from app.main import app
+
+SCENARIO_ISS = {"environment_id": "iss", "use_state": "stowed"}
+OWN_CARGO = {
+    "name": "My instrument",
+    "components": [
+        {"name": "Enclosure", "original_label": "PMMA cast sheet", "material_id": "pmma-cast-sheet",
+         "identity_confidence": "exact"},
+        {"name": "Battery", "original_label": "Li-ion"},
+    ],
+}
+
+
+@pytest.fixture
+def client():
+    engine = create_engine(get_settings().database_url)
+    with engine.connect() as conn:
+        trans = conn.begin()
+
+        def session_override():
+            with Session(bind=conn, join_transaction_mode="create_savepoint") as s:
+                yield s
+
+        app.dependency_overrides[get_session] = session_override
+        yield TestClient(app)
+        app.dependency_overrides.clear()
+        trans.rollback()
+
+
+def test_reference_endpoints(client):
+    envs = client.get("/environments").json()
+    lunar = next(e for e in envs if e["id"] == "lunar-base-nasa")
+    # Lunar cabin O2 is unknown, not ISS's 21%.
+    assert lunar["spaces"]["cabin"]["o2_fraction"] == {**lunar["spaces"]["cabin"]["o2_fraction"], "min": None, "status": "unknown"}
+    assert len(client.get("/routes").json()) == 24
+    assert len(client.get("/investigations").json()) == 24
+    assert client.get("/cargo/portable-science-instrument").json()["components"][1]["material_id"] is None
+    assert client.get("/cargo/nope").status_code == 404
+
+
+def test_compare_portable_instrument_on_iss(client):
+    d = client.post("/scenarios/compare", json={"cargo_slug": "portable-science-instrument", "scenario": SCENARIO_ISS}).json()
+    assert d["incomplete_dimensions"] == ["airflow_ms"]  # ISS note gives no airflow number
+    battery = next(c for c in d["components"] if c["name"] == "Battery pack")
+    assert {r["evidence_class"] for r in battery["ranked"]} == {"analogue"}  # no material evidence
+    fire = d["coverage"]["fire"]
+    assert fire["assembly"]["status"] == "gap"
+    assert d["coverage"]["toxicity"]["summary"]["unassessed"] == len(d["components"])
+    for c in d["components"]:
+        for r in c["ranked"]:
+            assert str(r["observation_id"]) in {str(k) for k in d["observations"]}
+
+
+def test_override_changes_comparison_not_observations(client):
+    base = {"cargo_slug": "portable-science-instrument", "scenario": SCENARIO_ISS}
+    a = client.post("/scenarios/compare", json=base).json()
+    b = client.post("/scenarios/compare", json={**base, "scenario": {**SCENARIO_ISS, "overrides": {"airflow_ms": 0.2}}}).json()
+    assert b["conditions"]["airflow_ms"]["effective"]["status"] == "override"
+    assert b["incomplete_dimensions"] == []
+    assert a["observations"] == b["observations"]  # measurements never move
+
+
+def test_validation(client):
+    bad_o2 = {"cargo_slug": "portable-science-instrument", "scenario": {**SCENARIO_ISS, "overrides": {"o2_fraction": 21}}}
+    assert client.post("/scenarios/compare", json=bad_o2).status_code == 422
+    both = {"cargo_slug": "x", "cargo": OWN_CARGO, "scenario": SCENARIO_ISS}
+    assert client.post("/scenarios/compare", json=both).status_code == 422
+    unknown_mat = {"cargo": {**OWN_CARGO, "components": [{**OWN_CARGO["components"][0], "material_id": "nope"}]},
+                   "scenario": SCENARIO_ISS}
+    assert client.post("/scenarios/compare", json=unknown_mat).status_code == 422
+    no_space = {"cargo": OWN_CARGO, "scenario": {**SCENARIO_ISS, "space": "attic"}}
+    assert client.post("/scenarios/compare", json=no_space).status_code == 404
+
+
+def test_share_create_view_edit(client):
+    body = {"cargo": OWN_CARGO, "scenario": {"environment_id": "lunar-base-nasa", "use_state": "charging",
+                                             "overrides": {"o2_fraction": 0.3}},
+            "forked_from_slug": "portable-science-instrument"}
+    created = client.post("/shares", json=body)
+    assert created.status_code == 201
+    share = created.json()
+    slug, token = share["slug"], share["edit_token"]
+    viewed = client.get(f"/shares/{slug}").json()
+    assert "edit_token" not in viewed
+    assert viewed["scenario"]["overrides"] == {"o2_fraction": 0.3}
+    assert client.put(f"/shares/{slug}", json=body, headers={"x-edit-token": "nope"}).status_code == 403
+    edited = client.put(f"/shares/{slug}", json=body, headers={"x-edit-token": token}).json()
+    assert edited["config_version"] == viewed["config_version"] + 1  # new version, old one kept
+
+
+def test_explain_unavailable_without_si_config(client, monkeypatch):
+    for k in ("si_base_url", "si_api_key", "si_model"):
+        monkeypatch.setattr(get_settings(), k, None)
+    d = client.post("/scenarios/explain", json={"cargo_slug": "portable-science-instrument", "component_index": 0,
+                                                "scenario": SCENARIO_ISS}).json()
+    assert d["explanation"]["status"] == "unavailable"
+    assert all(s["source_id"].startswith(("obs-", "finding-")) for s in d["sources"])
+
+
+def test_export_matches_compare_and_reopens(client):
+    body = {"cargo_slug": "portable-science-instrument", "scenario": {**SCENARIO_ISS, "overrides": {"o2_fraction": 0.25}}}
+    compared = client.post("/scenarios/compare", json=body).json()
+    exported = client.post("/passports/export", json=body).json()
+    passport = client.get(f"/passports/{exported['id']}").json()["passport"]
+    assert passport["coverage"] == compared["coverage"]
+    assert passport["conditions"]["o2_fraction"]["effective"] == compared["conditions"]["o2_fraction"]["effective"]
+    assert passport["limitations"] and passport["si_disclosure"]
+    assert client.get("/passports/not-a-uuid").status_code == 404
