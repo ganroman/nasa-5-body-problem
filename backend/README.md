@@ -40,7 +40,7 @@ Neon project `cargo-passport`: branch `dev` for development and migrations, `mai
 
 ## API
 
-Interactive docs at `/docs` when the server runs. Internal units in requests: O₂ as a fraction (0.30), pressure kPa, airflow m/s.
+Interactive docs at `/docs` when the server runs. Frontend guide with examples and rendering rules: [API.md](API.md). Internal units in requests: O₂ as a fraction (0.30), pressure kPa, airflow m/s.
 
 | Method & path | Purpose |
 |---|---|
