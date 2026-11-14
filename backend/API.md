@@ -134,9 +134,9 @@ const ex = await post("/scenarios/explain", { ...body, component_index: 0, hazar
 | `rejected` | The model cited something it was not given; show "explanation withheld" and the comparisons |
 | `error` | Provider error or timeout; offer a retry |
 
-Citation ids: `obs-<id>` (an observation), `finding-<id>`, `scenario-conditions`, `computed-coverage`, or a source id such as `psi-26-bass`.
+Citation ids: `obs-<id>` (an observation), `finding-<id>`, `scenario-conditions`, `computed-coverage`, a source id such as `psi-26-bass`, `compare-<environment>-<space>` (a computed comparison in another environment) or `cargo-summary`.
 
-When a `question` is sent, the model may look up more records with read-only tools (search observations, get a source, list findings; at most 3 rounds). Those records are appended to `ex.sources`, so every citation still resolves there. Without a question, explain is a single provider request. `explanation.cached` is true when served from the cache. Always show `ex.disclosure` near the text.
+When a `question` is sent, the model may look up more records with read-only tools: search observations, get a source, list findings, **compare this cargo in another environment** (e.g. "does the evidence still apply at the lunar base?") and **get the whole-cargo summary**; at most 3 rounds. Those records are appended to `ex.sources`, so every citation still resolves there. Without a question, explain is a single provider request. `explanation.cached` is true when served from the cache. Always show `ex.disclosure` near the text.
 
 Eustella allows 20 requests per minute for the whole team. Call explain on demand (a button), not on every slider move.
 

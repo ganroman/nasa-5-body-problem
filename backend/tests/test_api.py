@@ -127,7 +127,7 @@ def test_si_tools_search_and_source_lookup(client):
     session = next(app.dependency_overrides[real_get_session]())
     cargo = sc.seeded_cargo(session, "portable-science-instrument")
     result = sc.compute(session, cargo, SCENARIO_ISS)
-    tools = {t["name"]: t["fn"] for t in sc.si_tools(session, result, 0)}
+    tools = {t["name"]: t["fn"] for t in sc.si_tools(session, result, cargo, 0)}
     found = tools["search_observations"](investigation="PSI-26")
     bass = found["records"]
     assert found["note"] == f"showing {len(bass)} of 121 matching records"
@@ -135,3 +135,14 @@ def test_si_tools_search_and_source_lookup(client):
     assert "not linked to a material identity" in bass[0]["excerpt"]
     assert "PSI-26" in tools["get_source"]("psi-26-bass")[0]["excerpt"]
     assert tools["get_source"]("nope") == []
+
+    moved = tools["compare_in_environment"]("lunar-base-nasa")[0]
+    assert moved["source_id"] == "compare-lunar-base-nasa-cabin"
+    assert "gravity lunar" in moved["excerpt"] and "o2_fraction unknown" in moved["excerpt"]
+    assert "o2_fraction 0.21 (sourced) -> unknown" in moved["excerpt"] and "gravity microgravity -> lunar" in moved["excerpt"]
+    summary = tools["get_cargo_summary"]()[0]["excerpt"]
+    assert "Battery pack" in summary and "whole assembly: fire gap" in summary
+    with pytest.raises(sc.NotFound):
+        tools["compare_in_environment"]("atlantis")
+    with pytest.raises(ValueError):
+        tools["compare_in_environment"]("iss", overrides={"o2_fraction": 21})

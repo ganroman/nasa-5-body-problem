@@ -44,11 +44,6 @@ SI_DISCLOSURE = (
 # Request bodies
 # ---------------------------------------------------------------------------
 
-DIMENSION_BOUNDS = {
-    Dimension.o2_fraction: (0, 1), Dimension.co2_fraction: (0, 1), Dimension.n2_fraction: (0, 1),
-    Dimension.pressure_kpa: (0, 1000), Dimension.airflow_ms: (0, 50),
-    Dimension.temperature_c: (-150, 300), Dimension.relative_humidity_pct: (0, 100),
-}
 
 
 class ComponentIn(BaseModel):
@@ -82,7 +77,7 @@ class ScenarioIn(BaseModel):
     @model_validator(mode="after")
     def _bounds(self) -> "ScenarioIn":
         for dim, v in self.overrides.items():
-            lo, hi = DIMENSION_BOUNDS[dim]
+            lo, hi = sc.DIMENSION_BOUNDS[dim]
             if not lo <= v <= hi:
                 raise ValueError(f"{dim} override {v} outside {lo}..{hi} (internal units)")
         return self
@@ -295,7 +290,7 @@ def explain(body: ExplainIn, session: Session = Depends(get_session)) -> dict[st
     result = _or_404(sc.compute, session, cargo, body.scenario.model_dump())
     inputs = sc.si_inputs(result, cargo, body.component_index, body.hazard, body.question)
     # Tools only for follow-up questions: the default summary stays one provider request (rate limit).
-    tools = sc.si_tools(session, result, body.component_index) if body.question else None
+    tools = sc.si_tools(session, result, cargo, body.component_index) if body.question else None
     explanation = explain_cached(session, inputs, tools=tools)
     return {"explanation": explanation, "sources": inputs["sources"] + explanation.get("tool_records", []),
             "disclosure": SI_DISCLOSURE}

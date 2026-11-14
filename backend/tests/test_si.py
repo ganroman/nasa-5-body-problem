@@ -199,3 +199,11 @@ def test_bad_tool_arguments_go_back_to_the_model():
     out = si.explain(INPUTS, client, tools=[bad])
     assert out["status"] == "ok"
     assert "error" in json.loads(client.calls[1]["messages"][-1]["content"])
+
+
+def test_prose_after_tools_gets_one_json_retry():
+    client = ToolClient(tool_call("search_observations", {}), final("A test reached 30% O2."),
+                        final(reply(("A test reached 30% O2.", ["obs-7"]))))
+    out = si.explain(INPUTS, client, tools=[LOOKUP])
+    assert out["status"] == "ok" and len(client.calls) == 3
+    assert client.calls[-1]["response_format"] == {"type": "json_object"} and "tools" not in client.calls[-1]

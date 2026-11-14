@@ -26,6 +26,13 @@ from app.models import (
     Source,
 )
 
+# Plausible bounds for overrides, in internal units (validated at the API and in SI tools).
+DIMENSION_BOUNDS = {
+    Dimension.o2_fraction: (0, 1), Dimension.co2_fraction: (0, 1), Dimension.n2_fraction: (0, 1),
+    Dimension.pressure_kpa: (0, 1000), Dimension.airflow_ms: (0, 50),
+    Dimension.temperature_c: (-150, 300), Dimension.relative_humidity_pct: (0, 100),
+}
+
 # Dimensions the evidence map and comparisons use; a scenario missing any of them is incomplete.
 CORE_DIMENSIONS = (Dimension.o2_fraction, Dimension.pressure_kpa, Dimension.airflow_ms)
 
@@ -247,6 +254,18 @@ def _fmt_condition(dim: str, c: dict[str, Any]) -> str:
     return f"{dim} {val} ({e['status']}{src})"
 
 
+def _condition_change(dim: str, before: dict[str, Any] | None, after: dict[str, Any]) -> str:
+    def val(c):
+        e = (c or {}).get("effective") or {}
+        if e.get("min") is None:
+            return "unknown"
+        v = f"{e['min']:g}" if e["min"] == e["max"] else f"{e['min']:g}-{e['max']:g}"
+        return f"{v} ({e['status']})"
+
+    b, a = val(before), val(after)
+    return f"{dim} unchanged ({a})" if b == a else f"{dim} {b} -> {a}"
+
+
 def si_inputs(result: dict[str, Any], cargo: dict[str, Any], component_index: int, hazard: str,
               question: str | None, max_records: int = 8, max_analogues: int = 3) -> dict[str, Any]:
     """Evidence bundle for app.si.explain: only computed comparisons and recorded/curated text.
@@ -306,7 +325,7 @@ def si_inputs(result: dict[str, Any], cargo: dict[str, Any], component_index: in
 MAX_TOOL_RECORDS = 10
 
 
-def si_tools(session: Session, result: dict[str, Any], component_index: int) -> list[dict[str, Any]]:
+def si_tools(session: Session, result: dict[str, Any], cargo: dict[str, Any], component_index: int) -> list[dict[str, Any]]:
     """Read-only lookups the SI may call. Each returns records in the same deterministic text
     format as the evidence bundle, so the model can only restate recorded values."""
     comp = result["components"][component_index]
@@ -363,8 +382,70 @@ def si_tools(session: Session, result: dict[str, Any], component_index: int) -> 
             for f in _findings_for(session, {material_id})
         ]
 
+    def compare_in_environment(environment_id: str, use_state: str | None = None, space: str = "cabin",
+                               overrides: dict[str, float] | None = None) -> list[dict[str, Any]]:
+        overrides = {Dimension(k): float(v) for k, v in (overrides or {}).items()}
+        for dim, v in overrides.items():
+            lo, hi = DIMENSION_BOUNDS[dim]
+            if not lo <= v <= hi:
+                raise ValueError(f"{dim} override {v} outside {lo}..{hi} (internal units)")
+        other = compute(session, cargo, {"environment_id": environment_id, "space": space,
+                                         "use_state": use_state or result["use_state"], "overrides": overrides})
+        oc = other["components"][component_index]
+        material = [r for r in oc["ranked"] if r["evidence_class"] != "analogue"]
+        n_analogue = len(oc["ranked"]) - len(material)
+        env = other["environment"]
+        lines = [
+            f"Same cargo moved to {env['name']} ({env['space']}, maturity {env['maturity']}), gravity {env['gravity_regime']}, "
+            f"use state {other['use_state']}",
+            "conditions: " + "; ".join(_fmt_condition(d, c) for d, c in other["conditions"].items()),
+            "changes from the current scenario (" + result["environment"]["name"] + "): "
+            + "; ".join(_condition_change(d, result["conditions"].get(d), c) for d, c in other["conditions"].items())
+            + f"; gravity {result['environment']['gravity_regime']} -> {env['gravity_regime']}",
+            f"incomplete dimensions: {', '.join(other['incomplete_dimensions']) or 'none'}",
+            f"{comp['name']}: {len(material)} material record(s), {n_analogue} analogue record(s)",
+            *(f"record obs-{r['observation_id']} ({r['evidence_class']}): " + "; ".join(r["reasons"][1:]) for r in material[:5]),
+            *(f"{h} status for {comp['name']}: {other['coverage'][h]['components'][component_index]['status']}; "
+              f"assembly: {other['coverage'][h]['assembly']['status']}" for h in other["coverage"]),
+        ]
+        return [{"source_id": f"compare-{env['id']}-{env['space']}", "excerpt": ". ".join(lines) + ".",
+                 "locator": "Computed by the Cargo Passport comparison logic for the named environment"}]
+
+    def get_cargo_summary() -> list[dict[str, Any]]:
+        lines = [f"Cargo {cargo['name']} ({cargo.get('provenance', 'illustrative')}), {len(result['components'])} components, "
+                 f"scenario {result['environment']['name']} ({result['environment']['space']})"]
+        for i, c in enumerate(result["components"]):
+            statuses = ", ".join(f"{h} {result['coverage'][h]['components'][i]['status']}" for h in result["coverage"])
+            lines.append(f"{c['name']}: label '{c['original_label']}', material {c.get('material_id') or 'not identified'}, "
+                         f"identity {c['identity_confidence']}; {statuses}")
+        lines.append("whole assembly: " + ", ".join(f"{h} {v['assembly']['status']}" for h, v in result["coverage"].items()))
+        return [{"source_id": "cargo-summary", "excerpt": ". ".join(lines) + ".",
+                 "locator": "Computed by the Cargo Passport comparison logic for the current scenario"}]
+
+    env_ids = [e for e in session.scalars(select(Environment.id).order_by(Environment.id))]
     opt = lambda t: {"type": [t, "null"]}  # noqa: E731
     return [
+        {
+            "name": "compare_in_environment",
+            "description": "Run the same deterministic comparison for this cargo in another environment, to see how "
+                           "evidence applicability changes. Returns conditions with provenance, incomplete dimensions, "
+                           "the component's records with their differences, and evidence status per hazard.",
+            "parameters": {"type": "object", "properties": {
+                "environment_id": {"type": "string", "enum": env_ids},
+                "use_state": {**opt("string"), "enum": ["stowed", "operating", "charging", "maintenance", None]},
+                "space": {"type": "string", "description": "Space within the environment; usually 'cabin'"},
+                "overrides": {**opt("object"), "description": "Optional condition overrides in internal units, e.g. "
+                              "{\"o2_fraction\": 0.3, \"pressure_kpa\": 70.3}"},
+            }, "required": ["environment_id"]},
+            "fn": compare_in_environment,
+        },
+        {
+            "name": "get_cargo_summary",
+            "description": "Evidence status per hazard for every component of this cargo and for the whole assembly, "
+                           "in the current scenario.",
+            "parameters": {"type": "object", "properties": {}},
+            "fn": get_cargo_summary,
+        },
         {
             "name": "search_observations",
             "description": "Find recorded fire test records. Filters combine with AND. Returns at most 10 records with "

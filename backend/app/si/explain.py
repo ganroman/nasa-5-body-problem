@@ -97,7 +97,15 @@ def _run(client: Any, model: str, messages: list[dict], tools: list[dict], allow
         msg = resp.choices[0].message
         calls = getattr(msg, "tool_calls", None) or []
         if not calls or not specs or round_ == MAX_TOOL_ROUNDS:
-            return msg.content or ""
+            content = msg.content or ""
+            data = _first_json_object(content)
+            if specs and round_ < MAX_TOOL_ROUNDS and not (isinstance(data, dict) and "sentences" in data):
+                # JSON mode is off while tools are offered; ask once more for the required JSON.
+                messages += [{"role": "assistant", "content": content},
+                             {"role": "user", "content": "Reply now with the required JSON object only."}]
+                resp = client.chat.completions.create(messages=messages, response_format={"type": "json_object"}, **common)
+                return resp.choices[0].message.content or ""
+            return content
         messages.append({"role": "assistant", "content": msg.content or "", "tool_calls": [
             {"id": c.id, "type": "function", "function": {"name": c.function.name, "arguments": c.function.arguments}}
             for c in calls]})
