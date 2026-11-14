@@ -1,0 +1,61 @@
+# Tested specimen identities named in docs/environments/material-flammability-examples.md.
+# Identities only: values and outcomes live in material_tests.yaml. Variants (e.g. natural vs
+# black webbing) stay separate because their results differ. Fields the doc does not state are
+# null rather than filled from other sources.
+
+- id: pmma-cast-sheet
+  canonical_name: PMMA cast sheet
+  material_class: polymer
+  formulation: null
+  form: sheet
+  thickness_m: null
+  notes: "Enclosure material in the portable science instrument mock cargo. Thickness not stated."
+- id: silicone-rubber-1p5mm
+  canonical_name: "Silicone rubber, ~1.5 mm"
+  material_class: elastomer
+  formulation: null
+  form: sheet
+  thickness_m: 0.0015
+  notes: "Thickness approximate ('~1.5 mm'). Saffire silicone paper with per-thickness MOCs (NTRS 20150022123) not reviewed."
+- id: ptfe-resin-1p5mm
+  canonical_name: "PTFE resin, ~1.5 mm"
+  material_class: polymer
+  formulation: null
+  form: sheet
+  thickness_m: 0.0015
+  notes: "Thickness approximate ('~1.5 mm'); form assumed sheet-like specimen, not stated."
+- id: nomex-ht90-40-single-layer
+  canonical_name: "Nomex HT90-40, single layer"
+  material_class: fabric
+  formulation: null
+  form: fabric
+  thickness_m: null
+  notes: "That ISS cargo transfer bags are Nomex was not confirmed from a NASA primary source (doc Limits)."
+- id: kevlar-pbi-webbing-natural
+  canonical_name: "Kevlar/PBI webbing, natural"
+  material_class: fabric
+  formulation: null
+  form: webbing
+  thickness_m: null
+  notes: "Tested in NASA TB 26-05. Distinct from the black variant, which gave a different MOC."
+- id: kevlar-pbi-webbing-black
+  canonical_name: "Kevlar/PBI webbing, black"
+  material_class: fabric
+  formulation: null
+  form: webbing
+  thickness_m: null
+  notes: "Tested in NASA TB 26-05. Distinct from the natural variant."
+- id: cotton-untreated
+  canonical_name: "Cotton, untreated"
+  material_class: fabric
+  formulation: null
+  form: fabric
+  thickness_m: null
+  notes: "LOI value from the USDA-ARS cotton LOI study as cited by the doc."
+- id: ptfe-insulated-wire-m22759
+  canonical_name: PTFE-insulated M22759 wire
+  material_class: polymer
+  formulation: null
+  form: wire insulation
+  thickness_m: null
+  notes: "Doc: 'an M22759 wire failed Test 4'; slash sheet not stated for the test (sources list an M22759/6 spec sheet). That ISS wiring is PTFE was not confirmed from a NASA primary source."

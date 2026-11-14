@@ -1,0 +1,312 @@
+# Environments (models.Environment) with nested conditions: {space: {dimension: value}}.
+# Every space lists every Dimension, so an unknown is written down rather than left out.
+# Units: o2/co2/n2 as volume fraction (20.9% -> 0.209), pressure kPa absolute, airflow m/s,
+# temperature degC, relative humidity %. status unknown <=> value_min and value_max both null.
+# One-sided bounds ("at least", "at most") keep the other side null.
+# Lunar, Mars and Gateway cabins stay unknown: ISS values are never copied into them.
+
+# --- Space environments (6) -------------------------------------------------------------
+- id: iss
+  name: International Space Station
+  domain: space
+  gravity_regime: microgravity
+  gravity_g: null
+  maturity: operating
+  summary: "Crewed laboratory in low Earth orbit, roughly 400 km; continuously occupied since November 2000; NASA plans retirement around 2030."
+  source_id: doc-env-iss
+  doc_path: docs/environments/iss.md
+  conditions:
+    cabin:
+      o2_fraction: {value_min: 0.21, value_max: 0.21, status: sourced, source_id: doc-env-iss, locator: "§5 Relevance to our fire-safety challenge, bullet 2", note: "'roughly 21% oxygen'; nominal, actual O2 varies within controlled ranges and between segments (Limits)."}
+      pressure_kpa: {value_min: 101, value_max: 101, status: sourced, source_id: doc-env-iss, locator: "§5 Relevance to our fire-safety challenge, bullet 2", note: "'about 101 kPa'; nominal cabin value, not telemetry; controlled ranges not specified."}
+      airflow_ms: {status: unknown, source_id: doc-env-dimensions, locator: "§1 ISS dimension profile, row Airflow", note: "Forced ventilation; local speeds, directions and fan states must be obtained per module."}
+      temperature_c: {status: unknown, source_id: doc-env-dimensions, locator: "§1 ISS dimension profile, row Cabin temperature and humidity", note: "Numerical ranges unknown in the note."}
+      relative_humidity_pct: {status: unknown, source_id: doc-env-dimensions, locator: "§1 ISS dimension profile, row Cabin temperature and humidity", note: "Numerical ranges unknown in the note."}
+      co2_fraction: {status: unknown, source_id: doc-env-dimensions, locator: "§1 ISS dimension profile, row Remaining gas composition", note: "Detailed fractions unknown."}
+      n2_fraction: {status: unknown, source_id: doc-env-dimensions, locator: "§1 ISS dimension profile, row Remaining gas composition", note: "Detailed fractions unknown; do not infer a mixture from the nominal O2 percentage."}
+
+- id: lunar-base-nasa
+  name: NASA lunar surface base
+  domain: space
+  gravity_regime: lunar
+  gravity_g: 0.17
+  maturity: planned
+  summary: "Planned research outpost near the lunar South Pole, built up over multiple missions; no resident crew today."
+  source_id: doc-env-lunar-base-nasa
+  doc_path: docs/environments/lunar-base-nasa.md
+  conditions:
+    cabin:
+      o2_fraction: {status: unknown, source_id: doc-env-dimensions, locator: "§1 Environments covered, row NASA lunar surface base", note: "Interior pressure / oxygen: Unknown / unknown. The 30% O2 scenario is a separate environment, not this base's specification."}
+      pressure_kpa: {status: unknown, source_id: doc-env-dimensions, locator: "§1 Environments covered, row NASA lunar surface base", note: "Interior pressure / oxygen: Unknown / unknown."}
+      airflow_ms: {status: unknown, source_id: doc-env-lunar-base-nasa, locator: "§5 Limits of this research", note: "Module atmosphere specifications not established."}
+      temperature_c: {status: unknown, source_id: doc-env-lunar-base-nasa, locator: "§5 Limits of this research", note: "Module atmosphere specifications not established."}
+      relative_humidity_pct: {status: unknown, source_id: doc-env-lunar-base-nasa, locator: "§5 Limits of this research", note: "Module atmosphere specifications not established."}
+      co2_fraction: {status: unknown, source_id: doc-env-lunar-base-nasa, locator: "§5 Limits of this research", note: "Module atmosphere specifications not established."}
+      n2_fraction: {status: unknown, source_id: doc-env-lunar-base-nasa, locator: "§5 Limits of this research", note: "Module atmosphere specifications not established."}
+
+- id: lunar-base-china
+  name: China-led ILRS lunar base
+  domain: space
+  gravity_regime: lunar
+  gravity_g: 0.17
+  maturity: planned
+  summary: "International Lunar Research Station; long-term robotic operation with short human visits; basic station targeted around 2035. Conditions refer to the crewed surface habitat during an occupied period."
+  source_id: doc-env-lunar-base-china
+  doc_path: docs/environments/lunar-base-china.md
+  conditions:
+    cabin:
+      o2_fraction: {status: unknown, source_id: doc-env-lunar-base-china, locator: "§4 Relevance to Flame in Freefall", note: "No finalized ILRS cabin atmosphere was established by the sources reviewed."}
+      pressure_kpa: {status: unknown, source_id: doc-env-lunar-base-china, locator: "§4 Relevance to Flame in Freefall", note: "No finalized ILRS cabin atmosphere was established by the sources reviewed."}
+      airflow_ms: {status: unknown, source_id: doc-env-lunar-base-china, locator: "Limitations", note: "Cabin atmosphere not established."}
+      temperature_c: {status: unknown, source_id: doc-env-lunar-base-china, locator: "Limitations", note: "Cabin atmosphere not established."}
+      relative_humidity_pct: {status: unknown, source_id: doc-env-lunar-base-china, locator: "Limitations", note: "Cabin atmosphere not established."}
+      co2_fraction: {status: unknown, source_id: doc-env-lunar-base-china, locator: "Limitations", note: "Cabin atmosphere not established."}
+      n2_fraction: {status: unknown, source_id: doc-env-lunar-base-china, locator: "Limitations", note: "Cabin atmosphere not established."}
+
+- id: lunar-gateway
+  name: Lunar Gateway (earlier design)
+  domain: space
+  gravity_regime: microgravity
+  gravity_g: null
+  maturity: paused
+  summary: "Previously planned small station in near-rectilinear halo lunar orbit; NASA announced intent to pause it in its current form on 24 March 2026."
+  source_id: doc-env-lunar-gateway
+  doc_path: docs/environments/lunar-gateway.md
+  conditions:
+    cabin:
+      o2_fraction: {status: unknown, source_id: doc-env-lunar-gateway, locator: "Limits and open questions, bullet 1", note: "Detailed cabin-atmosphere specifications were not verified; the lunar elevated-O2 scenario must not become a Gateway specification (§5)."}
+      pressure_kpa: {status: unknown, source_id: doc-env-lunar-gateway, locator: "Limits and open questions, bullet 1", note: "Detailed cabin-atmosphere specifications were not verified."}
+      airflow_ms: {status: unknown, source_id: doc-env-lunar-gateway, locator: "Limits and open questions, bullet 1", note: "Not in the note."}
+      temperature_c: {status: unknown, source_id: doc-env-lunar-gateway, locator: "Limits and open questions, bullet 1", note: "Not in the note."}
+      relative_humidity_pct: {status: unknown, source_id: doc-env-lunar-gateway, locator: "Limits and open questions, bullet 1", note: "Not in the note."}
+      co2_fraction: {status: unknown, source_id: doc-env-lunar-gateway, locator: "Limits and open questions, bullet 1", note: "Not in the note."}
+      n2_fraction: {status: unknown, source_id: doc-env-lunar-gateway, locator: "Limits and open questions, bullet 1", note: "Not in the note."}
+
+- id: martian-base-nasa
+  name: NASA Martian surface base
+  domain: space
+  gravity_regime: martian
+  gravity_g: 0.38
+  maturity: concept
+  summary: "Surface-habitat and pressurized-rover architecture studies; no inhabited Mars base or assigned crew."
+  source_id: doc-env-martian-base-nasa
+  doc_path: docs/environments/martian-base-nasa.md
+  conditions:
+    cabin:
+      o2_fraction: {status: unknown, source_id: doc-env-martian-base-nasa, locator: "Limits", note: "Cabin atmosphere has not been verified; do not assign a lunar habitat's atmosphere (§4)."}
+      pressure_kpa: {status: unknown, source_id: doc-env-martian-base-nasa, locator: "Limits", note: "Cabin atmosphere has not been verified."}
+      airflow_ms: {status: unknown, source_id: doc-env-martian-base-nasa, locator: "Limits", note: "Not in the note."}
+      temperature_c: {status: unknown, source_id: doc-env-martian-base-nasa, locator: "Limits", note: "Not in the note; outside cold does not describe the cabin."}
+      relative_humidity_pct: {status: unknown, source_id: doc-env-martian-base-nasa, locator: "Limits", note: "Not in the note."}
+      co2_fraction: {status: unknown, source_id: doc-env-martian-base-nasa, locator: "Limits", note: "Not in the note; the mostly-CO2 outside atmosphere is not the cabin gas."}
+      n2_fraction: {status: unknown, source_id: doc-env-martian-base-nasa, locator: "Limits", note: "Not in the note."}
+
+- id: martian-orbital-station-nasa
+  name: NASA Mars orbital habitat
+  domain: space
+  gravity_regime: microgravity
+  gravity_g: null
+  maturity: concept
+  summary: "Studied Mars Transit Habitat operating temporarily in Mars orbit; no permanent station established. Microgravity unless artificial gravity is specified."
+  source_id: doc-env-martian-orbital-station
+  doc_path: docs/environments/martian-orbital-station-nasa.md
+  conditions:
+    cabin:
+      o2_fraction: {status: unknown, source_id: doc-env-martian-orbital-station, locator: "Limits", note: "No cabin atmosphere verified; do not copy an ISS or lunar-habitat atmosphere (§4)."}
+      pressure_kpa: {status: unknown, source_id: doc-env-martian-orbital-station, locator: "Limits", note: "No cabin atmosphere verified."}
+      airflow_ms: {status: unknown, source_id: doc-env-martian-orbital-station, locator: "Limits", note: "Not in the note."}
+      temperature_c: {status: unknown, source_id: doc-env-martian-orbital-station, locator: "Limits", note: "Not in the note."}
+      relative_humidity_pct: {status: unknown, source_id: doc-env-martian-orbital-station, locator: "Limits", note: "Not in the note."}
+      co2_fraction: {status: unknown, source_id: doc-env-martian-orbital-station, locator: "Limits", note: "Not in the note."}
+      n2_fraction: {status: unknown, source_id: doc-env-martian-orbital-station, locator: "Limits", note: "Not in the note."}
+
+# --- Earth environments (4): analyst-selected planning estimates, not measurements --------
+- id: earth-aircraft
+  name: Aircraft cabins and cargo holds
+  domain: earth
+  gravity_regime: earth
+  gravity_g: 1.0
+  maturity: estimate
+  summary: "Pressurised passenger aircraft in cruise; cabin and pressurised hold share the pressure assumption. Ground handling, depressurisation and unpressurised compartments are outside this baseline."
+  source_id: doc-env-earth-aircraft
+  doc_path: docs/environments/earth/aircraft.md
+  conditions:
+    cabin:
+      o2_fraction: {value_min: 0.209, value_max: 0.209, status: estimate, source_id: doc-env-earth-aircraft, locator: "Estimated baseline for comparison, row Oxygen concentration", note: "20.9% by volume, dry-gas basis; ordinary-air assumption."}
+      pressure_kpa: {value_min: 75, value_max: 85, status: estimate, source_id: doc-env-earth-aircraft, locator: "Estimated baseline for comparison, row Total gas pressure", note: "Rounded cruise scenario around the source's ~76 kPa reference; not a regulatory envelope."}
+      airflow_ms: {value_min: 0.05, value_max: 0.3, status: estimate, source_id: doc-env-earth-aircraft, locator: "Estimated baseline for comparison, row Local airflow (Cabin)", note: "Chosen low-speed comparison range; jets and ducts can be faster."}
+      temperature_c: {value_min: 18, value_max: 26, status: estimate, source_id: doc-env-earth-aircraft, locator: "Estimated baseline for comparison, row Air temperature (Cabin)", note: "Planning range."}
+      relative_humidity_pct: {value_min: 10, value_max: 30, status: estimate, source_id: doc-env-earth-aircraft, locator: "Estimated baseline for comparison, row Relative humidity (Cabin)", note: "Assumed cruise conditions."}
+      co2_fraction: {status: unknown, source_id: doc-env-earth-aircraft, locator: "Paragraph after the baseline table", note: "CO2 accumulation requires separate inputs."}
+      n2_fraction: {value_min: 0.78, value_max: 0.78, status: estimate, source_id: doc-env-earth-aircraft, locator: "Paragraph after the baseline table", note: "'approximate the remaining dry gas as 78% N2, 0.9% argon and trace gases'."}
+    hold:
+      o2_fraction: {value_min: 0.209, value_max: 0.209, status: estimate, source_id: doc-env-earth-aircraft, locator: "Estimated baseline for comparison, row Oxygen concentration", note: "Shared ordinary-air assumption."}
+      pressure_kpa: {value_min: 75, value_max: 85, status: estimate, source_id: doc-env-earth-aircraft, locator: "Estimated baseline for comparison, row Total gas pressure", note: "Cabin and pressurised hold share the pressure assumption."}
+      airflow_ms: {value_min: 0.01, value_max: 0.1, status: estimate, source_id: doc-env-earth-aircraft, locator: "Estimated baseline for comparison, row Local airflow (sheltered hold location)", note: "Chosen low-speed comparison range."}
+      temperature_c: {value_min: 5, value_max: 25, status: estimate, source_id: doc-env-earth-aircraft, locator: "Estimated baseline for comparison, row Air temperature (selected conditioned hold)", note: "Not a guarantee for cargo or a battery's internal temperature."}
+      relative_humidity_pct: {value_min: 10, value_max: 50, status: estimate, source_id: doc-env-earth-aircraft, locator: "Estimated baseline for comparison, row Relative humidity (hold scenario)", note: "Cargo moisture and ground conditions can change this substantially."}
+      co2_fraction: {status: unknown, source_id: doc-env-earth-aircraft, locator: "Paragraph after the baseline table", note: "CO2 accumulation requires separate inputs."}
+      n2_fraction: {value_min: 0.78, value_max: 0.78, status: estimate, source_id: doc-env-earth-aircraft, locator: "Paragraph after the baseline table", note: "Ordinary-air approximation, 78% N2."}
+
+- id: earth-battery-storage
+  name: Power plant battery storage room
+  domain: earth
+  gravity_regime: earth
+  gravity_g: 1.0
+  maturity: estimate
+  summary: "Indoor, mechanically cooled battery equipment room at a low-altitude site during normal operation; not a turbine hall, outdoor cabinet, failed cooling or thermal runaway."
+  source_id: doc-env-earth-battery-storage
+  doc_path: docs/environments/earth/power-plants-and-battery-storage.md
+  conditions:
+    room:
+      o2_fraction: {value_min: 0.209, value_max: 0.209, status: estimate, source_id: doc-env-earth-battery-storage, locator: "Estimated baseline for comparison, row Oxygen concentration", note: "20.9% dry-gas; excludes fault gases or an inerted enclosure."}
+      pressure_kpa: {value_min: 95, value_max: 103, status: estimate, source_id: doc-env-earth-battery-storage, locator: "Estimated baseline for comparison, row Total gas pressure", note: "Assumed low-altitude ambient-pressure room."}
+      airflow_ms: {value_min: 0.05, value_max: 0.3, status: estimate, source_id: doc-env-earth-battery-storage, locator: "Estimated baseline for comparison, row Local airflow (Room)", note: "Chosen comparison range."}
+      temperature_c: {value_min: 18, value_max: 30, status: estimate, source_id: doc-env-earth-battery-storage, locator: "Estimated baseline for comparison, row Air temperature", note: "Assumed cooled-room range; cell and module temperatures need a separate model."}
+      relative_humidity_pct: {value_min: 30, value_max: 60, status: estimate, source_id: doc-env-earth-battery-storage, locator: "Estimated baseline for comparison, row Relative humidity", note: "Assumed conditioned-room range; not an equipment rating."}
+      co2_fraction: {status: unknown, source_id: doc-env-earth-battery-storage, locator: "Paragraph after the baseline table", note: "CO2 accumulation requires separate inputs."}
+      n2_fraction: {value_min: 0.78, value_max: 0.78, status: estimate, source_id: doc-env-earth-battery-storage, locator: "Paragraph after the baseline table", note: "Ordinary-air approximation, 78% N2."}
+    rack:
+      o2_fraction: {status: unknown, source_id: doc-env-earth-battery-storage, locator: "Estimated baseline for comparison", note: "Doc gives O2 for the room only; not transcribed to the rack passage."}
+      pressure_kpa: {status: unknown, source_id: doc-env-earth-battery-storage, locator: "Estimated baseline for comparison", note: "Doc gives pressure for the room only."}
+      airflow_ms: {value_min: 0.5, value_max: 2, status: estimate, source_id: doc-env-earth-battery-storage, locator: "Estimated baseline for comparison, row Local airflow (forced-air rack passage)", note: "Only applies to a forced-air design; distinct from room flow."}
+      temperature_c: {status: unknown, source_id: doc-env-earth-battery-storage, locator: "Estimated baseline for comparison, row Air temperature", note: "Cell and module temperatures need a separate thermal model or measurement."}
+      relative_humidity_pct: {status: unknown, source_id: doc-env-earth-battery-storage, locator: "Estimated baseline for comparison", note: "Doc gives humidity for the room only."}
+      co2_fraction: {status: unknown, source_id: doc-env-earth-battery-storage, locator: "Paragraph after the baseline table", note: "Fault gases require separate inputs."}
+      n2_fraction: {status: unknown, source_id: doc-env-earth-battery-storage, locator: "Paragraph after the baseline table", note: "Doc gives the air mixture for the room scenario only."}
+
+- id: earth-schools
+  name: Schools and public buildings (occupied classroom)
+  domain: earth
+  gravity_regime: earth
+  gravity_g: 1.0
+  maturity: estimate
+  summary: "Occupied classroom at a low-altitude site with heating or cooling in operation; not every public building, assembly hall or wall cavity."
+  source_id: doc-env-earth-schools
+  doc_path: docs/environments/earth/schools-and-public-buildings.md
+  conditions:
+    classroom:
+      o2_fraction: {value_min: 0.209, value_max: 0.209, status: estimate, source_id: doc-env-earth-schools, locator: "Estimated baseline for comparison, row Oxygen concentration", note: "20.9% dry-gas; not a measured indoor gas analysis."}
+      pressure_kpa: {value_min: 95, value_max: 103, status: estimate, source_id: doc-env-earth-schools, locator: "Estimated baseline for comparison, row Total gas pressure", note: "Assumed low-altitude room pressure."}
+      airflow_ms: {value_min: 0.05, value_max: 0.2, status: estimate, source_id: doc-env-earth-schools, locator: "Estimated baseline for comparison, row Local airflow", note: "Occupied zone; near-window and supply-jet speeds can be higher."}
+      temperature_c: {value_min: 18, value_max: 27, status: estimate, source_id: doc-env-earth-schools, locator: "Estimated baseline for comparison, row Air temperature", note: "Assumed conditioned occupied-room range."}
+      relative_humidity_pct: {value_min: 30, value_max: 60, status: estimate, source_id: doc-env-earth-schools, locator: "Estimated baseline for comparison, row Relative humidity", note: "Not a claim that every school controls humidity."}
+      co2_fraction: {status: unknown, source_id: doc-env-earth-schools, locator: "Paragraph after the baseline table", note: "CO2 accumulation requires separate inputs."}
+      n2_fraction: {value_min: 0.78, value_max: 0.78, status: estimate, source_id: doc-env-earth-schools, locator: "Paragraph after the baseline table", note: "Ordinary-air approximation, 78% N2."}
+
+- id: earth-submarine
+  name: Submarine occupied compartment
+  domain: earth
+  gravity_regime: earth
+  gravity_g: 1.0
+  maturity: estimate
+  summary: "Occupied, air-filled compartment inside a submarine pressure hull with atmosphere control operating normally; interior gas pressure does not follow external water pressure."
+  source_id: doc-env-earth-submarines
+  doc_path: docs/environments/earth/submarines.md
+  conditions:
+    compartment:
+      o2_fraction: {value_min: 0.20, value_max: 0.21, status: estimate, source_id: doc-env-earth-submarines, locator: "Estimated baseline for comparison, row Oxygen concentration", note: "Assumed controlled-air band, dry-gas basis; not an operating instruction."}
+      pressure_kpa: {value_min: 95, value_max: 105, status: estimate, source_id: doc-env-earth-submarines, locator: "Estimated baseline for comparison, row Total gas pressure", note: "Near-atmospheric planning assumption; not external water pressure."}
+      airflow_ms: {value_min: 0.05, value_max: 0.3, status: estimate, source_id: doc-env-earth-submarines, locator: "Estimated baseline for comparison, row Local airflow", note: "Forced-ventilation comparison range; recesses and jets differ."}
+      temperature_c: {value_min: 18, value_max: 28, status: estimate, source_id: doc-env-earth-submarines, locator: "Estimated baseline for comparison, row Air temperature", note: "Machinery and battery spaces can differ."}
+      relative_humidity_pct: {value_min: 40, value_max: 70, status: estimate, source_id: doc-env-earth-submarines, locator: "Estimated baseline for comparison, row Relative humidity", note: "Cold hull surfaces may still cause local condensation."}
+      co2_fraction: {value_min: 0.005, value_max: 0.005, status: estimate, source_id: doc-env-earth-submarines, locator: "Paragraph after the baseline table", note: "0.5% CO2; the doc calls it a modelling assumption, not a recommended exposure limit."}
+      n2_fraction: {value_min: 0.776, value_max: 0.786, status: estimate, source_id: doc-env-earth-submarines, locator: "Paragraph after the baseline table", note: "N2 as the balance (77.6-78.6%) with 0.9% argon."}
+
+# --- Scenario (not a verified atmosphere for any environment) -----------------------------
+- id: lunar-elevated-o2-scenario
+  name: Lunar elevated-oxygen habitat scenario
+  domain: space
+  gravity_regime: lunar
+  gravity_g: 0.17
+  maturity: concept
+  summary: "Research brief's challenge scenario: at least 30% O2 at at most 10.2 psi (~70.3 kPa). A scenario range, not a verified atmosphere for any of the six space environments; the inequalities do not define a single operating point."
+  source_id: doc-env-dimensions
+  doc_path: docs/environments/environment-dimensions.md
+  conditions:
+    cabin:
+      o2_fraction: {value_min: 0.30, value_max: null, status: assumption, source_id: doc-env-dimensions, locator: "§2 Core physical dimensions, paragraph on the research brief's elevated-oxygen lunar scenario", note: "'at least 30% O2'; one-sided bound."}
+      pressure_kpa: {value_min: null, value_max: 70.3, status: assumption, source_id: doc-env-dimensions, locator: "§2 Core physical dimensions, paragraph on the research brief's elevated-oxygen lunar scenario", note: "'at most 10.2 psi, approximately 70.3 kPa'; one-sided bound."}
+      airflow_ms: {status: unknown, source_id: doc-env-dimensions, locator: "§2 Core physical dimensions", note: "Scenario defines O2 and pressure only."}
+      temperature_c: {status: unknown, source_id: doc-env-dimensions, locator: "§2 Core physical dimensions", note: "Scenario defines O2 and pressure only."}
+      relative_humidity_pct: {status: unknown, source_id: doc-env-dimensions, locator: "§2 Core physical dimensions", note: "Scenario defines O2 and pressure only."}
+      co2_fraction: {status: unknown, source_id: doc-env-dimensions, locator: "§2 Core physical dimensions", note: "Scenario defines O2 and pressure only."}
+      n2_fraction: {status: unknown, source_id: doc-env-dimensions, locator: "§2 Core physical dimensions", note: "Scenario defines O2 and pressure only."}
+
+# --- Prototype-only endpoints (prototype/cargo-environment-map.html ENV), all unknown -----
+- id: earth-logistics
+  name: Earth logistics (packing / receiving)
+  domain: earth
+  gravity_regime: earth
+  gravity_g: 1.0
+  maturity: concept
+  summary: "Illustrative ground endpoint: packing, inspection and return analysis; site-specific terrestrial environment."
+  source_id: doc-prototype-cargo-map
+  doc_path: prototype/cargo-environment-map.html
+  conditions:
+    site:
+      o2_fraction: {status: unknown, source_id: doc-prototype-cargo-map, locator: "ENV id=earth", note: "Not given in the prototype."}
+      pressure_kpa: {status: unknown, source_id: doc-prototype-cargo-map, locator: "ENV id=earth", note: "Not given in the prototype."}
+      airflow_ms: {status: unknown, source_id: doc-prototype-cargo-map, locator: "ENV id=earth", note: "Not given in the prototype."}
+      temperature_c: {status: unknown, source_id: doc-prototype-cargo-map, locator: "ENV id=earth", note: "Not given in the prototype."}
+      relative_humidity_pct: {status: unknown, source_id: doc-prototype-cargo-map, locator: "ENV id=earth", note: "Not given in the prototype."}
+      co2_fraction: {status: unknown, source_id: doc-prototype-cargo-map, locator: "ENV id=earth", note: "Not given in the prototype."}
+      n2_fraction: {status: unknown, source_id: doc-prototype-cargo-map, locator: "ENV id=earth", note: "Not given in the prototype."}
+
+- id: lunar-rover-cabin
+  name: Lunar pressurized rover cabin
+  domain: space
+  gravity_regime: lunar
+  gravity_g: 0.17
+  maturity: concept
+  summary: "Illustrative pressurized mobile workspace for field expeditions; distinct from an open rover."
+  source_id: doc-prototype-cargo-map
+  doc_path: prototype/cargo-environment-map.html
+  conditions:
+    cabin:
+      o2_fraction: {status: unknown, source_id: doc-prototype-cargo-map, locator: "ENV id=rover", note: "Not given in the prototype."}
+      pressure_kpa: {status: unknown, source_id: doc-prototype-cargo-map, locator: "ENV id=rover", note: "Not given in the prototype."}
+      airflow_ms: {status: unknown, source_id: doc-prototype-cargo-map, locator: "ENV id=rover", note: "Cabin volume and ventilation differ from the habitat (R17)."}
+      temperature_c: {status: unknown, source_id: doc-prototype-cargo-map, locator: "ENV id=rover", note: "Not given in the prototype."}
+      relative_humidity_pct: {status: unknown, source_id: doc-prototype-cargo-map, locator: "ENV id=rover", note: "Not given in the prototype."}
+      co2_fraction: {status: unknown, source_id: doc-prototype-cargo-map, locator: "ENV id=rover", note: "Not given in the prototype."}
+      n2_fraction: {status: unknown, source_id: doc-prototype-cargo-map, locator: "ENV id=rover", note: "Not given in the prototype."}
+
+- id: lunar-exterior
+  name: Lunar exterior (outdoor equipment)
+  domain: space
+  gravity_regime: lunar
+  gravity_g: 0.17
+  maturity: concept
+  summary: "Illustrative outdoor equipment environment: exposed tools and robot components in lunar vacuum and dust; no cabin."
+  source_id: doc-prototype-cargo-map
+  doc_path: prototype/cargo-environment-map.html
+  conditions:
+    exterior:
+      # shortcut: "not applicable" (vacuum, no cabin) is stored as unknown; add a ValueStatus value if it must be distinguished.
+      o2_fraction: {status: unknown, source_id: doc-prototype-cargo-map, locator: "ENV id=outside, oxygen", note: "Not applicable: no cabin atmosphere."}
+      pressure_kpa: {status: unknown, source_id: doc-prototype-cargo-map, locator: "ENV id=outside, pressure", note: "Not applicable: no cabin; external vacuum."}
+      airflow_ms: {status: unknown, source_id: doc-prototype-cargo-map, locator: "ENV id=outside, airflow", note: "Not applicable: no cabin ventilation."}
+      temperature_c: {status: unknown, source_id: doc-prototype-cargo-map, locator: "ENV id=outside, temperature", note: "No ambient gas temperature; hardware temperature unknown."}
+      relative_humidity_pct: {status: unknown, source_id: doc-prototype-cargo-map, locator: "ENV id=outside, humidity", note: "Not applicable: vacuum."}
+      co2_fraction: {status: unknown, source_id: doc-prototype-cargo-map, locator: "ENV id=outside, gas", note: "Not applicable: external vacuum."}
+      n2_fraction: {status: unknown, source_id: doc-prototype-cargo-map, locator: "ENV id=outside, gas", note: "Not applicable: external vacuum."}
+
+- id: disposal-vehicle
+  name: Disposal vehicle (Cygnus / Progress)
+  domain: space
+  gravity_regime: unknown
+  gravity_g: null
+  maturity: concept
+  summary: "Uncrewed departing vehicle loaded with waste for destructive re-entry; gravity is phase-dependent (free flight then re-entry)."
+  source_id: doc-prototype-cargo-map
+  doc_path: prototype/cargo-environment-map.html
+  conditions:
+    cabin:
+      o2_fraction: {status: unknown, source_id: doc-prototype-cargo-map, locator: "ENV id=disposal", note: "Not given in the prototype."}
+      pressure_kpa: {status: unknown, source_id: doc-prototype-cargo-map, locator: "ENV id=disposal", note: "Not given in the prototype."}
+      airflow_ms: {status: unknown, source_id: doc-prototype-cargo-map, locator: "ENV id=disposal", note: "Not given in the prototype."}
+      temperature_c: {status: unknown, source_id: doc-prototype-cargo-map, locator: "ENV id=disposal", note: "Not given in the prototype."}
+      relative_humidity_pct: {status: unknown, source_id: doc-prototype-cargo-map, locator: "ENV id=disposal", note: "Not given in the prototype."}
+      co2_fraction: {status: unknown, source_id: doc-prototype-cargo-map, locator: "ENV id=disposal", note: "Not given in the prototype."}
+      n2_fraction: {status: unknown, source_id: doc-prototype-cargo-map, locator: "ENV id=disposal", note: "Not given in the prototype."}

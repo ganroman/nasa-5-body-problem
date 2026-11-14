@@ -1,0 +1,67 @@
+# Mock cargo from docs/environments/material-flammability-examples.md. Objects and mass shares
+# are invented for demonstration (provenance illustrative). original_label is the doc's
+# "Material (tested form)" cell, verbatim. The doc's per-station verdicts, oxygen ceilings and
+# storage temperatures are deliberately not stored: comparisons are computed in code.
+# identity_confidence: exact when the label is the tested form itself; related when a generic
+# label is linked to a specific tested specimen; unmatched (material_id null) when no evidence.
+
+- slug: crew-clothing-kit
+  name: Crew clothing kit
+  purpose: "Personal clothing for one crew member, packed in a bag."
+  provenance: illustrative
+  origin: seeded
+  config:
+    version: 1
+    components:
+      - {name: Garments, original_label: "Cotton, untreated", material_id: cotton-untreated, identity_confidence: exact, mass_share: 0.70}
+      - {name: Stowage bag, original_label: "Nomex HT90-40, single layer", material_id: nomex-ht90-40-single-layer, identity_confidence: exact, mass_share: 0.25}
+      - {name: Handles, original_label: "Kevlar/PBI webbing, natural", material_id: kevlar-pbi-webbing-natural, identity_confidence: exact, mass_share: 0.05}
+
+- slug: portable-science-instrument
+  name: Portable science instrument
+  purpose: "Handheld measuring device with its own battery."
+  provenance: illustrative
+  origin: seeded
+  config:
+    version: 1
+    components:
+      - {name: Enclosure, original_label: "PMMA cast sheet", material_id: pmma-cast-sheet, identity_confidence: exact, mass_share: 0.40}
+      - {name: Battery pack, original_label: "Lithium-ion cells (no evidence in this document)", material_id: null, identity_confidence: unmatched, mass_share: 0.30}
+      - {name: Gaskets, original_label: "Silicone rubber, ~1.5 mm", material_id: silicone-rubber-1p5mm, identity_confidence: exact, mass_share: 0.10}
+      # Generic "PTFE-insulated wire"; the only test is on "an M22759 wire", hence related.
+      - {name: Wiring, original_label: "PTFE-insulated wire", material_id: ptfe-insulated-wire-m22759, identity_confidence: related, mass_share: 0.10}
+      - {name: Carry strap, original_label: "Kevlar/PBI webbing, black", material_id: kevlar-pbi-webbing-black, identity_confidence: exact, mass_share: 0.10}
+
+- slug: coolant-hose-assembly
+  name: Coolant hose assembly
+  purpose: "Flexible fluid line for a thermal-control loop."
+  provenance: illustrative
+  origin: seeded
+  config:
+    version: 1
+    components:
+      - {name: Hose, original_label: "Silicone rubber, ~1.5 mm", material_id: silicone-rubber-1p5mm, identity_confidence: exact, mass_share: 0.70}
+      - {name: Inner liner, original_label: "PTFE resin, ~1.5 mm", material_id: ptfe-resin-1p5mm, identity_confidence: exact, mass_share: 0.25}
+      - {name: Abrasion sleeve, original_label: "Nomex HT90-40, single layer", material_id: nomex-ht90-40-single-layer, identity_confidence: exact, mass_share: 0.05}
+
+- slug: seal-and-gasket-spares-kit
+  name: Seal and gasket spares kit
+  purpose: "Replacement seals for hatches and equipment."
+  provenance: illustrative
+  origin: seeded
+  config:
+    version: 1
+    components:
+      - {name: Seals, original_label: "PTFE resin, ~1.5 mm", material_id: ptfe-resin-1p5mm, identity_confidence: exact, mass_share: 0.80}
+      - {name: O-rings, original_label: "Silicone rubber, ~1.5 mm", material_id: silicone-rubber-1p5mm, identity_confidence: exact, mass_share: 0.20}
+
+- slug: crew-restraint-net
+  name: Crew restraint net
+  purpose: "Holds loose items and crew in place."
+  provenance: illustrative
+  origin: seeded
+  config:
+    version: 1
+    components:
+      - {name: Net webbing, original_label: "Kevlar/PBI webbing, natural", material_id: kevlar-pbi-webbing-natural, identity_confidence: exact, mass_share: 0.90}
+      - {name: Edge binding, original_label: "Nomex HT90-40, single layer", material_id: nomex-ht90-40-single-layer, identity_confidence: exact, mass_share: 0.10}

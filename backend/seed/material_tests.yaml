@@ -1,0 +1,152 @@
+# Earth standard-test results (MOC / LOI) from docs/environments/material-flammability-examples.md,
+# stored as observations. All are ground tests (gravity_regime earth).
+#   std6001_test1: an MOC "X% at Y kPa" is the highest O2 at which the material passed Test 1 at
+#                  that pressure -> outcome {passed: true} at (X, Y). Higher O2 is not recorded.
+#   std6001_test4: wire insulation; outcome {passed: false} where the doc says "failed".
+#   astm_d2863:    LOI at about 1 atm -> outcome {loi_fraction: x}; o2_fraction and pressure_kpa
+#                  stay null because LOI is a threshold, not a single test atmosphere, and the doc
+#                  gives no pressure. Not interchangeable with MOC.
+# Pressures are the doc's kPa conversions of psia values (8.2 psia ~ 56.5 kPa, etc.).
+# source_id is the primary source only where the doc names it for that value; otherwise the repo
+# doc itself, with candidate primaries in the note (the doc gives no per-value attribution).
+
+# --- Kevlar/PBI webbings: NASA TB 26-05 ----------------------------------------------------
+- material_id: kevlar-pbi-webbing-natural
+  test_method: std6001_test1
+  o2_fraction: 0.37
+  pressure_kpa: 56.5
+  o2_raw: "37%"
+  pressure_raw: "56.5 kPa"
+  outcome: {passed: true}
+  gravity_regime: earth
+  source_id: nasa-tb-26-05
+  locator: "MOC 37% at 56.5 kPa (8.2 psia); transcribed via docs/environments/material-flammability-examples.md, Crew clothing kit and Crew restraint net tables"
+- material_id: kevlar-pbi-webbing-black
+  test_method: std6001_test1
+  o2_fraction: 0.35
+  pressure_kpa: 56.5
+  o2_raw: "35%"
+  pressure_raw: "56.5 kPa"
+  outcome: {passed: true}
+  gravity_regime: earth
+  source_id: nasa-tb-26-05
+  locator: "MOC 35% at 56.5 kPa (8.2 psia); transcribed via docs/environments/material-flammability-examples.md, Portable science instrument table"
+
+# --- Nomex HT90-40 --------------------------------------------------------------------------
+- material_id: nomex-ht90-40-single-layer
+  test_method: std6001_test1
+  o2_fraction: 0.25
+  pressure_kpa: 70.3
+  o2_raw: "25%"
+  pressure_raw: "70.3 kPa"
+  outcome: {passed: true}
+  gravity_regime: earth
+  source_id: doc-env-material-flammability
+  locator: "Nomex HT90-40 MOC 25% at 70.3 kPa; Crew clothing kit table"
+  note: "Primary source not attributed per value in the doc; candidates in its source list include Hirsch et al. 2006/2007/2010."
+
+# --- Silicone rubber ~1.5 mm ----------------------------------------------------------------
+- material_id: silicone-rubber-1p5mm
+  test_method: std6001_test1
+  o2_fraction: 0.21
+  pressure_kpa: 101.3
+  o2_raw: "21%"
+  pressure_raw: "101.3 kPa"
+  outcome: {passed: true}
+  gravity_regime: earth
+  source_id: doc-env-material-flammability
+  locator: "Silicone rubber ~1.5 mm MOC 21% at 101.3 kPa; Portable science instrument table"
+  note: "Primary source not attributed per value; candidates Hirsch et al. 2006/2007/2010. Doc Limits: silicone passes at the ISS only at its limit (MOC 21%)."
+- material_id: silicone-rubber-1p5mm
+  test_method: std6001_test1
+  o2_fraction: 0.23
+  pressure_kpa: 85.3
+  o2_raw: "23%"
+  pressure_raw: "85.3 kPa"
+  outcome: {passed: true}
+  gravity_regime: earth
+  source_id: doc-env-material-flammability
+  locator: "Silicone rubber ~1.5 mm MOC 23% at 85.3 kPa; Portable science instrument table"
+  note: "Primary source not attributed per value; candidates Hirsch et al. 2006/2007/2010."
+- material_id: silicone-rubber-1p5mm
+  test_method: std6001_test1
+  o2_fraction: 0.28
+  pressure_kpa: 48.2
+  o2_raw: "28%"
+  pressure_raw: "48.2 kPa"
+  outcome: {passed: true}
+  gravity_regime: earth
+  source_id: doc-env-material-flammability
+  locator: "Silicone rubber ~1.5 mm MOC 28% at 48.2 kPa; Portable science instrument table"
+  note: "Primary source not attributed per value; candidates Hirsch et al. 2006/2007/2010."
+
+# --- PTFE resin ~1.5 mm ---------------------------------------------------------------------
+- material_id: ptfe-resin-1p5mm
+  test_method: std6001_test1
+  o2_fraction: 0.42
+  pressure_kpa: 101.3
+  o2_raw: "42%"
+  pressure_raw: "101.3 kPa"
+  outcome: {passed: true}
+  gravity_regime: earth
+  source_id: doc-env-material-flammability
+  locator: "PTFE resin ~1.5 mm MOC 42% at 101.3 kPa; Coolant hose assembly table"
+  note: "Primary source not attributed per value; candidates Hirsch et al. 2006/2007/2010."
+- material_id: ptfe-resin-1p5mm
+  test_method: std6001_test1
+  o2_fraction: 0.46
+  pressure_kpa: 85.3
+  o2_raw: "46%"
+  pressure_raw: "85.3 kPa"
+  outcome: {passed: true}
+  gravity_regime: earth
+  source_id: doc-env-material-flammability
+  locator: "PTFE resin ~1.5 mm MOC 46% at 85.3 kPa; Coolant hose assembly table"
+  note: "Primary source not attributed per value; candidates Hirsch et al. 2006/2007/2010."
+- material_id: ptfe-resin-1p5mm
+  test_method: std6001_test1
+  o2_fraction: 0.53
+  pressure_kpa: 48.2
+  o2_raw: "53%"
+  pressure_raw: "48.2 kPa"
+  outcome: {passed: true}
+  gravity_regime: earth
+  source_id: doc-env-material-flammability
+  locator: "PTFE resin ~1.5 mm MOC 53% at 48.2 kPa; Coolant hose assembly table"
+  note: "Primary source not attributed per value; candidates Hirsch et al. 2006/2007/2010."
+
+# --- PTFE-insulated M22759 wire -------------------------------------------------------------
+- material_id: ptfe-insulated-wire-m22759
+  test_method: std6001_test4
+  o2_fraction: 0.30
+  pressure_kpa: 70.3
+  o2_raw: "30%"
+  pressure_raw: "70.3 kPa"
+  outcome: {passed: false}
+  gravity_regime: earth
+  source_id: doc-env-material-flammability
+  locator: "'an M22759 wire failed Test 4 at 30% / 70.3 kPa'; Portable science instrument table, Wiring row"
+  note: "Primary source not attributed per value; candidates Hirsch et al. 2006/2007/2010. Doc: no passing result."
+
+# --- LOI (ASTM D2863) -----------------------------------------------------------------------
+- material_id: cotton-untreated
+  test_method: astm_d2863
+  o2_fraction: null
+  pressure_kpa: null
+  o2_raw: null
+  pressure_raw: "about 1 atm (doc's description of ASTM D2863)"
+  outcome: {loi_fraction: 0.18}
+  gravity_regime: earth
+  source_id: usda-ars-cotton-loi
+  locator: "LOI 18%; transcribed via docs/environments/material-flammability-examples.md, Crew clothing kit table ('None; burns in air (LOI 18%)')"
+- material_id: pmma-cast-sheet
+  test_method: astm_d2863
+  o2_fraction: null
+  pressure_kpa: null
+  o2_raw: null
+  pressure_raw: "about 1 atm (doc's description of ASTM D2863)"
+  outcome: {loi_fraction: 0.173}
+  gravity_regime: earth
+  source_id: doc-env-material-flammability
+  locator: "PMMA cast sheet LOI 17.3%; Portable science instrument table ('None; burns in air (LOI 17.3%)')"
+  note: "Doc Limits: PMMA LOI comes from a vendor, distributor or secondary source; the only PMMA source listed is the Röhm PLEXIGLAS GS datasheet 211-1, but the doc does not attribute the value to it."

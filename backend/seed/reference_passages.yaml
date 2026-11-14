@@ -1,0 +1,16 @@
+# Requirement / guidance passages (models.ReferencePassage), e.g. from NASA-STD-6001,
+# SSP 51721, JSC 20793, OCHMO-TB-008. Intentionally empty: the repo docs describe these
+# documents but quote no passage verbatim, and passages are never paraphrased or invented.
+# Never an automated compliance determination.
+#
+# Shape of one entry:
+# - id: ssp-51721-flammability-controls    # stable slug
+#   source_id: ssp-51721
+#   passage: "..."                         # verbatim text
+#   locator: "§x.y, p. n"
+#   hazard: fire                           # fire | toxicity | biological | null
+#   scope: "ISS end items only"
+#   relevance: "..."
+#   unresolved_applicability: "..."
+#   review_status: draft
+[]
