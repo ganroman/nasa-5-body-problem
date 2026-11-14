@@ -106,7 +106,7 @@ def test_explain_unavailable_without_si_config(client, monkeypatch):
     d = client.post("/scenarios/explain", json={"cargo_slug": "portable-science-instrument", "component_index": 0,
                                                 "scenario": SCENARIO_ISS}).json()
     assert d["explanation"]["status"] == "unavailable"
-    assert all(s["source_id"].startswith(("obs-", "finding-")) for s in d["sources"])
+    assert {s["source_id"] for s in d["sources"][:2]} == {"scenario-conditions", "computed-coverage"}
 
 
 def test_export_matches_compare_and_reopens(client):

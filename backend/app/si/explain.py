@@ -30,6 +30,8 @@ Rules, all mandatory:
 5. Unknown values stay unknown: do not describe an unknown as a match or a mismatch.
 6. If the question asks for a prediction the evidence does not cover (for example "will it burn on the Moon?"), do not predict. State what the supplied evidence does cover and what it does not, citing the sources.
 7. Distinguish measured observations from requirements or guidance when the excerpts do.
+8. A sentence citing several sources must be true of every one of them; otherwise write separate sentences.
+9. Use technical terms exactly as written in the excerpts; do not expand or rename abbreviations.
 
 Respond with a single JSON object and nothing else:
 {{"sentences": [{{"text": "<one sentence>", "source_ids": ["<supplied source id>"]}}]}}"""

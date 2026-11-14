@@ -31,7 +31,7 @@ OBSERVATION_FIELDS = (
     "id", "source_id", "investigation_accession", "locator", "test_method", "hazard", "material_id",
     "is_summary_row", "o2_min", "o2_max", "o2_raw", "pressure_kpa_min", "pressure_kpa_max", "pressure_raw",
     "airflow_ms_min", "airflow_ms_max", "airflow_raw", "flow_direction", "gravity_regime", "gravity_g",
-    "geometry", "outcome",
+    "geometry", "outcome", "raw",  # raw: the source row, shown next to normalized values
 )
 
 
@@ -196,7 +196,7 @@ LIMITATIONS = [
 ]
 
 
-def _obs_excerpt(o: dict[str, Any], material: str | None) -> str:
+def _obs_excerpt(o: dict[str, Any], evidence_class: str, class_reason: str) -> str:
     """Deterministic text of what the record says, so the SI can only restate recorded values."""
 
     def rng(lo, hi, raw, scale, unit):
@@ -204,32 +204,83 @@ def _obs_excerpt(o: dict[str, Any], material: str | None) -> str:
             return f"not recorded{f' (raw: {raw})' if raw else ''}"
         return f"{lo * scale:g}{unit}" if lo == hi else f"{lo * scale:g}-{hi * scale:g}{unit}"
 
+    if evidence_class == "analogue":
+        fuel = (o.get("raw") or {}).get("Fuel Bottle")
+        subject = f"gas-burner analogue (fuel: {fuel or 'not recorded'}), not a solid material"
+    else:
+        subject = f"material {o['material_id']}"
     parts = [
+        f"evidence class {evidence_class} ({class_reason})",
         f"test method {o['test_method']}",
-        f"material {material or 'not identified'}",
+        subject,
         f"O2 {rng(o['o2_min'], o['o2_max'], o['o2_raw'], 100, '%')}",
         f"pressure {rng(o['pressure_kpa_min'], o['pressure_kpa_max'], o['pressure_raw'], 1, ' kPa')}",
         f"airflow {rng(o['airflow_ms_min'], o['airflow_ms_max'], o['airflow_raw'], 100, ' cm/s')}",
         f"gravity {o['gravity_regime']}",
-        f"outcome {o['outcome'] if o['outcome'] else 'not recorded'}",
+        f"outcome {_fmt_outcome(o['outcome'])}",
     ]
     if o["is_summary_row"]:
-        parts.append("summary row, not an individual test")
+        parts.append("summary row (several tests on one day), not an individual test")
     return "; ".join(parts) + "."
 
 
+def _fmt_outcome(outcome: dict[str, Any] | None) -> str:
+    if not outcome:
+        return "not recorded"
+    if "loi_fraction" in outcome:
+        return f"limiting oxygen index (LOI, ASTM D2863) {outcome['loi_fraction'] * 100:g}% O2"
+    if "passed" in outcome:
+        return "passed" if outcome["passed"] else "failed"
+    return ", ".join(f"{k} {v}" for k, v in outcome.items() if not k.endswith("_raw"))
+
+
+def _fmt_condition(dim: str, c: dict[str, Any]) -> str:
+    e = c["effective"]
+    if e["min"] is None:
+        return f"{dim} unknown"
+    val = f"{e['min']:g}" if e["min"] == e["max"] else f"{e['min']:g}-{e['max']:g}"
+    src = f", source {c['suggested_source_id']}" if c.get("suggested_source_id") and e["status"] != "override" else ""
+    return f"{dim} {val} ({e['status']}{src})"
+
+
 def si_inputs(result: dict[str, Any], cargo: dict[str, Any], component_index: int, hazard: str,
-              question: str | None, max_records: int = 8) -> dict[str, Any]:
-    """Evidence bundle for app.si.explain: only computed comparisons and recorded/curated text."""
+              question: str | None, max_records: int = 8, max_analogues: int = 3) -> dict[str, Any]:
+    """Evidence bundle for app.si.explain: only computed comparisons and recorded/curated text.
+
+    Besides test records, the scenario conditions and the computed coverage are supplied as
+    citable records, so statements about them cite the right thing.
+    """
     comp = result["components"][component_index]
-    ranked = comp["ranked"][:max_records] if hazard == Hazard.fire else []
-    sources = []
+    ranked = []
+    if hazard == Hazard.fire:
+        material = [r for r in comp["ranked"] if r["evidence_class"] != "analogue"]
+        analogues = [r for r in comp["ranked"] if r["evidence_class"] == "analogue"]
+        ranked = (material + analogues[:max_analogues])[:max_records]
+    env = result["environment"]
+    cov = result["coverage"][hazard]
+    cov_comp = cov["components"][component_index]
+    sources = [
+        {
+            "source_id": "scenario-conditions",
+            "excerpt": f"Scenario: {env['name']} ({env['space']}), gravity {env['gravity_regime']}, use state "
+                       f"{result['use_state']}; " + "; ".join(_fmt_condition(d, c) for d, c in result["conditions"].items()) + ".",
+            "locator": "Computed from the selected environment's conditions and user overrides",
+        },
+        {
+            "source_id": "computed-coverage",  # also carries component identity
+            "excerpt": f"Component {comp['name']}: label '{comp['original_label']}', material "
+                       f"{comp.get('material_id') or 'not identified'}, identity {comp['identity_confidence']}. "
+                       f"{hazard} evidence status: {cov_comp['status']} ({cov_comp['reason']}); "
+                       f"whole assembly: {cov['assembly']['status']} ({cov['assembly']['reason']}).",
+            "locator": "Computed by the Cargo Passport comparison logic",
+        },
+    ]
     for r in ranked:
         o = result["observations"][r["observation_id"]]
         src = result["sources"].get(o["source_id"], {})
         sources.append({
             "source_id": f"obs-{o['id']}",
-            "excerpt": _obs_excerpt(o, o["material_id"]),
+            "excerpt": _obs_excerpt(o, r["evidence_class"], r["reasons"][0]),
             "locator": f"{src.get('title', o['source_id'])}, {o['locator']}",
         })
     for f in result["findings"]:
@@ -239,21 +290,10 @@ def si_inputs(result: dict[str, Any], cargo: dict[str, Any], component_index: in
         "cargo": {"name": cargo["name"], "provenance": cargo.get("provenance")},
         "component": {k: comp.get(k) for k in ("name", "original_label", "material_id", "identity_confidence")},
         "hazard": hazard,
-        "scenario": {
-            "environment": result["environment"],
-            "use_state": result["use_state"],
-            "conditions": {d: c["effective"] for d, c in result["conditions"].items()},
-            "incomplete_dimensions": result["incomplete_dimensions"],
-        },
         "comparisons": [
             {"source_id": f"obs-{r['observation_id']}", "evidence_class": r["evidence_class"], "reasons": r["reasons"]}
             for r in ranked
         ],
-        "coverage": {
-            "component": result["coverage"][hazard]["components"][component_index],
-            "assembly": result["coverage"][hazard]["assembly"],
-        },
         "sources": sources,
         **({"question": question} if question else {}),
     }
-
