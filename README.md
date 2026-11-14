@@ -29,3 +29,8 @@ Flames behave differently in microgravity because hot gases do not rise as they 
 Rocket and propellant fire safety is generally outside PSI’s scope. The challenge notes that PSI currently lacks partial-gravity combustion data. Applications to fire safety on Earth are also welcome.
 
 Source: [NASA’s Flame in Freefall challenge details](https://www.spaceappschallenge.org/2026/challenges/flame-in-freefall/?tab=details). This summarizes the challenge brief, not implemented repository features.
+
+## Team resources
+
+- [Research brief](docs/research-brief.md): PSI data inventory (all 24 investigations), judging and submission rules, O₂ coverage chart, 36-hour plan
+- [Data](data/README.md): PSI combustion metadata and per-test experimental tables, plus API notes
