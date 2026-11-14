@@ -1,0 +1,25 @@
+# Render Blueprint for the Cargo Passport API (backend/). The frontend is served from GitHub Pages.
+# Secrets (sync: false) are entered in the Render dashboard, never committed.
+services:
+  - type: web
+    name: cargo-passport-api
+    runtime: python
+    plan: free
+    region: frankfurt
+    rootDir: backend
+    buildCommand: pip install uv && uv sync --frozen --no-dev
+    # Migrations run before the server starts (free plan has no pre-deploy hook). Seeding is a
+    # separate one-off: `uv run python -m app.ingest.load` against the production DATABASE_URL.
+    startCommand: uv run --no-dev alembic upgrade head && uv run --no-dev uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
+      - key: DATABASE_URL # Neon main branch, pooled host
+        sync: false
+      - key: DATABASE_URL_DIRECT # Neon main branch, direct host (no -pooler), for migrations
+        sync: false
+      - key: EUSTELLA_API_KEY
+        sync: false
+      - key: CORS_ORIGINS
+        value: https://ganroman.github.io,http://localhost:8000

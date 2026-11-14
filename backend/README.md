@@ -14,6 +14,17 @@ uv run pytest
 uv run uvicorn app.main:app --reload
 ```
 
+## Deploy (Render + Neon main)
+
+`render.yaml` at the repo root defines the API service (free plan, Frankfurt). Migrations run on every start; seeding is a one-off.
+
+1. Migrate and seed Neon `main` once, from your machine, with its URLs in `backend/.env.main` (gitignored):
+   `set -a; . ./.env.main; set +a; uv run alembic upgrade head && uv run python -m app.ingest.load`
+2. In Render: New → Blueprint → this repo. Enter `DATABASE_URL`, `DATABASE_URL_DIRECT` (Neon `main`) and `EUSTELLA_API_KEY`.
+3. Check `https://<service>.onrender.com/health`, then point the frontend at that URL.
+
+The free plan sleeps after inactivity; the first request afterwards takes about a minute. Open the API shortly before a demo.
+
 ## Configuration
 
 All configuration comes from environment variables (`.env` locally, the host's settings in production). Nothing secret is committed.
