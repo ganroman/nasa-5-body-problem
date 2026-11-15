@@ -108,6 +108,11 @@ def test_short_secret_shows_no_characters(client):
     assert row(client, "SI_API_KEY")["masked"] == "••••"
 
 
+def test_admin_password_never_shows_characters(client):
+    assert row(client, "ADMIN_PASSWORD")["masked"] == "••••"
+    assert PASSWORD[-4:] not in client.get("/admin/api/env", headers=AUTH).text
+
+
 def test_unset_secret_says_not_set(client):
     v = row(client, "SI_API_KEY")
     assert v["is_set"] is False and v["masked"] is None

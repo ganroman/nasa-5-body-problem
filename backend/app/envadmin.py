@@ -25,6 +25,7 @@ class EnvVar:
     secret: bool = False
     example: str = ""
     editable: bool = True
+    tail: bool = True  # show the last four characters of a secret
 
 
 # Everything the backend reads (app/config.py) plus the admin and ops knobs.
@@ -41,7 +42,7 @@ REGISTRY: tuple[EnvVar, ...] = (
     EnvVar("CORS_ORIGINS", "Comma-separated browser origins allowed to call the API.",
            example="https://cargo.qwadratic.me,http://localhost:8000"),
     EnvVar("ADMIN_PASSWORD", "Password of /admin (HTTP Basic, any user name). Set by the host, not editable here.",
-           secret=True, editable=False),
+           secret=True, editable=False, tail=False),
     EnvVar("CARGO_ENV_FILE", "Env file of the service that this widget edits. Set in the unit.",
            example="/var/lib/cargo/cargo.env", editable=False),
     EnvVar("CARGO_FLAGS_FILE", "JSON file with the feature flags. Set in the unit.",
@@ -148,7 +149,7 @@ def describe() -> list[dict[str, Any]]:
             "pending_restart": v.editable and in_file is not None and in_file != (running or ""),
         }
         if v.secret:
-            row["masked"] = mask(effective) if effective else None
+            row["masked"] = (mask(effective) if v.tail else MASK) if effective else None
         else:
             row["value"] = effective or ""
             row["running_value"] = running or ""
