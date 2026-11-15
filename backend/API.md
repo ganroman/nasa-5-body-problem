@@ -2,10 +2,9 @@
 
 How to build the cargo → component → environment → evidence screen ([build plan §2 and §4](../docs/build-plan.md#2-the-complete-user-journey)) on top of this API. Full endpoint list: [README](README.md#api). Interactive docs: `<API_URL>/docs`.
 
-- **Base URL:** `http://localhost:8000` locally (`uv run uvicorn app.main:app --reload` in `backend/`), the Vercel URL (`https://<project>.vercel.app`) once deployed. Keep it in one constant.
-- **CORS:** the API accepts requests from `https://ganroman.github.io` and `http://localhost:8000`. Tell the backend owner if the page is served from another origin.
+- **Base URL:** `http://localhost:8000` (the API runs locally; see the README for the demo setup against Neon `main`). Keep it in one constant.
+- **CORS:** the API accepts requests from the origins in `CORS_ORIGINS` (default `http://localhost:8000`). If the page is served from another port, e.g. Live Server on `5500`, add that origin there.
 - **Units in requests and responses:** O₂ as a fraction (`0.21`), pressure kPa, airflow m/s. Convert for display: O₂ × 100 → %, airflow × 100 → cm/s.
-- **Cold start:** the first request after an idle period can take a few seconds while the function starts. Show a loading state.
 
 ## 1. Load the pickers
 

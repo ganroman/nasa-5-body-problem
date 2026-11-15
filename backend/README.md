@@ -1,6 +1,6 @@
 # Cargo Passport API
 
-Backend for the Cargo Passport dashboard (see [build plan](../docs/build-plan.md)). FastAPI + SQLAlchemy 2 + Alembic on Neon Postgres. The frontend is served from GitHub Pages; this API is deployed separately (Vercel), because Pages cannot run a server or keep the SI key secret.
+Backend for the Cargo Passport dashboard (see [build plan](../docs/build-plan.md)). FastAPI + SQLAlchemy 2 + Alembic on Neon Postgres. The API runs locally for the demo (see below); the SI key stays in `backend/.env` on that machine.
 
 ## Setup
 
@@ -14,17 +14,19 @@ uv run pytest
 uv run uvicorn app.main:app --reload
 ```
 
-## Deploy (Vercel + Neon main)
+## Running for the demo (local, Neon main)
 
-The API runs as a Vercel Function (FastAPI preset, entrypoint `app/main.py`, region `fra1`). `vercel.json` raises the time limit to 30 s for SI calls; `.vercelignore` keeps `.env*`, tests, seed data and migrations out of the upload. Migrations and seeding are one-off commands run locally against Neon.
+The API runs locally; there is no hosted deployment. For the demo, run it against Neon `main` (production data), with its URLs in `backend/.env.main` (gitignored). Quote the values (`DATABASE_URL="..."`): the URLs contain `&`, which the shell otherwise treats as a command separator and silently falls back to `.env` (dev).
 
-1. Migrate and seed Neon `main` once, from your machine, with its URLs in `backend/.env.main` (gitignored). Quote the values (`DATABASE_URL="..."`): the URLs contain `&`, which the shell otherwise treats as a command separator and silently falls back to `.env` (dev):
-   `set -a; . ./.env.main; set +a; uv run alembic upgrade head && uv run python -m app.ingest.load`
-2. From `backend/`: `npx vercel login`, then `npx vercel link --yes --project cargo-passport-api`.
-3. Add production variables: `DATABASE_URL` (Neon `main`, pooled), `EUSTELLA_API_KEY`, `CORS_ORIGINS`, e.g. `npx vercel env add EUSTELLA_API_KEY production`.
-4. Deploy: `npx vercel deploy --prod`. Check `https://<project>.vercel.app/health`.
+```bash
+cd backend
+set -a; . ./.env.main; set +a
+uv run alembic upgrade head            # after schema changes
+uv run python -m app.ingest.load       # after seed/data changes; safe to re-run
+uv run uvicorn app.main:app --port 8000
+```
 
-After schema changes, run `alembic upgrade head` against Neon `main` before deploying.
+The API is then at `http://localhost:8000` (docs at `/docs`). Add the frontend's local origin to `CORS_ORIGINS` if it is served from another port.
 
 ## Configuration
 
