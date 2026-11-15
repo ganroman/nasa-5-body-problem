@@ -35,3 +35,4 @@ Source: [NASA’s Flame in Freefall challenge details](https://www.spaceappschal
 - [Cargo & environment map](prototype/cargo-environment-map.html): standalone interactive diagram of cargo routes, cargo types, and environment dimensions. Open the HTML file in a browser; no installation is needed.
 - [Research brief](docs/research-brief.md): PSI data inventory (all 24 investigations), judging and submission rules, O₂ coverage chart, 36-hour plan
 - [Data](data/README.md): PSI combustion metadata and per-test experimental tables, plus API notes
+- [Backend API](backend/README.md): FastAPI + Neon Postgres backend, setup, data rules and open data questions

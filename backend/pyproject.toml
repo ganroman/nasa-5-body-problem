@@ -1,0 +1,21 @@
+[project]
+name = "cargo-passport-api"
+version = "0.1.0"
+description = "Backend for the Cargo Passport dashboard (NASA Space Apps 2026, Flame in Freefall)"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "sqlalchemy>=2.0.36",
+    "alembic>=1.14",
+    "psycopg[binary]>=3.2",
+    "pydantic-settings>=2.6",
+    "pyyaml>=6.0",
+    "openai>=1.55",
+]
+
+[dependency-groups]
+dev = ["pytest>=8.3", "httpx>=0.28"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

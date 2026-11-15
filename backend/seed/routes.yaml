@@ -1,0 +1,254 @@
+# Cargo routes R01-R24, transcribed from prototype/cargo-environment-map.html (ROUTES).
+# Prototype env ids -> seed ids: earth -> earth-logistics, gateway -> lunar-gateway,
+# moon -> lunar-base-nasa, ilrs -> lunar-base-china, orbit -> martian-orbital-station-nasa,
+# mars -> martian-base-nasa, rover -> lunar-rover-cabin, outside -> lunar-exterior,
+# disposal -> disposal-vehicle.
+# possible_cargo = prototype "contents"; description = prototype "transport" text.
+# status: operating -> supported; illustrative -> hypothetical; "reference" (planning / study)
+#   -> historical for the paused-Gateway routes R04-R07 (cargo-journes.md calls them "historical
+#   planning references"), otherwise supported. prototype_status keeps the original label
+#   because RouteStatus has no planning/study value (R12-R16 are Mars study concepts).
+# W1-W5 follow cargo-journes.md "ISS departures to lunar destinations": R22 [W1][W3],
+#   R23 [W2][W5], R24 [W4]; R04/R06/R07/R08/R10 share one sentence citing [W1][W2].
+# prototype_status and cargo_types have no column in models.Route; the loader only validates them.
+
+- id: R01
+  from_env: earth-logistics
+  to_env: iss
+  status: supported
+  prototype_status: operating
+  cargo_types: [supplies, reserves, equipment, science]
+  possible_cargo: "Food, water, gases, clothing, hygiene and medical supplies; spares, tools, batteries and experiments."
+  description: "Cargo spacecraft; pressurized stowage or external carriers depending on vehicle."
+  source_ids: [doc-prototype-cargo-map, doc-env-iss]
+
+- id: R02
+  from_env: iss
+  to_env: earth-logistics
+  status: supported
+  prototype_status: operating
+  cargo_types: [returns]
+  possible_cargo: "Completed experiments, biological / physical samples and failed hardware."
+  description: "Only return-capable vehicles bring selected cargo back intact."
+  source_ids: [doc-prototype-cargo-map, doc-env-iss]
+
+- id: R03
+  from_env: iss
+  to_env: disposal-vehicle
+  status: supported
+  prototype_status: operating
+  cargo_types: [waste]
+  possible_cargo: "Rubbish, used packaging and unneeded equipment."
+  description: "Loaded into Cygnus or Progress for destructive re-entry, not recovery."
+  source_ids: [doc-prototype-cargo-map, doc-env-iss]
+
+- id: R04
+  from_env: earth-logistics
+  to_env: lunar-gateway
+  status: historical
+  prototype_status: reference
+  cargo_types: [supplies, reserves, equipment, science, infrastructure]
+  possible_cargo: "Station modules, food, water, atmosphere supplies, clothing, medicine, tools, spares and experiments."
+  description: "Earlier Gateway logistics architecture; visiting cargo vehicles."
+  source_ids: [doc-prototype-cargo-map, doc-env-lunar-gateway, w1-nasa-gateway-logistics-2020, w2-nasa-national-space-policy-2026]
+
+- id: R05
+  from_env: lunar-gateway
+  to_env: earth-logistics
+  status: historical
+  prototype_status: reference
+  cargo_types: [returns]
+  possible_cargo: "Selected lunar / research samples and small items needing examination."
+  description: "Earlier architecture: transfer into an Earth-return vehicle."
+  source_ids: [doc-prototype-cargo-map, doc-env-lunar-gateway]
+
+- id: R06
+  from_env: lunar-gateway
+  to_env: lunar-base-nasa
+  status: historical
+  prototype_status: reference
+  cargo_types: [equipment, science, supplies]
+  possible_cargo: "Surface tools, experiments, empty sample containers and expedition supplies."
+  description: "Lander transfer in the earlier Gateway architecture."
+  source_ids: [doc-prototype-cargo-map, doc-env-lunar-gateway, w1-nasa-gateway-logistics-2020, w2-nasa-national-space-policy-2026]
+
+- id: R07
+  from_env: lunar-base-nasa
+  to_env: lunar-gateway
+  status: historical
+  prototype_status: reference
+  cargo_types: [returns]
+  possible_cargo: "Sealed lunar rock and soil samples; selected equipment and experiments."
+  description: "Ascent / lander transfer to an orbital staging point."
+  source_ids: [doc-prototype-cargo-map, doc-env-lunar-gateway, w1-nasa-gateway-logistics-2020, w2-nasa-national-space-policy-2026]
+
+- id: R08
+  from_env: earth-logistics
+  to_env: lunar-base-nasa
+  status: supported
+  prototype_status: reference
+  cargo_types: [infrastructure, supplies, reserves, equipment, science]
+  possible_cargo: "Habitats, rovers, power and communications systems; supplies, water, gases, tools, batteries, cables, instruments and packaging."
+  description: "Separate direct surface deliveries; Gateway is not required for all cargo. Transit / lander conditions remain unknown."
+  source_ids: [doc-prototype-cargo-map, doc-env-lunar-base-nasa, w1-nasa-gateway-logistics-2020, w2-nasa-national-space-policy-2026]
+
+- id: R09
+  from_env: lunar-base-nasa
+  to_env: earth-logistics
+  status: supported
+  prototype_status: reference
+  cargo_types: [returns]
+  possible_cargo: "Selected lunar rocks, soil, experiment specimens and failed components."
+  description: "End-to-end return via ascent and Earth-return spacecraft; no Gateway stop required in this summarized route."
+  source_ids: [doc-prototype-cargo-map, doc-env-lunar-base-nasa]
+
+- id: R10
+  from_env: earth-logistics
+  to_env: lunar-base-china
+  status: supported
+  prototype_status: reference
+  cargo_types: [infrastructure, supplies, reserves, equipment, science]
+  possible_cargo: "Habitat hardware, robots, power / communications systems, instruments, food, water, gases, batteries, filters and repair materials."
+  description: "Expected engineering needs; not a published ILRS cargo manifest."
+  source_ids: [doc-prototype-cargo-map, doc-env-lunar-base-china, w1-nasa-gateway-logistics-2020, w2-nasa-national-space-policy-2026]
+
+- id: R11
+  from_env: lunar-base-china
+  to_env: earth-logistics
+  status: supported
+  prototype_status: reference
+  cargo_types: [returns]
+  possible_cargo: "Selected rocks, soil, cores, specimens, failed components and exposed materials."
+  description: "Selected cargo return; some samples may need special temperature control."
+  source_ids: [doc-prototype-cargo-map, doc-env-lunar-base-china]
+
+- id: R12
+  from_env: earth-logistics
+  to_env: martian-orbital-station-nasa
+  status: study
+  prototype_status: reference
+  cargo_types: [supplies, reserves, equipment, science, infrastructure]
+  possible_cargo: "Food, water and gas reserves, medicine, tools, spares, experiments and expedition-support hardware."
+  description: "Mars transit habitat / transport concept; no permanent orbital station assumed."
+  source_ids: [doc-prototype-cargo-map, doc-env-martian-orbital-station]
+
+- id: R13
+  from_env: martian-orbital-station-nasa
+  to_env: earth-logistics
+  status: study
+  prototype_status: reference
+  cargo_types: [returns]
+  possible_cargo: "Selected samples, research materials and hardware for examination."
+  description: "Return transit; sample containment and condition must be specified."
+  source_ids: [doc-prototype-cargo-map, doc-env-martian-orbital-station]
+
+- id: R14
+  from_env: earth-logistics
+  to_env: martian-base-nasa
+  status: study
+  prototype_status: reference
+  cargo_types: [infrastructure, supplies, reserves, equipment, science]
+  possible_cargo: "Predeployed habitats / rovers, power, communications and ascent equipment; food, medicine, clothing, reserves, tools and spares."
+  description: "Direct surface delivery, including before crew arrival; not all cargo passes through an orbital habitat."
+  source_ids: [doc-prototype-cargo-map, doc-env-martian-base-nasa]
+
+- id: R15
+  from_env: martian-orbital-station-nasa
+  to_env: martian-base-nasa
+  status: study
+  prototype_status: reference
+  cargo_types: [supplies, science, equipment]
+  possible_cargo: "Expedition supplies, instruments and equipment."
+  description: "Lander in an orbital-rendezvous scenario."
+  source_ids: [doc-prototype-cargo-map, doc-env-cargo-journeys]
+
+- id: R16
+  from_env: martian-base-nasa
+  to_env: martian-orbital-station-nasa
+  status: study
+  prototype_status: reference
+  cargo_types: [returns]
+  possible_cargo: "Selected sealed rock, soil and atmospheric samples; experiments and equipment."
+  description: "Ascent to return vehicle; appropriate containment / planetary protection required."
+  source_ids: [doc-prototype-cargo-map, doc-env-martian-base-nasa]
+
+- id: R17
+  from_env: lunar-base-nasa
+  to_env: lunar-rover-cabin
+  status: hypothetical
+  prototype_status: illustrative
+  cargo_types: [equipment, science]
+  possible_cargo: "Tools, sample containers and spare equipment for fieldwork."
+  description: "Local transfer into a pressurized rover; cabin volume and ventilation differ from habitat."
+  source_ids: [doc-prototype-cargo-map, doc-env-cargo-journeys]
+
+- id: R18
+  from_env: lunar-rover-cabin
+  to_env: lunar-base-nasa
+  status: hypothetical
+  prototype_status: illustrative
+  cargo_types: [equipment, science]
+  possible_cargo: "Field tools, sample containers and equipment returning after the expedition."
+  description: "Record changed condition; rover use does not establish suitability for indoor charging."
+  source_ids: [doc-prototype-cargo-map, doc-env-cargo-journeys]
+
+- id: R19
+  from_env: lunar-base-nasa
+  to_env: lunar-exterior
+  status: hypothetical
+  prototype_status: illustrative
+  cargo_types: [equipment, science]
+  possible_cargo: "Battery-powered geological instrument or other field equipment."
+  description: "Airlock / suit interface; record the change from cabin gas to external vacuum."
+  source_ids: [doc-prototype-cargo-map, doc-env-cargo-journeys]
+
+- id: R20
+  from_env: lunar-exterior
+  to_env: lunar-base-nasa
+  status: hypothetical
+  prototype_status: illustrative
+  cargo_types: [equipment]
+  possible_cargo: "Drill or robot component brought inside for inspection, repair or charging."
+  description: "Record dust, thermal exposure, damage and exposed internal parts."
+  source_ids: [doc-prototype-cargo-map, doc-env-cargo-journeys]
+
+- id: R21
+  from_env: lunar-base-nasa
+  to_env: lunar-base-china
+  status: hypothetical
+  prototype_status: illustrative
+  cargo_types: [equipment, science]
+  possible_cargo: "A replacement instrument or urgently needed spare."
+  description: "Hypothetical cross-program transfer only; receiving-site compatibility and acceptance remain unresolved."
+  source_ids: [doc-prototype-cargo-map, doc-env-cargo-journeys]
+
+- id: R22
+  from_env: iss
+  to_env: lunar-gateway
+  status: hypothetical
+  prototype_status: illustrative
+  cargo_types: [equipment, science]
+  possible_cargo: "Hypothetical cargo: an ISS-used instrument, experiment or spare; no published manifest established."
+  description: "No announced ISS-to-Gateway service found in the reviewed sources (14 Nov 2026). Earlier Dragon XL logistics launched from Earth; transfer vehicle and acceptance are unspecified."
+  source_ids: [doc-prototype-cargo-map, doc-env-cargo-journeys, w1-nasa-gateway-logistics-2020, w3-nasa-isaac]
+
+- id: R23
+  from_env: iss
+  to_env: lunar-base-nasa
+  status: hypothetical
+  prototype_status: illustrative
+  cargo_types: [equipment, science]
+  possible_cargo: "Hypothetical cargo: tools, instruments or spare equipment after ISS use."
+  description: "No announced ISS-to-NASA-base service found in the reviewed sources (14 Nov 2026). A generic ISS-to-Moon paper is speculative; lunar transfer vehicle and lander are unspecified. No Earth return or Gateway stop is assumed."
+  source_ids: [doc-prototype-cargo-map, doc-env-cargo-journeys, w2-nasa-national-space-policy-2026, w5-khoshyaran-2017]
+
+- id: R24
+  from_env: iss
+  to_env: lunar-base-china
+  status: hypothetical
+  prototype_status: illustrative
+  cargo_types: [equipment, science]
+  possible_cargo: "Hypothetical cross-program cargo: an instrument or spare after ISS use."
+  description: "No announced ISS-to-ILRS service found in the reviewed sources (14 Nov 2026). ILRS describes Earth-Moon transport; transfer vehicle, lander, program agreement and acceptance are unspecified."
+  source_ids: [doc-prototype-cargo-map, doc-env-cargo-journeys, w4-ilrs-details-2024]
+

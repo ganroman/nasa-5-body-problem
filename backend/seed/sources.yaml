@@ -1,0 +1,232 @@
+# Non-PSI sources cited by the repo docs, plus the repo docs themselves (kind internal_doc).
+# PSI investigations live elsewhere (ids like psi-26-bass, psi-98-saffire-1) and may be
+# referenced from other seed files without an entry here.
+# Titles are as the repo docs cite them; where a doc gives only "Author et al. YEAR", that is
+# the title here rather than a guessed full title.
+
+# --- Standards, requirements and guidance ---------------------------------------------------
+- id: nasa-std-6001
+  kind: standard
+  title: "NASA-STD-6001: Flammability, Offgassing, and Compatibility Requirements and Test Procedures"
+  url: https://standards.nasa.gov/standard/NASA/NASA-STD-6001
+  publisher: NASA
+  access_notes: "Catalogue: public standard, not a material-property database; use the applicable revision for each test."
+- id: ssp-51721
+  kind: standard
+  title: "ISS Safety Requirements Document, SSP 51721"
+  url: https://ntrs.nasa.gov/citations/20210009936
+  publisher: NASA
+  access_notes: "Catalogue: public baseline edition identified; not assumed to be the latest controlled revision."
+- id: jsc-20793
+  kind: standard
+  title: "Crewed Space Vehicle Battery Safety Requirements, JSC 20793 Rev D"
+  url: https://standards.nasa.gov/sites/default/files/standards/JSC/D/0/jsc-20793_revd.pdf
+  publisher: NASA Johnson Space Center
+  revision: D
+  published_on: "2017"
+  access_notes: "Catalogue: public 2017 revision identified; confirm the applicable controlled version."
+- id: ochmo-tb-008
+  kind: guidance
+  title: "NASA Fire Protection Technical Brief, OCHMO-TB-008"
+  url: https://www.nasa.gov/wp-content/uploads/2023/12/ochmo-tb-008-fire-protection.pdf
+  publisher: NASA OCHMO
+  published_on: "2023-11-29"
+  access_notes: "Catalogue: reviewed revision dated 29 November 2023; does not replace programme requirements."
+
+# --- Material flammability (docs/environments/material-flammability-examples.md, Sources) ---
+- id: nasa-tb-26-05
+  kind: paper
+  title: "NASA TB 26-05: Webbings for Use in Elevated Oxygen Environments"
+  url: https://www.nasa.gov/centers-and-facilities/nesc/tb-26-05-webbings-for-use-in-elevated-oxygen-environments/
+  publisher: NASA NESC
+  access_notes: "Facts from the bulletin web page; PDF text did not extract, so the image-only results table and offgassing results were not reviewed. MAPTIS records not opened."
+- id: hirsch-2006
+  kind: paper
+  title: "Hirsch et al. 2006"
+  url: https://ntrs.nasa.gov/api/citations/20070005041/downloads/20070005041.pdf
+  publisher: NASA NTRS
+  published_on: "2006"
+- id: hirsch-2007
+  kind: paper
+  title: "Hirsch et al. 2007"
+  url: https://ntrs.nasa.gov/api/citations/20070018178/downloads/20070018178.pdf
+  publisher: NASA NTRS
+  published_on: "2007"
+- id: hirsch-2010
+  kind: paper
+  title: "Hirsch et al. 2010"
+  url: https://ntrs.nasa.gov/api/citations/20100015582/downloads/20100015582.pdf
+  publisher: NASA NTRS
+  published_on: "2010"
+- id: olson-2014
+  kind: paper
+  title: "Olson et al. 2014"
+  url: https://ntrs.nasa.gov/api/citations/20150004099/downloads/20150004099.pdf
+  publisher: NASA NTRS
+  published_on: "2014"
+- id: urban-ruff-2016
+  kind: paper
+  title: "Urban & Ruff 2016"
+  url: https://ntrs.nasa.gov/api/citations/20160010292/downloads/20160010292.pdf
+  publisher: NASA NTRS
+  published_on: "2016"
+- id: ntrs-20150022123
+  kind: paper
+  title: "Saffire silicone MOC paper (NTRS 20150022123)"
+  url: https://ntrs.nasa.gov/citations/20150022123
+  publisher: NASA NTRS
+  access_notes: "Not opened: reports per-thickness MOCs that were not reviewed."
+- id: usda-ars-cotton-loi
+  kind: paper
+  title: "USDA-ARS cotton LOI study"
+  url: https://digitalcommons.unl.edu/usdaarsfacpub/1115
+  publisher: USDA-ARS
+- id: rohm-plexiglas-gs-211-1
+  kind: datasheet
+  title: "Röhm PLEXIGLAS GS datasheet 211-1"
+  url: https://www.voskunststoffen.nl/files/166151/datasheet%20plexiglas%20XT%20GS.pdf
+  publisher: Röhm
+- id: polymax-silicone-sheeting
+  kind: datasheet
+  title: "Polymax silicone rubber sheeting datasheet"
+  url: https://www.polymax.co.uk/media/documents/Datasheet/general-purpose-silicone-rubber-sheeting.pdf
+  publisher: Polymax
+- id: plastics-intl-ptfe
+  kind: datasheet
+  title: "Plastics International PTFE datasheet"
+  url: https://www.plasticsintl.com/media/trshlm53/ptfe-data-sheet.pdf
+  publisher: Plastics International
+- id: iewc-m22759-6
+  kind: datasheet
+  title: "IEWC M22759/6 specification sheet"
+  url: https://media.iewc.com/SpecificationSheets/M22759-6_SS.pdf
+  publisher: IEWC
+- id: nasa-wstf-flammability
+  kind: web
+  title: "NASA White Sands Test Facility: flammability testing"
+  url: https://www.nasa.gov/centers-and-facilities/white-sands/flammability/
+  publisher: NASA
+- id: maptis
+  kind: web
+  title: "NASA MAPTIS (Materials and Processes Technical Information System)"
+  url: https://maptis.nasa.gov/
+  publisher: NASA
+  access_notes: "Registration required; access cost-sharing from January 2026. Records, bulk export and reuse permissions not verified."
+
+# --- Web review for ISS -> lunar routes (docs/environments/cargo-journes.md, W1-W5) ----------
+- id: w1-nasa-gateway-logistics-2020
+  kind: web
+  title: "NASA Awards Artemis Contract for Gateway Logistics Services"
+  url: https://www.nasa.gov/news-release/nasa-awards-artemis-contract-for-gateway-logistics-services/
+  publisher: NASA
+  published_on: "2020-03-27"
+  accessed_on: "2026-11-14"
+  access_notes: "[W1] Earlier Gateway delivery architecture; historical schedules are not current commitments."
+- id: w2-nasa-national-space-policy-2026
+  kind: web
+  title: "NASA Unveils Initiatives to Achieve America's National Space Policy"
+  url: https://www.nasa.gov/news-release/nasa-unveils-initiatives-to-achieve-americas-national-space-policy/
+  publisher: NASA
+  published_on: "2026-03-24"
+  accessed_on: "2026-11-14"
+  access_notes: "[W2] Gateway pause intention and phased surface-base deliveries."
+- id: w3-nasa-isaac
+  kind: web
+  title: "Integrated System for Autonomous and Adaptive Caretaking (ISAAC)"
+  url: https://www.nasa.gov/integrated-system-for-autonomous-and-adaptive-caretaking-isaac/
+  publisher: NASA
+  accessed_on: "2026-11-14"
+  access_notes: "[W3] ISS demonstrations and simulated Gateway cargo handling; not an ISS-to-Gateway shipment."
+- id: w4-ilrs-details-2024
+  kind: web
+  title: "China unveils International Lunar Research Station details"
+  url: https://english.www.gov.cn/news/202404/25/content_WS662a42bdc6d0868f4e8e66f0.html
+  publisher: State Council / Xinhua
+  published_on: "2024-04-25"
+  accessed_on: "2026-11-14"
+  access_notes: "[W4] ILRS sections and Earth-Moon transport; historical targets are not confirmed completion dates."
+- id: w5-khoshyaran-2017
+  kind: paper
+  title: "A Newtonian Logistic System for the Earth-ISS-Moon Cargo Delivery"
+  url: https://www.tsijournals.com/articles/a-newtonian-logistic-system-for-the-earthissmoon-cargo-delivery-13338.html
+  publisher: "Journal of Space Exploration 6(2):125"
+  published_on: "2017-07-15"
+  accessed_on: "2026-11-14"
+  access_notes: "[W5] Speculative proposal; publisher-indexed text via web search after direct page access timed out."
+
+# --- Repo docs transcribed into this seed ---------------------------------------------------
+- id: doc-env-iss
+  kind: internal_doc
+  title: "International Space Station: modules, logistics, and crew"
+  url: docs/environments/iss.md
+  published_on: "2026-11-14"
+- id: doc-env-lunar-base-nasa
+  kind: internal_doc
+  title: "NASA lunar surface base: systems, logistics, and crew"
+  url: docs/environments/lunar-base-nasa.md
+  published_on: "2026-11-14"
+- id: doc-env-lunar-base-china
+  kind: internal_doc
+  title: "China's planned lunar base: ILRS"
+  url: docs/environments/lunar-base-china.md
+  published_on: "2026-11-14"
+- id: doc-env-lunar-gateway
+  kind: internal_doc
+  title: "Lunar Gateway: modules, logistics, crew, and comparison with the ISS"
+  url: docs/environments/lunar-gateway.md
+  published_on: "2026-11-14"
+- id: doc-env-martian-base-nasa
+  kind: internal_doc
+  title: "Martian surface base: functions, logistics, and crew"
+  url: docs/environments/martian-base-nasa.md
+  published_on: "2026-11-14"
+- id: doc-env-martian-orbital-station
+  kind: internal_doc
+  title: "Martian orbital habitat: functions, logistics, and crew"
+  url: docs/environments/martian-orbital-station-nasa.md
+  published_on: "2026-11-14"
+- id: doc-env-dimensions
+  kind: internal_doc
+  title: "Environment dimensions"
+  url: docs/environments/environment-dimensions.md
+  published_on: "2026-11-14"
+- id: doc-env-cargo-journeys
+  kind: internal_doc
+  title: "Cargo journeys between environments"
+  url: docs/environments/cargo-journes.md
+  published_on: "2026-11-14"
+- id: doc-env-material-flammability
+  kind: internal_doc
+  title: "Mock cargo and material flammability evidence"
+  url: docs/environments/material-flammability-examples.md
+  published_on: "2026-11-14"
+- id: doc-env-earth-aircraft
+  kind: internal_doc
+  title: "Aircraft: cabins and cargo holds"
+  url: docs/environments/earth/aircraft.md
+  published_on: "2026-11-14"
+- id: doc-env-earth-battery-storage
+  kind: internal_doc
+  title: "Power plants and battery energy storage"
+  url: docs/environments/earth/power-plants-and-battery-storage.md
+  published_on: "2026-11-14"
+- id: doc-env-earth-schools
+  kind: internal_doc
+  title: "Schools and public buildings"
+  url: docs/environments/earth/schools-and-public-buildings.md
+  published_on: "2026-11-14"
+- id: doc-env-earth-submarines
+  kind: internal_doc
+  title: "Submarines: occupied compartments and equipment spaces"
+  url: docs/environments/earth/submarines.md
+  published_on: "2026-11-14"
+- id: doc-data-sources-catalog
+  kind: internal_doc
+  title: "Data sources for Flame in Freefall"
+  url: data/data-sources-catalog.md
+  published_on: "2026-11-14"
+- id: doc-prototype-cargo-map
+  kind: internal_doc
+  title: "Cargo & environment map (prototype ENV and ROUTES data)"
+  url: prototype/cargo-environment-map.html
+  published_on: "2026-11-14"
