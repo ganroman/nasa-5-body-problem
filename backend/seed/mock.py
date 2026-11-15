@@ -204,7 +204,7 @@ def build_observations(rng: random.Random) -> list[dict]:
                 o2_min=moc, o2_max=moc, o2_raw=f"{moc * 100:g}%", pressure_kpa_min=p, pressure_kpa_max=p, pressure_raw=f"{p:g} kPa",
                 gravity_regime=GravityRegime.earth, outcome={"passed": True},
                 raw={"Material": name, "Note": "maximum O2 passed at this pressure"})
-        if rng.random() < 0.12:
+        if key in LOI_MATERIALS:
             loi = round(lim + 0.01 + rng.random() * 0.03, 3)
             add("mock-std-loi", f"mock#loi/{key}", test_method=TestMethod.astm_d2863, material_id=f"mock-{key}",
                 gravity_regime=GravityRegime.earth, outcome={"loi_fraction": loi}, raw={"Material": name})
@@ -219,6 +219,9 @@ def build_observations(rng: random.Random) -> list[dict]:
             pressure_raw="101.3 kPa", gravity_regime=GravityRegime.microgravity, outcome=None, raw={"Material": label})
     return rows
 
+
+# LOI rows record no oxygen or pressure, so they rank first and read as "unknown". Keep them to a few materials.
+LOI_MATERIALS = {"paper", "cardboard", "cotton-poly", "wool", "fleece", "pu-foam", "pe-foam", "ps-foam"}
 
 TOPICS = [FindingTopic.prevention, FindingTopic.detection, FindingTopic.suppression, FindingTopic.general]
 
