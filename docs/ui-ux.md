@@ -69,7 +69,19 @@ Other rules:
 - Each environment is compared once with `POST /scenarios/compare` and cached while the page is open.
 - **Data status:** unknown values stay "unknown"; the strip lists the scenario's `incomplete_dimensions`. Only the ISS has a published cabin atmosphere (see [environment dimensions](environments/environment-dimensions.md)).
 - **Custom…** opens sliders for oxygen, pressure, airflow, temperature and CO₂ on top of a chosen base environment (which sets gravity). Values are sent as `overrides` and labelled "your values"; they are the user's scenario, not measurements.
-- A **Use state** selector (stowed, operating, charging, maintenance) sits in the header; changing it re-runs the comparison.
+- A **Cargo is** selector in the header sets the use state: *kept (stowed)*, *unpacked and in use* (operating), *unpacked and charging* or *unpacked for maintenance*. Changing it re-runs the comparison.
+
+**Extra care needed (bottom row of the top panel).** The row lists review points for keeping or unpacking the cargo in the selected environment, for example "⚠ Extra care needed: 5 review points for cargo kept (stowed) at NASA lunar base". Every point comes from the comparison response:
+
+| Review point | Source in the compare response |
+|---|---|
+| "O₂, pressure unknown here" | `incomplete_dimensions` |
+| "<object>: no fire evidence" | `coverage.fire.components[i].status` is `gap` |
+| "<object>: tested under different O₂ / pressure / airflow / gravity" | `comparison.<dim>.result` is `differs` on the object's top-ranked non-analogue record |
+| "Whole assembly: not tested as packed together" | `coverage.fire.assembly.status` is not `evidence_found` |
+| "Cargo passport does not list / records no use states, including …" | the selected use state is missing from `cargo.supported_use_states` |
+
+With no points, the row reads "No open review points". The row never says the cargo is *allowed*, *approved* or *safe*: the app does not assign approval ([cargo passport](cargo-passport.md), [build plan](build-plan.md)). A fixed note under it says the decision belongs to the responsible safety review. The backend does not yet change comparisons by use state, so only the last point depends on it.
 
 ### Panel A: Cargo fire evidence (circle diagram)
 

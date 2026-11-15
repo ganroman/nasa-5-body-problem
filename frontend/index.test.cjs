@@ -22,7 +22,8 @@ const compareFor = env => {
     incomplete_dimensions: iss ? [] : ['o2_fraction', 'pressure_kpa'],
     components: [
       { ...comps[0], component_index: 0, ranked: [
-        { observation_id: 7, evidence_class: 'exact', counts: iss ? { match: 2, differs: 1, unknown: 1 } : { match: 0, differs: 1, unknown: 3 }, reasons: ['same material identity'] },
+        { observation_id: 7, evidence_class: 'exact', counts: iss ? { match: 2, differs: 1, unknown: 1 } : { match: 0, differs: 1, unknown: 3 }, reasons: ['same material identity'],
+          comparison: { o2: { result: iss ? 'match' : 'unknown' }, gravity: { result: 'differs' } } },
         { observation_id: 9, evidence_class: 'analogue', counts: { match: 0, differs: 0, unknown: 4 }, reasons: [] }] },
       { ...comps[1], component_index: 1, ranked: [] },
     ],
@@ -101,7 +102,17 @@ const tick = () => new Promise(r => setTimeout(r, 0));
   assert.match(body, /Temperature · CO₂<b class="same">unknown at both/);
   assert.doesNotMatch(body, /unknown — no change/);
   assert.match(body, /Enclosure<\/span> match\/differs\/unknown 2\/1\/1 → 0\/1\/3/);
-  assert.match(body, /1\/2<\/text>/);                       // count with denominator, never a percentage or verdict
+  assert.match(body, /1\/2<\/text>/);
+  // Top panel: review points for keeping the cargo here, never an approval.
+  assert.match(body, /Extra care needed: 5 review points for cargo kept \(stowed\) at Moon base/);
+  assert.match(body, /<li>O₂, pressure unknown here/);
+  assert.match(body, /<li>Enclosure: tested under different gravity<\/li>/);
+  assert.match(body, /<li>Battery pack: no fire evidence<\/li>/);
+  assert.match(body, /<li>Whole assembly: not tested as packed together<\/li>/);
+  assert.match(body, /records no use states, including “stowed”/);
+  assert.match(body, /decided by the responsible safety review, not this app/);
+  assert.doesNotMatch(body.match(/<div class="care"[\s\S]*?not this app/)[0], /allowed|approved|safe/i);
+  assert.equal(run("carePoints({incomplete_dimensions:[], cargo:{supported_use_states:['stowed']}, components:[{name:'A',ranked:[{evidence_class:'exact',comparison:{o2:{result:'match'}}}]}], coverage:{fire:{components:[{status:'evidence_found'}],assembly:{status:'evidence_found'}}}}, 'stowed').length"), 0);                       // count with denominator, never a percentage or verdict
   assert.doesNotMatch(body, /HIGH|MEDIUM|LOW|safe</);
   assert.match(body, /Water-based foam/);
   assert.match(body, /BASS-II<\/b> <span class="tag mono">PSI-25/); // investigation acronym + accession, as in the mock

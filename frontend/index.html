@@ -73,6 +73,12 @@
   .diff .evc b { white-space:normal; font-size:13px; line-height:1.6; }
   .diff .same { color:var(--muted); }
   .up { color:var(--gap); } .dn { color:var(--accent); }
+  .diff { flex-wrap:wrap; }
+  .diff > .care { flex-basis:100%; border-left:0; border-top:1px solid var(--line); margin-top:14px; padding-top:12px; }
+  .care .head { font-size:14px; font-weight:700; }
+  .care .head.warn { color:var(--accent); } .care .head.ok { color:var(--match); }
+  .care ul { margin:6px 0 0; padding-left:18px; color:var(--soft); columns:2 320px; column-gap:28px; }
+  .care li { margin:2px 0; break-inside:avoid; }
   .dg { display:grid; grid-template-columns:minmax(300px, .95fr) 1.1fr 1.25fr; gap:14px; align-items:stretch; }
   .donut circle.seg { transition:stroke-width .15s, opacity .15s; cursor:pointer; }
   .legend { list-style:none; padding:0; margin:12px 0 0; font-size:12px; }
@@ -402,7 +408,7 @@ async function renderDetails(el) {
   const c = state.cargo, { envId, overrides } = selection();
   el.innerHTML = `
     <div class="dhead"><span><a href="#">← ${cargoId(c)}</a> · ${esc(c.name)} · Fire evidence</span>
-      <label>Use state <select id="use-state" aria-label="Use state">${USE_STATES.map(u => `<option${u === state.useState ? ' selected' : ''}>${u}</option>`).join('')}</select></label></div>
+      <label>Cargo is <select id="use-state" aria-label="Kept or unpacked (use state)">${USE_STATES.map(u => `<option value="${u}"${u === state.useState ? ' selected' : ''}>${KEPT[u]}</option>`).join('')}</select></label></div>
     <div class="env">${envChips()}</div>
     ${customEditor()}
     <div id="body"><p class="msg">Comparing evidence…</p></div>`;
@@ -434,13 +440,44 @@ async function renderDetails(el) {
   if (state.focus != null) { const f = state.focus; state.focus = null; setFocus(f); }
 }
 
+const CMP_LABELS = { o2:'O₂', pressure:'pressure', airflow:'airflow', gravity:'gravity' };
+const KEPT = { stowed:'kept (stowed)', operating:'unpacked and in use', charging:'unpacked and charging', maintenance:'unpacked for maintenance' };
+
+// Review points for keeping or unpacking the cargo in the selected environment, read only from the comparison.
+// Points to extra care; never an approval (docs/cargo-passport.md: the app does not assign approval).
+function carePoints(r, useState) {
+  const pts = [];
+  if (r.incomplete_dimensions.length)
+    pts.push(`${r.incomplete_dimensions.map(d => d.replace(/_.*/, '').replace('o2', 'O₂').replace('co2', 'CO₂')).join(', ')} unknown here: evidence cannot be compared on ${r.incomplete_dimensions.length > 1 ? 'these' : 'this'}`);
+  r.coverage.fire.components.forEach((st, i) => {
+    const comp = r.components[i];
+    if (st.status === 'gap') { pts.push(`${comp.name}: no fire evidence`); return; }
+    const top = comp.ranked.find(x => x.evidence_class !== 'analogue');
+    const diff = Object.entries(top?.comparison || {}).filter(([, v]) => v?.result === 'differs').map(([k]) => CMP_LABELS[k] || k);
+    if (diff.length) pts.push(`${comp.name}: tested under different ${diff.join(', ')}`);
+  });
+  if (r.coverage.fire.assembly.status !== 'evidence_found') pts.push('Whole assembly: not tested as packed together');
+  const uses = r.cargo?.supported_use_states || [];
+  if (!uses.includes(useState)) pts.push(`Cargo passport ${uses.length ? 'does not list' : 'records no use states, including'} “${useState}”`);
+  return pts;
+}
+
+function careRow(r) {
+  const pts = carePoints(r, state.useState), where = state.selected === 'custom' ? 'these conditions' : esc(shortName(r.environment.id));
+  return `<div class="care" role="status"><span class="head ${pts.length ? 'warn' : 'ok'}">${pts.length
+      ? `⚠ Extra care needed: ${pts.length} review point${pts.length > 1 ? 's' : ''} for cargo ${esc(KEPT[state.useState] || state.useState)} at ${where}`
+      : `No open review points for cargo ${esc(KEPT[state.useState] || state.useState)} at ${where}`}</span>
+    ${pts.length ? `<ul>${pts.map(p => `<li>${esc(p)}</li>`).join('')}</ul>` : ''}
+    <div class="small" style="margin-top:6px">Based on the evidence comparison only. Whether the cargo may be kept or unpacked here is decided by the responsible safety review, not this app.</div></div>`;
+}
+
 function diffStrip(cur, sel) {
   const custom = state.selected === 'custom';
   const name = r => custom && r === sel ? `Custom (${esc(shortName(r.environment.id))})` : esc(shortName(r.environment.id));
-  if (!cur) return `<div class="card diff"><div class="lead">No current location known for this cargo.</div></div>`;
+  if (!cur) return `<div class="card diff"><div class="lead">No current location known for this cargo.</div>${careRow(sel)}</div>`;
   if (cur.environment.id === sel.environment.id && !custom) {
     return `<div class="card diff"><div class="lead">This is the cargo's current location<b>${name(sel)}</b></div>${
-      conditionChanges(sel, sel).map(r => `<div>${r.label}<b>${esc(r.to)}</b></div>`).join('')}</div>`;
+      conditionChanges(sel, sel).map(r => `<div>${r.label}<b>${esc(r.to)}</b></div>`).join('')}${careRow(sel)}</div>`;
   }
   const rows = conditionChanges(cur, sel), changed = rows.filter(r => !r.same);
   const same = rows.filter(r => r.same && r.to !== 'unknown'), unknownBoth = rows.filter(r => r.same && r.to === 'unknown');
@@ -453,6 +490,7 @@ function diffStrip(cur, sel) {
     ${same.length ? `<div>${same.map(r => r.label).join(' · ')}<b class="same">${same.map(r => esc(r.to)).join(' · ')} — no change</b></div>` : ''}
     ${unknownBoth.length ? `<div>${unknownBoth.map(r => r.label).join(' · ')}<b class="same">unknown at both</b></div>` : ''}
     <div class="evc">Evidence changes<b>${ev.length ? ev.map(e => `<span style="color:var(--soft)">${esc(e.name)}</span> ${esc(e.text)}`).join('<br>') : '<span class="same">No evidence changes</span>'}</b></div>
+    ${careRow(sel)}
   </div>`;
 }
 
