@@ -26,6 +26,8 @@ The app has a single dark theme.
 - **Status colours:** every status colour also carries a text label, which keeps it readable for colour-blind users.
 - **Contrast:** text must meet WCAG AA contrast.
 
+**Two screens:** the page opens on Screen 1 only. Clicking "More details" opens Screen 2 (`#details`); the back arrow returns to Screen 1. Each screen sits in a framed card as in the sample design. Clicking an object anywhere (contents list, donut legend, extinguisher table or evidence row) highlights it in every panel and selects it for *Ask about this evidence*. Evidence rows expand to show the match/differs/unknown counts, the differences and the DOI.
+
 ## 2. Screen 1: after scanning the QR code
 
 The layout uses two columns. On a phone in portrait orientation, the columns stack, with the left card first.
@@ -54,7 +56,7 @@ A header shows a back arrow, the cargo ID and the cargo name.
 
 ### Environment selector
 
-A row of chips, one per environment from `GET /environments`. The cargo's current location is marked "● (current)". The cargo's destination is selected by default.
+A row of chips with short names for the cargo's route ends and the main space environments (ISS, Lunar Gateway, NASA and ILRS lunar bases, lunar rover, Mars orbit, Mars base); the other environments from `GET /environments` are in a "More environments…" menu. The cargo's current location is marked "● (current)". The cargo's destination is selected by default.
 
 **Changes from current location.** Below the chips, a strip compares the cargo's current location with the selected environment:
 
@@ -66,7 +68,8 @@ Other rules:
 
 - Each environment is compared once with `POST /scenarios/compare` and cached while the page is open.
 - **Data status:** unknown values stay "unknown"; the strip lists the scenario's `incomplete_dimensions`. Only the ISS has a published cabin atmosphere (see [environment dimensions](environments/environment-dimensions.md)).
-- **Custom…** (sliders for pressure, temperature, O₂ and CO₂ via `overrides`) is not built yet.
+- **Custom…** opens sliders for oxygen, pressure, airflow, temperature and CO₂ on top of a chosen base environment (which sets gravity). Values are sent as `overrides` and labelled "your values"; they are the user's scenario, not measurements.
+- A **Use state** selector (stowed, operating, charging, maintenance) sits in the header; changing it re-runs the comparison.
 
 ### Panel A: Cargo fire evidence (circle diagram)
 
@@ -109,6 +112,15 @@ For each object, the top-ranked PSI record from the comparison: accession number
 - **No evidence for an object:** shown as *gap* in Panels A and C.
 - **Footer on Screen 2:** "<provenance> CARGO · EVIDENCE COMPARISON · not a safety approval".
 
-## 5. Out of scope for now
+### Below the panels: Ask about this evidence and Passport
 
-The following are not covered yet: the Custom environment sliders, the offline banner, SI explanations (`POST /scenarios/explain`), passport export and share links, a QR scanner design (the device camera opens), user accounts, editing cargo, and the flame-spread animation and storage map from the video.
+- **Ask about this evidence** (`POST /scenarios/explain`): pick an object, optionally type a question, press **Explain**. Each sentence carries numbered citations that link to the record list underneath (record id, excerpt, locator). The panel shows the four states from [API.md §4](../backend/API.md#4-si-explanation): answer, unavailable, withheld (rejected) and error, and always the AI disclosure. Without a question it is one provider request; a question lets the model use read-only lookups (including comparing another environment), which is slower.
+- **Passport**: **Download passport (JSON)** stores and downloads the snapshot (`POST /passports/export`) for the current environment, overrides and use state. **Create share link** saves the cargo and scenario (`POST /shares`), copies a `?share=<slug>` link and keeps the edit token in this browser; the button then becomes **Save changes to link** (`PUT /shares/{slug}`). Opening a share link restores the cargo, environment, overrides and use state.
+
+## 5. Running it
+
+`backend/serve.py` serves this page at `/frontend/` on the same origin as the API (locally `http://localhost:8000/frontend/`, hosted `https://cargo.qwadratic.me/frontend/`); see [backend/README.md](../backend/README.md#running-for-the-demo-local-neon-main).
+
+## 6. Out of scope for now
+
+The following are not covered yet: the offline banner, a QR scanner design (the device camera opens), user accounts, editing cargo contents, and the flame-spread animation and storage map from the video.

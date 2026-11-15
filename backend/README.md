@@ -16,21 +16,21 @@ uv run uvicorn app.main:app --reload
 
 ## Running for the demo (local, Neon main)
 
-The API runs locally; there is no hosted deployment. For the demo, run it against Neon `main` (production data), with its URLs in `backend/.env.main` (gitignored). Quote the values (`DATABASE_URL="..."`): the URLs contain `&`, which the shell otherwise treats as a command separator and silently falls back to `.env` (dev).
+Locally, run it against Neon `main` (production data), with its URLs in `backend/.env.main` (gitignored). Quote the values (`DATABASE_URL="..."`): the URLs contain `&`, which the shell otherwise treats as a command separator and silently falls back to `.env` (dev).
 
 ```bash
 cd backend
 set -a; . ./.env.main; set +a
 uv run alembic upgrade head            # after schema changes
 uv run python -m app.ingest.load       # after seed/data changes; safe to re-run
-uv run uvicorn app.main:app --port 8000
+uv run uvicorn serve:app --port 8000
 ```
 
-The API is then at `http://localhost:8000` (docs at `/docs`). Add the frontend's local origin to `CORS_ORIGINS` if it is served from another port.
+The dashboard is then at `http://localhost:8000/frontend/` and the API at `http://localhost:8000` (docs at `/docs`); `serve.py` serves the static pages on the same origin (see below), so no CORS setup is needed.
 
 ## Hosted demo (one origin)
 
-`serve.py` mounts the static pages (`/prototype`, `/presentation`, landing page `site/`) after the API routes, so API and frontend share one origin and no base URL or CORS setup is needed:
+`serve.py` mounts the static pages (`/frontend`, `/prototype`, `/presentation`, landing page `site/`) after the API routes, so API and frontend share one origin and no base URL or CORS setup is needed:
 
 ```bash
 cd backend

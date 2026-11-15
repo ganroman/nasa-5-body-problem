@@ -8,7 +8,10 @@ import time
 
 import pytest
 
-os.environ.setdefault("DATABASE_URL", "postgresql+psycopg://nobody@127.0.0.1:1/none")  # never connected here
+# Settings needs a DATABASE_URL to load; these tests never connect. Only fall back to a dummy when no
+# backend/.env provides one, otherwise the dummy (an env var beats .env) breaks later database tests.
+if not (os.path.exists(os.path.join(os.path.dirname(__file__), "..", ".env"))):
+    os.environ.setdefault("DATABASE_URL", "postgresql+psycopg://nobody@127.0.0.1:1/none")
 
 from fastapi.testclient import TestClient  # noqa: E402
 
