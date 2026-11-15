@@ -1,0 +1,13 @@
+[Unit]
+Description=Daily rebuild of the Cargo Passport evidence base
+
+[Timer]
+OnCalendar=*-*-* 03:30:00
+# Spread the start over up to 45 minutes so the documents' hosts are not hit at the same second every day.
+RandomizedDelaySec=45min
+# Run once after boot if the server was off at the scheduled time.
+Persistent=true
+Unit=evidence-base.service
+
+[Install]
+WantedBy=timers.target

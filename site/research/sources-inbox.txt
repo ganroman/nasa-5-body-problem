@@ -1,0 +1,5 @@
+# Reading list for the evidence base.
+# One URL per line. An optional title may follow after a TAB character.
+# Lines starting with # and empty lines are ignored.
+# A document listed here is fetched and added to the evidence base before any claim cites it.
+# Adding a URL here does not create evidence and does not publish anything on the site.

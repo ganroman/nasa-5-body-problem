@@ -1,0 +1,22 @@
+@layer depth {
+  /* A scene is a plain section of the document, separated from the one above by a hairline. */
+  .scene {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    padding: var(--space-5) var(--gutter);
+    border-top: 1px solid var(--line);
+  }
+  .scene:first-of-type { border-top: 0; }
+  .scene--short { padding-block: var(--space-4); }
+  .scene__inner { position: relative; width: 100%; max-width: var(--wrap); margin-inline: auto; }
+
+  /* A panel is a ruled box: one hairline, no fill gradient, no shadow. */
+  .slab {
+    position: relative;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--frame);
+  }
+  .rule { height: 1px; border: 0; background: var(--line); }
+}

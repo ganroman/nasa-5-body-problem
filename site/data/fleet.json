@@ -1,0 +1,499 @@
+{
+ "default_item": "portable-science-instrument",
+ "default_vehicle": "iss",
+ "hatch_check_place": "locker",
+ "places": [
+  {
+   "id": "airlock",
+   "short": "Airlock"
+  },
+  {
+   "id": "vent",
+   "short": "Vent"
+  },
+  {
+   "id": "power",
+   "short": "Power"
+  },
+  {
+   "id": "locker",
+   "short": "Locker"
+  },
+  {
+   "id": "rack",
+   "short": "Rack"
+  }
+ ],
+ "items": [
+  {
+   "id": "crew-clothing-kit",
+   "name": "Crew clothing kit",
+   "purpose": "Personal clothing for one crew member, packed in a bag.",
+   "provenance": "illustrative",
+   "registered": true,
+   "place": "locker",
+   "powered": false,
+   "components": [
+    {
+     "id": "garments",
+     "name": "Garments",
+     "material": "Cotton, untreated",
+     "tests": [],
+     "notes": []
+    },
+    {
+     "id": "stowage-bag",
+     "name": "Stowage bag",
+     "material": "Nomex HT90-40, single layer",
+     "tests": [
+      {
+       "evidence": "nomex-ht90-40-single-layer-moc-10p2psia",
+       "result": "self-extinguished-up-to",
+       "o2_percent": 25,
+       "pressure_kpa": 70.3,
+       "gravity": null,
+       "form": "Nomex HT90-40"
+      },
+      {
+       "evidence": "nomex-ht90-40-fabric-config-dependence-70p1kpa",
+       "result": "failed-at",
+       "o2_percent": 30,
+       "pressure_kpa": 70.1,
+       "gravity": null,
+       "form": "Nomex"
+      }
+     ],
+     "notes": []
+    },
+    {
+     "id": "handles",
+     "name": "Handles",
+     "material": "Kevlar/PBI webbing, natural",
+     "tests": [
+      {
+       "evidence": "kevlar-pbi-webbing-moc-8p2psia",
+       "result": "passed-at",
+       "o2_percent": 37,
+       "pressure_kpa": 56.5,
+       "gravity": null,
+       "form": "natural webbing"
+      }
+     ],
+     "notes": []
+    }
+   ]
+  },
+  {
+   "id": "portable-science-instrument",
+   "name": "Portable science instrument",
+   "purpose": "Handheld measuring device with its own battery.",
+   "provenance": "illustrative",
+   "registered": true,
+   "place": "power",
+   "powered": true,
+   "components": [
+    {
+     "id": "enclosure",
+     "name": "Enclosure",
+     "material": "PMMA cast sheet",
+     "tests": [
+      {
+       "evidence": "saffire45-thick-pmma-flame-stays-at-leading-edge",
+       "result": "burned-at",
+       "o2_percent": 22.0,
+       "pressure_kpa": 100.0,
+       "gravity": "low gravity",
+       "form": "PMMA sample IV-2"
+      },
+      {
+       "evidence": "saffire45-thick-pmma-flame-stays-at-leading-edge",
+       "result": "burned-at",
+       "o2_percent": 25.4,
+       "pressure_kpa": 71.3,
+       "gravity": "low gravity",
+       "form": "PMMA sample V-3"
+      }
+     ],
+     "notes": [
+      "pmma-ignition-delay-shorter-at-58-6-kpa-and-32-o2"
+     ]
+    },
+    {
+     "id": "battery",
+     "name": "Battery pack",
+     "material": "Lithium-ion cells",
+     "tests": [],
+     "notes": [
+      "jsc29353d-liion-vs-alkaline-ignition-power",
+      "jsc29353d-liion-in-stowage-bags"
+     ]
+    },
+    {
+     "id": "gasket",
+     "name": "Gaskets",
+     "material": "Silicone rubber, ~1.5 mm",
+     "tests": [
+      {
+       "evidence": "silicone-1p5mm-moc-vs-pressure",
+       "result": "self-extinguished-up-to",
+       "o2_percent": 28,
+       "pressure_kpa": 48.2,
+       "gravity": null,
+       "form": "silicone"
+      },
+      {
+       "evidence": "silicone-1p5mm-moc-vs-pressure",
+       "result": "self-extinguished-up-to",
+       "o2_percent": 23,
+       "pressure_kpa": 85.3,
+       "gravity": null,
+       "form": "silicone"
+      },
+      {
+       "evidence": "silicone-1p5mm-moc-vs-pressure",
+       "result": "self-extinguished-up-to",
+       "o2_percent": 21,
+       "pressure_kpa": 101.3,
+       "gravity": null,
+       "form": "silicone"
+      }
+     ],
+     "notes": []
+    },
+    {
+     "id": "wiring",
+     "name": "Wiring",
+     "material": "PTFE-insulated wire",
+     "tests": [],
+     "notes": [
+      "ptfe-1p5mm-moc-vs-pressure",
+      "ssp51721-ignition-source-definition"
+     ]
+    },
+    {
+     "id": "strap",
+     "name": "Carry strap",
+     "material": "Kevlar/PBI webbing, black",
+     "tests": [
+      {
+       "evidence": "kevlar-pbi-webbing-moc-8p2psia",
+       "result": "passed-at",
+       "o2_percent": 35,
+       "pressure_kpa": 56.5,
+       "gravity": null,
+       "form": "black webbing"
+      }
+     ],
+     "notes": []
+    }
+   ]
+  },
+  {
+   "id": "coolant-hose-assembly",
+   "name": "Coolant hose assembly",
+   "purpose": "Flexible fluid line for a thermal-control loop.",
+   "provenance": "illustrative",
+   "registered": true,
+   "place": "vent",
+   "powered": false,
+   "components": [
+    {
+     "id": "hose",
+     "name": "Hose",
+     "material": "Silicone rubber, ~1.5 mm",
+     "tests": [
+      {
+       "evidence": "silicone-1p5mm-moc-vs-pressure",
+       "result": "self-extinguished-up-to",
+       "o2_percent": 28,
+       "pressure_kpa": 48.2,
+       "gravity": null,
+       "form": "silicone"
+      },
+      {
+       "evidence": "silicone-1p5mm-moc-vs-pressure",
+       "result": "self-extinguished-up-to",
+       "o2_percent": 23,
+       "pressure_kpa": 85.3,
+       "gravity": null,
+       "form": "silicone"
+      },
+      {
+       "evidence": "silicone-1p5mm-moc-vs-pressure",
+       "result": "self-extinguished-up-to",
+       "o2_percent": 21,
+       "pressure_kpa": 101.3,
+       "gravity": null,
+       "form": "silicone"
+      }
+     ],
+     "notes": []
+    },
+    {
+     "id": "inner-liner",
+     "name": "Inner liner",
+     "material": "PTFE resin, ~1.5 mm",
+     "tests": [
+      {
+       "evidence": "ptfe-1p5mm-moc-vs-pressure",
+       "result": "self-extinguished-up-to",
+       "o2_percent": 53,
+       "pressure_kpa": 48.2,
+       "gravity": null,
+       "form": "PTFE"
+      },
+      {
+       "evidence": "ptfe-1p5mm-moc-vs-pressure",
+       "result": "self-extinguished-up-to",
+       "o2_percent": 46,
+       "pressure_kpa": 85.3,
+       "gravity": null,
+       "form": "PTFE"
+      },
+      {
+       "evidence": "ptfe-1p5mm-moc-vs-pressure",
+       "result": "self-extinguished-up-to",
+       "o2_percent": 42,
+       "pressure_kpa": 101.3,
+       "gravity": null,
+       "form": "PTFE"
+      }
+     ],
+     "notes": []
+    },
+    {
+     "id": "abrasion-sleeve",
+     "name": "Abrasion sleeve",
+     "material": "Nomex HT90-40, single layer",
+     "tests": [
+      {
+       "evidence": "nomex-ht90-40-single-layer-moc-10p2psia",
+       "result": "self-extinguished-up-to",
+       "o2_percent": 25,
+       "pressure_kpa": 70.3,
+       "gravity": null,
+       "form": "Nomex HT90-40"
+      },
+      {
+       "evidence": "nomex-ht90-40-fabric-config-dependence-70p1kpa",
+       "result": "failed-at",
+       "o2_percent": 30,
+       "pressure_kpa": 70.1,
+       "gravity": null,
+       "form": "Nomex"
+      }
+     ],
+     "notes": []
+    }
+   ]
+  },
+  {
+   "id": "seal-and-gasket-spares-kit",
+   "name": "Seal and gasket spares kit",
+   "purpose": "Replacement seals for hatches and equipment.",
+   "provenance": "illustrative",
+   "registered": true,
+   "place": "locker",
+   "powered": false,
+   "components": [
+    {
+     "id": "seals",
+     "name": "Seals",
+     "material": "PTFE resin, ~1.5 mm",
+     "tests": [
+      {
+       "evidence": "ptfe-1p5mm-moc-vs-pressure",
+       "result": "self-extinguished-up-to",
+       "o2_percent": 53,
+       "pressure_kpa": 48.2,
+       "gravity": null,
+       "form": "PTFE"
+      },
+      {
+       "evidence": "ptfe-1p5mm-moc-vs-pressure",
+       "result": "self-extinguished-up-to",
+       "o2_percent": 46,
+       "pressure_kpa": 85.3,
+       "gravity": null,
+       "form": "PTFE"
+      },
+      {
+       "evidence": "ptfe-1p5mm-moc-vs-pressure",
+       "result": "self-extinguished-up-to",
+       "o2_percent": 42,
+       "pressure_kpa": 101.3,
+       "gravity": null,
+       "form": "PTFE"
+      }
+     ],
+     "notes": []
+    },
+    {
+     "id": "o-rings",
+     "name": "O-rings",
+     "material": "Silicone rubber, ~1.5 mm",
+     "tests": [
+      {
+       "evidence": "silicone-1p5mm-moc-vs-pressure",
+       "result": "self-extinguished-up-to",
+       "o2_percent": 28,
+       "pressure_kpa": 48.2,
+       "gravity": null,
+       "form": "silicone"
+      },
+      {
+       "evidence": "silicone-1p5mm-moc-vs-pressure",
+       "result": "self-extinguished-up-to",
+       "o2_percent": 23,
+       "pressure_kpa": 85.3,
+       "gravity": null,
+       "form": "silicone"
+      },
+      {
+       "evidence": "silicone-1p5mm-moc-vs-pressure",
+       "result": "self-extinguished-up-to",
+       "o2_percent": 21,
+       "pressure_kpa": 101.3,
+       "gravity": null,
+       "form": "silicone"
+      }
+     ],
+     "notes": []
+    }
+   ]
+  },
+  {
+   "id": "crew-restraint-net",
+   "name": "Crew restraint net",
+   "purpose": "Holds loose items and crew in place.",
+   "provenance": "illustrative",
+   "registered": true,
+   "place": "rack",
+   "powered": false,
+   "components": [
+    {
+     "id": "net-webbing",
+     "name": "Net webbing",
+     "material": "Kevlar/PBI webbing, natural",
+     "tests": [
+      {
+       "evidence": "kevlar-pbi-webbing-moc-8p2psia",
+       "result": "passed-at",
+       "o2_percent": 37,
+       "pressure_kpa": 56.5,
+       "gravity": null,
+       "form": "natural webbing"
+      }
+     ],
+     "notes": []
+    },
+    {
+     "id": "edge-binding",
+     "name": "Edge binding",
+     "material": "Nomex HT90-40, single layer",
+     "tests": [
+      {
+       "evidence": "nomex-ht90-40-single-layer-moc-10p2psia",
+       "result": "self-extinguished-up-to",
+       "o2_percent": 25,
+       "pressure_kpa": 70.3,
+       "gravity": null,
+       "form": "Nomex HT90-40"
+      },
+      {
+       "evidence": "nomex-ht90-40-fabric-config-dependence-70p1kpa",
+       "result": "failed-at",
+       "o2_percent": 30,
+       "pressure_kpa": 70.1,
+       "gravity": null,
+       "form": "Nomex"
+      }
+     ],
+     "notes": []
+    }
+   ]
+  },
+  {
+   "id": "handheld-speaker",
+   "name": "Handheld speaker",
+   "purpose": "Battery-powered speaker bought off the shelf.",
+   "provenance": "illustrative",
+   "registered": false,
+   "place": null,
+   "powered": false,
+   "components": [
+    {
+     "id": "case",
+     "name": "Case",
+     "material": "ABS plastic",
+     "tests": [
+      {
+       "evidence": "jsc29353b-abs-case-speaker-burned-completely-24-1-o2-aluminum-case-undamaged",
+       "result": "burned-at",
+       "o2_percent": 24.1,
+       "pressure_kpa": 101.4,
+       "gravity": null,
+       "form": "Bluetooth speaker"
+      }
+     ],
+     "notes": []
+    },
+    {
+     "id": "battery",
+     "name": "Battery pack",
+     "material": "Lithium-ion cells",
+     "tests": [],
+     "notes": [
+      "jsc29353d-liion-vs-alkaline-ignition-power"
+     ]
+    }
+   ]
+  }
+ ],
+ "scenario": {
+  "item": "portable-science-instrument",
+  "vehicle": "iss",
+  "steps": [
+   {
+    "id": "stowed",
+    "label": "Stowed, off",
+    "item": "portable-science-instrument",
+    "place": "locker",
+    "powered": false,
+    "actor": "crew"
+   },
+   {
+    "id": "carried",
+    "label": "Carried in",
+    "item": "portable-science-instrument",
+    "place": "airlock",
+    "powered": false,
+    "actor": "crew"
+   },
+   {
+    "id": "flag",
+    "label": "Flag raised",
+    "item": "portable-science-instrument",
+    "place": "airlock",
+    "powered": false,
+    "actor": "watch"
+   },
+   {
+    "id": "decision",
+    "label": "Move it back",
+    "item": "portable-science-instrument",
+    "place": "airlock",
+    "powered": false,
+    "actor": "person"
+   },
+   {
+    "id": "back",
+    "label": "Stowed again",
+    "item": "portable-science-instrument",
+    "place": "locker",
+    "powered": false,
+    "actor": "crew"
+   }
+  ]
+ }
+}

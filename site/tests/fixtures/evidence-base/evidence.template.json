@@ -1,0 +1,38 @@
+[
+  {
+    "id": "fake-alpha-1",
+    "topic": "fixture",
+    "claim": "The made-up bulletin says an imaginary sample flamed for nine seconds.",
+    "quote": "The imaginary sample flamed for nine seconds in the pretend chamber at a made-up pressure of one fictional atmosphere",
+    "source_title": "Fictional Fire Bulletin",
+    "source_authors": ["Made-Up Author", "Second Invented Author"],
+    "source_year": 2001,
+    "source_org": "Fictional Fire Institute",
+    "source_kind": "fixture-web",
+    "landing_url": "{{NASA}}/alpha-landing",
+    "doc_url": "{{NASA}}/alpha.html",
+    "doi": null,
+    "locator": "paragraph 2",
+    "material": "fictional sample",
+    "conditions": { "o2_percent": null, "pressure_text": null, "pressure_kpa": null, "gravity": null, "flow_text": null },
+    "limits": "Fixture only."
+  },
+  {
+    "id": "fake-beta-1",
+    "topic": "fixture",
+    "claim": "The made-up report says a pretend gas cylinder held its mixture for seven days.",
+    "quote": "The invented gas cylinder held a pretend mixture for seven days without any fictional leak in the storage room",
+    "source_title": "Imaginary Gas Report: with a colon, \"quotes\" and a # sign",
+    "source_authors": "Another Made-Up Author",
+    "source_year": 1999,
+    "source_org": "Imaginary Gas Board / Second Board",
+    "source_kind": "fixture-report",
+    "landing_url": "{{OTHER}}/beta-landing",
+    "doc_url": "{{OTHER}}/beta.html",
+    "doi": "10.1234/fake.beta",
+    "locator": "paragraph 2",
+    "material": "fictional gas",
+    "conditions": { "o2_percent": null, "pressure_text": null, "pressure_kpa": null, "gravity": null, "flow_text": null },
+    "limits": "Fixture only."
+  }
+]

@@ -1,0 +1,36 @@
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  html { background: var(--bg); color-scheme: dark; }
+  body {
+    margin: 0;
+    color: var(--fg);
+    font: var(--fs-md) / 1.55 var(--font);
+    overflow-x: clip;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, p, ol, ul, figure, blockquote { margin: 0; }
+  h1, h2, h3 { font-weight: 500; letter-spacing: var(--track-tight); line-height: 1.12; text-wrap: balance; }
+  h1 { font-size: var(--fs-h1); }
+  h2 { font-size: var(--fs-h2); }
+  h3 { font-size: var(--fs-h3); line-height: 1.25; }
+  p { text-wrap: pretty; }
+  a { color: var(--accent); text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+  a:hover { color: var(--accent-hover); }
+  button, input, select, textarea { font: inherit; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  ::selection { background: var(--accent); color: var(--bg); }
+  .mono { font-family: var(--mono); }
+  .skip {
+    position: fixed; z-index: 100; left: var(--space-2); top: var(--space-2);
+    padding: var(--space-1) var(--space-2); background: var(--accent); color: var(--bg);
+    font-family: var(--mono); font-size: var(--fs-xs); font-weight: 700; text-decoration: none;
+    translate: 0 -200%;
+  }
+  .skip:focus { translate: 0 0; }
+  .visually-hidden {
+    position: absolute; width: 1px; height: 1px; overflow: hidden;
+    clip-path: inset(50%); white-space: nowrap;
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+}

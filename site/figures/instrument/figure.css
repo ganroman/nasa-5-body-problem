@@ -1,0 +1,71 @@
+.anatomy-figure[data-figure="instrument"] {
+  margin: 0;
+  --anatomy-card: #0c1526;
+  --anatomy-paper: #0c1526;
+  --anatomy-face: #15233e;
+  --anatomy-top: #213558;
+  --anatomy-shade-0: #09101d;
+  --anatomy-shade-1: #0f1a2e;
+  --anatomy-shade-2: #152440;
+  --anatomy-shade-3: #1a2c4e;
+  --anatomy-lit-top: #3a5688;
+  --anatomy-lit-shade: #1f3358;
+  --anatomy-hi: #cddaf0;
+  --anatomy-mid: #7189b4;
+  --anatomy-lo: #3e5480;
+  --anatomy-faint: #263858;
+  --anatomy-lit: #ffffff;
+  --anatomy-halo: #02060d;
+  --anatomy-text: #9db0cf;
+  --anatomy-muted: #6a7fa4;
+}
+.anatomy-figure[data-figure="instrument"][data-theme="light"] {
+  --anatomy-card: #f4f6fa;
+  --anatomy-paper: #f4f6fa;
+  --anatomy-face: #ffffff;
+  --anatomy-top: #ffffff;
+  --anatomy-shade-0: #cfd6e4;
+  --anatomy-shade-1: #dbe1ec;
+  --anatomy-shade-2: #e6eaf2;
+  --anatomy-shade-3: #eff2f7;
+  --anatomy-lit-top: #ffffff;
+  --anatomy-lit-shade: #e4e8f0;
+  --anatomy-hi: #1d2a44;
+  --anatomy-mid: #6d7d9c;
+  --anatomy-lo: #a4b0c8;
+  --anatomy-faint: #cdd5e4;
+  --anatomy-lit: #000000;
+  --anatomy-halo: #8793ab;
+  --anatomy-text: #4a5875;
+  --anatomy-muted: #7a87a3;
+}
+.anatomy-figure[data-figure="instrument"] .in-stage { touch-action: pan-y; overflow: hidden; }
+@media (max-width: 560px) {
+  .anatomy-figure[data-figure="instrument"] .in-stage .iso-svg { width: 126%; margin: -2% -13% -6%; max-width: none; }
+}
+.anatomy-figure[data-figure="instrument"] .in-floor { fill: var(--anatomy-top); stroke: none; }
+.anatomy-figure[data-figure="instrument"] .in-slot,
+.anatomy-figure[data-figure="instrument"] .in-port { fill: var(--anatomy-shade-0); stroke: var(--anatomy-lo); stroke-width: var(--anatomy-weight); stroke-linejoin: round; }
+.anatomy-figure[data-figure="instrument"] .in-gasket-side { fill: none; stroke: var(--anatomy-lo); stroke-linejoin: round; }
+.anatomy-figure[data-figure="instrument"] .in-gasket-top { fill: none; stroke: var(--anatomy-mid); stroke-linejoin: round; }
+.anatomy-figure[data-figure="instrument"] .in-gasket-edge { fill: none; stroke: var(--anatomy-lo); stroke-width: var(--anatomy-weight); stroke-linejoin: round; }
+.anatomy-figure[data-figure="instrument"] .in-piece[data-lit] .in-gasket-edge { stroke: var(--anatomy-lit); }
+.anatomy-figure[data-figure="instrument"] .in-piece[data-lit] .in-gasket-top { stroke: var(--anatomy-hi); }
+.anatomy-figure[data-figure="instrument"] .in-piece[data-lit] .in-gasket-side { stroke: var(--anatomy-mid); }
+.anatomy-figure[data-figure="instrument"] .in-piece[data-lit] .in-cable-body { stroke: var(--anatomy-lit-top); }
+.anatomy-figure[data-figure="instrument"] .in-piece[data-lit] .in-cable-core { stroke: var(--anatomy-lit); opacity: 1; }
+.anatomy-figure[data-figure="instrument"] .in-cable-body { fill: none; stroke: var(--anatomy-lo); stroke-width: 2.4px; stroke-linecap: round; stroke-linejoin: round; }
+.anatomy-figure[data-figure="instrument"] .in-cable-core { fill: none; stroke: var(--anatomy-hi); stroke-width: 0.7px; stroke-linecap: round; stroke-linejoin: round; opacity: 0.8; }
+.anatomy-figure[data-figure="instrument"] .in-piece { cursor: pointer; outline: none; }
+.anatomy-figure[data-figure="instrument"] .in-piece:focus-visible { outline: 1px solid var(--anatomy-muted); outline-offset: 6px; }
+.anatomy-figure[data-figure="instrument"] .in-piece { transition: filter 420ms var(--anatomy-ease); }
+.anatomy-figure[data-figure="instrument"] .in-piece:hover .iso-edge,
+.anatomy-figure[data-figure="instrument"] .in-piece[data-picked] .iso-edge { stroke: var(--anatomy-hi); }
+.anatomy-figure[data-figure="instrument"] .in-piece[data-picked] { filter: drop-shadow(0 0 2px var(--anatomy-hi)) drop-shadow(0 0 8px var(--anatomy-mid)); }
+.anatomy-figure[data-figure="instrument"] :is(.in-tag-none, .in-tag-applies, .in-tag-differs) { opacity: 0; transition: opacity 420ms var(--anatomy-ease); }
+.anatomy-figure[data-figure="instrument"] .in-tag[data-flag="none"] .in-tag-none,
+.anatomy-figure[data-figure="instrument"] .in-tag[data-flag="applies"] .in-tag-applies,
+.anatomy-figure[data-figure="instrument"] .in-tag[data-flag="differs"] .in-tag-differs { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .anatomy-figure[data-figure="instrument"] :is(.in-tag-none, .in-tag-applies, .in-tag-differs, .in-piece) { transition: none; }
+}

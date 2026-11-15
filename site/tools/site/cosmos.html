@@ -1,0 +1,18 @@
+<!-- A fixed backdrop: a sparse star field and one orbital diagram drawn in thin lines. No glow, no motion. -->
+<div class="cosmos" data-cosmos aria-hidden="true">
+  <div class="layer layer--stars-far"></div>
+  <div class="planet">
+    <svg viewBox="0 0 1000 1000" focusable="false">
+      <circle class="limb" cx="500" cy="500" r="360"/>
+    </svg>
+    <svg viewBox="0 0 1000 1000" focusable="false">
+      <circle class="ticks" cx="500" cy="500" r="382" pathLength="360" stroke-dasharray="0.3 4.7"/>
+      <circle class="ticks ticks--minor" cx="500" cy="500" r="379" pathLength="360" stroke-dasharray="0.15 0.85"/>
+    </svg>
+    <svg viewBox="0 0 1000 1000" focusable="false">
+      <circle class="orbit" cx="500" cy="500" r="420"/>
+      <circle class="orbit orbit--dash" cx="500" cy="500" r="458"/>
+      <circle class="orbit" cx="500" cy="500" r="494"/>
+    </svg>
+  </div>
+</div>

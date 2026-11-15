@@ -1,0 +1,7 @@
+{
+  "slug": "fixture-cup",
+  "name": "Fixture cup",
+  "components": [
+    { "id": "lid", "name": "Lid", "material": "Silicone rubber, 1.5 mm thick" }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "start_s": 1.4,
+  "steps": [
+    { "flow": "full", "fan": true, "gravity": "0g", "hold_s": 3.4 },
+    { "flow": "mid", "fan": true, "gravity": "0g", "hold_s": 2.6 },
+    { "flow": "quench", "fan": true, "gravity": "0g", "hold_s": 6.4 },
+    { "flow": "full", "fan": true, "gravity": "0g", "hold_s": 3.8 },
+    { "flow": "full", "fan": false, "gravity": "0g", "hold_s": 3.6 },
+    { "flow": "full", "fan": true, "gravity": "0g", "hold_s": 3.6 },
+    { "flow": "full", "fan": true, "gravity": "1g", "hold_s": 3.8 }
+  ]
+}

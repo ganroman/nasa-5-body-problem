@@ -1,0 +1,9 @@
+{
+  "slug": "fixture-cup",
+  "name": "Fixture cup",
+  "provenance": "illustrative",
+  "components": [
+    { "id": "lid", "name": "Lid", "material": "Silicone rubber, ~1.5 mm", "mass_share": 0.4 },
+    { "id": "body", "name": "Body", "material": "Ceramic", "mass_share": 0.6 }
+  ]
+}

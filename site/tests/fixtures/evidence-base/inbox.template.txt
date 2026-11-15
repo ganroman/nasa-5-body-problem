@@ -1,0 +1,3 @@
+# A reading list used by the tests.
+
+{{OTHER}}/gamma.html	Gamma title from the list
