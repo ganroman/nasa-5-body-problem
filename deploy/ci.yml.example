@@ -1,0 +1,39 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: cargo
+          POSTGRES_PASSWORD: cargo
+          POSTGRES_DB: cargo_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U cargo -d cargo_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      DATABASE_URL: postgresql+psycopg://cargo:cargo@localhost:5432/cargo_ci
+      DATABASE_URL_DIRECT: postgresql+psycopg://cargo:cargo@localhost:5432/cargo_ci
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --frozen
+      - name: Migrate and seed (the API tests read seeded data)
+        run: |
+          uv run alembic upgrade head
+          uv run python -m app.ingest.load
+      - name: Tests (all, none skipped or deselected)
+        run: uv run pytest -q
