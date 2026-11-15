@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cargo Passport · Five-Body Problem</title>
 <style>
+  [hidden] { display:none !important; }
   body { margin:0; font:16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; background:#f5f7fa; color:#14202e; }
   main { max-width:720px; margin:0 auto; padding:48px 20px; }
   h1 { margin:0 0 4px; font-size:28px; }
@@ -21,9 +22,11 @@
   <p class="sub">NASA Space Apps 2026 · Flame in Freefall · Five-Body Problem</p>
   <a class="card" href="/prototype/dashboard-mock.html"><b>Material Passport dashboard (mock)</b><span>Evidence for cargo materials in a target environment</span></a>
   <a class="card" href="/prototype/cargo-environment-map.html"><b>Cargo &amp; environment map</b><span>Routes, cargo types and environment dimensions</span></a>
-  <a class="card" href="/prototype/cargo-journey-animation.html"><b>Cargo on the move</b><span>Animated journeys across Earth, Moon and Mars</span></a>
+  <a class="card" data-flag="journey-animation" hidden href="/prototype/cargo-journey-animation.html"><b>Cargo on the move</b><span>Animated journeys across Earth, Moon and Mars</span></a>
   <a class="card" href="/presentation/presentation-slides.html"><b>Presentation</b><span>Slides</span></a>
+  <p class="sub" data-flag="beta-notice" hidden>Beta build: new sections are switched on and off with feature flags.</p>
   <a class="card" href="/docs"><b>API docs</b><span>Live FastAPI backend on a database of NASA PSI combustion data</span></a>
 </main>
+<script src="/flags.js"></script>
 </body>
 </html>
