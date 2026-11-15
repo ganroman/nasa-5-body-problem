@@ -1,0 +1,11 @@
+[Unit]
+Description=Autodeploy cargo-passport main -> thing-cargo-api (checks green, dump, migrate, restart, rollback)
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/cargo-deploy/autodeploy.sh
+Nice=10
+CPUWeight=20
+MemoryMax=1500M
+TimeoutStartSec=900
