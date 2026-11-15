@@ -528,6 +528,8 @@ class Share(TimestampMixin, Base):
     edit_token_hash: Mapped[str] = mapped_column(String(128))
     cargo_config_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("cargo_configs.id", ondelete="CASCADE"))
     scenario_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("scenarios.id", ondelete="SET NULL"))
+    # Keyed hash of the creator's IP, only for the per-IP creation limit; never the raw IP.
+    creator_ip_hash: Mapped[str | None] = mapped_column(String(64), index=True)
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )

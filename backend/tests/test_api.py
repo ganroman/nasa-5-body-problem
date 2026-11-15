@@ -146,3 +146,15 @@ def test_si_tools_search_and_source_lookup(client):
         tools["compare_in_environment"]("atlantis")
     with pytest.raises(ValueError):
         tools["compare_in_environment"]("iss", overrides={"o2_fraction": 21})
+
+
+def test_share_creation_is_rate_limited_per_ip(client, monkeypatch):
+    from app import api
+
+    monkeypatch.setattr(api, "SHARES_PER_IP_PER_HOUR", 2)
+    body = {"cargo": OWN_CARGO, "scenario": SCENARIO_ISS}
+    ip = {"x-forwarded-for": "203.0.113.7"}
+    assert client.post("/shares", json=body, headers=ip).status_code == 201
+    assert client.post("/shares", json=body, headers=ip).status_code == 201
+    assert client.post("/shares", json=body, headers=ip).status_code == 429
+    assert client.post("/shares", json=body, headers={"x-forwarded-for": "198.51.100.1"}).status_code == 201

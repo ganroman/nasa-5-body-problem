@@ -4,16 +4,17 @@ import hashlib
 import hmac
 import secrets
 import uuid
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from typing import Any
 
-from fastapi import APIRouter, Depends, Header, HTTPException
+from fastapi import APIRouter, Depends, Header, HTTPException, Request
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel, Field, model_validator
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session, selectinload
 
 from app import scenario as sc
+from app.config import get_settings
 from app.db import get_session
 from app.enums import Dimension, Hazard, MatchConfidence, Origin, Provenance, UseState
 from app.models import (
@@ -337,9 +338,23 @@ def get_passport(export_id: str, session: Session = Depends(get_session)) -> dic
 # ---------------------------------------------------------------------------
 
 
-# shortcut: no rate limit on share writes; add a per-IP limit in Postgres or at Render if abused.
+SHARES_PER_IP_PER_HOUR = 20
+
+
+def _ip_hash(request: Request) -> str:
+    # First X-Forwarded-For hop is the client behind Vercel's proxy. Keyed with a server secret so
+    # stored hashes cannot be reversed by hashing all IPv4 addresses.
+    ip = (request.headers.get("x-forwarded-for") or "").split(",")[0].strip() or (request.client.host if request.client else "")
+    return hmac.new(get_settings().database_url.encode(), ip.encode(), hashlib.sha256).hexdigest()
+
+
 @router.post("/shares", status_code=201)
-def create_share(body: ShareIn, session: Session = Depends(get_session)) -> dict[str, Any]:
+def create_share(body: ShareIn, request: Request, session: Session = Depends(get_session)) -> dict[str, Any]:
+    ip_hash = _ip_hash(request)
+    recent = session.scalar(select(func.count()).select_from(Share).where(
+        Share.creator_ip_hash == ip_hash, Share.created_at > datetime.now(UTC) - timedelta(hours=1)))
+    if recent >= SHARES_PER_IP_PER_HOUR:
+        raise HTTPException(429, f"share limit reached ({SHARES_PER_IP_PER_HOUR} per hour); try again later")
     _check_materials(session, body.cargo)
     forked = None
     if body.forked_from_slug:
@@ -352,7 +367,7 @@ def create_share(body: ShareIn, session: Session = Depends(get_session)) -> dict
     config, scen = _save_cargo_and_scenario(session, item, body)
     token = secrets.token_urlsafe(24)
     share = Share(slug=secrets.token_urlsafe(9), edit_token_hash=_hash_token(token),
-                  cargo_config_id=config.id, scenario_id=scen.id)
+                  cargo_config_id=config.id, scenario_id=scen.id, creator_ip_hash=ip_hash)
     session.add(share)
     session.commit()
     # The edit token is returned once; only its hash is stored.

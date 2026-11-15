@@ -52,7 +52,7 @@ Interactive docs at `/docs` when the server runs. Frontend guide with examples a
 | `POST /scenarios/compare` | `{cargo_slug | cargo, scenario}` → conditions, ranked evidence per component, coverage per hazard, sources, tolerances, limitations |
 | `POST /scenarios/explain` | Same body + `component_index`, `hazard`, `question` → grounded SI explanation (`ok`, `unavailable`, `rejected` or `error`) plus the cited records |
 | `POST /passports/export`, `GET /passports/{id}` | Store and reopen an immutable passport snapshot built from the same computation as compare |
-| `POST /shares`, `GET /shares/{slug}`, `PUT /shares/{slug}` | Anonymous share links. `POST` returns an `edit_token` once; `PUT` needs it in `X-Edit-Token` and saves a new config version |
+| `POST /shares`, `GET /shares/{slug}`, `PUT /shares/{slug}` | Anonymous share links. `POST` returns an `edit_token` once (limit: 20 new links per IP per hour, else `429`); `PUT` needs it in `X-Edit-Token` and saves a new config version |
 
 `scenario` is `{environment_id, space="cabin", use_state, route_id?, overrides: {dimension: value}}`. Gravity cannot be overridden; it follows the environment.
 

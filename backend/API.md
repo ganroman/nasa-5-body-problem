@@ -170,4 +170,5 @@ await fetch(`${API}/shares/${slug}`, {
 
 - `422`: invalid request. `detail` explains it, e.g. O₂ override 21 instead of 0.21, unknown `material_id`, both `cargo_slug` and `cargo`.
 - `404`: unknown cargo, environment, space, share or passport.
+- `429`: more than 20 new share links from one IP within an hour.
 - `material_id` must be `null` exactly when `identity_confidence` is `unmatched`. Use `GET /materials` for valid ids.
