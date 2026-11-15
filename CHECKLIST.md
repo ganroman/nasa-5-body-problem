@@ -28,8 +28,8 @@ Status key: `[ ]` open · `[~]` in progress (claimed) · `[!]` blocked · `[x]` 
 ## Open
 
 ### A. Merge and deploy
-- [ ] T01 HUMAN (Roman): review and merge PR #49 (purge mock data, https://github.com/ganroman/nasa-5-body-problem/pull/49). The merge deploys and runs the purge on prod; a DB dump is taken first.
-- [ ] T02 After T01: check live (https://cargo.qwadratic.me): `/health` ok, `/cargo` lists only the 5 curated items, no `mock`/`MOCK`/`M##` in `/environments`, `/routes`, `/sources`. Report in the line.
+- [x] T01 @roman 19:00 merged as 44b77ef, deployed. (was: review and merge PR #49 (purge mock data, https://github.com/ganroman/nasa-5-body-problem/pull/49). The merge deploys and runs the purge on prod; a DB dump is taken first.)
+- [x] @roman-claude 19:05 T02 RESULT: /health ok; /cargo 55 -> 5 items; no mock ids in cargo, environments, routes, materials, investigations (24 PSI intact). Leftover text 'instrument mock cargo' fixed by PR #52 (open, T20). (was: check live (https://cargo.qwadratic.me): `/health` ok, `/cargo` lists only the 5 curated items, no `mock`/`MOCK`/`M##` in `/environments`, `/routes`, `/sources`. Report in the line.)
 - [ ] T03 HUMAN (Roman): set `SI_API_KEY` (Eustella) on the demo server and restart.
 - [ ] T04 After T03: on live, "Explain" returns a real SI explanation, not "SI not configured". Note the result on the line.
 - [x] @roman-claude T05 Lunar base O₂ and pressure show "unknown" in the app, while the video says 30% O₂, 0.69 atm. Find the cited NASA source, fix the seed data (`backend/seed/environments.yaml`) via PR, or tell Roman the video claim has no source. RESULT: no data fix. 30% O2 / 0.69 atm is the challenge brief scenario (>=30% O2, <=10.2 psi); the app has it as environment `lunar-elevated-o2-scenario` (assumption) and keeps the NASA lunar base itself "unknown" on purpose. Only wording: call it a "scenario", not the base spec (README, form).
@@ -49,10 +49,15 @@ Status key: `[ ]` open · `[~]` in progress (claimed) · `[!]` blocked · `[x]` 
 
 ### D. Submission form
 - [x] @roman-claude T15 DRAFT in PR #51, now built from the team's own description.txt (SI disclosure, resources, data note). Hook settled: written by the team (Roman). Only the demo video link is left to add. Old note: 
-- [ ] T16 HUMAN (Roman): upload the 30 s video and paste the Demo video link.
+- [x] T16 @roman 20:50 video is public on YouTube: https://youtu.be/5JOlN18c3TY (title, description with SI disclosure, tags, thumbnail set; 30.000 s file). Demo link is in the NASA form.
 - [ ] T17 Final audit (after T01–T15): no mock data anywhere, no secrets, every link in README and form opens, video is 30.0 s with watermark. Post a pass/fail list on the line.
 - [x] @roman-claude T19 QR in team.png scans to https://github.com/Hantok/cargo-passport. The small QR on the crate in hero.png does not decode (decoration only).
-- [ ] T18 Claude (browser) fills the form; HUMAN (Roman) confirms in chat; only then Claude presses **Submit for Judging** and ticks Terms and Originality. Target 21:00, hard limit 23:59.
+- [~] T18 STATUS 20:57: form is filled and SAVED (last saved 20:57), NOT submitted. Left: Roman reviews the public team page, says 'submit' in chat, Claude presses Submit for Judging. Original line: Claude (browser) fills the form; HUMAN (Roman) confirms in chat; only then Claude presses **Submit for Judging** and ticks Terms and Originality. Target 21:00, hard limit 23:59.
+
+- [ ] T20 HUMAN (Ivan or Roman): merge PR #52 (https://github.com/ganroman/nasa-5-body-problem/pull/52) so the live app stops saying 'instrument mock cargo' in the material pmma-cast-sheet and one source title. Then check https://cargo.qwadratic.me/materials. Data-only migration, tested.
+- [ ] T21 HUMAN (Ivan or Roman): merge PRs #53, #51, #50 (docs and files only, no deploy effect on data). Order does not matter.
+- [ ] T22 Add the two missing links to the NASA form 'Other data' list: HyperFrames (project URL) and Eustella AI (service URL). Needs the real URLs from the team; do not guess. Roman's browser, ask Roman.
+- [ ] T23 HUMAN (Roman): decide on presentation decks in the team repo (slide 3 uses a mock-style dashboard picture; decks are served at /presentation on the live site) and on prototype/dashboard-mock.html, ui-mock.html. Keep or remove? If remove: branch + PR.
 
 ## In progress
 <!-- Claims appear here as the `[~]` lines in Open. Do not move them. -->
