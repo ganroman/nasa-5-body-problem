@@ -49,7 +49,7 @@ const fetch = async (url, opts) => {
 
 const els = new Map();
 const el = id => { if (!els.has(id)) els.set(id, { innerHTML: '', textContent: '', querySelectorAll: () => [] }); return els.get(id); };
-const location = { search: '?cargo=kit', hash: '' };
+const location = { search: '?cargo=kit', hash: '', protocol: 'http:', hostname: 'localhost', port: '5500', origin: 'http://localhost:5500' };
 const ctx = vm.createContext({ fetch, location, URLSearchParams, Promise, document: { getElementById: el }, window: { addEventListener() {} } });
 vm.runInContext(html.match(/<script>([\s\S]*?)<\/script>/)[1], ctx);
 const run = c => vm.runInContext(c, ctx);
@@ -95,5 +95,14 @@ const tick = () => new Promise(r => setTimeout(r, 0));
   run("state.selected='iss'; render()");
   for (let i = 0; i < 5; i++) await tick();
   assert.match(el('body').innerHTML, /This is the cargo's current location/);
+
+  // API default: local static server -> local backend; served by the API -> same origin; ?api= wins.
+  const apiFor = (loc) => {
+    const m = html.match(/const LOCAL_STATIC = [^\n]*\nconst API = [^\n]*/)[0];
+    return vm.runInNewContext(m + '; API', { location: loc, params: new URLSearchParams(loc.search) });
+  };
+  assert.equal(apiFor({ search: '', protocol: 'http:', hostname: 'localhost', port: '5500', origin: 'http://localhost:5500' }), 'http://localhost:8000');
+  assert.equal(apiFor({ search: '', protocol: 'https:', hostname: 'cargo.qwadratic.me', port: '', origin: 'https://cargo.qwadratic.me' }), 'https://cargo.qwadratic.me');
+  assert.equal(apiFor({ search: '?api=http://x:1', protocol: 'https:', hostname: 'cargo.qwadratic.me', port: '', origin: 'https://cargo.qwadratic.me' }), 'http://x:1');
   console.log('frontend ok');
 })().catch(e => { console.error(e); process.exit(1); });
