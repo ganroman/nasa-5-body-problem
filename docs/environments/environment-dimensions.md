@@ -4,7 +4,7 @@ Summary for **Flame in Freefall** · 14 November 2026
 
 Compare environments by their physical conditions, the materials and activities inside them, and the help available when something goes wrong. **Gravity, total pressure, oxygen concentration, and airflow are the starting dimensions** for comparing combustion research. A shared destination alone does not establish that two environments have similar fire behaviour.
 
-This document proposes dimensions based on the six space-environment notes below, the four Earth profiles based on [Earth use cases](../earth-use-cases.md) and its submarine research references, and the [research brief](../research-brief.md). It does not establish mission specifications or safety limits. The Earth profiles use explicitly labelled estimates for representative scenarios. Space-environment evidence gaps remain separate; planning estimates do not establish operating limits.
+This document proposes dimensions based on the six destination-environment notes and the generalized spacecraft profile below, the four Earth profiles based on [Earth use cases](../earth-use-cases.md) and its submarine research references, and the [research brief](../research-brief.md). It does not establish mission specifications or safety limits. The Earth profiles use explicitly labelled estimates for representative scenarios. Space-environment evidence gaps remain separate; planning estimates do not establish operating limits.
 
 ## 1. Environments covered
 
@@ -18,6 +18,7 @@ Gravity here describes the conditions experienced by objects inside the habitat.
 | [Lunar Gateway](lunar-gateway.md) | Microgravity | Space vacuum | Unknown / unknown | Earlier architecture, with visits and unattended periods; the note records a pause in its current form. |
 | [NASA Martian surface base](martian-base-nasa.md) | Partial gravity, about 0.38g | Thin, mostly CO₂ atmosphere and surface dust | Unknown / unknown | Surface-habitat and rover studies, not an operational base. |
 | [NASA Mars orbital habitat](martian-orbital-station-nasa.md) | Microgravity, unless artificial gravity is specified | Space vacuum | Unknown / unknown | Could be a transit habitat temporarily in orbit; a separate permanent station is not established. |
+| [Spacecraft in transit](spacecraft.md) | Microgravity during unpowered coast; phase-dependent acceleration during powered flight | Route-dependent; vacuum in space, atmosphere during launch/entry where applicable | Vehicle-specific; unknown generally. An illustrative baseline is provided separately. | Moving environment for crew and cargo; distinguish vehicle, compartment, flight phase and transfer interfaces. |
 | [Aircraft cabins and cargo holds](earth/aircraft.md) | Approximately 1g in ordinary flight | Earth atmosphere; altitude and flight phase vary | Estimated 75–85 kPa / 20.9% O₂ in cruise | Card A: proposed item-evidence comparison for cabin installations and cargo shipments; method plus potentially relevant data. |
 | [Power plants and battery storage](earth/power-plants-and-battery-storage.md) | Approximately 1g | Low-altitude temperate site; cooled indoor battery room | Estimated 95–103 kPa / 20.9% O₂ | Card B: battery modules and racks through installation, operation and maintenance; method only. |
 | [Schools and public buildings](earth/schools-and-public-buildings.md) | Approximately 1g | Local weather and building surroundings | Estimated 95–103 kPa / 20.9% O₂ | Card C: furniture, panels and devices in occupied buildings; method plus potentially relevant smoke-detection data. |
@@ -49,6 +50,10 @@ The following values come from [the ISS research note](iss.md), including its no
 
 **Cabin conditions are not experiment conditions.** An ISS combustion chamber can use a different gas mixture, pressure, and airflow from the surrounding cabin. Compare each investigation's recorded test conditions with the destination environment; do not assign 21% O₂ and 101 kPa to every ISS experiment. Saffire experiments took place in departed Cygnus vehicles, not in the occupied ISS cabin.
 
+
+### Spacecraft dimension profile
+
+The [spacecraft profile](spacecraft.md) describes transport between environments, including compartment dimensions, atmosphere, flight phases and response constraints. Its illustrative coast scenario uses a 3 m internal-diameter × 4 m-long cylindrical cabin (approximately 28.3 m³ gross volume), 101 kPa and 21% O₂. These are selected modelling assumptions, not generic vehicle specifications or destination conditions. Free gas volume and whole-vehicle dimensions remain unknown.
 
 ### Earth dimension profiles
 
@@ -108,7 +113,7 @@ These are proposed fields to record for each relevant space, such as a living ar
 
 **Illustrative calculation, not a mission specification:** 21% O₂ at 100 kPa and 30% O₂ at 70 kPa both give an oxygen partial pressure of 21 kPa. They still have different oxygen concentrations and total pressures; equal partial pressure does not establish equal flammability or safety.
 
-The research brief's elevated-oxygen lunar scenario (at least 30% O₂ and at most 10.2 psi, approximately 70.3 kPa) can be recorded as a **scenario range**. It is not a verified atmosphere for any of the six space environments, and those inequalities do not define a single operating point.
+The research brief's elevated-oxygen lunar scenario (at least 30% O₂ and at most 10.2 psi, approximately 70.3 kPa) can be recorded as a **scenario range**. It is not a verified atmosphere for any of the space environments listed here, and those inequalities do not define a single operating point.
 
 ## 3. Additional dimensions worth recording
 
@@ -152,6 +157,7 @@ The applicable measurements differ by environment:
 | NASA lunar base and ILRS surface habitat | Record local ground and hardware temperatures, sun angle, terrain shadow, and sunlight duration. Lunar vacuum has no ambient air temperature. A general lunar day/night range is not a verified range for a particular south-pole site. |
 | Lunar Gateway | Record orbit-dependent illumination and eclipses, incoming solar and lunar radiation, and component temperatures. There is no single outside air temperature in orbital vacuum. |
 | Martian surface base | Record ground temperature and air temperature separately, with measurement height, location, season, and time of day. Include wind and atmospheric dust conditions, which affect heat exchange and sunlight reaching the surface. |
+| Spacecraft in transit | Record trajectory and flight phase, changing solar distance, orientation, eclipses, shielding and exposed hardware temperatures. Launch, entry and descent require separate atmospheric and heating conditions. |
 | Mars orbital habitat | Record solar distance, orbit, eclipses, planetary radiation, and hardware temperatures. Mars surface temperature ranges do not describe a spacecraft in orbit. |
 
 For example, a rover battery enclosure in sunlight and an identical enclosure in terrain shadow can experience different temperatures at the same lunar site. Record their lighting and thermal conditions separately. This is an illustrative case, not a measured temperature range.
@@ -170,6 +176,6 @@ For an initial comparison, prioritize **space and operating state, gravity, pres
 
 Matching these dimensions helps explain why a study is relevant. It does not certify a material or system for a destination. The existing research brief reports a gap in direct partial-gravity combustion data in the reviewed PSI collection; an unknown condition or an untested gravity regime must remain visible.
 
-**Scope and limitations:** This is a synthesis of the repository's environment research, not a fresh verification of mission plans or engineering specifications. It distinguishes sourced values from explicitly selected Earth scenario estimates. Rocket and propellant combustion remain outside the project's stated scope.
+**Scope and limitations:** This is a synthesis of the repository's environment research, not a fresh verification of mission plans or engineering specifications. It distinguishes sourced values from explicitly selected Earth and spacecraft scenario estimates. Rocket and propellant combustion remain outside the project's stated scope.
 
 *SI disclosure: compiled with AI assistance from the linked repository research notes.*

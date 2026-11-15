@@ -4,6 +4,8 @@ For our Flame in Freefall challenge, cargo traffic matters because the same item
 
 This extends the team's existing [cargo passport concept](../cargo-passport.md). The scenarios below are illustrative research cases, not confirmed mission routes or safety findings.
 
+Treat each transport leg as a [spacecraft environment](spacecraft.md), with its own compartment, dimensions and flight-phase conditions. Destination values do not describe the vehicle automatically.
+
 ## Possible cargo journeys
 
 | Scenario | What moves and why | What changes for fire safety | What the passport should explain |
