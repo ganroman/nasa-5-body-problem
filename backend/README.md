@@ -26,7 +26,7 @@ uv run python -m app.ingest.load       # after seed/data changes; safe to re-run
 uv run uvicorn app.main:app --port 8000
 ```
 
-The API is then at `http://localhost:8000` (docs at `/docs`). Add the frontend's local origin to `CORS_ORIGINS` if it is served from another port.
+The dashboard is then at `http://localhost:8000/app/` and the API at `http://localhost:8000` (docs at `/docs`). The backend serves `frontend/` itself, so no CORS setup is needed; `CORS_ORIGINS` only matters if the page is served from somewhere else.
 
 ## Configuration
 

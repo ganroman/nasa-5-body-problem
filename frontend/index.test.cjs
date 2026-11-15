@@ -39,18 +39,31 @@ const routes = { '/cargo': [{ slug: 'kit' }], '/environments': [{ id: 'iss', nam
   '/routes': [{ id: 'R23', from_env: 'iss', to_env: 'moon', description: 'Hypothetical' }],
   '/materials': [{ id: 'pmma-cast-sheet', material_class: 'polymer' }],
   '/cargo/kit': { slug: 'kit', name: 'Science kit', purpose: 'Demo', provenance: 'illustrative', config_version: 1, components: comps } };
-const calls = [];
+const calls = [], bodies = {};
+let explainReply = { explanation: { status: 'ok', cached: false, sentences: [{ text: 'PMMA LOI is 17.3%.', source_ids: ['obs-7'] }] },
+  sources: [{ source_id: 'obs-7', excerpt: 'LOI 17.3% O2.', locator: 'doc' }], disclosure: 'AI-generated from listed records.' };
 const fetch = async (url, opts) => {
   const p = url.replace('http://localhost:8000', '');
-  calls.push(p);
-  const data = p === '/scenarios/compare' ? compareFor(JSON.parse(opts.body).scenario.environment_id) : routes[p];
+  calls.push(p + (opts?.method && opts.method !== 'POST' ? ' ' + opts.method : ''));
+  if (opts?.body) bodies[p] = { ...JSON.parse(opts.body), headers: opts.headers };
+  const data = p === '/scenarios/compare' ? compareFor(JSON.parse(opts.body).scenario.environment_id)
+    : p === '/scenarios/explain' ? explainReply
+    : p === '/passports/export' ? { id: 'pp-1', passport: { passport_version: 1 } }
+    : p === '/shares' ? { slug: 'abc', edit_token: 'tok', config_version: 1 }
+    : p === '/shares/abc' ? { slug: 'abc', config_version: 2 }
+    : routes[p];
   return { ok: data !== undefined, status: data ? 200 : 404, json: async () => data ?? { detail: 'not found' } };
 };
 
 const els = new Map();
-const el = id => { if (!els.has(id)) els.set(id, { innerHTML: '', textContent: '', querySelectorAll: () => [] }); return els.get(id); };
-const location = { search: '?cargo=kit', hash: '' };
-const ctx = vm.createContext({ fetch, location, URLSearchParams, Promise, document: { getElementById: el }, window: { addEventListener() {} } });
+const el = id => { if (!els.has(id)) els.set(id, { innerHTML: '', textContent: '', value: '', querySelectorAll: () => [], querySelector: () => null }); return els.get(id); };
+const location = { search: '?cargo=kit', hash: '', pathname: '/app/', origin: 'http://localhost:8000' };
+const saved = {}, clicked = [];
+const ctx = vm.createContext({ fetch, location, URLSearchParams, Promise, JSON, setTimeout,
+  document: { getElementById: el, createElement: () => ({ click() { clicked.push(this.download); } }) },
+  window: { addEventListener() {} }, localStorage: { getItem: k => saved[k] ?? null, setItem: (k, v) => { saved[k] = v; } },
+  history: { replaceState: (a, b, url) => { location.search = url.split('?')[1]?.split('#')[0] ? '?' + url.split('?')[1].split('#')[0] : ''; } },
+  navigator: { clipboard: { writeText: async () => {} } }, URL: { createObjectURL: () => 'blob:x', revokeObjectURL() {} }, Blob: class {} });
 vm.runInContext(html.match(/<script>([\s\S]*?)<\/script>/)[1], ctx);
 const run = c => vm.runInContext(c, ctx);
 const tick = () => new Promise(r => setTimeout(r, 0));
@@ -90,10 +103,50 @@ const tick = () => new Promise(r => setTimeout(r, 0));
   assert.match(body, /Battery pack<\/b> <span class="tag">gap/);
   assert.match(body, /Analogue records .*: 1/);
   assert.equal(calls.filter(c => c === '/scenarios/compare').length, 2); // results cached per environment
+  assert.match(body, /Ask about this evidence/);
+  assert.match(body, /Download passport/);
 
   // Selecting the current location says so instead of diffing against itself.
   run("state.selected='iss'; render()");
   for (let i = 0; i < 5; i++) await tick();
   assert.match(el('body').innerHTML, /This is the cargo's current location/);
+
+  // Custom…: slider overrides are sent in internal units and labelled as the user's values.
+  run("state.selected='moon'; startCustom(); state.custom.overrides.o2_fraction=0.3; render()");
+  for (let i = 0; i < 5; i++) await tick();
+  assert.equal(bodies['/scenarios/compare'].scenario.overrides.o2_fraction, 0.3);
+  assert.equal(bodies['/scenarios/compare'].scenario.environment_id, 'moon');
+  assert.match(el('app').innerHTML, /Custom…/);
+  assert.match(el('body').innerHTML, /Custom \(Moon base\)/);
+  assert.match(el('body').innerHTML, /your values/);
+
+  // SI: question goes to /scenarios/explain; citations are numbered and resolve to the returned records.
+  el('ask-component').value = '0'; el('ask-question').value = 'Does it apply on the Moon?';
+  await run('ask()');
+  assert.equal(bodies['/scenarios/explain'].question, 'Does it apply on the Moon?');
+  assert.equal(bodies['/scenarios/explain'].cargo_slug, 'kit');
+  const ans = run('answerHtml(state.ask.answer)');
+  assert.match(ans, /PMMA LOI is 17.3%.<sup><a href="#cite-1"/);
+  assert.match(ans, /\[1\] obs-7<\/b> LOI 17.3% O2./);
+  assert.match(ans, /AI-generated/);
+  for (const [status, text] of [['unavailable', /unavailable/], ['rejected', /withheld/], ['error', /failed/]]) {
+    assert.match(run(`answerHtml({explanation:{status:'${status}',reason:'r',invalid_source_ids:['x']},disclosure:'d'})`), text);
+  }
+
+  // Download: export uses the same scenario; a file is offered.
+  await run('downloadPassport()');
+  assert.equal(bodies['/passports/export'].scenario.overrides.o2_fraction, 0.3);
+  assert.match(clicked[0], /cargo-passport-kit-moon.json/);
+
+  // Share: first save creates a link (forked from the seeded slug) and keeps the edit token; second save edits it.
+  await run('saveShare()');
+  assert.equal(bodies['/shares'].forked_from_slug, 'kit');
+  assert.equal(saved['share:abc'], 'tok');
+  assert.equal(location.search, '?share=abc');
+  await run('saveShare()');
+  assert.ok(calls.includes('/shares/abc PUT'));
+  assert.equal(bodies['/shares/abc'].headers['x-edit-token'], 'tok');
+  // After sharing, comparisons send the copied cargo instead of the slug.
+  assert.equal(run('JSON.stringify(Object.keys(cargoRef()))'), '["cargo"]');
   console.log('frontend ok');
 })().catch(e => { console.error(e); process.exit(1); });

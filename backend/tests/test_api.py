@@ -158,3 +158,9 @@ def test_share_creation_is_rate_limited_per_ip(client, monkeypatch):
     assert client.post("/shares", json=body, headers=ip).status_code == 201
     assert client.post("/shares", json=body, headers=ip).status_code == 429
     assert client.post("/shares", json=body, headers={"x-forwarded-for": "198.51.100.1"}).status_code == 201
+
+
+def test_frontend_is_served_same_origin(client):
+    page = client.get("/app/")
+    assert page.status_code == 200 and "Cargo Passport" in page.text
+    assert client.get("/", follow_redirects=False).headers["location"] == "/app/"
