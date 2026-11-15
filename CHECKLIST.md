@@ -32,7 +32,7 @@ Status key: `[ ]` open · `[~]` in progress (claimed) · `[!]` blocked · `[x]` 
 - [ ] T02 After T01: check live (https://cargo.qwadratic.me): `/health` ok, `/cargo` lists only the 5 curated items, no `mock`/`MOCK`/`M##` in `/environments`, `/routes`, `/sources`. Report in the line.
 - [ ] T03 HUMAN (Roman): set `SI_API_KEY` (Eustella) on the demo server and restart.
 - [ ] T04 After T03: on live, "Explain" returns a real SI explanation, not "SI not configured". Note the result on the line.
-- [ ] T05 Lunar base O₂ and pressure show "unknown" in the app, while the video says 30% O₂, 0.69 atm. Find the cited NASA source, fix the seed data (`backend/seed/environments.yaml`) via PR, or tell Roman the video claim has no source.
+- [x] @roman-claude T05 Lunar base O₂ and pressure show "unknown" in the app, while the video says 30% O₂, 0.69 atm. Find the cited NASA source, fix the seed data (`backend/seed/environments.yaml`) via PR, or tell Roman the video claim has no source. RESULT: no data fix. 30% O2 / 0.69 atm is the challenge brief scenario (>=30% O2, <=10.2 psi); the app has it as environment `lunar-elevated-o2-scenario` (assumption) and keeps the NASA lunar base itself "unknown" on purpose. Only wording: call it a "scenario", not the base spec (README, form).
 
 ### B. Public repo `Hantok/cargo-passport` (prepare content, a human pushes)
 - [ ] T06 Prepare a code snapshot of the team repo without `brag-output` v1–v5 renders, in a folder outside the repo. List what is included.
@@ -48,7 +48,7 @@ Status key: `[ ]` open · `[~]` in progress (claimed) · `[!]` blocked · `[x]` 
 - [!] T14 HUMAN (Roman): the Mac is OFFLINE, not lost (may be back in ~1 hour). When it is online, push the Mac-only files (`presentation/final/`, `docs/brag-video-review.md`, `brag-output/v5` and `v6` text, `v6/composition`) to branch `mac-files` of the team repo (see prompt in chat). Needed for T15 (`v6/description.txt`) and the two `presentation/final` images.
 
 ### D. Submission form
-- [ ] T15 Draft the form text in `docs/submission-form.md`: Name, Summary, Detailed description, SI use, NASA Data (DOIs), References (fonts, GSAP, Kokoro, HyperFrames, Eustella, ZARM Zenodo). Sources: `brag-output/v6/description.txt`, the Hantok README. Only facts that exist in the repo. Note: `brag-output/v6/description.txt` is on the offline Mac (T14); draft from the Hantok README and repo now, and merge in that file when the Mac is back.
+- [~] @roman-claude 17:55 T15 Draft the form text in `docs/submission-form.md`: Name, Summary, Detailed description, SI use, NASA Data (DOIs), References (fonts, GSAP, Kokoro, HyperFrames, Eustella, ZARM Zenodo). Sources: `brag-output/v6/description.txt`, the Hantok README. Only facts that exist in the repo. Note: `brag-output/v6/description.txt` is on the offline Mac (T14); draft from the Hantok README and repo now, and merge in that file when the Mac is back.
 - [ ] T16 HUMAN (Roman): upload the 30 s video and paste the Demo video link.
 - [ ] T17 Final audit (after T01–T15): no mock data anywhere, no secrets, every link in README and form opens, video is 30.0 s with watermark. Post a pass/fail list on the line.
 - [ ] T19 Check the QR code drawn inside `team.png` and `hero.png` (Hantok `media/`): it is SI-drawn and may not scan. If it does not, tell Roman; the real QR files are `brag-output/v6/cargo-passport-repo-qr.png/svg`.
