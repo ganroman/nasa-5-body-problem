@@ -10,7 +10,7 @@ Data shown: material and experiment names come from the NASA PSI tables (PMMA in
 
 SI disclosure
 - Audio: the narration is synthetic speech generated with Kokoro-82M TTS (voice af_heart) through the HyperFrames CLI. Music and sound effects were synthesized in code with SI assistance. This acknowledgement is also embedded in the MP4 metadata (comment and description tags).
-- Video: visuals, layout, animation and the narration script were produced with SI assistance (Claude, HyperFrames). The opening line was drafted by SI in an earlier version and approved by the team. Every frame carries a visible "SI-ASSISTED" watermark.
+- Video: visuals, layout, animation and the narration script were produced with SI assistance (Claude, HyperFrames). The opening line was written by the team. Every frame carries a visible "SI-ASSISTED" watermark.
 - The cargo journey animation at 0:10 is the team's own prototype (prototype/cargo-journey-animation.html), rendered frame by frame inside the video.
 - English subtitles are burned in.
 
