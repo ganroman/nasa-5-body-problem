@@ -17,7 +17,7 @@ Pressures are absolute. Conversions: 7.0 psia ≈ 48.2 kPa, 8.2 psia ≈ 56.5 kP
 
 ## Stations included
 
-Only stations with a **published cabin atmosphere** are included. Of the six environments in [environment dimensions](environment-dimensions.md), only the ISS qualifies:
+Only stations with a **published cabin atmosphere** are included. Among the space environments in [environment dimensions](environment-dimensions.md), only the ISS has a sourced nominal cabin atmosphere in the repository notes. The generalized spacecraft profile supplies illustrative assumptions, so it is excluded:
 
 | Station | Gravity | Cabin O₂ / total pressure | Source |
 |---|---|---|---|
