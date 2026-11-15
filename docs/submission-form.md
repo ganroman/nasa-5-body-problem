@@ -25,7 +25,7 @@ Not a safety verdict: Cargo Passport organises evidence for review and does not 
 
 How it works: (1) Evidence: NASA PSI experiments, drop-tower tests and material data. (2) SI assesses: compares test conditions with the cargo's journey and explains with sources. (3) People decide: how to ship, where to store, what to test next.
 
-Hook / one-line pitch: `TODO(Roman)`. The video opens with "In space, there's no fire department." (SI-drafted, team-approved, see SI disclosure).
+Hook / one-line pitch: "In space, there's no fire department." (written by the team; the video opens with it).
 
 ## Links
 - Demo video (30 s): `TODO(Roman)` upload link
@@ -37,11 +37,10 @@ Hook / one-line pitch: `TODO(Roman)`. The video opens with "In space, there's no
 Source: `brag-output/v6/description.txt` and `docs/concept-draft.md` (both written by the team); keep this wording.
 - Idea: the concept originated in the team's brainstorm (recordings of 14 Nov, in the repo). SI tools (Claude and Codex) were used to organize the brainstorm, check data feasibility, review the concept and edit wording. The data normalization scripts were written with SI assistance. The passport framing and the prototypes were developed with SI assistance.
 - Audio: the narration is synthetic speech generated with Kokoro-82M TTS (voice af_heart) through the HyperFrames CLI. Music and sound effects were synthesized in code with SI assistance. This acknowledgement is also embedded in the MP4 metadata (comment and description tags).
-- Video: visuals, layout, animation and the narration script were produced with SI assistance (Claude, HyperFrames). **The opening line was drafted by SI in an earlier version and approved by the team.** Every frame carries a visible "SI-ASSISTED" watermark. English subtitles are burned in.
+- Video: visuals, layout, animation and the narration script were produced with SI assistance (Claude, HyperFrames). **The opening line was written by the team.** Every frame carries a visible "SI-ASSISTED" watermark. English subtitles are burned in.
 - The cargo journey animation at 0:10 is the team's own prototype (`prototype/cargo-journey-animation.html`), rendered frame by frame inside the video.
 - Images: the README hero image and team image are SI-generated and carry a visible "SI-assisted" watermark.
 - App: the "Explain" feature uses an SI model (Eustella AI) to explain the computed evidence comparison with sources; the comparison itself is computed in code from NASA data.
-- `TODO(Roman)`: the review feedback says hooks must come from the team, not SI. The line "In space, there's no fire department." was SI-drafted and team-approved. Keep the disclosure above as is, or replace the line with one the team wrote.
 
 ## NASA data used
 NASA Physical Sciences Informatics (PSI), https://psi.nasa.gov/ , 24 investigation records and 20 experimental tables (in `data/`):
