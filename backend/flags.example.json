@@ -1,0 +1,16 @@
+{
+  "journey-animation": {
+    "enabled": true,
+    "description": "Landing: card with the animated cargo journeys (prototype section)",
+    "rollout_percent": 100,
+    "updated_at": "2026-11-15T12:00:00+00:00",
+    "updated_by": "seed"
+  },
+  "beta-notice": {
+    "enabled": true,
+    "description": "Landing: beta notice line",
+    "rollout_percent": 100,
+    "updated_at": "2026-11-15T12:00:00+00:00",
+    "updated_by": "seed"
+  }
+}

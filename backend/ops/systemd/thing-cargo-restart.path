@@ -1,0 +1,9 @@
+[Unit]
+Description=Watch the restart signal written by the Cargo admin widget
+
+[Path]
+PathModified=/var/lib/cargo/restart.signal
+Unit=thing-cargo-restart.service
+
+[Install]
+WantedBy=multi-user.target
