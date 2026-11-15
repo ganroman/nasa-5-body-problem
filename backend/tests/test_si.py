@@ -207,3 +207,20 @@ def test_prose_after_tools_gets_one_json_retry():
     out = si.explain(INPUTS, client, tools=[LOOKUP])
     assert out["status"] == "ok" and len(client.calls) == 3
     assert client.calls[-1]["response_format"] == {"type": "json_object"} and "tools" not in client.calls[-1]
+
+
+def test_explain_cached_survives_concurrent_identical_save():
+    from sqlalchemy.exc import IntegrityError
+
+    class RacingSession(FakeSession):
+        rolled_back = False
+
+        def commit(self):
+            raise IntegrityError("insert", {}, Exception("duplicate cache_key"))
+
+        def rollback(self):
+            self.rolled_back = True
+
+    session = RacingSession()
+    out = si.explain_cached(session, INPUTS, FakeClient(reply(("Observed.", ["psi-bass-1"]))))
+    assert out["status"] == "ok" and session.rolled_back

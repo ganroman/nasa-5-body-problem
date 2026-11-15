@@ -18,6 +18,7 @@ from typing import Any
 
 from openai import OpenAI
 from sqlalchemy import select
+from sqlalchemy.exc import IntegrityError
 
 from app.config import get_settings
 from app.models import SIExplanation
@@ -197,7 +198,6 @@ def explain_cached(session: Any, inputs: dict, client: Any = None, tools: list[d
 
     result = explain(inputs, client, tools)
     if result["status"] == "ok":
-        # shortcut: concurrent identical misses can hit the unique cache_key; catch IntegrityError if traffic grows.
         session.add(
             SIExplanation(
                 cache_key=key,
@@ -208,5 +208,8 @@ def explain_cached(session: Any, inputs: dict, client: Any = None, tools: list[d
                 citations_valid=True,
             )
         )
-        session.commit()
+        try:
+            session.commit()
+        except IntegrityError:  # an identical request cached the same answer first; ours is still valid
+            session.rollback()
     return {**result, "cached": False}

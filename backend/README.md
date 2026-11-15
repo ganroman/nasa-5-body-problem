@@ -1,6 +1,6 @@
 # Cargo Passport API
 
-Backend for the Cargo Passport dashboard (see [build plan](../docs/build-plan.md)). FastAPI + SQLAlchemy 2 + Alembic on Neon Postgres. The frontend is served from GitHub Pages; this API is deployed separately (Vercel), because Pages cannot run a server or keep the SI key secret.
+Backend for the Cargo Passport dashboard (see [build plan](../docs/build-plan.md)). FastAPI + SQLAlchemy 2 + Alembic on Neon Postgres. The API runs locally for the demo (see below); the SI key stays in `backend/.env` on that machine.
 
 ## Setup
 
@@ -14,17 +14,19 @@ uv run pytest
 uv run uvicorn app.main:app --reload
 ```
 
-## Deploy (Vercel + Neon main)
+## Running for the demo (local, Neon main)
 
-The API runs as a Vercel Function (FastAPI preset, entrypoint `app/main.py`, region `fra1`). `vercel.json` raises the time limit to 30 s for SI calls; `.vercelignore` keeps `.env*`, tests, seed data and migrations out of the upload. Migrations and seeding are one-off commands run locally against Neon.
+The API runs locally; there is no hosted deployment. For the demo, run it against Neon `main` (production data), with its URLs in `backend/.env.main` (gitignored). Quote the values (`DATABASE_URL="..."`): the URLs contain `&`, which the shell otherwise treats as a command separator and silently falls back to `.env` (dev).
 
-1. Migrate and seed Neon `main` once, from your machine, with its URLs in `backend/.env.main` (gitignored). Quote the values (`DATABASE_URL="..."`): the URLs contain `&`, which the shell otherwise treats as a command separator and silently falls back to `.env` (dev):
-   `set -a; . ./.env.main; set +a; uv run alembic upgrade head && uv run python -m app.ingest.load`
-2. From `backend/`: `npx vercel login`, then `npx vercel link --yes --project cargo-passport-api`.
-3. Add production variables: `DATABASE_URL` (Neon `main`, pooled), `EUSTELLA_API_KEY`, `CORS_ORIGINS`, e.g. `npx vercel env add EUSTELLA_API_KEY production`.
-4. Deploy: `npx vercel deploy --prod`. Check `https://<project>.vercel.app/health`.
+```bash
+cd backend
+set -a; . ./.env.main; set +a
+uv run alembic upgrade head            # after schema changes
+uv run python -m app.ingest.load       # after seed/data changes; safe to re-run
+uv run uvicorn app.main:app --port 8000
+```
 
-After schema changes, run `alembic upgrade head` against Neon `main` before deploying.
+The API is then at `http://localhost:8000` (docs at `/docs`). Add the frontend's local origin to `CORS_ORIGINS` if it is served from another port.
 
 ## Configuration
 
@@ -52,7 +54,7 @@ Interactive docs at `/docs` when the server runs. Frontend guide with examples a
 | `POST /scenarios/compare` | `{cargo_slug | cargo, scenario}` → conditions, ranked evidence per component, coverage per hazard, sources, tolerances, limitations |
 | `POST /scenarios/explain` | Same body + `component_index`, `hazard`, `question` → grounded SI explanation (`ok`, `unavailable`, `rejected` or `error`) plus the cited records |
 | `POST /passports/export`, `GET /passports/{id}` | Store and reopen an immutable passport snapshot built from the same computation as compare |
-| `POST /shares`, `GET /shares/{slug}`, `PUT /shares/{slug}` | Anonymous share links. `POST` returns an `edit_token` once; `PUT` needs it in `X-Edit-Token` and saves a new config version |
+| `POST /shares`, `GET /shares/{slug}`, `PUT /shares/{slug}` | Anonymous share links. `POST` returns an `edit_token` once (limit: 20 new links per IP per hour, else `429`); `PUT` needs it in `X-Edit-Token` and saves a new config version |
 
 `scenario` is `{environment_id, space="cabin", use_state, route_id?, overrides: {dimension: value}}`. Gravity cannot be overridden; it follows the environment.
 
