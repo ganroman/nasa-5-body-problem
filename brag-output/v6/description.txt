@@ -1,0 +1,24 @@
+Cargo Passport | Five-Body Problem | Flame in Freefall | NASA Space Apps Challenge 2026, Vienna
+
+Repository: https://github.com/Hantok/cargo-passport
+
+Team: Roman Slysh, Roman Ganopolskyi, Ivan Kotelnikov, Gjergj Brestovci, Sophie Ganopolska
+
+Every shipment to space carries a Cargo Passport: each item and the materials it is made of. Follow the cargo from Earth to the ISS and the Moon, compare the conditions at every stop, and see which NASA PSI combustion tests apply, what differs and what evidence is missing. Roadmap: combine evidence from PSI, drop-tower tests and MAPTIS; flag risky routes and storage spots; predict flame spread; link fire-response steps; extend to the Moon and Mars.
+
+Data shown: material and experiment names come from the NASA PSI tables (PMMA in BASS-II at 14–22% O2, SIBAL in Saffire-I and silicone in Saffire-II at about 21% O2; none tested at the lunar 30% O2, 0.69 atm or 1/6 g). The shipment, its items and the flame animation are illustrative. The video compares evidence; it is not a safety verdict. Lunar habitat conditions (30% O2, 0.69 atm) come from the challenge brief.
+
+SI disclosure
+- Audio: the narration is synthetic speech generated with Kokoro-82M TTS (voice af_heart) through the HyperFrames CLI. Music and sound effects were synthesized in code with SI assistance. This acknowledgement is also embedded in the MP4 metadata (comment and description tags).
+- Video: visuals, layout, animation and the narration script were produced with SI assistance (Claude, HyperFrames). The opening line was drafted by SI in an earlier version and approved by the team. Every frame carries a visible "SI-ASSISTED" watermark.
+- The cargo journey animation at 0:10 is the team's own prototype (prototype/cargo-journey-animation.html), rendered frame by frame inside the video.
+- English subtitles are burned in.
+
+External resources
+- Space Grotesk font (Florian Karsten, SIL Open Font License)
+- JetBrains Mono font (JetBrains, SIL Open Font License)
+- GSAP 3.14.2 animation library (GreenSock)
+- Kokoro-82M text-to-speech model, run with kokoro-onnx
+- HyperFrames 0.9.45 (HTML-to-video composition and rendering)
+- NASA Physical Science Informatics (PSI) combustion data: BASS-II, Saffire-I, Saffire-II
+No third-party music or stock footage is used.
