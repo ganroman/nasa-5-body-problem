@@ -48,7 +48,7 @@ Status key: `[ ]` open · `[~]` in progress (claimed) · `[!]` blocked · `[x]` 
 - [x] @roman-claude T14 Mac files fetched over SSH (Mac is online, host romans-mac, repo ~/dev/nasa-hackathon) and added in PR #53 (presentation/final, brag-video-review, v5/v6 text, v6 composition). The two final images in that PR are the watermarked, typo-fixed versions. Mac itself untouched. `output/` NOT copied (not requested).
 
 ### D. Submission form
-- [x] @roman-claude T15 DRAFT in PR #51, now built from the team's own description.txt (SI disclosure, resources, data note). Roman must: confirm the hook decision (opening line "In space, there's no fire department." was SI-drafted, team-approved; review feedback says hooks must come from the team), add video link. Old note: 
+- [x] @roman-claude T15 DRAFT in PR #51, now built from the team's own description.txt (SI disclosure, resources, data note). Hook settled: written by the team (Roman). Only the demo video link is left to add. Old note: 
 - [ ] T16 HUMAN (Roman): upload the 30 s video and paste the Demo video link.
 - [ ] T17 Final audit (after T01–T15): no mock data anywhere, no secrets, every link in README and form opens, video is 30.0 s with watermark. Post a pass/fail list on the line.
 - [x] @roman-claude T19 QR in team.png scans to https://github.com/Hantok/cargo-passport. The small QR on the crate in hero.png does not decode (decoration only).
