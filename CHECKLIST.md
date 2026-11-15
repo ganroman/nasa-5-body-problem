@@ -39,7 +39,7 @@ Status key: `[ ]` open · `[~]` in progress (claimed) · `[!]` blocked · `[x]` 
 - [x] @roman-claude T07 live demo link added to Hantok README (d244f83).
 - [x] @roman-claude T08 24 PSI DOIs added to Hantok README (d244f83).
 - [x] @roman-claude T09 dashboard-mock.html and ui-mock.html excluded from the Hantok snapshot. Still in the TEAM repo (decide there). Open question for Roman: presentation decks use a mock-style dashboard image (slide 3); excluded from snapshot.
-- [ ] T10 HUMAN (Roman): after T06–T08 and T10–T12, give the go-ahead to push to `Hantok/cargo-passport`.
+- [x] T10 @roman-claude 21:10 Roman gave the go-ahead; snapshot pushed to Hantok master d1c20e5 (138 files, secrets scan clean). Public repo now has the code.
 
 ### C. Media and compliance
 - [x] @roman-claude T11 watermark done on hero.png and team.png (Hantok 09aea91) and on the two presentation/final images (PR #53, byte-identical originals).
