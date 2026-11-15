@@ -623,8 +623,7 @@ describe('gbrain sync', () => {
 
   it('writes reading leads for the next story and says they create no evidence', async (t) => {
     const { world, env } = await gbrainWorld(t);
-    writeFileSync(`${world.site}/data/stories.json`, JSON.stringify([{ id: 'round-flame', title: 'The round flame' }]));
-    writeFileSync(`${world.site}/data/votes.json`, JSON.stringify({ next: 'round-flame', proposals: [], stories: {} }));
+    writeFileSync(`${world.site}/data/stories.json`, JSON.stringify([{ id: 'round-flame', title: 'The round flame', state: 'proposed' }]));
     const run = await runWithSync(world, env, ['--leads']);
     assert.equal(run.code, 0, run.output);
     const leads = readFileSync(`${world.base}/reports/leads-round-flame.md`, 'utf8');

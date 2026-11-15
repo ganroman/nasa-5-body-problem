@@ -1,9 +1,7 @@
 import { html, raw } from './html.mjs';
-import { APP_URL } from './layout.mjs';
+import { appLink } from './layout.mjs';
 import { BuildError } from './load.mjs';
 import { qrSvg } from './qr.mjs';
-
-const ROUTE = 'R23';
 
 const GLYPH = {
   applies: raw('<circle cx="8" cy="8" r="7" fill="currentColor"/><path d="M4.7 8.3l2.2 2.2 4.4-4.7" fill="none" stroke="#0b1628" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>'),
@@ -88,14 +86,14 @@ const summary = (counts) => html`<p class="pp-summary" data-pp-summary aria-live
 const figureHost = (name, label, ratio) => html`<figure-host name="${name}" style="--figure-ratio: ${ratio}" role="group" aria-label="${label}"><noscript><p class="small">${label} needs JavaScript.</p></noscript></figure-host>`;
 
 const scan = (passport) => {
-  const url = `${APP_URL}/frontend/?cargo=${passport.slug}&route=${ROUTE}`;
+  const url = appLink(passport.slug, { absolute: true });
   return html`<div class="pp-scan slab" data-pp-scan>
         <div class="pp-qr">${qrSvg(url, `QR code that opens the live passport of the ${passport.name.toLowerCase()}`)}</div>
         <div class="pp-scan__text">
           <span class="eyebrow">Scan</span>
           <h3>One code on the item</h3>
-          <p class="small">The code opens the <a href="${url}" rel="noopener">live app</a> on a phone, with the passport of this item.</p>
-          <div class="actions"><button type="button" class="btn btn--primary" data-pp-open aria-controls="pp-card" aria-expanded="false" hidden>Open the passport</button></div>
+          <p class="small">The code opens the <a href="${appLink(passport.slug)}">live app</a> on a phone, with the passport of this item.</p>
+          <div class="actions"><a class="btn btn--primary" href="${appLink(passport.slug)}">Open the passport</a><button type="button" class="btn" data-pp-open aria-controls="pp-card" aria-expanded="false" hidden>Preview it here</button></div>
         </div>
       </div>`;
 };

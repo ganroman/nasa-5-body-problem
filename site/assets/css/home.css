@@ -32,16 +32,9 @@
 
   @media (max-width: 899px) { .hook h1 { max-width: none; } }
 
-  /* first screen: title and line left, the title-slide picture right */
-  .hook--hero { align-items: center; }
+  /* first screen: the title, one line and two buttons; type alone, nothing fills the space */
   .hook--hero h1 { max-width: none; margin-top: var(--space-2); }
   .hook__line { max-width: 22ch; font-size: var(--fs-h3); line-height: 1.25; color: var(--soft); }
-  .hook__art { margin: 0; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--frame); }
-  .hook__art img { display: block; width: 100%; height: auto; }
-  @media (min-width: 900px) {
-    .hook--hero { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: var(--space-5); }
-    .hook--hero .hook__text { padding-block: var(--space-3); }
-  }
 
   /* four stories */
   .tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-3); margin: var(--space-4) 0 0; padding: 0; list-style: none; }
@@ -53,6 +46,16 @@
   .tile__kind { font-size: var(--fs-xs); letter-spacing: var(--track-label); text-transform: uppercase; color: var(--muted); }
   .tile__title { font-size: var(--fs-lg); font-weight: 600; line-height: 1.2; color: var(--fg); }
   .tile__premise { font-size: var(--fs-sm); line-height: 1.45; color: var(--soft); }
+  /* the example tile: first, a row of its own (picture left, words right from 700px) */
+  .tile--example { grid-column: 1 / -1; }
+  .tile--example .tile__img { aspect-ratio: auto; object-fit: contain; }
+  .tile--example .tile__title { font-size: var(--fs-h3); }
+  .tile--example .tile__premise { font-size: var(--fs-md); }
+  @media (min-width: 700px) {
+    .tile--example .tile__link { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); grid-template-rows: auto; align-items: stretch; }
+    .tile--example .tile__img { height: 100%; border-bottom: 0; border-right: 1px solid var(--line); }
+    .tile--example .tile__body { align-content: center; padding: var(--space-4); }
+  }
   @media (max-width: 1099px) { .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (max-width: 559px) { .tiles { grid-template-columns: minmax(0, 1fr); } }
+  @media (max-width: 559px) { .tiles { grid-template-columns: minmax(0, 1fr); } .tile--example { grid-column: auto; } }
 }

@@ -67,7 +67,7 @@ A run is safe to repeat: a second run with nothing new changes no file and makes
 2. A claim: a researcher adds a verified claim with a verbatim quote to `research/evidence/<lane>.verified.json`. The next run adds it to its document's page.
 3. Publishing: copy the claim into `data/evidence.json`. It then has to pass the site's three gates (offline citation gate, live quote check, LLM judge).
 
-With `--leads`, if `data/votes.json` names a next story and gbrain is present, the run searches `nasa-evidence` for the story's title and writes `reports/leads-<story id>.md`: pages to read, nothing more.
+With `--leads`, if `data/stories.json` has a story that is not published yet (the first one is the next) and gbrain is present, the run searches `nasa-evidence` for the story's title and writes `reports/leads-<story id>.md`: pages to read, nothing more.
 
 To make another host count as NASA, add its domain to `NASA_DOMAINS` in `tools/evidence-base/classify.mjs` and add a test case.
 

@@ -1,0 +1,176 @@
+{
+  "id": "moon-air",
+  "title": "Does Moon-base air make space fires worse?",
+  "dek": "How might the air planned for a Moon base change how a fire starts and spreads? This story collects what the sources say, and marks that the whole picture has not yet been looked at together.",
+  "status": "partial",
+  "status_reason": "Each observation comes from a NASA document or a test, but none tested a material at the planned Moon-base air in lunar gravity, so putting them together is our reading.",
+  "beats": [
+    {
+      "id": "hook",
+      "heading": "Different air from the station",
+      "sentences": [
+        {
+          "text": "The ISS was designed and is operated to approximate an Earth-equivalent atmosphere of 14.7 psia with 21% O2.",
+          "evidence": [
+            "iss-cabin-nominal-14-7-psia-21-o2"
+          ]
+        },
+        {
+          "text": "NASA Artemis requirements for sustained missions are targeting an average pressure of 8.2 psi (56.5 kPa) and a 34% oxygen concentration.",
+          "evidence": [
+            "exploration-atmosphere-8-2-psi-34-o2-artemis-sustained"
+          ]
+        },
+        {
+          "text": "A table of early surface vehicle options lists 8.2 psi with a maximum oxygen concentration of 37% for one architecture, and 9.6 psi with 30% for another.",
+          "evidence": [
+            "early-artemis-surface-options-8-2-psi-37-moc-9-6-psi-30-moc"
+          ]
+        },
+        {
+          "text": "Does that air change how a fire starts and spreads?",
+          "evidence": []
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "pressure",
+      "heading": "Less pressure, quicker ignition",
+      "sentences": [
+        {
+          "text": "In piloted ignition tests of PMMA, reducing the pressure to 58.6 kPa while keeping the oxygen at 21% reduced the ignition time by 17% on average.",
+          "evidence": [
+            "pmma-ignition-delay-shorter-at-58-6-kpa-and-32-o2"
+          ]
+        },
+        {
+          "text": "Raising the oxygen at low pressure reduced the ignition time by a further 10%.",
+          "evidence": [
+            "pmma-ignition-delay-shorter-at-58-6-kpa-and-32-o2"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "materials",
+      "heading": "Each material moves its own way",
+      "sentences": [
+        {
+          "text": "A table of oxygen limits at three total pressures lists silicone at 28% oxygen at 48.2 kPa, 23% at 85.3 kPa and 21% at 101.3 kPa.",
+          "evidence": [
+            "silicone-1p5mm-moc-vs-pressure"
+          ]
+        },
+        {
+          "text": "Kevlar and PBI webbings had maximum oxygen concentrations of 37% and 35% oxygen, natural and black, at 8.2 psia.",
+          "evidence": [
+            "kevlar-pbi-webbing-moc-8p2psia"
+          ]
+        },
+        {
+          "text": "The maximum oxygen concentration is expected to depend on sample geometry, thickness, ignition mode, radiant energy, pressure and gravity level, so its conditions should be stated.",
+          "evidence": [
+            "moc-depends-on-geometry-thickness-pressure-gravity"
+          ]
+        }
+      ],
+      "pull_quote": {
+        "evidence": "air-data-not-conservative-for-higher-o2-lower-pressure"
+      },
+      "figure": null
+    },
+    {
+      "id": "not-equal",
+      "heading": "Air data does not carry over",
+      "sentences": [
+        {
+          "text": "A review of earlier data concludes that results at lower oxygen and higher pressure, such as 21% at 101.4 kPa, cannot be conservatively applied to higher oxygen and lower pressure, such as 30% at 70.3 kPa, despite equivalent partial pressures.",
+          "evidence": [
+            "air-data-not-conservative-for-higher-o2-lower-pressure"
+          ]
+        },
+        {
+          "text": "A white paper says material flammability limits are not expected to meet current requirements under the elevated oxygen (34%) and reduced pressure (8.2 psi) planned for future lunar habitats.",
+          "evidence": [
+            "fortenberry-lunar-habitat-34pct-8-2psi"
+          ]
+        },
+        {
+          "text": "It adds that these conditions are also expected to affect fire emissions.",
+          "evidence": [
+            "fortenberry-lunar-habitat-34pct-8-2psi"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "gravity",
+      "heading": "Then there is lunar gravity",
+      "sentences": [
+        {
+          "text": "Theory and experimental results indicate that oxygen flammability limits in lunar gravity are lower than those measured in normal gravity.",
+          "evidence": [
+            "ruff2021-lunar-g-oxygen-limits-lower-than-1g"
+          ]
+        },
+        {
+          "text": "Some materials that will not burn in normal gravity will burn in weightlessness with a low-speed flow, or in partial gravity such as lunar gravity.",
+          "evidence": [
+            "ferkul2026-1g-nonflammable-materials-burn-in-0g-flow-or-lunar-g"
+          ]
+        },
+        {
+          "text": "Essentially all existing test data for flammability of flight materials are from normal-gravity testing, and consequently minimal flammability data exists at varying oxygen concentrations in partial-gravity environments.",
+          "evidence": [
+            "eclss-tm-essentially-all-flammability-test-data-1g"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "unknown",
+      "heading": "What we cannot yet say",
+      "sentences": [
+        {
+          "text": "Putting the three effects together, less pressure, more oxygen and lunar gravity, is our reading of separate results.",
+          "evidence": [],
+          "concept": true
+        },
+        {
+          "text": "None of the sources we read tests a material at the planned Moon-base air in lunar gravity.",
+          "evidence": []
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    }
+  ],
+  "limits": [
+    "No design of a Moon base is given here: the 34% oxygen and 8.2 psi are a NASA target for sustained missions.",
+    "No result here was measured on the Moon.",
+    "The expectation that planned conditions fall short of current requirements is not a test result.",
+    "No sentence here is a verdict on any material or item."
+  ],
+  "open_questions": [
+    {
+      "text": "How does a flame behave at Moon or Mars gravity?",
+      "story": "moon-gravity"
+    },
+    {
+      "text": "What does a battery fire do in orbit?",
+      "story": "battery-orbit"
+    },
+    {
+      "text": "What is a cool flame?",
+      "story": "cool-flame"
+    }
+  ]
+}

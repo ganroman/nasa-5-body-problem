@@ -1,0 +1,148 @@
+{
+  "id": "weightless-extinguish",
+  "title": "How do you put out a weightless fire?",
+  "dek": "When nothing lifts a flame away, what makes it go out? This story follows tests that cut the air, left it still, or let it come back, and marks where the answers stop.",
+  "status": "data",
+  "status_reason": "Each observation comes from a flight experiment or a NASA paper on it. They are separate tests on different fuels, so the common reading is ours.",
+  "beats": [
+    {
+      "id": "hook",
+      "heading": "No up to carry the flame away",
+      "sentences": [
+        {
+          "text": "On a spacecraft, ventilation fans replace natural convection and can supply the air a fire needs to burn.",
+          "evidence": [
+            "qf-ventilation-replaces-convection"
+          ]
+        },
+        {
+          "text": "So what happens when the air stops?",
+          "evidence": []
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "cut",
+      "heading": "Cut the flow, a thin film goes out",
+      "sentences": [
+        {
+          "text": "In the BASS-II experiments a flame spread across half of a 100-micrometre PMMA film at a steady rate.",
+          "evidence": [
+            "qf-bass2-flow-cut-flame-out-2s"
+          ]
+        },
+        {
+          "text": "When the flow was abruptly cut off, the flame was observed to extinguish within 2 seconds.",
+          "evidence": [
+            "qf-bass2-flow-cut-flame-out-2s"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "regrew",
+      "heading": "Cut the flow, thin cotton comes back",
+      "sentences": [
+        {
+          "text": "In a Saffire V test on thin cotton fabric, the fan was off for 70 seconds, and the flame grew back when the flow was turned on again.",
+          "evidence": [
+            "saffire-v-cotton-fan-off-70s-regrew"
+          ]
+        },
+        {
+          "text": "It burned for another 150 seconds until the material was consumed.",
+          "evidence": [
+            "saffire-v-cotton-fan-off-70s-regrew"
+          ]
+        },
+        {
+          "text": "Both flamelets and embers were present when imaging stopped, so the authors cannot tell whether the flame survived the next 60 seconds.",
+          "evidence": [
+            "saffire-v-cotton-flamelets-or-embers-undetermined"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": "flame-duct"
+    },
+    {
+      "id": "still",
+      "heading": "Still air is not a switch",
+      "sentences": [
+        {
+          "text": "The Saffire results caution that putting out thin charring fuels at increased oxygen cannot be assumed to happen rapidly in quiescent conditions.",
+          "evidence": [
+            "qf-saffire-still-air-not-rapid"
+          ]
+        },
+        {
+          "text": "Experiments have shown that even a very slight air flow of a fraction of a cm/s is sufficient to allow the flame to survive.",
+          "evidence": [
+            "olson2004-slight-flow-keeps-near-invisible-flame-alive"
+          ]
+        },
+        {
+          "text": "These flames can become almost undetectable, small and non-luminous, and yet persist for many minutes.",
+          "evidence": [
+            "olson2004-slight-flow-keeps-near-invisible-flame-alive"
+          ]
+        }
+      ],
+      "pull_quote": {
+        "evidence": "qf-saffire-still-air-not-rapid"
+      },
+      "figure": null
+    },
+    {
+      "id": "twice",
+      "heading": "A flame can go out and the fire stay",
+      "sentences": [
+        {
+          "text": "A fuel droplet on the space station appeared to extinguish but continued to burn without a visible flame.",
+          "evidence": [
+            "fire-went-out-twice-flex"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "unknown",
+      "heading": "What we cannot yet say",
+      "sentences": [
+        {
+          "text": "No source we read tests putting out a fire in a loaded cargo bag.",
+          "evidence": []
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    }
+  ],
+  "limits": [
+    "The BASS-II result is one described test on a very thin film.",
+    "The cotton result is one test on one thin fabric, and the cause of the regrowth is a judgement of the authors.",
+    "No test here covers droplets, films and fabrics together.",
+    "The figure is a simplified drawing of a flame in a duct, not a recording of the flight.",
+    "No sentence here is a verdict on any material or item."
+  ],
+  "open_questions": [
+    {
+      "text": "Does switching off the fans reliably put a fire out?",
+      "story": "fans-off"
+    },
+    {
+      "text": "What is a cool flame?",
+      "story": "cool-flame"
+    },
+    {
+      "text": "What did the big Cygnus fires show?",
+      "story": "cygnus-big-fires"
+    }
+  ]
+}

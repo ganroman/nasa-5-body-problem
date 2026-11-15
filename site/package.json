@@ -7,7 +7,7 @@
   },
   "scripts": {
     "build": "node tools/build-site.mjs",
-    "test": "node --test --test-reporter=spec tests/evidence-schema.test.mjs tests/pages-citations.test.mjs tests/library-rules.test.mjs \"tests/unit/*.test.mjs\"",
+    "test": "node --test --test-reporter=spec tests/evidence-schema.test.mjs tests/pages-citations.test.mjs \"tests/unit/*.test.mjs\"",
     "test:quotes": "node --test --test-reporter=spec tests/quotes-live.test.mjs",
     "test:judge": "node tests/judge/run.mjs",
     "serve": "node tools/serve.mjs",

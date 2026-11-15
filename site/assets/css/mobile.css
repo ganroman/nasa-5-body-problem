@@ -1,0 +1,30 @@
+/* Phone pass: touch targets of 44 px, readable small text. Layout and facts stay as they are. */
+@media (pointer: coarse), (max-width: 759px) {
+  html .btn, html .chip { min-height: 44px; justify-content: center; }
+  html .chip { display: inline-flex; align-items: center; gap: 0.5em; }
+  html .skip { min-height: 44px; display: inline-flex; align-items: center; }
+  html .brand { display: inline-flex; align-items: center; gap: 0.6em; min-height: 44px; }
+  html .fleet-air__opt { min-height: 44px; }
+  html .fleet-air__opt span { display: inline-flex; align-items: center; min-height: 44px; }
+  html .fleet-pill { min-height: 44px; padding-inline: 1rem; }
+  html .fleet-step { min-height: 44px; }
+  html .card summary { min-height: 44px; display: flex; align-items: center; }
+  /* links in lists and rows: widen the tap area without moving the text */
+  html .basis a { display: inline-flex; align-items: center; gap: 0.4em; min-height: 44px; }
+  html li[id^="src-"] a, html .fn a, html .fleet-panel a, html .fleet-card a, html .questions a, html .fact a { position: relative; }
+  html li[id^="src-"] a::after, html .fleet-panel a::after, html .fleet-card a::after, html .questions a::after, html .fact a::after { content: ""; position: absolute; inset: -13px -4px; }
+  html .foot li a { display: inline-flex; align-items: center; min-height: 44px; }
+  html h3 a, html figcaption a, html p.small a, html blockquote a { position: relative; }
+  html h3 a::after, html figcaption a::after, html p.small a::after, html blockquote a::after { content: ""; position: absolute; inset: -12px -4px; }
+  html .fn a::after { content: ""; position: absolute; inset: -15px -5px; }
+}
+@media (max-width: 759px) {
+  html .fleet-pill, html .fleet-air__opt span { font-size: 1rem; }
+  html .eyebrow, html .fleet-air legend, html .fleet-air__k { font-size: 0.8125rem; }
+  html .fn { font-size: 0.75rem; }
+  html .fn a { padding: 0 0.2rem; }
+  html .fleet-step__who { font-size: 0.75rem; }
+  html .fleet-label { font-size: 13px; }
+  html .fleet-svg[data-layout="tall"] .fleet-label { font-size: 15px; }
+  html .fleet-svg .fleet-tag__id { font-size: 16px; }
+}

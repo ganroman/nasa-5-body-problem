@@ -4,7 +4,18 @@ import { fileURLToPath } from 'node:url';
 import { html, raw } from './html.mjs';
 
 const REPO_URL = 'https://github.com/Hantok/cargo-passport';
-export const APP_URL = 'https://cargo.qwadratic.me';
+
+// Where the app lives: config/app.json is the one place (path, and the origin when the app moves to its own host).
+const CONFIG = JSON.parse(readFileSync(join(dirname(fileURLToPath(import.meta.url)), '../../../config/app.json'), 'utf8'));
+const APP_ORIGIN = CONFIG.app_origin ?? CONFIG.canonical_origin;
+/** Absolute address of the app: what the QR code and the links in other places carry. */
+export const APP_URL = new URL(CONFIG.app_path, APP_ORIGIN).href;
+/** Address of the app from a page of the site: a path while the app shares the host of the site. */
+export const APP_HREF = APP_ORIGIN === CONFIG.canonical_origin ? CONFIG.app_path : APP_URL;
+/** The example route of the item on the home page: ISS to the NASA lunar base. */
+export const DEMO_ROUTE = 'R23';
+/** The app opened with this cargo and this route, as the QR code on the crate carries it. */
+export const appLink = (slug, { absolute = false } = {}) => `${absolute ? APP_URL : APP_HREF}?cargo=${slug}&route=${DEMO_ROUTE}`;
 export const repoFile = (path) => `${REPO_URL}/blob/HEAD/${path}`;
 const SI_DISCLOSURE =
   'The code, layout and first drafts of text of this site were produced with SI assistance. Every numbered sentence links to a verbatim quote from its source.';
@@ -12,7 +23,7 @@ const SI_DISCLOSURE =
 const FAVICON = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='none' stroke='%23ff8c1a' stroke-width='2'/%3E%3Ccircle cx='16' cy='16' r='8' fill='%234fb3ff'/%3E%3C/svg%3E";
 
 const COSMOS = readFileSync(join(dirname(fileURLToPath(import.meta.url)), 'cosmos.html'), 'utf8');
-const STYLES = ['tokens', 'base', 'cosmos', 'depth', 'components', 'library', 'story'];
+const STYLES = ['tokens', 'base', 'cosmos', 'depth', 'components', 'library', 'story', 'mobile'];
 const SCRIPTS = ['rail', 'figure-host', 'figure-controls', 'shelf-filter', 'evidence'];
 
 const footer = (base) => html`<footer class="foot">
@@ -20,7 +31,7 @@ const footer = (base) => html`<footer class="foot">
     <p class="foot__verdict">Not a safety verdict. This library organises evidence; people decide.</p>
     <p>${SI_DISCLOSURE}</p>
     <ul>
-      <li><a href="${APP_URL}" rel="noopener">Live app</a></li>
+      <li><a href="${APP_HREF}">Live app</a></li>
       <li><a href="${REPO_URL}" rel="noopener">Repository</a></li>
       <li><a href="${repoFile('LICENSE')}" rel="noopener">MIT License</a></li>
     </ul>
@@ -46,7 +57,7 @@ export function page({ title, description, base, top, skipTo, railItems, body, s
 <meta name="si-disclosure" content="${SI_DISCLOSURE}">
 <meta name="theme-color" content="#0b1628">
 <link rel="icon" href="${FAVICON}">
-${[...STYLES, ...styles].map((name) => html`<link rel="stylesheet" href="${base}assets/css/${name}.css">\n`)}<script type="module" src="${base}vendor/ui-sdk/web.js"></script>
+${[...STYLES, ...styles].map((name) => html`<link rel="stylesheet" href="${base}assets/css/${name}.css?v=20261116a">\n`)}<script type="module" src="${base}vendor/ui-sdk/web.js"></script>
 ${[...SCRIPTS, ...scripts].map((name) => html`<script type="module" src="${base}assets/js/${name}.js"></script>\n`)}</head>
 <body>
 <a class="skip" href="#${skipTo}">Skip to the content</a>
@@ -54,7 +65,10 @@ ${[...SCRIPTS, ...scripts].map((name) => html`<script type="module" src="${base}
 ${raw(COSMOS)}
 <header class="top">
   <a class="brand" href="${base || './'}">Cargo <span>Passport</span></a>
-  <a class="btn" href="${top.href}">${top.label}</a>
+  <nav class="top__nav" aria-label="Site">
+    <a class="btn" href="${top.href}">${top.label}</a>
+    <a class="btn" href="${APP_HREF}">App</a>
+  </nav>
 </header>
 
 <main>

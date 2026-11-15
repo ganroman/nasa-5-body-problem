@@ -5,6 +5,8 @@ import { after, describe, it } from 'node:test';
 import { buildPages, siteWarnings, writePages } from '../../tools/build-site.mjs';
 import { defaultState } from '../../tools/site/passport.mjs';
 import { rules } from '../../tools/site/optional.mjs';
+import { qrSvg } from '../../tools/site/qr.mjs';
+import { toHtml } from '../../tools/site/html.mjs';
 import { PAGES, REPO } from '../../tools/site.mjs';
 import { scanHtml } from '../../tools/page-scan.mjs';
 import { BuildError } from '../../tools/site/load.mjs';
@@ -115,11 +117,14 @@ describe('build-site failures', () => {
     assert.ok(page.includes('Why?') && !page.includes('#story-ghost'));
   });
 
-  it('links a question to the card of the story it names', () => {
-    const root = site({ shelf: [entry('s'), entry('t', { state: 'proposed' })], stories: [story('s', { open_questions: [{ text: 'Why?', story: 't' }] })] });
+  it('links a question to the card of a published story it names, and names an unpublished one without a link', () => {
+    const root = site({ shelf: [entry('s'), entry('t')], stories: [story('s', { open_questions: [{ text: 'Why?', story: 't' }] }), story('t')] });
     const page = buildPages(root).find(({ path }) => path === 'stories/s/index.html').html;
-    assert.ok(page.includes('href="../../#story-t"') && page.includes('data-story="t"'));
+    assert.ok(page.includes('href="../#story-t"') && page.includes('data-story="t"'));
     assert.deepEqual(siteWarnings(root), []);
+    const hidden = site({ shelf: [entry('s'), entry('t', { state: 'proposed' })], stories: [story('s', { open_questions: [{ text: 'Why?', story: 't' }] })] });
+    const quiet = buildPages(hidden).find(({ path }) => path === 'stories/s/index.html').html;
+    assert.ok(!quiet.includes('href="../#story-t"') && quiet.includes('Why?'));
   });
 
   it('fails when the status in content differs from the shelf', () => {
@@ -165,7 +170,7 @@ describe('build-site output', () => {
     const root = site({ shelf: [entry('s', { title: hostile, premise: hostile })], stories: [story('s', { title: hostile, dek: hostile })] });
     for (const { path, html } of buildPages(root)) {
       assert.ok(!html.includes('<img src=x'), `${path} contains unescaped markup`);
-      if (path === 'index.html') continue; // the home page shows the shelf only through four fixed tiles, none of them in this fixture
+      if (path === 'index.html' || path === 'vehicle/index.html') continue; // the home page shows the shelf only through four fixed tiles, none of them in this fixture
       assert.ok(html.includes('&lt;img src=x onerror=&quot;alert(1)&quot;&gt; &amp; &quot;q&quot;'), `${path} does not show the escaped text`);
     }
   });
@@ -185,13 +190,13 @@ describe('build-site output', () => {
     assert.ok(page.includes('Source b, Example org, 2001.'));
   });
 
-  it('writes one story page per content file, a home page and a page of all stories with a card for every shelf entry', () => {
+  it('writes one story page per content file, a home page and a page of all stories with a card for every published shelf entry only', () => {
     const root = site({ shelf: [entry('s'), entry('t', { state: 'proposed' })] });
     const written = writePages(root);
-    assert.deepEqual(written, ['index.html', 'stories/index.html', 'stories/s/index.html']);
+    assert.deepEqual(written, ['index.html', 'vehicle/index.html', 'stories/index.html', 'stories/s/index.html']);
     const home = readFileSync(join(root, 'stories/index.html'), 'utf8');
-    for (const id of ['s', 't']) assert.ok(home.includes(`id="story-${id}" data-story="${id}"`), `no card for ${id}`);
-    assert.match(home, /Not written yet\./);
+    assert.ok(home.includes('id="story-s" data-story="s"'), 'no card for the published story');
+    assert.ok(!home.includes('data-story="t"') && !/Not written yet|Proposed|data-stage|data-state/.test(home), 'an unpublished story or a stage label is shown');
     assert.ok(!/data-like|data-discuss|votes__count/.test(home), 'no likes or comments on the shelf');
   });
 
@@ -226,6 +231,7 @@ describe('the committed site', () => {
   }
 });
 
+const vehiclePageOf = (root) => buildPages(root).find(({ path }) => path === 'vehicle/index.html').html;
 const homePageOf = (root) => buildPages(root).find(({ path }) => path === 'index.html').html;
 const withBeat = (id, change) => {
   const bad = homeStory();
@@ -241,18 +247,18 @@ describe('the home story', () => {
 
   it('writes no page of its own for the home story and leaves it off the shelf', () => {
     const root = site();
-    assert.deepEqual(buildPages(root).map(({ path }) => path), ['index.html', 'stories/index.html', 'stories/s/index.html']);
+    assert.deepEqual(buildPages(root).map(({ path }) => path), ['index.html', 'vehicle/index.html', 'stories/index.html', 'stories/s/index.html']);
     const page = buildPages(root).find(({ path }) => path === 'stories/index.html').html;
     assert.ok(!page.includes('id="story-home"'), 'the home story has a card on the shelf');
     assert.ok(page.includes('id="story-s"'));
     assert.match(homePageOf(root), /<h1 id="hook-title"[^>]*>Home story<\/h1>/);
   });
 
-  it('opens with the title, one line, the title-slide picture and two buttons, and the first beat keeps all its sentences', () => {
+  it('opens with the title, one line and two buttons, no picture, and the first beat keeps all its sentences', () => {
     const page = homePageOf(site());
     const opening = page.slice(page.indexOf('id="hook"'), page.indexOf('id="beat-journey"'));
     assert.match(opening, /<h1 id="hook-title"[^>]*>Home story<\/h1>/);
-    assert.ok(opening.includes('A dek of the home story.') && opening.includes('assets/images/hero.webp'));
+    assert.ok(opening.includes('A dek of the home story.') && !opening.includes('<img') && !opening.includes('hook__art'));
     assert.equal((opening.match(/class="btn/g) ?? []).length, 2);
     assert.ok(!opening.includes('Opening one.'));
     const scene = page.slice(page.indexOf('id="beat-journey"'), page.indexOf('id="beat-onboard"'));
@@ -271,7 +277,7 @@ describe('the home story', () => {
     const onboard = page.slice(page.indexOf('id="beat-onboard"'), page.indexOf('id="beat-passport"'));
     assert.match(onboard, /<p class="beat__mark">Concept: not built, written as what would happen\.<\/p>/);
     assert.ok(!onboard.includes('Illustrative:'));
-    const passport = page.slice(page.indexOf('id="beat-passport"'), page.indexOf('id="beat-fleet"'));
+    const passport = page.slice(page.indexOf('id="beat-passport"'), page.indexOf('id="library"'));
     assert.ok(!passport.includes('Concept: not built'));
   });
 
@@ -311,7 +317,7 @@ describe('the home story', () => {
   it('shows the shelf, the method and the gates after the story, with computed counts', () => {
     const shelf = [entry('s'), entry('t', { state: 'proposed', evidence_status: 'hypothesis' })];
     const all = buildPages(site({ shelf })).find(({ path }) => path === 'stories/index.html').html;
-    assert.match(all, /All <span data-computed="[^"]+">2<\/span>/);
+    assert.match(all, /All <span data-computed="[^"]+">1<\/span>/); // the unpublished story is not counted
     const page = homePageOf(site({ shelf }));
     assert.ok(page.indexOf('id="library"') > page.indexOf('id="beat-more"') || !page.includes('id="beat-more"'));
     assert.ok(page.indexOf('id="born"') > page.indexOf('id="library"') && page.indexOf('id="honest"') > page.indexOf('id="born"'));
@@ -334,23 +340,53 @@ describe('the home story', () => {
     assert.ok(!page.includes('Things.') && !page.includes('test rows'));
   });
 
-  it('loads the fleet files only when they exist in the site', () => {
+  it('loads the fleet files on the vehicle page only, and only when they exist in the site', () => {
     const root = site();
-    assert.ok(!homePageOf(root).includes('assets/css/fleet.css'));
+    assert.ok(!vehiclePageOf(root).includes('assets/css/fleet.css'));
     mkdirSync(join(root, 'assets/css'), { recursive: true });
     mkdirSync(join(root, 'assets/js'), { recursive: true });
     writeFileSync(join(root, 'assets/css/fleet.css'), '');
     writeFileSync(join(root, 'assets/js/fleet-view.js'), '');
-    const page = homePageOf(root);
-    assert.ok(page.includes('assets/css/fleet.css') && page.includes('assets/js/fleet-view.js'));
+    const page = vehiclePageOf(root);
+    assert.ok(page.includes('../assets/css/fleet.css') && page.includes('../assets/js/fleet-view.js'));
+    assert.ok(!homePageOf(root).includes('fleet.css') && !homePageOf(root).includes('fleet-view.js'));
     assert.ok(!buildPages(root).find(({ path }) => path === 'stories/s/index.html').html.includes('fleet.css'));
   });
 
-  it('puts a fleet view, or a quiet placeholder, in the fleet beat', () => {
-    const page = homePageOf(site());
+  it('puts the fleet view, or a quiet placeholder, on the vehicle page and not on the home page', () => {
+    const page = vehiclePageOf(site());
     const views = [...page.matchAll(/<fleet-view mode="(overview|scenario)"/g)].map((match) => match[1]);
     const placeholders = [...page.matchAll(/fleet-slot--missing" data-mode="(overview|scenario)"/g)].map((match) => match[1]);
     assert.deepEqual([...views, ...placeholders].sort(), ['overview']);
+    const home = homePageOf(site());
+    assert.ok(!/<fleet-view|fleet-slot/.test(home) && !home.includes('id="beat-fleet"'));
+  });
+
+  it('gives the vehicle page the text of the fleet beat as its introduction', () => {
+    const page = vehiclePageOf(site());
+    assert.match(page, /<h1 id="vehicle-title">fleet<\/h1>/);
+    assert.match(page, /<p class="prose">Text of fleet\. <\/p>/);
+    assert.ok(page.includes('href="../"') && page.includes('src="../assets/js/rail.js"'));
+  });
+
+  it('keeps the paragraph breaks a beat names with new_paragraph and marks a sentence with computed', () => {
+    const framed = withBeat('onboard', { sentences: [
+      { text: 'One.', evidence: [] }, { text: 'Two.', evidence: [] },
+      { text: 'Three.', evidence: [], new_paragraph: true }, { text: 'Four.', evidence: [] }, { text: 'Five.', evidence: [] }, { text: 'Six.', evidence: [], computed: 'what the page displays' }, { text: 'Seven.', evidence: [] }] });
+    const page = homePageOf(site({ home: framed }));
+    assert.match(page, /<p class="prose">One\. Two\. <\/p>\s*<p class="prose">Three\. Four\. Five\. <span data-computed="what the page displays">Six\.<\/span> Seven\. <\/p>/);
+    const bad = withBeat('onboard', { sentences: [{ text: 'X.', evidence: [], new_paragraph: 'yes', computed: '' }] });
+    assert.match(problemsOf(site({ home: bad })).join('\n'), /"new_paragraph" with a value other than true/);
+  });
+
+  it('shows one section of tiles: the vehicle example first, then the stories, with a link to all of them', () => {
+    const page = homePageOf(site());
+    const section = page.slice(page.indexOf('id="library"'), page.indexOf('id="born"'));
+    assert.equal([...section.matchAll(/<h2 /g)].length, 1);
+    assert.ok(!section.includes('data-story') || section.indexOf('tile--example') < section.indexOf('data-story'));
+    assert.match(section, /<li class="tile tile--example" data-example="vehicle">\s*<a class="tile__link" href="vehicle\/">/);
+    assert.match(section, /<a class="btn" href="stories\/">All stories<\/a>/);
+    assert.ok(!page.includes('class="shelf"'), 'no second shelf on the home page');
   });
 });
 
@@ -359,9 +395,15 @@ describe('the passport on the home page, written at build time', () => {
   const page = homePageOf(site());
 
   it('has a real QR code for the live passport and a link to the same address', () => {
-    const url = `https://cargo.qwadratic.me/frontend/?cargo=${passport.slug}&route=R23`;
+    const url = `https://cargo-passport.qwadratic.me/app/?cargo=${passport.slug}&route=R23`;
+    const path = `/app/?cargo=${passport.slug}&route=R23`;
     assert.match(page, /<svg class="pp-qr__svg" viewBox="0 0 \d+ \d+" role="img" aria-label="QR code that opens the live passport/);
-    assert.ok(page.includes(`href="${url.replaceAll('&', '&amp;')}"`));
+    assert.ok(page.includes(`href="${path.replaceAll('&', '&amp;')}"`), 'links to the app, same item and route');
+    assert.ok(!page.includes('/frontend/') && !page.includes('cargo.qwadratic.me'), 'the old app address is gone');
+    assert.ok(page.includes(`<a class="btn btn--primary" href="${path.replaceAll('&', '&amp;')}">Open the passport</a>`), 'the Open the passport buttons lead to the app');
+    assert.ok(page.includes('<a class="btn" href="/app/">App</a>'), 'the header links to the app');
+    const modules = (svg) => svg.match(/<path d="([^"]+)"/)[1];
+    assert.equal(modules(page.match(/<svg class="pp-qr__svg"[\s\S]*?<\/svg>/)[0]), modules(toHtml(qrSvg(url, 'x'))), 'the QR code encodes the absolute address of the app');
     assert.ok((page.match(/<svg class="pp-qr__svg"[\s\S]*?<\/svg>/)[0].match(/h1v1h-1z/g) ?? []).length > 200, 'the code has too few dark modules to be a QR code');
   });
 

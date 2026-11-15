@@ -13,15 +13,12 @@ function readJson(file) {
   }
 }
 
-/** The next story of data/votes.json as { id, title }, or null when none is named. */
+/** The next story to write: the first entry of data/stories.json that is not published yet and is not the home story, as { id, title }, or null. */
 export function nextStory(siteRoot) {
-  const votes = readJson(`${siteRoot}/data/votes.json`);
-  if (!votes?.next) return null;
-  const story = (readJson(`${siteRoot}/data/stories.json`) ?? []).find((item) => item.id === votes.next);
-  const proposal = (votes.proposals ?? []).find((item) => `proposal-${item.issue}` === votes.next);
-  const title = story?.title ?? proposal?.title;
-  if (!title) throw new ConfigError(`data/votes.json names "${votes.next}" as next, but no story or proposal of that id has a title.`);
-  return { id: votes.next, title };
+  const story = (readJson(`${siteRoot}/data/stories.json`) ?? []).find((item) => item.state !== 'published' && item.home !== true);
+  if (!story) return null;
+  if (typeof story.title !== 'string' || story.title === '') throw new ConfigError(`data/stories.json: the next story "${story.id}" has no title.`);
+  return { id: story.id, title: story.title };
 }
 
 const rowsOf = (data) => (Array.isArray(data) ? data : Array.isArray(data?.results) ? data.results : null);
@@ -50,7 +47,7 @@ function renderLeads(story, rows, raw) {
 /** Searches the NASA source for the title of the next story and writes reports/leads-<story id>.md. */
 export async function writeLeads({ base, siteRoot, env, log, execute = runProgram }) {
   const story = nextStory(siteRoot);
-  if (!story) return log('leads: data/votes.json names no next story; nothing to search');
+  if (!story) return log('leads: data/stories.json has no story waiting to be written; nothing to search');
   const binary = findGbrain(env);
   if (!binary) return log('leads: gbrain not found; skipped');
   let stdout;

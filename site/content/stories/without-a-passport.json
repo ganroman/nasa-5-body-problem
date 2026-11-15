@@ -35,53 +35,16 @@
       "heading": "The air differs by place",
       "sentences": [
         {
-          "text": "The International Space Station was designed and is operated to approximate Earth-equivalent air, at 14.7 psia with 21 percent oxygen.",
-          "evidence": [
-            "iss-cabin-nominal-14-7-psia-21-o2"
-          ]
+          "text": "Whether a test applies to a cargo item depends on more than the atmosphere.",
+          "evidence": []
         },
         {
-          "text": "ISS safety requirements name a worst-case oxygen environment of 14.7 psia with 24.1 percent oxygen for all locations except the US-segment airlock, where it is 10.2 psia with 30 percent oxygen.",
-          "evidence": [
-            "ssp51721-airlock-worst-case-o2"
-          ]
+          "text": "The passport reads the oxygen share and pressure of the vehicle, the place on board (a locker, the airlock, a spot by an air vent, a charging shelf) and whether the item is powered there.",
+          "evidence": []
         },
         {
-          "text": "In one report, a portable, battery-powered device that measures specific atmospheric constituents is not required by its specification to operate in oxygen concentrations other than the nominal ISS level of 21 percent.",
-          "evidence": [
-            "aga-portable-battery-powered-device",
-            "aga-end-item-spec-21-percent-o2"
-          ]
-        },
-        {
-          "text": "A white paper says material flammability limits are not expected to meet current requirements under the 34 percent oxygen and 8.2 psi planned for future lunar habitats.",
-          "evidence": [
-            "fortenberry-lunar-habitat-34pct-8-2psi"
-          ]
-        },
-        {
-          "text": "One paper concludes that data from lower-oxygen, higher-pressure air cannot be conservatively applied to higher-oxygen, lower-pressure air, despite equivalent partial pressures.",
-          "evidence": [
-            "air-data-not-conservative-for-higher-o2-lower-pressure"
-          ]
-        },
-        {
-          "text": "In a table of oxygen-concentration flammability limits at three total pressures, silicone is listed at 28 percent oxygen at 48.2 kPa, 23 percent at 85.3 kPa and 21 percent at 101.3 kPa.",
-          "evidence": [
-            "silicone-1p5mm-moc-vs-pressure"
-          ]
-        },
-        {
-          "text": "Silicone has a different listed limit at each pressure.",
-          "evidence": [
-            "silicone-1p5mm-moc-vs-pressure"
-          ]
-        },
-        {
-          "text": "The JSC 29353D flammability guidance says small, low-voltage alkaline and coin batteries are still believed unable to deliver the powers required for ignition, although larger batteries, such as lithium-ion rechargeables for portable electronic devices, can certainly reach higher power levels.",
-          "evidence": [
-            "jsc29353d-liion-vs-alkaline-ignition-power"
-          ]
+          "text": "It keeps each part's material and thickness next to the tests that name it, and marks a test that does not name its gravity.",
+          "evidence": []
         }
       ],
       "pull_quote": {
@@ -95,24 +58,30 @@
       "heading": "The passport for one item",
       "sentences": [
         {
-          "text": "It compares the existing tests of each material with the conditions of the place the item is going to.",
+          "text": "Every cargo item gets a detailed record of its parts and their materials.",
           "evidence": []
         },
         {
-          "text": "This step is live today, for one illustrative item.",
+          "text": "The passport carries a link to that record.",
           "evidence": []
         },
         {
-          "text": "Move the instrument to another place.",
+          "text": "The app reads the passport.",
+          "evidence": [],
+          "new_paragraph": true
+        },
+        {
+          "text": "SI searches NASA experiments and research for findings on each material.",
           "evidence": []
         },
         {
-          "text": "Change the air.",
+          "text": "It weighs them against the conditions at the destination.",
           "evidence": []
         },
         {
-          "text": "For each part, the passport says whether evidence applies, whether conditions differ, or whether there is no evidence.",
-          "evidence": []
+          "text": "You see what the evidence supports, where it shows a risk, and where there is none.",
+          "evidence": [],
+          "computed": "what the passport below displays for each part, from assess() in assets/js/passport-rules.js"
         },
         {
           "text": "People make the final call.",
@@ -205,7 +174,7 @@
     },
     {
       "id": "more",
-      "heading": "Stories",
+      "heading": "Examples and stories",
       "sentences": [
         {
           "text": "Four stories from the shelf. Each follows what the experiments tell us and what is still unknown.",

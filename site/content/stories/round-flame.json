@@ -1,0 +1,141 @@
+{
+  "id": "round-flame",
+  "title": "Why is a flame round in space?",
+  "dek": "A flame on Earth leans up and flickers. This story follows what the sources say makes it so, what a flame looks like when that pull is gone, and where the answers stop.",
+  "status": "data",
+  "status_reason": "Each observation comes from a NASA document or a flight experiment on a flame. How a candle shape maps to the shape of other fires is not covered by the sources we read.",
+  "beats": [
+    {
+      "id": "hook",
+      "heading": "The flame we know",
+      "sentences": [
+        {
+          "text": "A flame on Earth makes an eight-fold density change over the scale of a centimetre.",
+          "evidence": [
+            "qf-eightfold-density-flame-lifts-flickers"
+          ]
+        },
+        {
+          "text": "This density gradient induces a strong velocity field that causes the flame to lift and point upward.",
+          "evidence": [
+            "qf-eightfold-density-flame-lifts-flickers"
+          ]
+        },
+        {
+          "text": "The resulting flow instabilities cause the flicker typical of flames on Earth.",
+          "evidence": [
+            "qf-eightfold-density-flame-lifts-flickers"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "no-up",
+      "heading": "The pull that is gone",
+      "sentences": [
+        {
+          "text": "NASA's fire-protection brief says that as hot gases from the flame rise, gravity pulls cooler, denser air to the bottom of the flame, which regulates its speed and size.",
+          "evidence": [
+            "qf-earth-hot-gas-rises-sets-flame-shape"
+          ]
+        },
+        {
+          "text": "The same brief says this also creates the shape of the flame and its flickering, and that in microgravity this flow does not occur.",
+          "evidence": [
+            "qf-earth-hot-gas-rises-sets-flame-shape"
+          ]
+        }
+      ],
+      "pull_quote": {
+        "evidence": "qf-earth-hot-gas-rises-sets-flame-shape"
+      },
+      "figure": null
+    },
+    {
+      "id": "candle",
+      "heading": "A candle with no up",
+      "sentences": [
+        {
+          "text": "A candle lit in weightlessness aboard the Space Shuttle was spherical and bright yellow just after ignition.",
+          "evidence": [
+            "qf-shuttle-candle-yellow-to-blue"
+          ]
+        },
+        {
+          "text": "After 8 to 10 seconds the yellow, presumably from soot, disappeared, and the flame became blue and nearly hemispherical.",
+          "evidence": [
+            "qf-shuttle-candle-yellow-to-blue"
+          ]
+        },
+        {
+          "text": "On the Mir station a candle flame in weightlessness was nearly invisible to the naked eye, and a very long shutter time was needed to record its image.",
+          "evidence": [
+            "qf-mir-candle-nearly-invisible-lower-oxygen"
+          ]
+        },
+        {
+          "text": "NASA's fire-protection brief says that flames in nearly still or low-oxygen air are often pale blue and almost invisible.",
+          "evidence": [
+            "qf-pale-blue-almost-invisible"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "draught",
+      "heading": "Add a draught and the shape changes",
+      "sentences": [
+        {
+          "text": "On a spacecraft, ventilation fans replace natural convection and can supply the air a fire needs to burn.",
+          "evidence": [
+            "tb008-ventilation-feeds-fire"
+          ]
+        },
+        {
+          "text": "Under these circumstances the fire can spread in any direction, rather than just upward.",
+          "evidence": [
+            "tb008-ventilation-feeds-fire"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": "flame-duct"
+    },
+    {
+      "id": "unknown",
+      "heading": "What we cannot yet say",
+      "sentences": [
+        {
+          "text": "What shape a fire takes in a loaded cargo bag is not covered by the sources we read.",
+          "evidence": []
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    }
+  ],
+  "limits": [
+    "Candle results are not results for cargo.",
+    "The soot explanation for the yellow glow is the authors' presumption.",
+    "The figure is a simplified drawing of a flame in a duct, not a recording of the flight.",
+    "No sentence here is a verdict on any material or item."
+  ],
+  "open_questions": [
+    {
+      "text": "Does switching off the fans reliably put a fire out?",
+      "story": "fans-off"
+    },
+    {
+      "text": "What is a cool flame?",
+      "story": "cool-flame"
+    },
+    {
+      "text": "How does a flame behave at Moon or Mars gravity?",
+      "story": "moon-gravity"
+    }
+  ]
+}

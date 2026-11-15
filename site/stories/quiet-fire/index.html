@@ -8,13 +8,14 @@
 <meta name="si-disclosure" content="The code, layout and first drafts of text of this site were produced with SI assistance. Every numbered sentence links to a verbatim quote from its source.">
 <meta name="theme-color" content="#0b1628">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 32 32&#39;%3E%3Ccircle cx=&#39;16&#39; cy=&#39;16&#39; r=&#39;14&#39; fill=&#39;none&#39; stroke=&#39;%23ff8c1a&#39; stroke-width=&#39;2&#39;/%3E%3Ccircle cx=&#39;16&#39; cy=&#39;16&#39; r=&#39;8&#39; fill=&#39;%234fb3ff&#39;/%3E%3C/svg%3E">
-<link rel="stylesheet" href="../../assets/css/tokens.css">
-<link rel="stylesheet" href="../../assets/css/base.css">
-<link rel="stylesheet" href="../../assets/css/cosmos.css">
-<link rel="stylesheet" href="../../assets/css/depth.css">
-<link rel="stylesheet" href="../../assets/css/components.css">
-<link rel="stylesheet" href="../../assets/css/library.css">
-<link rel="stylesheet" href="../../assets/css/story.css">
+<link rel="stylesheet" href="../../assets/css/tokens.css?v=20261116a">
+<link rel="stylesheet" href="../../assets/css/base.css?v=20261116a">
+<link rel="stylesheet" href="../../assets/css/cosmos.css?v=20261116a">
+<link rel="stylesheet" href="../../assets/css/depth.css?v=20261116a">
+<link rel="stylesheet" href="../../assets/css/components.css?v=20261116a">
+<link rel="stylesheet" href="../../assets/css/library.css?v=20261116a">
+<link rel="stylesheet" href="../../assets/css/story.css?v=20261116a">
+<link rel="stylesheet" href="../../assets/css/mobile.css?v=20261116a">
 <script type="module" src="../../vendor/ui-sdk/web.js"></script>
 <script type="module" src="../../assets/js/rail.js"></script>
 <script type="module" src="../../assets/js/figure-host.js"></script>
@@ -46,7 +47,10 @@
 
 <header class="top">
   <a class="brand" href="../../">Cargo <span>Passport</span></a>
-  <a class="btn" href="../../#library">Stories</a>
+  <nav class="top__nav" aria-label="Site">
+    <a class="btn" href="../../#library">Stories</a>
+    <a class="btn" href="/app/">App</a>
+  </nav>
 </header>
 
 <main>
@@ -57,7 +61,7 @@
       <p class="lead">What happens to a flame when gravity goes away, and could a harmful fire be hard to notice? This story follows the experiments and marks where the answers stop.</p>
       <div>
         <div class="slab statusbox" data-story="quiet-fire">
-          <div class="statusbox__row"><span class="status status--partial"><svg class="status__glyph" viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.5a7.5 7.5 0 0 0 0 15z" fill="currentColor"/></svg><span class="status__label">Partly data</span></span><span class="tag" data-stage>Published</span></div>
+          <div class="statusbox__row"><span class="status status--partial"><svg class="status__glyph" viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.5a7.5 7.5 0 0 0 0 15z" fill="currentColor"/></svg><span class="status__label">Partly data</span></span></div>
           <p data-computed="content/stories/quiet-fire.json status_reason, rendered unchanged">Each observation comes from a flight experiment or a NASA document, but none tested whether a dim or invisible fire would go unnoticed on a spacecraft, so that idea is our reading of separate pieces.</p>
         </div>
       </div>
@@ -195,16 +199,16 @@
       <ul class="questions">
         <li class="question slab" data-story="moon-gravity">
       <p>How does a flame behave at Moon or Mars gravity?</p>
-      <p class="question__link"><a href="../../#story-moon-gravity">What burns on the Moon?</a></p>
+      <p class="question__link"><a href="../#story-moon-gravity">What burns on the Moon?</a></p>
     </li><li class="question slab" data-story="cool-flame">
       <p>Can a cool flame burn on solid plastic or cargo, and would anyone notice?</p>
-      <p class="question__link"><a href="../../#story-cool-flame">What is a cool flame?</a></p>
+      <p class="question__link"><a href="../#story-cool-flame">What is a cool flame?</a></p>
     </li><li class="question slab" data-story="smoke-alarm">
       <p>How quickly would a real station find a slow, dim fire?</p>
-      <p class="question__link"><a href="../../#story-smoke-alarm">Do smoke alarms work without gravity?</a></p>
+      <p class="question__link"><a href="../#story-smoke-alarm">Do smoke alarms work without gravity?</a></p>
     </li><li class="question slab" data-story="fans-off">
       <p>Does switching off the fans reliably put a fire out?</p>
-      <p class="question__link"><a href="../../#story-fans-off">Does switching off the fans put fire out?</a></p>
+      <p class="question__link"><a href="../#story-fans-off">Does switching off the fans put fire out?</a></p>
     </li>
       </ul>
     </div>
@@ -314,7 +318,7 @@
     <p class="foot__verdict">Not a safety verdict. This library organises evidence; people decide.</p>
     <p>The code, layout and first drafts of text of this site were produced with SI assistance. Every numbered sentence links to a verbatim quote from its source.</p>
     <ul>
-      <li><a href="https://cargo.qwadratic.me" rel="noopener">Live app</a></li>
+      <li><a href="/app/">Live app</a></li>
       <li><a href="https://github.com/Hantok/cargo-passport" rel="noopener">Repository</a></li>
       <li><a href="https://github.com/Hantok/cargo-passport/blob/HEAD/LICENSE" rel="noopener">MIT License</a></li>
     </ul>
