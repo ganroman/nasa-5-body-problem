@@ -26,7 +26,7 @@ The app has a single dark theme.
 - **Status colours:** every status colour also carries a text label, which keeps it readable for colour-blind users.
 - **Contrast:** text must meet WCAG AA contrast.
 
-**Layout as in the sample design:** both screens are shown on one page, each in its own framed section ("1 · After QR scan", "2 · More details"); "More details" scrolls to section 2. Clicking an object anywhere (contents list, donut legend, extinguisher table or evidence row) highlights it in every panel and selects it for *Ask about this evidence*. Evidence rows expand to show the match/differs/unknown counts, the differences and the DOI.
+**Two screens:** the page opens on Screen 1 only. Clicking "More details" opens Screen 2 (`#details`); the back arrow returns to Screen 1. Each screen sits in a framed card as in the sample design. Clicking an object anywhere (contents list, donut legend, extinguisher table or evidence row) highlights it in every panel and selects it for *Ask about this evidence*. Evidence rows expand to show the match/differs/unknown counts, the differences and the DOI.
 
 ## 2. Screen 1: after scanning the QR code
 

@@ -62,7 +62,7 @@ const location = { search: '?cargo=kit', hash: '', pathname: '/app/', origin: 'h
 const saved = {}, clicked = [];
 const ctx = vm.createContext({ fetch, location, URLSearchParams, Promise, JSON, setTimeout,
   document: { getElementById: el, querySelectorAll: () => [], createElement: () => ({ click() { clicked.push(this.download); } }) },
-  window: { addEventListener() {} }, localStorage: { getItem: k => saved[k] ?? null, setItem: (k, v) => { saved[k] = v; } },
+  window: { addEventListener() {}, scrollTo() {} }, localStorage: { getItem: k => saved[k] ?? null, setItem: (k, v) => { saved[k] = v; } },
   history: { replaceState: (a, b, url) => { location.search = url.split('?')[1]?.split('#')[0] ? '?' + url.split('?')[1].split('#')[0] : ''; } },
   navigator: { clipboard: { writeText: async () => {} } }, URL: { createObjectURL: () => 'blob:x', revokeObjectURL() {} }, Blob: class {} });
 vm.runInContext(html.match(/<script>([\s\S]*?)<\/script>/)[1], ctx);
@@ -75,7 +75,8 @@ const tick = () => new Promise(r => setTimeout(r, 0));
   const ov = el('passport').innerHTML;
   assert.match(ov, /Science kit/);
   assert.match(ov, /60 %/);
-  assert.match(el('app').innerHTML, /1 · After QR scan[\s\S]*2 · More details/); // both screens on one page, as in the mock
+  assert.doesNotMatch(el('app').innerHTML, /id="details"/); // screen 1 alone until More details is clicked
+  assert.doesNotMatch(el('app').innerHTML, /After QR scan|More details<\/p>/);
   assert.match(ov, /Current location<\/h3><div class="big">ISS/);
   assert.match(ov, /Final destination<\/h3><div class="big">Moon base/);
   assert.match(el('dest-summary').innerHTML, /fire evidence 1\/2 at destination/);
@@ -90,7 +91,8 @@ const tick = () => new Promise(r => setTimeout(r, 0));
   assert.ok(Math.abs(segs[0].dash + segs[1].dash + 4 - 2 * Math.PI * 80) < 0.01);
 
   // Screen 2: destination selected by default; strip names changes from the current location.
-  run('render()');
+  location.hash = '#details'; run('render()');
+  assert.doesNotMatch(el('app').innerHTML, /id="passport"/);
   for (let i = 0; i < 5; i++) await tick();
   const body = el('body').innerHTML;
   assert.match(body, /ISS → Moon base/);  // short chip names

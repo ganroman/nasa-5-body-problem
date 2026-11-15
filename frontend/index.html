@@ -23,8 +23,6 @@
   .tag { font-size:10px; padding:1px 6px; border-radius:4px; border:1px solid var(--line); color:var(--muted); margin-left:4px; white-space:nowrap; }
   .pill { display:inline-block; font-size:11px; padding:1px 9px; border-radius:999px; border:1px solid currentColor; margin:6px 6px 0 0; white-space:nowrap; }
   /* page frame, as in docs/ui-mock.png */
-  .sec { margin:18px 0 8px; font-size:12px; letter-spacing:.06em; color:var(--muted); text-transform:uppercase; }
-  .sec:first-child { margin-top:0; }
   .frame { background:var(--frame); border:1px solid var(--line); border-radius:20px; padding:20px; scroll-margin-top:12px; }
   .frame-title { margin:0 0 14px; font-size:13px; font-weight:700; color:var(--accent); letter-spacing:.1em; text-transform:uppercase; }
   .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; }
@@ -298,14 +296,15 @@ function render() {
   const app = document.getElementById('app');
   if (state.error) { app.innerHTML = `<p class="msg err">${esc(state.error)}</p>`; return; }
   if (!state.cargo) return;
-  // Both screens on one page, as in docs/ui-mock.png; "More details" scrolls to section 2.
-  app.innerHTML = `
-    <p class="sec">1 · After QR scan</p>
-    <section class="frame" id="passport" aria-label="Cargo passport"></section>
-    <p class="sec">2 · More details</p>
-    <section class="frame" id="details" aria-label="Fire evidence and response"></section>`;
-  renderOverview(document.getElementById('passport'));
-  renderDetails(document.getElementById('details'));
+  // Screen 1 (after the QR scan) first; "More details" (#details) opens screen 2.
+  window.scrollTo?.(0, 0);
+  if (location.hash === '#details') {
+    app.innerHTML = '<section class="frame" id="details" aria-label="Fire evidence and response"></section>';
+    renderDetails(document.getElementById('details'));
+  } else {
+    app.innerHTML = '<section class="frame" id="passport" aria-label="Cargo passport"></section>';
+    renderOverview(document.getElementById('passport'));
+  }
 }
 
 const cargoId = c => state.share ? `share ${esc(state.share.slug)} · v${esc(c.config_version)}` : `${esc(c.slug)} · v${esc(c.config_version)}`;
@@ -400,7 +399,7 @@ async function renderDetails(el) {
   if (!el) return;
   const c = state.cargo, { envId, overrides } = selection();
   el.innerHTML = `
-    <div class="dhead"><span><a href="#passport">← ${cargoId(c)}</a> · ${esc(c.name)} · Fire evidence</span>
+    <div class="dhead"><span><a href="#">← ${cargoId(c)}</a> · ${esc(c.name)} · Fire evidence</span>
       <label>Use state <select id="use-state" aria-label="Use state">${USE_STATES.map(u => `<option${u === state.useState ? ' selected' : ''}>${u}</option>`).join('')}</select></label></div>
     <div class="env">${envChips()}</div>
     ${customEditor()}
@@ -618,7 +617,8 @@ async function saveShare() {
   render();
 }
 
-load().then(() => { if (location.hash === '#details') document.getElementById('details')?.scrollIntoView(); });
+window.addEventListener('hashchange', render);
+load();
 </script>
 </body>
 </html>
