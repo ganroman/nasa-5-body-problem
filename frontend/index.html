@@ -69,8 +69,10 @@
 <main id="app"><p class="msg">Loading cargo passport…</p></main>
 <script>
 const params = new URLSearchParams(location.search);
-// shortcut: API URL comes from ?api= or defaults to the local backend; set the Vercel URL here once it is deployed.
-const API = params.get('api') || 'http://localhost:8000';
+// API URL: ?api= wins. Opened from a file or a local static server (port 5500) it defaults to the local backend;
+// served by the API itself (backend/serve.py mounts this page at /frontend) it uses the same origin.
+const LOCAL_STATIC = location.protocol === 'file:' || (/^(localhost|127\.0\.0\.1)$/.test(location.hostname) && location.port === '5500');
+const API = params.get('api') || (LOCAL_STATIC ? 'http://localhost:8000' : location.origin);
 const DEFAULT_ROUTE = 'R23'; // ISS → NASA lunar surface base, used when the QR code carries no route
 const DIMS = [['pressure_kpa', 'Pressure'], ['o2_fraction', 'Oxygen'], ['temperature_c', 'Temperature'], ['co2_fraction', 'CO₂']];
 const STATUS = {
