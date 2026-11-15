@@ -184,6 +184,20 @@ Leave a small runnable regression check for comparison logic and export consiste
 
 **Approximately two-minute local pitch:** use the same journey, with brief context about multi-material cargo moving between environments, the value of traceable evidence, the actual NASA finding and the next validation question. Choose one or two presenters. Keep technical methodology ready for questions; do not turn the pitch into a source catalogue.
 
+### Live opening: the passport icebreaker
+
+Allow about 20 seconds within the two-minute pitch. The audience replies below are expected responses, not a requirement to continue; pause briefly and move on if the room is quiet.
+
+**Presenter:** “Who here has a passport?” *Pause for hands or a “yes.”*
+
+**Presenter:** “And when you travel abroad, do you have to show it?” *Pause for responses.*
+
+**Presenter:** “Your cargo needs a passport for space travel, too—one that tells us what’s inside, where it’s been, and what conditions it will face next.”
+
+**Transition:** Show the cargo journey animation. “Follow this instrument from Earth to the Moon. When its surroundings change, we need to check whether the evidence still applies.” Then open its passport and continue with the source-linked NASA finding and the next validation question.
+
+The passport is our product metaphor, not a claim about an existing legal requirement. Rehearse the pauses and animation cue as part of the two-minute total.
+
 Disclose SI assistance accurately, including concept framing, research organization, code and generated interpretations. The research brief quotes a competition restriction on SI-originated solution ideas: retain team-origin records and resolve compliance in the submission; do not imply all framing was unaided. List external resources, use English, avoid NASA branding in generated content and watermark SI-generated imagery/video if used. Keep the global video at 30 seconds or less; confirm current submission instructions before final upload.
 
 ## 12. Explicit non-goals and outstanding evidence
