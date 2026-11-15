@@ -1,19 +1,21 @@
 # CHECKLIST: single source of truth for the final push
 
+**Live copy: branch `checklist`** (`origin/checklist`). `main` requires PRs, so claims cannot go there. Always read and edit this file on `checklist`: `git fetch origin && git checkout checklist && git pull --rebase origin checklist`. The copy on `main` is only a snapshot.
+
 Deadline: **Submit for Judging by 23:59 Vienna time. Target: 21:00.** All times are Vienna.
 Humans: **Roman** and **Ivan**. Agents work for one of them and put that owner in the claim (`@roman-claude`, `@ivan-agent-2`, ...).
 
 ## Rules for agents (read before touching anything)
 
-1. **This file is the only task list.** Do not start work that is not on it. If you find new work, add a line to the bottom of "Open" with the next free `T##` and status `[ ]`, in its own commit.
-2. **Claim before you work.** Change only your task's line from `[ ]` to `[~] @you HH:MM`. Commit that one line alone and push to `main` **immediately**:
-   `git pull --rebase origin main && git commit -am "claim: T## @you" && git push origin main`
+1. **This file (on branch `checklist`) is the only task list.** Do not start work that is not on it. If you find new work, add a line to the bottom of "Open" with the next free `T##` and status `[ ]`, in its own commit.
+2. **Claim before you work.** Change only your task's line from `[ ]` to `[~] @you HH:MM`. Commit that one line alone and push to `checklist` **immediately**:
+   `git pull --rebase origin checklist && git commit -am "claim: T## @you" && git push origin checklist`
    If the push is rejected, pull again and re-read the line. If someone else claimed it first, **pick another task**. Never work on a `[~]` task that is not yours.
 3. **Only edit your own line** (and move it to "Done" when finished). Never reformat, reorder or renumber other lines. This keeps merges conflict-free.
 4. **Stale claims:** a `[~]` older than 45 minutes with no commit referencing its `T##` may be taken over. Write `takeover from @them` on the line.
-5. **Finish:** change to `[x] @you HH:MM <commit or PR link>`, move the line to "Done", pull --rebase, push. Commit message starts with `T##:`.
+5. **Finish:** change to `[x] @you HH:MM <commit or PR link>`, move the line to "Done", pull --rebase, push to `checklist`. Commit message starts with `T##:`.
 6. **Blocked or needs a human:** change to `[!] @you reason`, push, and move on to another task.
-7. **Code changes go on a branch and a PR** (`t##-short-name`), never straight to `main`. A human merges. Only edits to this file go straight to `main`. Merging `main` auto-deploys (`deploy/autodeploy.sh`, runs migrations), so do not push anything else there.
+7. **Code changes go on a branch and a PR** (`t##-short-name`), never straight to `main`. A human merges. Only edits to this file go straight to the `checklist` branch (never edit it in a code branch). `main` is protected; merging into it auto-deploys (`deploy/autodeploy.sh`, runs migrations).
 8. **Never push to `Hantok/cargo-passport` without Roman's explicit go-ahead in the chat.** Tasks for that repo prepare the content; a human pushes.
 9. **No mock data.** Only NASA PSI and the cited NASA sources. No invented numbers, DOIs or references. If a fact has no source, leave it out.
 10. **Hackathon rules** (video structure, SI disclosure, watermark on SI-generated images, team-made hook) apply to every artifact. Do not publish secrets (`SI_API_KEY`, `.env`).
