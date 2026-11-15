@@ -119,7 +119,7 @@ For each object, the top-ranked PSI record from the comparison: accession number
 
 ## 5. Running it
 
-The backend serves this page at `http://localhost:8000/app/` (same origin, so no CORS setup); see [backend/README.md](../backend/README.md#running-for-the-demo-local-neon-main).
+`backend/serve.py` serves this page at `/frontend/` on the same origin as the API (locally `http://localhost:8000/frontend/`, hosted `https://cargo.qwadratic.me/frontend/`); see [backend/README.md](../backend/README.md#running-for-the-demo-local-neon-main).
 
 ## 6. Out of scope for now
 

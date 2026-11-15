@@ -58,7 +58,7 @@ const fetch = async (url, opts) => {
 
 const els = new Map();
 const el = id => { if (!els.has(id)) els.set(id, { innerHTML: '', textContent: '', value: '', querySelectorAll: () => [], querySelector: () => null, scrollIntoView() {} }); return els.get(id); };
-const location = { search: '?cargo=kit', hash: '', pathname: '/app/', origin: 'http://localhost:8000' };
+const location = { search: '?cargo=kit', hash: '', pathname: '/frontend/', protocol: 'http:', hostname: 'localhost', port: '5500', origin: 'http://localhost:5500' };
 const saved = {}, clicked = [];
 const ctx = vm.createContext({ fetch, location, URLSearchParams, Promise, JSON, setTimeout,
   document: { getElementById: el, querySelectorAll: () => [], createElement: () => ({ click() { clicked.push(this.download); } }) },
@@ -153,5 +153,14 @@ const tick = () => new Promise(r => setTimeout(r, 0));
   assert.equal(bodies['/shares/abc'].headers['x-edit-token'], 'tok');
   // After sharing, comparisons send the copied cargo instead of the slug.
   assert.equal(run('JSON.stringify(Object.keys(cargoRef()))'), '["cargo"]');
+
+  // API default: local static server -> local backend; served by the API -> same origin; ?api= wins.
+  const apiFor = (loc) => {
+    const m = html.match(/const LOCAL_STATIC = [^\n]*\nconst API = [^\n]*/)[0];
+    return vm.runInNewContext(m + '; API', { location: loc, params: new URLSearchParams(loc.search) });
+  };
+  assert.equal(apiFor({ search: '', protocol: 'http:', hostname: 'localhost', port: '5500', origin: 'http://localhost:5500' }), 'http://localhost:8000');
+  assert.equal(apiFor({ search: '', protocol: 'https:', hostname: 'cargo.qwadratic.me', port: '', origin: 'https://cargo.qwadratic.me' }), 'https://cargo.qwadratic.me');
+  assert.equal(apiFor({ search: '?api=http://x:1', protocol: 'https:', hostname: 'cargo.qwadratic.me', port: '', origin: 'https://cargo.qwadratic.me' }), 'http://x:1');
   console.log('frontend ok');
 })().catch(e => { console.error(e); process.exit(1); });

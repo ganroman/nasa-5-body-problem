@@ -1,0 +1,6 @@
+[Unit]
+Description=Restart thing-cargo-api after the admin widget changed its env file
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/systemctl restart thing-cargo-api.service

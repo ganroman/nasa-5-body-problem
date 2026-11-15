@@ -16,17 +16,41 @@ uv run uvicorn app.main:app --reload
 
 ## Running for the demo (local, Neon main)
 
-The API runs locally; there is no hosted deployment. For the demo, run it against Neon `main` (production data), with its URLs in `backend/.env.main` (gitignored). Quote the values (`DATABASE_URL="..."`): the URLs contain `&`, which the shell otherwise treats as a command separator and silently falls back to `.env` (dev).
+Locally, run it against Neon `main` (production data), with its URLs in `backend/.env.main` (gitignored). Quote the values (`DATABASE_URL="..."`): the URLs contain `&`, which the shell otherwise treats as a command separator and silently falls back to `.env` (dev).
 
 ```bash
 cd backend
 set -a; . ./.env.main; set +a
 uv run alembic upgrade head            # after schema changes
 uv run python -m app.ingest.load       # after seed/data changes; safe to re-run
-uv run uvicorn app.main:app --port 8000
+uv run uvicorn serve:app --port 8000
 ```
 
-The dashboard is then at `http://localhost:8000/app/` and the API at `http://localhost:8000` (docs at `/docs`). The backend serves `frontend/` itself, so no CORS setup is needed; `CORS_ORIGINS` only matters if the page is served from somewhere else.
+The dashboard is then at `http://localhost:8000/frontend/` and the API at `http://localhost:8000` (docs at `/docs`); `serve.py` serves the static pages on the same origin (see below), so no CORS setup is needed.
+
+## Hosted demo (one origin)
+
+`serve.py` mounts the static pages (`/frontend`, `/prototype`, `/presentation`, landing page `site/`) after the API routes, so API and frontend share one origin and no base URL or CORS setup is needed:
+
+```bash
+cd backend
+uv run uvicorn serve:app --host 127.0.0.1 --port 8220
+```
+
+The demo host runs this as a systemd unit behind a Cloudflare tunnel with `CORS_ORIGINS=https://cargo.qwadratic.me`. A timer on the host deploys every `main` commit whose GitHub checks are all green: database dump, `uv sync --frozen`, `alembic upgrade head`, restart, `/health` check, rollback of the code on failure (migrations stay). Script: `deploy/autodeploy.sh`.
+
+## Mock demo data
+
+`seed/mock.py` loads invented demo data on top of the curated seed (about 50 cargo items, 12 environments, 26 routes, 440 observations, findings, share links and passport exports). Every row is marked (`mock-` ids, `MOCK-` accessions, routes `M01`..`M26`, passport snapshots with `mock_demo`), and the curated rows are never touched. Run it from `backend/` with `DATABASE_URL` set:
+
+```bash
+uv run python seed/mock.py            # replace the mock rows (idempotent, deterministic)
+uv run python seed/mock.py --dry-run  # same, rolled back
+uv run python seed/mock.py --counts   # table counts: all rows / mock rows
+uv run python seed/mock.py --purge    # delete every mock row
+```
+
+Nothing in it is a measurement or a real publication; the numbers come from a toy model.
 
 ## Configuration
 
@@ -38,6 +62,19 @@ All configuration comes from environment variables (`.env` locally, the host's s
 | `DATABASE_URL_DIRECT` | Neon direct connection (host without `-pooler`), used by Alembic |
 | `SI_BASE_URL`, `SI_API_KEY`, `SI_MODEL` | Eustella AI, OpenAI-compatible. Unset means the SI feature reports `unavailable` |
 | `CORS_ORIGINS` | Comma-separated browser origins allowed to call the API (add the GitHub Pages origin) |
+| `ADMIN_PASSWORD` | Password of `/admin` (HTTP Basic, any user name). Unset: admin is off (503) |
+| `CARGO_ENV_FILE` | Service env file edited by the `/admin` widget (mode 600, systemd `EnvironmentFile=`) |
+| `CARGO_FLAGS_FILE` | JSON file with the feature flags (mode 600) |
+| `CARGO_RESTART_SIGNAL` | File touched to make a systemd path unit restart the service |
+| `CARGO_AUDIT_FILE` | Admin change log (JSON lines, no secret values); default `admin-audit.log` beside the env file |
+
+## Admin: env variables and feature flags
+
+`/admin` (HTTP Basic, password from `ADMIN_PASSWORD`) has a widget for the env variables listed in `app/envadmin.py` (secrets are write-only: shown as set and the last four characters) and a feature flag editor. Flags live in a JSON file, no database: `{key: {enabled, description, rollout_percent, updated_at, updated_by}}`.
+
+- Backend: `from app.flags import flag`; `flag("key")` re-reads the file when its mtime changes. For `rollout_percent < 100` pass a stable id: `flag("key", user_id)`.
+- Frontend: `<script src="/flags.js">`, then `CargoFlags.isEnabled("key")`, or `data-flag="key" hidden` on an element. `GET /api/flags?uid=...` returns the enabled keys only.
+- Host setup (path unit for the soft restart, drop-in, files): [ops/README.md](ops/README.md).
 
 Neon project `cargo-passport`: branch `dev` for development and migrations, `main` for the deployed app.
 

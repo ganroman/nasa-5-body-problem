@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Cargo Passport · Admin</title>
+<style>
+  body { margin:0; font:15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; background:#f5f7fa; color:#14202e; }
+  main { max-width:960px; margin:0 auto; padding:28px 20px 60px; }
+  h1 { margin:0 0 2px; font-size:26px; }
+  h2 { margin:32px 0 10px; font-size:18px; }
+  p.sub { margin:0 0 8px; color:#5b6878; }
+  .panel { background:#fff; border:1px solid #d8dee6; border-radius:10px; padding:4px 16px; }
+  .row { display:grid; grid-template-columns:200px 1fr; gap:6px 16px; padding:12px 0; border-bottom:1px solid #eef1f5; }
+  .row:last-child { border-bottom:0; }
+  .name { font:600 13px ui-monospace, Menlo, monospace; }
+  .desc { color:#5b6878; font-size:13px; }
+  .ex { color:#8a95a3; font:12px ui-monospace, Menlo, monospace; }
+  input[type=text], input[type=password], input[type=number] { width:100%; box-sizing:border-box; padding:6px 8px; border:1px solid #c5ccd6; border-radius:6px; font:14px ui-monospace, Menlo, monospace; }
+  input:disabled { background:#eef1f5; color:#5b6878; }
+  .tag { display:inline-block; font:600 11px system-ui; padding:1px 7px; border-radius:9px; background:#e8eef9; color:#1f5fe0; margin-left:6px; }
+  .tag.warn { background:#fff1d6; color:#8a5a00; }
+  .tag.ok { background:#dff5e6; color:#1d7a3e; }
+  button { font:600 14px system-ui; padding:7px 14px; border-radius:7px; border:1px solid #1f5fe0; background:#1f5fe0; color:#fff; cursor:pointer; }
+  button.ghost { background:#fff; color:#1f5fe0; }
+  button.danger { background:#fff; color:#b3261e; border-color:#b3261e; }
+  button:disabled { opacity:.5; cursor:default; }
+  .bar { display:flex; gap:14px; align-items:center; padding:12px 0; }
+  .msg { color:#5b6878; font-size:13px; }
+  .msg.err { color:#b3261e; }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  th, td { text-align:left; padding:8px 6px; border-bottom:1px solid #eef1f5; vertical-align:middle; }
+  th { color:#5b6878; font-weight:600; font-size:12px; }
+  td input[type=number] { width:70px; }
+  .log { font:12px ui-monospace, Menlo, monospace; white-space:pre-wrap; padding:10px 0; color:#33404f; }
+  .add { display:grid; grid-template-columns:200px 1fr 90px auto; gap:8px; padding:12px 0; align-items:center; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Cargo Passport admin</h1>
+  <p class="sub" id="who">…</p>
+
+  <h2>Environment variables</h2>
+  <p class="sub">Saved to the service env file. Secrets are write-only: leave the field empty to keep the current value. Changes apply after a restart.</p>
+  <div class="panel" id="env"></div>
+  <div class="bar">
+    <button id="env-save">Save</button>
+    <label><input type="checkbox" id="env-restart" checked> restart the service after saving</label>
+    <span class="msg" id="env-msg"></span>
+  </div>
+
+  <h2>Feature flags</h2>
+  <p class="sub">Public <code>/api/flags</code> returns enabled keys only. Backend: <code>flag("key")</code>; frontend: <code>/flags.js</code>.</p>
+  <div class="panel">
+    <table>
+      <thead><tr><th>Key</th><th>Description</th><th>Rollout %</th><th>On</th><th>Updated</th><th></th></tr></thead>
+      <tbody id="flags"></tbody>
+    </table>
+    <div class="add">
+      <input type="text" id="nf-key" placeholder="new-flag-key">
+      <input type="text" id="nf-desc" placeholder="description">
+      <input type="number" id="nf-pct" min="0" max="100" value="100">
+      <button id="nf-add">Add flag</button>
+    </div>
+  </div>
+  <div class="msg" id="flag-msg"></div>
+
+  <h2>Change log</h2>
+  <div class="panel"><div class="log" id="audit"></div></div>
+</main>
+<script>
+const H = {"Content-Type": "application/json", "X-Admin-Request": "1"};
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+async function api(method, path, body) {
+  const r = await fetch("/admin/api" + path, {method, headers: H, body: body ? JSON.stringify(body) : undefined});
+  let data = null;
+  try { data = await r.json(); } catch (e) {}
+  if (!r.ok) throw new Error((data && data.detail) || r.status);
+  return data;
+}
+
+function say(id, text, err) { const el = $(id); el.textContent = text; el.className = "msg" + (err ? " err" : ""); }
+
+let envVars = [];
+
+function renderEnv() {
+  $("env").innerHTML = envVars.map((v) => {
+    let field;
+    if (v.secret) {
+      const state = v.is_set ? `set, ${esc(v.masked)}` : "not set";
+      field = `<div>${state}</div>` + (v.editable
+        ? `<input type="password" autocomplete="new-password" data-name="${v.name}" placeholder="new value (empty = keep)">
+           <label class="desc"><input type="checkbox" data-clear="${v.name}"> clear</label>`
+        : "");
+    } else {
+      field = `<input type="text" data-name="${v.name}" value="${esc(v.value)}" placeholder="${esc(v.example)}" ${v.editable ? "" : "disabled"}>`;
+    }
+    const tags = (v.secret ? '<span class="tag">secret</span>' : "")
+      + (v.pending_restart ? '<span class="tag warn">restart pending</span>' : "")
+      + (!v.editable ? '<span class="tag">read-only</span>' : "")
+      + (v.source === "service" ? '<span class="tag ok">from service</span>' : "");
+    return `<div class="row"><div><div class="name">${v.name}${tags}</div></div>
+      <div>${field}<div class="desc">${esc(v.description)}</div>${v.example ? `<div class="ex">e.g. ${esc(v.example)}</div>` : ""}</div></div>`;
+  }).join("");
+}
+
+async function loadEnv() {
+  const d = await api("GET", "/env");
+  envVars = d.vars;
+  renderEnv();
+}
+
+$("env-save").onclick = async () => {
+  const set = {}, unset = [];
+  document.querySelectorAll("#env [data-name]").forEach((el) => {
+    const v = envVars.find((x) => x.name === el.dataset.name);
+    if (el.disabled) return;
+    if (v.secret) { if (el.value) set[v.name] = el.value; }
+    else if (el.value !== v.value) { if (el.value === "") unset.push(v.name); else set[v.name] = el.value; }
+  });
+  document.querySelectorAll("#env [data-clear]:checked").forEach((el) => unset.push(el.dataset.clear));
+  if (!Object.keys(set).length && !unset.length) return say("env-msg", "nothing changed");
+  $("env-save").disabled = true;
+  try {
+    const d = await api("PUT", "/env", {set, unset, restart: $("env-restart").checked});
+    envVars = d.vars; renderEnv();
+    const names = d.changed.join(", ") || "nothing";
+    if (d.restart === "scheduled") { say("env-msg", `saved: ${names}. Restarting…`); waitBack(); }
+    else if (d.restart === "not-configured") say("env-msg", `saved: ${names}. Restart is not configured: restart the service by hand.`, true);
+    else say("env-msg", `saved: ${names}. Applies after the next restart.`);
+    loadAudit();
+  } catch (e) { say("env-msg", String(e.message), true); }
+  $("env-save").disabled = false;
+};
+
+async function waitBack() {
+  await new Promise((r) => setTimeout(r, 2500));
+  for (let i = 0; i < 30; i++) {
+    try { await loadEnv(); say("env-msg", "service is back"); loadAudit(); return; } catch (e) { await new Promise((r) => setTimeout(r, 1000)); }
+  }
+  say("env-msg", "service did not come back in 30 s", true);
+}
+
+function renderFlags(list) {
+  $("flags").innerHTML = list.map((f) => `<tr data-key="${esc(f.key)}">
+    <td class="name">${esc(f.key)}</td>
+    <td><input type="text" data-f="description" value="${esc(f.description)}"></td>
+    <td><input type="number" min="0" max="100" data-f="rollout_percent" value="${f.rollout_percent}"></td>
+    <td><input type="checkbox" data-f="enabled" ${f.enabled ? "checked" : ""}></td>
+    <td class="desc">${esc((f.updated_at || "").replace("T", " ").slice(0, 16))}<br>${esc(f.updated_by || "")}</td>
+    <td><button class="ghost" data-save>Save</button> <button class="danger" data-del>Delete</button></td></tr>`).join("")
+    || '<tr><td colspan="6" class="desc">no flags yet</td></tr>';
+}
+
+async function loadFlags() { renderFlags((await api("GET", "/flags")).flags); }
+
+$("flags").onclick = async (ev) => {
+  const tr = ev.target.closest("tr[data-key]");
+  if (!tr) return;
+  const key = tr.dataset.key;
+  try {
+    if (ev.target.matches("[data-del]")) {
+      if (!confirm(`Delete flag ${key}?`)) return;
+      await api("DELETE", "/flags/" + encodeURIComponent(key));
+    } else if (ev.target.matches("[data-save]")) {
+      await api("PUT", "/flags/" + encodeURIComponent(key), {
+        enabled: tr.querySelector('[data-f=enabled]').checked,
+        description: tr.querySelector('[data-f=description]').value,
+        rollout_percent: parseInt(tr.querySelector('[data-f=rollout_percent]').value, 10),
+      });
+    } else return;
+    say("flag-msg", "ok"); await loadFlags(); loadAudit();
+  } catch (e) { say("flag-msg", String(e.message), true); }
+};
+
+$("nf-add").onclick = async () => {
+  try {
+    await api("POST", "/flags", {key: $("nf-key").value.trim(), description: $("nf-desc").value, rollout_percent: parseInt($("nf-pct").value, 10), enabled: false});
+    $("nf-key").value = ""; $("nf-desc").value = "";
+    say("flag-msg", "created (off)"); await loadFlags(); loadAudit();
+  } catch (e) { say("flag-msg", String(e.message), true); }
+};
+
+async function loadAudit() {
+  const d = await api("GET", "/audit?limit=50");
+  $("audit").textContent = d.entries.map((e) => {
+    const extra = [e.name, e.secret ? "(secret)" : "", e.old !== undefined || e.new !== undefined ? `${e.old ?? ""} → ${e.new ?? ""}` : "",
+      e.enabled !== undefined ? (e.enabled ? "on" : "off") + ` ${e.rollout_percent}%` : ""].filter(Boolean).join(" ");
+    return `${e.ts.replace("T", " ").slice(0, 19)}  ${e.actor}  ${e.action}  ${extra}`;
+  }).join("\n") || "empty";
+}
+
+(async () => {
+  try {
+    const me = await api("GET", "/me");
+    $("who").textContent = `signed in as ${me.actor}` + (me.env_file ? "" : " · CARGO_ENV_FILE is not set: env is read-only") + (me.flags_file ? "" : " · CARGO_FLAGS_FILE is not set: flags are read-only");
+    await Promise.all([loadEnv(), loadFlags(), loadAudit()]);
+  } catch (e) { $("who").textContent = "error: " + e.message; }
+})();
+</script>
+</body>
+</html>

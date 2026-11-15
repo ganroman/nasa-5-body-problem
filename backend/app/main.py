@@ -1,12 +1,10 @@
-from pathlib import Path
-
 from fastapi import Depends, FastAPI
-from fastapi.responses import RedirectResponse
-from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
+from app.admin import public_router as flags_router
+from app.admin import router as admin_router
 from app.api import router
 from app.config import get_settings
 from app.db import get_session
@@ -28,12 +26,5 @@ def health(session: Session = Depends(get_session)) -> dict[str, str]:
 
 
 app.include_router(router)
-
-# The dashboard (frontend/index.html) is served from the same origin, so the browser needs no CORS setup.
-FRONTEND = Path(__file__).resolve().parents[2] / "frontend"
-if FRONTEND.is_dir():
-    app.mount("/app", StaticFiles(directory=FRONTEND, html=True), name="app")
-
-    @app.get("/", include_in_schema=False)
-    def root() -> RedirectResponse:
-        return RedirectResponse("/app/")
+app.include_router(flags_router)
+app.include_router(admin_router)
