@@ -1,0 +1,140 @@
+{
+  "id": "fans-off",
+  "title": "Does switching off the fans put fire out?",
+  "dek": "On the station an alarm switches the fans off to starve a fire. This story follows the tests where the air was cut, and marks that the question has no answer yet for a fire in a crewed cabin.",
+  "status": "partial",
+  "status_reason": "Each observation comes from a NASA paper or a flight test, but they cover different fuels and none burned in a crewed cabin, so no single answer follows from them.",
+  "beats": [
+    {
+      "id": "hook",
+      "heading": "The alarm switches the fans off",
+      "sentences": [
+        {
+          "text": "When the ISS fire alarm sounds, intramodular and intermodular fans are deactivated, and gas introduction and oxygen generation are stopped.",
+          "evidence": [
+            "spaceops2020-iss-alarm-turns-fans-off-to-starve-fire"
+          ]
+        },
+        {
+          "text": "The aim is to stop air and oxygen flowing toward the fire, so that it can burn itself out.",
+          "evidence": [
+            "spaceops2020-iss-alarm-turns-fans-off-to-starve-fire"
+          ]
+        },
+        {
+          "text": "NASA's fire-protection brief lists the response as terminating ventilation in the affected module to slow the spread of fire.",
+          "evidence": [
+            "tb008-iss-response-stop-ventilation"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "goes-out",
+      "heading": "Some flames go out",
+      "sentences": [
+        {
+          "text": "In the Mir low-speed wind tunnel, increasing the flow rate made the flames strengthen significantly, and when the forced air flow was stopped the flames self-extinguished.",
+          "evidence": [
+            "qf-mir-flow-stop-self-extinguish"
+          ]
+        },
+        {
+          "text": "In Saffire-I a large fabric flame burned for about 7 minutes and went out immediately when the air flow was shut off.",
+          "evidence": [
+            "saffire1-flow-shutoff-extinguished-sibal-flame"
+          ]
+        },
+        {
+          "text": "In one BASS-II test on a 100-micrometre PMMA film, the flame went out within 2 seconds of the flow being cut off.",
+          "evidence": [
+            "qf-bass2-flow-cut-flame-out-2s"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "comes-back",
+      "heading": "Some flames wait",
+      "sentences": [
+        {
+          "text": "In a Saffire V test on thin cotton fabric, the fan was off for 70 seconds, and the flame grew back when the flow returned.",
+          "evidence": [
+            "saffire-v-cotton-fan-off-70s-regrew"
+          ]
+        },
+        {
+          "text": "The Saffire results caution that putting out thin charring fuels at increased oxygen cannot be assumed to happen rapidly in quiescent conditions.",
+          "evidence": [
+            "qf-saffire-still-air-not-rapid"
+          ]
+        },
+        {
+          "text": "NASA's researcher guide lists as critical misconceptions the beliefs that a steady fire cannot exist in still microgravity air and that a fire will self-extinguish if ventilation is shut off.",
+          "evidence": [
+            "qf-misconceptions-self-extinguish"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": "flame-duct"
+    },
+    {
+      "id": "moon",
+      "heading": "On the Moon the fans do not decide",
+      "sentences": [
+        {
+          "text": "A NASA slide says that turning the ECLSS flow off to extinguish a fire in lunar gravity is not effective, because reduced gravity will still induce buoyant flow velocities.",
+          "evidence": [
+            "ruff2021-eclss-off-not-effective-in-lunar-g"
+          ]
+        }
+      ],
+      "pull_quote": {
+        "evidence": "ruff2021-eclss-off-not-effective-in-lunar-g"
+      },
+      "figure": null
+    },
+    {
+      "id": "unknown",
+      "heading": "What we cannot yet say",
+      "sentences": [
+        {
+          "text": "No source we read measures switching the fans off in a fire in a crewed cabin.",
+          "evidence": []
+        },
+        {
+          "text": "Which of the two outcomes, out or waiting, a cargo fire would take is not covered by the sources we read.",
+          "evidence": []
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    }
+  ],
+  "limits": [
+    "The alarm response is a design intent, not a measured outcome.",
+    "No result here comes from a fire in a crewed cabin.",
+    "No test here covers the fuels of a cargo item.",
+    "The figure is a simplified drawing of a flame in a duct, not a recording of the flight.",
+    "No sentence here is a verdict on any material or item."
+  ],
+  "open_questions": [
+    {
+      "text": "How quickly would a real station find a slow, dim fire?",
+      "story": "smoke-alarm"
+    },
+    {
+      "text": "How does a flame behave at Moon or Mars gravity?",
+      "story": "moon-gravity"
+    },
+    {
+      "text": "How do you put out a weightless fire?",
+      "story": "weightless-extinguish"
+    }
+  ]
+}

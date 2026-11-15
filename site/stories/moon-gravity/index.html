@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>What burns on the Moon? · Cargo Passport</title>
+<meta name="description" content="How does a flame behave in the gravity of the Moon? This story follows what ground tests with simulated lunar gravity say, and marks that none of them was run on the Moon.">
+<meta name="si-disclosure" content="The code, layout and first drafts of text of this site were produced with SI assistance. Every numbered sentence links to a verbatim quote from its source.">
+<meta name="theme-color" content="#0b1628">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 32 32&#39;%3E%3Ccircle cx=&#39;16&#39; cy=&#39;16&#39; r=&#39;14&#39; fill=&#39;none&#39; stroke=&#39;%23ff8c1a&#39; stroke-width=&#39;2&#39;/%3E%3Ccircle cx=&#39;16&#39; cy=&#39;16&#39; r=&#39;8&#39; fill=&#39;%234fb3ff&#39;/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../../assets/css/tokens.css?v=20261116a">
+<link rel="stylesheet" href="../../assets/css/base.css?v=20261116a">
+<link rel="stylesheet" href="../../assets/css/cosmos.css?v=20261116a">
+<link rel="stylesheet" href="../../assets/css/depth.css?v=20261116a">
+<link rel="stylesheet" href="../../assets/css/components.css?v=20261116a">
+<link rel="stylesheet" href="../../assets/css/library.css?v=20261116a">
+<link rel="stylesheet" href="../../assets/css/story.css?v=20261116a">
+<link rel="stylesheet" href="../../assets/css/mobile.css?v=20261116a">
+<script type="module" src="../../vendor/ui-sdk/web.js"></script>
+<script type="module" src="../../assets/js/rail.js"></script>
+<script type="module" src="../../assets/js/figure-host.js"></script>
+<script type="module" src="../../assets/js/figure-controls.js"></script>
+<script type="module" src="../../assets/js/shelf-filter.js"></script>
+<script type="module" src="../../assets/js/evidence.js"></script>
+</head>
+<body>
+<a class="skip" href="#story-top">Skip to the content</a>
+
+<!-- A fixed backdrop: a sparse star field and one orbital diagram drawn in thin lines. No glow, no motion. -->
+<div class="cosmos" data-cosmos aria-hidden="true">
+  <div class="layer layer--stars-far"></div>
+  <div class="planet">
+    <svg viewBox="0 0 1000 1000" focusable="false">
+      <circle class="limb" cx="500" cy="500" r="360"/>
+    </svg>
+    <svg viewBox="0 0 1000 1000" focusable="false">
+      <circle class="ticks" cx="500" cy="500" r="382" pathLength="360" stroke-dasharray="0.3 4.7"/>
+      <circle class="ticks ticks--minor" cx="500" cy="500" r="379" pathLength="360" stroke-dasharray="0.15 0.85"/>
+    </svg>
+    <svg viewBox="0 0 1000 1000" focusable="false">
+      <circle class="orbit" cx="500" cy="500" r="420"/>
+      <circle class="orbit orbit--dash" cx="500" cy="500" r="458"/>
+      <circle class="orbit" cx="500" cy="500" r="494"/>
+    </svg>
+  </div>
+</div>
+
+<header class="top">
+  <a class="brand" href="../../">Cargo <span>Passport</span></a>
+  <nav class="top__nav" aria-label="Site">
+    <a class="btn" href="../../#library">Stories</a>
+    <a class="btn" href="/app/">App</a>
+  </nav>
+</header>
+
+<main>
+<section class="scene scene--title" id="story-top" aria-labelledby="story-title">
+    <div class="scene__inner story-head">
+      <div><span class="eyebrow">A story from the library</span></div>
+      <h1 id="story-title">What burns on the Moon?</h1>
+      <p class="lead">How does a flame behave in the gravity of the Moon? This story follows what ground tests with simulated lunar gravity say, and marks that none of them was run on the Moon.</p>
+      <div>
+        <div class="slab statusbox" data-story="moon-gravity">
+          <div class="statusbox__row"><span class="status status--partial"><svg class="status__glyph" viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.5a7.5 7.5 0 0 0 0 15z" fill="currentColor"/></svg><span class="status__label">Partly data</span></span></div>
+          <p data-computed="content/stories/moon-gravity.json status_reason, rendered unchanged">Each observation comes from a drop tower, centrifuge, aircraft or model, none from the Moon itself, so the picture of a Moon fire is not yet measured.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+<section class="scene scene--beat" id="beat-hook" aria-labelledby="beat-hook-title">
+    <div class="scene__inner beat">
+      <div class="beat__head">
+        <div class="beat__title">
+          <div><span class="eyebrow">01 of 05</span></div>
+          <h2 id="beat-hook-title">A gravity in between</h2>
+        </div>
+      </div>
+      <div class="beat__text">
+        <p class="prose"><span class="fact" data-evidence="ruff2021-lunar-g-oxygen-limits-lower-than-1g">Theory and experimental results indicate that oxygen flammability limits in lunar gravity are lower than those measured in normal gravity.<sup class="fn"><a href="#src-1">1</a></sup></span> <span class="fact" data-evidence="lunar-gravity-lower-oxygen-limits">A NASA Glenn poster reports increasing evidence from 5.18-second centrifuge tests at the drop facility that materials have lower oxygen limits of flammability in lunar gravity than in Earth gravity.<sup class="fn"><a href="#src-2">2</a></sup></span> </p>
+        
+      </div>
+      
+    </div>
+  </section><section class="scene scene--beat" id="beat-some-burn" aria-labelledby="beat-some-burn-title">
+    <div class="scene__inner beat">
+      <div class="beat__head">
+        <div class="beat__title">
+          <div><span class="eyebrow">02 of 05</span></div>
+          <h2 id="beat-some-burn-title">What burns that did not</h2>
+        </div>
+      </div>
+      <div class="beat__text">
+        <p class="prose"><span class="fact" data-evidence="ferkul2026-1g-nonflammable-materials-burn-in-0g-flow-or-lunar-g">Theoretical and experimental results have demonstrated that some materials that will not burn in normal gravity will burn in weightlessness with a low-speed flow, or in partial gravity such as lunar gravity.<sup class="fn"><a href="#src-3">3</a></sup></span> <span class="fact" data-evidence="lunar-gravity-airflow-self-extinguishing-material-may-burn">NASA&#39;s reduced-pressure report reasons that a flame can go out if cabin airflow is high enough, and that this happens more readily on Earth because higher gravity causes higher flow velocities.<sup class="fn"><a href="#src-4">4</a></sup></span> <span class="fact" data-evidence="lunar-gravity-airflow-self-extinguishing-material-may-burn">So a material that self-extinguishes in Earth gravity may continue to burn in lunar gravity.<sup class="fn"><a href="#src-4">4</a></sup></span> </p>
+        
+      </div>
+      
+    </div>
+  </section><section class="scene scene--beat" id="beat-speed" aria-labelledby="beat-speed-title">
+    <div class="scene__inner beat">
+      <div class="beat__head">
+        <div class="beat__title">
+          <div><span class="eyebrow">03 of 05</span></div>
+          <h2 id="beat-speed-title">Slower, in one test</h2>
+        </div>
+      </div>
+      <div class="beat__text">
+        <p class="prose"><span class="fact" data-evidence="luci-sibal-flame-spread-lunar-g-0p9-vs-1g-1p5-mm-per-s">In the first extended-duration burn in simulated lunar gravity, the flame base of a fabric spread at about 0.9 mm/s versus 1.5 mm/s in the 1-g comparison, and the flame tip at 1.1 versus 2.8 mm/s.<sup class="fn"><a href="#src-5">5</a></sup></span> <span data-concept>So in this test the speed of spread was lower in lunar gravity, which is why we do not read &quot;worse&quot; into every number.</span> </p>
+        
+      </div>
+      
+    </div>
+  </section><section class="scene scene--beat" id="beat-expected" aria-labelledby="beat-expected-title">
+    <div class="scene__inner beat">
+      <div class="beat__head">
+        <div class="beat__title">
+          <div><span class="eyebrow">04 of 05</span></div>
+          <h2 id="beat-expected-title">What people expect</h2>
+        </div>
+      </div>
+      <div class="beat__text">
+        <p class="prose"><span class="fact" data-evidence="olson2004-moon-mars-buoyant-flow-over-20-cm-s-concurrent-viable">A 2004 paper estimates that on the Moon or Mars (0.17 g and 0.38 g) buoyant flows will be greater than 20 cm/s, so concurrent flame spread will be viable.<sup class="fn"><a href="#src-6">6</a></sup></span> <span class="fact" data-evidence="ferkul2026-partial-g-habitat-fire-expected-worse-than-0g-and-1g">A 2026 abstract says that a partial-gravity fire in an extraterrestrial habitat is a real hazard that is expected to be substantially worse than in 0-g and potentially worse than even 1-g.<sup class="fn"><a href="#src-7">7</a></sup></span> </p><p class="prose"><span class="fact" data-evidence="eclss-tm-essentially-all-flammability-test-data-1g">Essentially all existing test data for flammability of flight materials are from 1-g testing.<sup class="fn"><a href="#src-8">8</a></sup></span> <span class="fact" data-evidence="ruff2021-no-partial-gravity-acceptance-criterion-yet">A 2021 NASA presentation says additional work is needed to establish a partial gravity flammability acceptance criterion.<sup class="fn"><a href="#src-9">9</a></sup></span> </p>
+        <figure class="pull slab">
+        <blockquote data-evidence="ferkul2026-partial-g-habitat-fire-expected-worse-than-0g-and-1g">“Consequently, partial-g fire in an extraterrestrial habitat is a real hazard that is expected to be substantially worse than in 0-g and potentially worse than even 1-g.”<sup class="fn"><a href="#src-7">7</a></sup></blockquote>
+        <figcaption data-computed="source title, organisation, year and link of evidence record ferkul2026-partial-g-habitat-fire-expected-worse-than-0g-and-1g, from data/evidence.json">Material Flammability at Lunar and Martian Gravity, USRA at NASA Glenn Research Center and Case Western Reserve University (57th Lunar and Planetary Science Conference, extended abstract), 2026. <a href="https://ntrs.nasa.gov/citations/20260000646" target="_blank" rel="noopener noreferrer">Open the source</a></figcaption>
+      </figure>
+      </div>
+      
+    </div>
+  </section><section class="scene scene--beat" id="beat-unknown" aria-labelledby="beat-unknown-title">
+    <div class="scene__inner beat">
+      <div class="beat__head">
+        <div class="beat__title">
+          <div><span class="eyebrow">05 of 05</span></div>
+          <h2 id="beat-unknown-title">What we cannot yet say</h2>
+        </div>
+      </div>
+      <div class="beat__text">
+        <p class="prose">No source we read reports a fire lit on the Moon. How a fire in a Moon-base habitat compares with one on the station is not covered by the sources we read. </p>
+        
+      </div>
+      
+    </div>
+  </section>
+<section class="scene scene--short" id="limits" aria-labelledby="limits-title">
+    <div class="scene__inner">
+      <div class="slab limits">
+        <h2 id="limits-title">What this story does not show</h2>
+        <ul>
+          <li data-computed="content/stories/moon-gravity.json limits[0], rendered unchanged">No result here was measured on the Moon.</li><li data-computed="content/stories/moon-gravity.json limits[1], rendered unchanged">The lunar-gravity results come from drop-facility and centrifuge tests, not from the Moon.</li><li data-computed="content/stories/moon-gravity.json limits[2], rendered unchanged">The speed result comes from the first extended-duration burn in simulated lunar gravity.</li><li data-computed="content/stories/moon-gravity.json limits[3], rendered unchanged">The statement that such a fire is expected to be worse is an expectation, not a measured result.</li><li data-computed="content/stories/moon-gravity.json limits[4], rendered unchanged">No sentence here is a verdict on any material or item.</li>
+        </ul>
+        
+      </div>
+    </div>
+  </section>
+<section class="scene scene--short" id="unknown" aria-labelledby="unknown-title">
+    <div class="scene__inner">
+      <h2 id="unknown-title">What nobody knows yet</h2>
+      <p class="lead">Each question that names another story links to its card in the library.</p>
+      <ul class="questions">
+        <li class="question slab" data-story="moon-air">
+      <p>Does Moon-base air make space fires worse?</p>
+      <p class="question__link"><a href="../#story-moon-air">Does Moon-base air make space fires worse?</a></p>
+    </li><li class="question slab" data-story="battery-orbit">
+      <p>What does a battery fire do in orbit?</p>
+      <p class="question__link"><a href="../#story-battery-orbit">What does a battery fire do in orbit?</a></p>
+    </li><li class="question slab" data-story="fans-off">
+      <p>Does switching off the fans put fire out?</p>
+      <p class="question__link"><a href="../#story-fans-off">Does switching off the fans put fire out?</a></p>
+    </li>
+      </ul>
+    </div>
+  </section>
+<section class="scene scene--short sources" id="sources" aria-labelledby="sources-title">
+    <div class="scene__inner">
+      <h2 id="sources-title">Sources</h2>
+      <p class="small">Each numbered marker in the story opens the passage it rests on.</p>
+      <ol data-evidence-list data-computed="title, organisation, year, locator and links of the evidence records cited on this page, from data/evidence.json">
+  <li id="src-1">
+    <span class="src-title">Impact of Lunar Gravity on Material Flammability</span>
+    <span class="src-meta">NASA Glenn Research Center, Spacecraft Fire Safety Demonstration project (Lunar Surface Science Workshop, 18-19 Aug 2021, presentation), 2021. Slide 17 &quot;Conclusions&quot; (PDF p. 17) </span>
+    <a href="https://ntrs.nasa.gov/citations/20210020446" target="_blank" rel="noopener noreferrer">Source page</a> · <a href="https://ntrs.nasa.gov/api/citations/20210020446/downloads/LSSW%20Presentation_8-12-2021_FINAL.pdf" target="_blank" rel="noopener noreferrer">Document</a>
+  </li><li id="src-2">
+    <span class="src-title">Flammability of Materials on the Moon (2024 Glenn Space Technology Symposium poster)</span>
+    <span class="src-meta">NASA Glenn Research Center (with Ohio Northern University and USRA), 2024. PDF p. 1; &#39;Centrifuge Testing&#39; text block </span>
+    <a href="https://ntrs.nasa.gov/citations/20240008623" target="_blank" rel="noopener noreferrer">Source page</a> · <a href="https://ntrs.nasa.gov/api/citations/20240008623/downloads/20240008623.pdf" target="_blank" rel="noopener noreferrer">Document</a>
+  </li><li id="src-3">
+    <span class="src-title">Material Flammability at Lunar and Martian Gravity</span>
+    <span class="src-meta">USRA at NASA Glenn Research Center and Case Western Reserve University (57th Lunar and Planetary Science Conference, extended abstract), 2026. Introduction, p. 1 (PDF p. 1) </span>
+    <a href="https://ntrs.nasa.gov/citations/20260000646" target="_blank" rel="noopener noreferrer">Source page</a> · <a href="https://ntrs.nasa.gov/api/citations/20260000646/downloads/Ferkul-Lunar%20and%20Planetary%20Science%20Conference%202026.pdf" target="_blank" rel="noopener noreferrer">Document</a>
+  </li><li id="src-4">
+    <span class="src-title">Surface Vehicle Atmospheric Considerations for Moon to Mars Exploration (ICES-2026-324)</span>
+    <span class="src-meta">NASA Johnson Space Center / Marshall Space Flight Center (55th International Conference on Environmental Systems), 2026. Sec. II.A Flammability, p. 4 (PDF p. 4) </span>
+    <a href="https://ntrs.nasa.gov/citations/20260002050" target="_blank" rel="noopener noreferrer">Source page</a> · <a href="https://ntrs.nasa.gov/api/citations/20260002050/downloads/ICES-2026-324%20Final.pdf" target="_blank" rel="noopener noreferrer">Document</a>
+  </li><li id="src-5">
+    <span class="src-title">Lunar Combustion Investigation: Flammability Results from a Rotating Sounding Rocket</span>
+    <span class="src-meta">USRA; NASA Johnson Space Center; Case Western Reserve University (ASGSR 2025 annual meeting, presentation), 2025. Slide 33 &quot;Combined Results: SIBAL&quot; (PDF p. 33); first-ever statement on slide 12 </span>
+    <a href="https://ntrs.nasa.gov/citations/20250010653" target="_blank" rel="noopener noreferrer">Source page</a> · <a href="https://ntrs.nasa.gov/api/citations/20250010653/downloads/ASGSR%202025-LUCI-Ferkul-Presentation-v2-20250010653.pdf" target="_blank" rel="noopener noreferrer">Document</a>
+  </li><li id="src-6">
+    <span class="src-title">Most Probable Fire Scenarios in Spacecraft and Extraterrestrial Habitats: Why NASA&#39;s Current Test 1 Might Not Always be Conservative (NASA/CP-2004-213205/VOL2, pp. 296-299)</span>
+    <span class="src-meta">NASA Glenn Research Center, 2004. NASA/CP-2004-213205/VOL2, p. 297 (PDF p. 2) </span>
+    <a href="https://ntrs.nasa.gov/citations/20040161244" target="_blank" rel="noopener noreferrer">Source page</a> · <a href="https://ntrs.nasa.gov/api/citations/20040161244/downloads/20040161244.pdf" target="_blank" rel="noopener noreferrer">Document</a>
+  </li><li id="src-7">
+    <span class="src-title">Material Flammability at Lunar and Martian Gravity</span>
+    <span class="src-meta">USRA at NASA Glenn Research Center and Case Western Reserve University (57th Lunar and Planetary Science Conference, extended abstract), 2026. Section &quot;Current Knowledge&quot;, p. 1 (PDF p. 1) </span>
+    <a href="https://ntrs.nasa.gov/citations/20260000646" target="_blank" rel="noopener noreferrer">Source page</a> · <a href="https://ntrs.nasa.gov/api/citations/20260000646/downloads/Ferkul-Lunar%20and%20Planetary%20Science%20Conference%202026.pdf" target="_blank" rel="noopener noreferrer">Document</a>
+  </li><li id="src-8">
+    <span class="src-title">Impacts of Reduced Pressure Atmospheres on Environmental Control and Life Support Systems (ECLSS) Architectures (NASA/TM-20260003925, NESC-RP-20-01610)</span>
+    <span class="src-meta">NASA Engineering and Safety Center (NESC), Langley Research Center, 2026. Sec. 6.1, report p. 29 (PDF p. 33); finding label O-4 </span>
+    <a href="https://ntrs.nasa.gov/citations/20260003925" target="_blank" rel="noopener noreferrer">Source page</a> · <a href="https://ntrs.nasa.gov/api/citations/20260003925/downloads/20260003925.pdf" target="_blank" rel="noopener noreferrer">Document</a>
+  </li><li id="src-9">
+    <span class="src-title">Impact of Lunar Gravity on Material Flammability</span>
+    <span class="src-meta">NASA Glenn Research Center, Spacecraft Fire Safety Demonstration project (Lunar Surface Science Workshop, 18-19 Aug 2021, presentation), 2021. Slide 17 &quot;Conclusions&quot; (PDF p. 17) </span>
+    <a href="https://ntrs.nasa.gov/citations/20210020446" target="_blank" rel="noopener noreferrer">Source page</a> · <a href="https://ntrs.nasa.gov/api/citations/20210020446/downloads/LSSW%20Presentation_8-12-2021_FINAL.pdf" target="_blank" rel="noopener noreferrer">Document</a>
+  </li>
+</ol>
+      <div class="actions"><a class="btn btn--primary" href="../../#library">Back to more stories</a></div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="foot__inner">
+    <p class="foot__verdict">Not a safety verdict. This library organises evidence; people decide.</p>
+    <p>The code, layout and first drafts of text of this site were produced with SI assistance. Every numbered sentence links to a verbatim quote from its source.</p>
+    <ul>
+      <li><a href="/app/">Live app</a></li>
+      <li><a href="https://github.com/Hantok/cargo-passport" rel="noopener">Repository</a></li>
+      <li><a href="https://github.com/Hantok/cargo-passport/blob/HEAD/LICENSE" rel="noopener">MIT License</a></li>
+    </ul>
+  </div>
+</footer>
+
+<nav class="rail" aria-label="Sections">
+  <a href="#story-top" aria-label="Start of the story" aria-current="true"></a><a href="#beat-hook" aria-label="A gravity in between"></a><a href="#beat-some-burn" aria-label="What burns that did not"></a><a href="#beat-speed" aria-label="Slower, in one test"></a><a href="#beat-expected" aria-label="What people expect"></a><a href="#beat-unknown" aria-label="What we cannot yet say"></a><a href="#limits" aria-label="What this story does not show"></a><a href="#unknown" aria-label="What nobody knows yet"></a><a href="#sources" aria-label="Sources"></a>
+</nav>
+</body>
+</html>

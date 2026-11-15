@@ -1,7 +1,7 @@
 import { citedSentence } from './cites.mjs';
 import { html } from './html.mjs';
 import { repoFile } from './layout.mjs';
-import { STATUS, recordMark, stageTag, statusMark } from './parts.mjs';
+import { STATUS, recordMark, statusMark } from './parts.mjs';
 
 const DATA_FILE = 'data/stories.json';
 const FILTERS = ['data', 'partial', 'hypothesis'];
@@ -37,14 +37,12 @@ const gapsBlock = (entry) => (entry.gaps.length
       </details>`
   : '');
 
-const cardAction = (entry, prefix) => (entry.state === 'published'
-  ? html`<a class="btn btn--primary" href="${prefix}${entry.id}/">Read the story</a>`
-  : html`<p class="card__note small">Not written yet.</p>`);
+const cardAction = (entry, prefix) => html`<a class="btn btn--primary" href="${prefix}${entry.id}/">Read the story</a>`;
 
 const storyCard = (prefix) => (entry) => html`<li class="shelf__item" data-status="${entry.evidence_status}">
-      <article class="card slab" id="story-${entry.id}" data-story="${entry.id}" data-status="${entry.evidence_status}" data-state="${entry.state}">
-        <div class="card__top">${statusMark(entry.evidence_status)}${stageTag(entry.state)}</div>
-        <h3>${entry.state === 'published' ? html`<a href="${prefix}${entry.id}/">${entry.title}</a>` : entry.title}</h3>
+      <article class="card slab" id="story-${entry.id}" data-story="${entry.id}" data-status="${entry.evidence_status}">
+        <div class="card__top">${statusMark(entry.evidence_status)}</div>
+        <h3><a href="${prefix}${entry.id}/">${entry.title}</a></h3>
         <p class="card__premise" data-computed="${recordMark(DATA_FILE, `${entry.id} premise`)}">${entry.premise}</p>
         <p class="card__reason small" data-computed="${recordMark(DATA_FILE, `${entry.id} status_reason`)}"><span class="visually-hidden">Why this status: </span>${entry.status_reason}</p>
         ${basisBlock(entry)}
@@ -67,7 +65,6 @@ const filterBar = (shelf) => {
 export const libraryScene = (shelf, beat, index, cites, link, prefix = 'stories/') => html`<section class="scene" id="library" aria-labelledby="library-title">
     <div class="scene__inner">
       <div class="scene__head">
-        <div><span class="eyebrow">${index ? `${index} · ` : ''}The shelf</span></div>
         <h2 id="library-title">${beat.heading}</h2>
         <p class="lead">${beat.sentences.map((sentence) => citedSentence(sentence, cites))}</p>
         ${link}
@@ -121,6 +118,7 @@ export function citedCounts(stories, evidence) {
 /**
  * The four stories on the home page, chosen from the shelf of twelve. Criteria: how directly the story touches the
  * passport (cargo, air at the destination, a part the passport lists) and how striking its leading fact is.
+ * Only published stories get a tile: a story that is not written yet is hidden, and nothing stands in for it.
  * Each tile shows a still of a figure: the story's own figure where it has one, else a still of the closest kit figure.
  */
 export const FEATURED = [
@@ -130,39 +128,49 @@ export const FEATURED = [
   { id: 'cygnus-big-fires', image: 'story-cygnus-big-fires.webp', alt: 'The stowage bay figure, close in: racks and a cargo box in a cutaway of a cargo module' },
 ];
 
-const featuredTile = (entry, image, alt) => {
-  const published = entry.state === 'published';
-  const href = published ? `stories/${entry.id}/` : `stories/#story-${entry.id}`;
-  return html`<li class="tile" data-story="${entry.id}">
-        <a class="tile__link" href="${href}">
+const featuredTile = (entry, image, alt) => html`<li class="tile" data-story="${entry.id}">
+        <a class="tile__link" href="stories/${entry.id}/">
           <img class="tile__img" src="assets/images/${image}" width="720" height="480" alt="${alt}" loading="lazy">
           <span class="tile__body">
-            <span class="tile__kind mono">${published ? 'Story' : 'Not written yet'} · ${STATUS[entry.evidence_status].label}</span>
+            <span class="tile__kind mono">Story · ${STATUS[entry.evidence_status].label}</span>
             <span class="tile__title">${entry.title}</span>
             <span class="tile__premise" data-computed="${recordMark(DATA_FILE, `${entry.id} premise`)}">${entry.premise}</span>
           </span>
         </a>
       </li>`;
-};
 
-/** Four tiles of the shelf and a link to all of it. `beat` is the "more" beat of the home story. */
-export const featuredScene = (shelf, beat, index, cites) => html`<section class="scene" id="library" aria-labelledby="library-title">
+const VEHICLE_IMAGE = { image: 'example-vehicle.webp', alt: 'Plan view of a habitat module with cargo items placed in it, from the whole-vehicle example' };
+
+/** The first tile: the worked example of the whole vehicle, which has a page of its own. `beat` is the "fleet" beat of the home story. */
+const exampleTile = (beat, cites) => html`<li class="tile tile--example" data-example="vehicle">
+        <a class="tile__link" href="vehicle/">
+          <img class="tile__img" src="assets/images/${VEHICLE_IMAGE.image}" width="1200" height="539" alt="${VEHICLE_IMAGE.alt}" loading="lazy">
+          <span class="tile__body">
+            <span class="tile__kind mono">Example · Concept</span>
+            <span class="tile__title">${beat.heading}</span>
+            <span class="tile__premise">${beat.sentences.slice(0, 2).map((sentence) => citedSentence(sentence, cites))}</span>
+          </span>
+        </a>
+      </li>`;
+
+/** One section of tiles: the whole-vehicle example first, then four stories of the shelf and a link to all of it. `beat` is the "more" beat of the home story. */
+export const featuredScene = (shelf, beat, index, cites, fleetBeat = null) => html`<section class="scene" id="library" aria-labelledby="library-title">
     <div class="scene__inner">
       <div class="scene__head">
-        <div><span class="eyebrow">${index} · Stories</span></div>
         <h2 id="library-title">${beat.heading}</h2>
         <p class="lead">${beat.sentences.map((sentence) => citedSentence(sentence, cites))}</p>
       </div>
       <ul class="tiles">
-        ${FEATURED.filter(({ id }) => shelf.some((entry) => entry.id === id)).map(({ id, image, alt }) => featuredTile(shelf.find((entry) => entry.id === id), image, alt))}
+        ${fleetBeat ? exampleTile(fleetBeat, cites) : ''}
+        ${FEATURED.filter(({ id }) => shelf.some((entry) => entry.id === id && entry.state === 'published')).map(({ id, image, alt }) => featuredTile(shelf.find((entry) => entry.id === id), image, alt))}
       </ul>
       <div class="actions"><a class="btn" href="stories/">All stories</a></div>
     </div>
   </section>`;
 
-/** The page with the whole shelf, one level below the site root. */
+/** The page with every published story, one level below the site root. Stories that are not written yet are hidden. */
 export const storiesPage = (shelf, cites) => libraryScene(
-  shelf.filter((entry) => !entry.home),
+  shelf.filter((entry) => !entry.home && entry.state === 'published'),
   { heading: 'All stories', sentences: [{ text: 'The whole shelf. Each story follows what the experiments tell us and what is still unknown.', evidence: [] }] },
   '', cites, '', '',
 );

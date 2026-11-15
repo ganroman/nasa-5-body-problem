@@ -2,7 +2,7 @@ import { citedSentence, createCites, sourceList } from './cites.mjs';
 import { html } from './html.mjs';
 import { page } from './layout.mjs';
 import { BuildError } from './load.mjs';
-import { pad, recordMark, stageTag, statusMark } from './parts.mjs';
+import { pad, recordMark, statusMark } from './parts.mjs';
 
 const SENTENCES_PER_PARAGRAPH = 3;
 
@@ -92,10 +92,11 @@ export const limitsScene = (story, file, heading = 'What this story does not sho
 
 const questionItem = (question, shelfById) => {
   const target = question.story ? shelfById.get(question.story) : null;
+  if (target && target.state !== 'published') return html`<li class="question slab"><p>${question.text}</p></li>`; // a story that is not written yet is hidden
   if (!target) return html`<li class="question slab"><p>${question.text}</p></li>`;
   return html`<li class="question slab" data-story="${target.id}">
       <p>${question.text}</p>
-      <p class="question__link"><a href="../../#story-${target.id}">${target.title}</a></p>
+      <p class="question__link"><a href="../#story-${target.id}">${target.title}</a></p>
     </li>`;
 };
 
@@ -116,7 +117,7 @@ const headScene = (story, entry, file) => html`<section class="scene scene--titl
       <p class="lead">${story.dek}</p>
       <div>
         <div class="slab statusbox" data-story="${entry.id}">
-          <div class="statusbox__row">${statusMark(story.status)}${stageTag(entry.state)}</div>
+          <div class="statusbox__row">${statusMark(story.status)}</div>
           <p data-computed="${recordMark(file, 'status_reason')}">${story.status_reason}</p>
         </div>
       </div>

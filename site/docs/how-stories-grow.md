@@ -14,5 +14,5 @@ A story's evidence status comes from evidence alone.
 
 ## Limits
 
-- The site has no likes, comments or voting. `data/votes.json` is a leftover snapshot of the earlier voting; the build does not read it.
+- The site has no likes, comments or voting. A story with `state` other than `published` in `data/stories.json` is hidden everywhere on the site until it is written.
 - Text from a source is quoted, never paraphrased into a stronger claim.

@@ -1,0 +1,133 @@
+{
+  "id": "cool-flame",
+  "title": "What is a cool flame?",
+  "dek": "On the space station a fire went out twice: once with a visible flame and once without. This story follows that second stage and marks where the answers stop.",
+  "status": "data",
+  "status_reason": "Each observation comes from a NASA page or a paper on droplet and gas-flame experiments. None of the sources we read reports a cool flame on a solid material.",
+  "beats": [
+    {
+      "id": "hook",
+      "heading": "A fire that went out twice",
+      "sentences": [
+        {
+          "text": "On the space station a fuel droplet appeared to extinguish but actually continued to burn without a visible flame.",
+          "evidence": [
+            "fire-went-out-twice-flex"
+          ]
+        },
+        {
+          "text": "NASA says the fire went out twice, once with and once without a visible flame.",
+          "evidence": [
+            "fire-went-out-twice-flex"
+          ]
+        }
+      ],
+      "pull_quote": {
+        "evidence": "fire-went-out-twice-flex"
+      },
+      "figure": null
+    },
+    {
+      "id": "second-stage",
+      "heading": "The second stage",
+      "sentences": [
+        {
+          "text": "Scientists observed for the first time large droplets of heptane fuel with dual modes of combustion and extinction.",
+          "evidence": [
+            "flex-heptane-dual-modes-cool-flame-second-stage"
+          ]
+        },
+        {
+          "text": "The second stage was sustained by what is known as cool flame chemical heat release.",
+          "evidence": [
+            "flex-heptane-dual-modes-cool-flame-second-stage"
+          ]
+        },
+        {
+          "text": "Non-premixed cool flames, made when fuel and oxidizer are not mixed before reacting, were discovered in 2012 aboard the space station during the Flame Extinguishment (FLEX) studies.",
+          "evidence": [
+            "cool-flames-discovered-2012-flex"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "cameras",
+      "heading": "Cameras that see nothing",
+      "sentences": [
+        {
+          "text": "In one n-decane droplet test at 21 percent oxygen and 0.5 atm, the colour and ultraviolet cameras were not sensitive enough to register any flame image during the cool-flame stage.",
+          "evidence": [
+            "cameras-blind-radiometers-see-heat"
+          ]
+        },
+        {
+          "text": "Radiometers still recorded continued radiative heat loss from the droplet, which the authors read as active chemical heat release.",
+          "evidence": [
+            "cameras-blind-radiometers-see-heat"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "why",
+      "heading": "Why anyone studies it",
+      "sentences": [
+        {
+          "text": "The principal investigator of the CFI-G gas-flame experiment says cool flames are important to study because engine technology is trending toward lower temperatures.",
+          "evidence": [
+            "little-known-about-cool-flame-chemistry"
+          ]
+        },
+        {
+          "text": "Little is known about combustion chemistry at these temperatures, and experiments like CFI-G could help.",
+          "evidence": [
+            "little-known-about-cool-flame-chemistry"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "unknown",
+      "heading": "What we cannot yet say",
+      "sentences": [
+        {
+          "text": "In the Combustion Integrated Rack the first five studies burned liquid droplets, the next six burned gaseous fuels, and the current series studies solid fuels such as PMMA.",
+          "evidence": [
+            "limit-liquid-then-gas-then-solid-programs"
+          ]
+        },
+        {
+          "text": "Among the sources we checked, none reports a cool flame on a solid material or a cargo item.",
+          "evidence": [
+            "limit-liquid-then-gas-then-solid-programs"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    }
+  ],
+  "limits": [
+    "Droplet and gas-flame results are not results for a solid material or a cargo item.",
+    "That the cool stage is \"active chemical heat release\" is the authors' reading of radiometer data.",
+    "The NASA summary page gives no oxygen level, pressure or droplet size for the heptane result.",
+    "No sentence here is a verdict on any material or item."
+  ],
+  "open_questions": [
+    {
+      "text": "How quickly would a real station find a slow, dim fire?",
+      "story": "smoke-alarm"
+    },
+    {
+      "text": "Why is a flame round in space?",
+      "story": "round-flame"
+    }
+  ]
+}

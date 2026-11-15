@@ -1,0 +1,151 @@
+{
+  "id": "smoke-alarm",
+  "title": "Do smoke alarms work without gravity?",
+  "dek": "Smoke does not rise in weightlessness, so detectors sit in the air flow. This story collects what the sources say about how smoke moves and what detectors caught, and marks that no one has yet looked at the question whole.",
+  "status": "partial",
+  "status_reason": "Each observation comes from a NASA brief, paper or experiment, but none tested a detector against a slow, dim fire in a crewed cabin, so the reading across them is ours.",
+  "beats": [
+    {
+      "id": "hook",
+      "heading": "Smoke with no ceiling",
+      "sentences": [
+        {
+          "text": "On Earth, smoke detectors are installed on the ceiling or upper section of a wall because that is the direction in which smoke travels.",
+          "evidence": [
+            "tb008-smoke-detectors-go-in-the-ventilation"
+          ]
+        },
+        {
+          "text": "In space, smoke does not rise, so detectors are placed within the ventilation system.",
+          "evidence": [
+            "tb008-smoke-detectors-go-in-the-ventilation"
+          ]
+        }
+      ],
+      "pull_quote": {
+        "evidence": "tb008-smoke-detectors-go-in-the-ventilation"
+      },
+      "figure": null
+    },
+    {
+      "id": "mixed",
+      "heading": "Mixed air, thin smoke",
+      "sentences": [
+        {
+          "text": "A NASA plan says that mixing dilutes the smoke, so in most cases the entire vehicle volume must be brought up to the alarm threshold rather than smoke collecting in a thin layer at the ceiling.",
+          "evidence": [
+            "ices2020-well-mixed-air-dilutes-smoke"
+          ]
+        },
+        {
+          "text": "In an ISS experiment, smoke particles from heated spacecraft materials were not significantly different from those made in equivalent tests in normal gravity.",
+          "evidence": [
+            "meyer2018-smoke-not-different-detectors-missed-some"
+          ]
+        },
+        {
+          "text": "The two spacecraft smoke detectors did not successfully detect every type of smoke.",
+          "evidence": [
+            "meyer2018-smoke-not-different-detectors-missed-some"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "quiet",
+      "heading": "Detectors that stayed quiet",
+      "sentences": [
+        {
+          "text": "In about 20 years of Space Shuttle operations, five potential fire-causing incidents of component overheating or electrical short circuits occurred.",
+          "evidence": [
+            "friedman2000-shuttle-overheats-never-tripped-detector"
+          ]
+        },
+        {
+          "text": "In no case was the incipient-fire signature strong enough to cause a smoke detector to actuate.",
+          "evidence": [
+            "friedman2000-shuttle-overheats-never-tripped-detector"
+          ]
+        },
+        {
+          "text": "A NASA summary of candle experiments on the Mir says that smoke detectors would be unable to sense such weak, non-smoking flames, but that they are so weak as to be non-hazardous.",
+          "evidence": [
+            "qf-mir-weak-flames-not-sensed-by-smoke-detectors"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "late",
+      "heading": "Smoke seen, alarm late",
+      "sentences": [
+        {
+          "text": "In Saffire VI the smoke from the fire event was readily detected by an ionization detector and a light scattering system.",
+          "evidence": [
+            "saffire6-alarm-after-most-hazardous-gas"
+          ]
+        },
+        {
+          "text": "But a typical alarm threshold was only achieved at 981 seconds, and by this time most of the hazardous gas release had occurred.",
+          "evidence": [
+            "saffire6-alarm-after-most-hazardous-gas"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "conundrum",
+      "heading": "A conundrum from 2001",
+      "sentences": [
+        {
+          "text": "A NASA Johnson ISS materials manager listed a conundrum in 2001: air flow is needed to transport smoke and combustion products to traditional sensors, and air flow is the worst thing for microgravity fires.",
+          "evidence": [
+            "pedley2001-airflow-conundrum"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "unknown",
+      "heading": "What we cannot yet say",
+      "sentences": [
+        {
+          "text": "How fast a station detector would find a slow, dim fire in a crewed cabin is not covered by the sources we read.",
+          "evidence": []
+        },
+        {
+          "text": "Our reading across these separate results is that detector placement and fire type both matter, and no test here put them together.",
+          "evidence": [],
+          "concept": true
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    }
+  ],
+  "limits": [
+    "No result here comes from a fire in a crewed cabin.",
+    "The Shuttle result gives no data from the ISS.",
+    "The sources do not say which detector missed which smoke.",
+    "The 2001 conundrum comes with no data behind it.",
+    "No sentence here is a verdict on any detector or item."
+  ],
+  "open_questions": [
+    {
+      "text": "Can a cool flame burn on solid plastic or cargo, and would anyone notice?",
+      "story": "cool-flame"
+    },
+    {
+      "text": "Does switching off the fans reliably put a fire out?",
+      "story": "fans-off"
+    }
+  ]
+}

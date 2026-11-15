@@ -1,0 +1,145 @@
+{
+  "id": "moon-gravity",
+  "title": "What burns on the Moon?",
+  "dek": "How does a flame behave in the gravity of the Moon? This story follows what ground tests with simulated lunar gravity say, and marks that none of them was run on the Moon.",
+  "status": "partial",
+  "status_reason": "Each observation comes from a drop tower, centrifuge, aircraft or model, none from the Moon itself, so the picture of a Moon fire is not yet measured.",
+  "beats": [
+    {
+      "id": "hook",
+      "heading": "A gravity in between",
+      "sentences": [
+        {
+          "text": "Theory and experimental results indicate that oxygen flammability limits in lunar gravity are lower than those measured in normal gravity.",
+          "evidence": [
+            "ruff2021-lunar-g-oxygen-limits-lower-than-1g"
+          ]
+        },
+        {
+          "text": "A NASA Glenn poster reports increasing evidence from 5.18-second centrifuge tests at the drop facility that materials have lower oxygen limits of flammability in lunar gravity than in Earth gravity.",
+          "evidence": [
+            "lunar-gravity-lower-oxygen-limits"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "some-burn",
+      "heading": "What burns that did not",
+      "sentences": [
+        {
+          "text": "Theoretical and experimental results have demonstrated that some materials that will not burn in normal gravity will burn in weightlessness with a low-speed flow, or in partial gravity such as lunar gravity.",
+          "evidence": [
+            "ferkul2026-1g-nonflammable-materials-burn-in-0g-flow-or-lunar-g"
+          ]
+        },
+        {
+          "text": "NASA's reduced-pressure report reasons that a flame can go out if cabin airflow is high enough, and that this happens more readily on Earth because higher gravity causes higher flow velocities.",
+          "evidence": [
+            "lunar-gravity-airflow-self-extinguishing-material-may-burn"
+          ]
+        },
+        {
+          "text": "So a material that self-extinguishes in Earth gravity may continue to burn in lunar gravity.",
+          "evidence": [
+            "lunar-gravity-airflow-self-extinguishing-material-may-burn"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "speed",
+      "heading": "Slower, in one test",
+      "sentences": [
+        {
+          "text": "In the first extended-duration burn in simulated lunar gravity, the flame base of a fabric spread at about 0.9 mm/s versus 1.5 mm/s in the 1-g comparison, and the flame tip at 1.1 versus 2.8 mm/s.",
+          "evidence": [
+            "luci-sibal-flame-spread-lunar-g-0p9-vs-1g-1p5-mm-per-s"
+          ]
+        },
+        {
+          "text": "So in this test the speed of spread was lower in lunar gravity, which is why we do not read \"worse\" into every number.",
+          "evidence": [],
+          "concept": true
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "expected",
+      "heading": "What people expect",
+      "sentences": [
+        {
+          "text": "A 2004 paper estimates that on the Moon or Mars (0.17 g and 0.38 g) buoyant flows will be greater than 20 cm/s, so concurrent flame spread will be viable.",
+          "evidence": [
+            "olson2004-moon-mars-buoyant-flow-over-20-cm-s-concurrent-viable"
+          ]
+        },
+        {
+          "text": "A 2026 abstract says that a partial-gravity fire in an extraterrestrial habitat is a real hazard that is expected to be substantially worse than in 0-g and potentially worse than even 1-g.",
+          "evidence": [
+            "ferkul2026-partial-g-habitat-fire-expected-worse-than-0g-and-1g"
+          ]
+        },
+        {
+          "text": "Essentially all existing test data for flammability of flight materials are from 1-g testing.",
+          "evidence": [
+            "eclss-tm-essentially-all-flammability-test-data-1g"
+          ]
+        },
+        {
+          "text": "A 2021 NASA presentation says additional work is needed to establish a partial gravity flammability acceptance criterion.",
+          "evidence": [
+            "ruff2021-no-partial-gravity-acceptance-criterion-yet"
+          ]
+        }
+      ],
+      "pull_quote": {
+        "evidence": "ferkul2026-partial-g-habitat-fire-expected-worse-than-0g-and-1g"
+      },
+      "figure": null
+    },
+    {
+      "id": "unknown",
+      "heading": "What we cannot yet say",
+      "sentences": [
+        {
+          "text": "No source we read reports a fire lit on the Moon.",
+          "evidence": []
+        },
+        {
+          "text": "How a fire in a Moon-base habitat compares with one on the station is not covered by the sources we read.",
+          "evidence": []
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    }
+  ],
+  "limits": [
+    "No result here was measured on the Moon.",
+    "The lunar-gravity results come from drop-facility and centrifuge tests, not from the Moon.",
+    "The speed result comes from the first extended-duration burn in simulated lunar gravity.",
+    "The statement that such a fire is expected to be worse is an expectation, not a measured result.",
+    "No sentence here is a verdict on any material or item."
+  ],
+  "open_questions": [
+    {
+      "text": "Does Moon-base air make space fires worse?",
+      "story": "moon-air"
+    },
+    {
+      "text": "What does a battery fire do in orbit?",
+      "story": "battery-orbit"
+    },
+    {
+      "text": "Does switching off the fans put fire out?",
+      "story": "fans-off"
+    }
+  ]
+}

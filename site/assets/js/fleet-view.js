@@ -229,7 +229,7 @@ function labelsSvg(fleet, layout, lit, waiting) {
     const [px, py] = at(layout, x, y);
     return `<text class="fleet-label fleet-label--quiet" x="${px}" y="${py}" text-anchor="middle"${extra}>${text}</text>`;
   };
-  const gate = `<g class="fleet-wait"${waiting ? '' : ' data-off'}>${quiet(62, 292, 'No passport:')}${quiet(62, 306, 'not admitted')}</g>`;
+  const gate = `<g class="fleet-wait"${waiting ? '' : ' data-off'}>${layout === 'tall' ? `${quiet(62, 312, 'No passport:')}${quiet(78, 312, 'not admitted')}` : `${quiet(62, 292, 'No passport:')}${quiet(62, 306, 'not admitted')}`}</g>`;
   return `${Object.keys(LABELS).map(place).join('')}${quiet(125, 158, 'Hatch')}${quiet(62, 128, 'Outside')}${gate}`;
 }
 

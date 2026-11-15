@@ -29,6 +29,7 @@ export function citedSentence(sentence, cites) {
   let out = sentence.evidence.length
     ? html`<span class="fact" data-evidence="${sentence.evidence.join(' ')}">${sentence.text}${cites.markers(sentence.evidence)}</span>`
     : html`${sentence.text}`;
+  if (sentence.computed) out = html`<span data-computed="${sentence.computed}">${out}</span>`;
   if (sentence.illustrative) out = html`<span data-illustrative>${out}</span>`;
   if (sentence.concept) out = html`<span data-concept>${out}</span>`;
   return html`${out} `;

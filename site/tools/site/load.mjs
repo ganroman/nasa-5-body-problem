@@ -25,6 +25,10 @@ function shapeProblems(story, file) {
     need(isText(beat.id) && isText(beat.heading), `beats[${b}] needs "id" and "heading"`);
     need(Array.isArray(beat.sentences) && beat.sentences.every((sentence) => isText(sentence.text) && Array.isArray(sentence.evidence)),
       `beats[${b}].sentences must be a list of { text, evidence: [ids] }`);
+    need((beat.sentences ?? []).every((sentence) => sentence.new_paragraph === undefined || sentence.new_paragraph === true),
+      `beats[${b}].sentences carry "new_paragraph" with a value other than true`);
+    need((beat.sentences ?? []).every((sentence) => sentence.computed === undefined || isText(sentence.computed)),
+      `beats[${b}].sentences carry "computed" without a text that says how the value is computed`);
     for (const flag of ['illustrative', 'concept']) {
       need((beat.sentences ?? []).every((sentence) => sentence[flag] === undefined || sentence[flag] === true || sentence[flag] === false),
         `beats[${b}].sentences carry "${flag}" with a value other than true`);

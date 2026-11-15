@@ -1,0 +1,168 @@
+{
+  "id": "battery-orbit",
+  "title": "What does a battery fire do in orbit?",
+  "dek": "We found no report of a battery fire in orbit, so this story gives only what the handbooks say about the power needed to start a fire, and where batteries are kept.",
+  "status": "hypothesis",
+  "status_reason": "No direct measurement of a battery fire in weightlessness is in our sources. What follows is what the safety handbooks and requirements say, not what a battery does.",
+  "beats": [
+    {
+      "id": "hook",
+      "heading": "No battery fire reported yet",
+      "sentences": [
+        {
+          "text": "None of the sources we read reports a battery fire in orbit.",
+          "evidence": []
+        },
+        {
+          "text": "What they do hold is rules: how much electrical power is thought enough to start a fire, and where powered items may sit.",
+          "evidence": []
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "ignition",
+      "heading": "Power decides",
+      "sentences": [
+        {
+          "text": "For flammability considerations, any high-power electrical wire is a potential ignition source.",
+          "evidence": [
+            "ssp51721-ignition-source-definition"
+          ]
+        },
+        {
+          "text": "Any item that could cause sparks, such as a brush motor, is also considered a potential ignition source.",
+          "evidence": [
+            "ssp51721-ignition-source-definition"
+          ]
+        },
+        {
+          "text": "Small, low-voltage alkaline and coin batteries are still believed to be incapable of delivering powers required for ignition.",
+          "evidence": [
+            "jsc29353d-liion-vs-alkaline-ignition-power"
+          ]
+        },
+        {
+          "text": "Larger batteries, such as lithium-ion rechargeable batteries for portable electronic devices, can certainly achieve higher power levels.",
+          "evidence": [
+            "jsc29353d-liion-vs-alkaline-ignition-power"
+          ]
+        }
+      ],
+      "pull_quote": {
+        "evidence": "jsc29353d-liion-vs-alkaline-ignition-power"
+      },
+      "figure": null
+    },
+    {
+      "id": "threshold",
+      "heading": "The number is not settled",
+      "sentences": [
+        {
+          "text": "The handbook says a reevaluation of an earlier test found that the actual voltage was considerably lower than reported and the power was more like 5 watts.",
+          "evidence": [
+            "jsc29353d-ignition-power-reevaluated"
+          ]
+        },
+        {
+          "text": "It adds that further testing is required before a new power threshold can be identified.",
+          "evidence": [
+            "jsc29353d-ignition-power-reevaluated"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "partial-g",
+      "heading": "Less gravity, less power",
+      "sentences": [
+        {
+          "text": "Combustion theory and very limited experimental data indicate that the electrical power required for ignition may be lower in partial gravity than in Earth gravity.",
+          "evidence": [
+            "jsc29353d-partial-g-2w-short-circuit"
+          ]
+        },
+        {
+          "text": "In the absence of specific data, the handbook advises a maximum short-circuit power draw of less than 2 watts for lunar and Martian environments.",
+          "evidence": [
+            "jsc29353d-partial-g-2w-short-circuit"
+          ]
+        },
+        {
+          "text": "That advice is about the Moon and Mars, not about orbit.",
+          "evidence": [],
+          "concept": true
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "where",
+      "heading": "Where batteries are kept",
+      "sentences": [
+        {
+          "text": "The ISS and MPCV Programs allow fully certified and undamaged batteries, including lithium-ion rechargeable batteries, to be stowed inside stowage bags without additional containment.",
+          "evidence": [
+            "jsc29353d-liion-in-stowage-bags"
+          ]
+        },
+        {
+          "text": "Flammable materials stowed in lockers do not constitute a fire risk while in the containers, provided they are unpowered.",
+          "evidence": [
+            "jsc29353d-powered-in-locker"
+          ]
+        },
+        {
+          "text": "Powered payloads stowed in lockers for an entire mission are to be evaluated from a flammability standpoint because they present a potential fire hazard.",
+          "evidence": [
+            "jsc29353d-powered-in-locker"
+          ]
+        },
+        {
+          "text": "When deployed in the open cabin for use, flammable items will be kept away from rack power outlets, utility outlet panels and power strips.",
+          "evidence": [
+            "jsc29353b-open-cabin-use-keep-flammables-away-from-power-outlets"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "unknown",
+      "heading": "What we cannot yet say",
+      "sentences": [
+        {
+          "text": "How a failing battery behaves in weightlessness, with its heat, smoke and gases, is not covered by the sources we read.",
+          "evidence": []
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    }
+  ],
+  "limits": [
+    "No test of a battery in weightlessness is in our sources.",
+    "The rules here are handbook guidance for ISS and partial-gravity design, not measurements of a battery.",
+    "The 2 watts is guidance used in the absence of specific data, and the handbook says a new power threshold is not yet identified.",
+    "No sentence here is a verdict on any battery or item."
+  ],
+  "open_questions": [
+    {
+      "text": "How quickly would a real station find a slow, dim fire?",
+      "story": "smoke-alarm"
+    },
+    {
+      "text": "Does Moon-base air make space fires worse?",
+      "story": "moon-air"
+    },
+    {
+      "text": "How does a flame behave at Moon or Mars gravity?",
+      "story": "moon-gravity"
+    }
+  ]
+}

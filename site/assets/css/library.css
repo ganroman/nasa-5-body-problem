@@ -68,7 +68,6 @@
   .card .basis p { flex-basis: 100%; }
   .card details:not(.card__basis) > ul li { padding-top: var(--space-2); border-top: 1px dashed var(--line); }
   .card__foot { display: grid; gap: var(--space-2); margin-top: auto; padding-top: var(--space-2); }
-  .card__note { color: var(--soft); }
   .card .btn--primary { justify-self: start; }
 
   /* how a story is born */

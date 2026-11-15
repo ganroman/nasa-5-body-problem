@@ -1,0 +1,96 @@
+{
+  "id": "earth-spinoffs",
+  "title": "What on Earth uses space-fire research?",
+  "dek": "Fire research on the station is meant to help life on the ground too. This story follows the few links the sources state, and marks that none of them names a product.",
+  "status": "partial",
+  "status_reason": "Each observation comes from a NASA page, guide or paper. A product or a standard that changed because of this research is not covered by the sources we read.",
+  "beats": [
+    {
+      "id": "hook",
+      "heading": "A flame that dies on Earth, lives on the station",
+      "sentences": [
+        {
+          "text": "Cool flames have been produced on Earth, but they quickly flicker out.",
+          "evidence": [
+            "earth-cool-flames-flicker-station-minutes"
+          ]
+        },
+        {
+          "text": "On the station, cool flames can burn for minutes, giving scientists a better opportunity to study them.",
+          "evidence": [
+            "earth-cool-flames-flicker-station-minutes"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "engines",
+      "heading": "Why that matters on the ground",
+      "sentences": [
+        {
+          "text": "The principal investigator of the CFI-G gas-flame experiment says cool flames are important to study because engine technology is trending toward lower temperatures.",
+          "evidence": [
+            "little-known-about-cool-flame-chemistry"
+          ]
+        },
+        {
+          "text": "Little is known about combustion chemistry at these temperatures, and experiments like CFI-G could help.",
+          "evidence": [
+            "little-known-about-cool-flame-chemistry"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "test",
+      "heading": "A test written for Earth",
+      "sentences": [
+        {
+          "text": "NASA's researcher guide says recent results from the BASS experiment indicate that the NASA-STD-6001 Test 1 screening test is not conservative.",
+          "evidence": [
+            "qf-test1-not-conservative"
+          ]
+        },
+        {
+          "text": "Materials can burn at lower oxygen levels in microgravity than on Earth.",
+          "evidence": [
+            "qf-test1-not-conservative"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "unknown",
+      "heading": "What we cannot yet say",
+      "sentences": [
+        {
+          "text": "A product on Earth that came from this research is not covered by the sources we read.",
+          "evidence": []
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    }
+  ],
+  "limits": [
+    "The engine link is the opinion of the principal investigator of CFI-G.",
+    "The cool-flame statement gives no number for how quickly the flames flicker out.",
+    "No sentence here is a verdict on any material, engine or item."
+  ],
+  "open_questions": [
+    {
+      "text": "What is a cool flame?",
+      "story": "cool-flame"
+    },
+    {
+      "text": "What burns on the Moon?",
+      "story": "moon-gravity"
+    }
+  ]
+}

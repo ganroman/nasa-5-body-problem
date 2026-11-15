@@ -1,5 +1,5 @@
-// Facts backed by evidence. Every element with data-evidence="id1 id2" is marked as a fact (class "fact", an
-// accent underline). Hover, focus or tap shows a tooltip with the verbatim quote, the source and a link to the
+// Facts backed by evidence. Every element with data-evidence="id1 id2" is marked as a fact (class "fact", plain text).
+// Only its small footnote marker (sup.fn) is visible. Hover, focus or tap on the marker shows a tooltip with the verbatim quote, the source and a link to the
 // original web page; <ol data-evidence-list> gets the source list. The generated pages already carry plain
 // footnote numbers (sup.fn) and the same source list, so they read without JavaScript.
 
@@ -73,14 +73,41 @@ function placeTip(element, point) {
   const rects = [...element.getClientRects()];
   const rect = (point && rects.find((r) => point.y >= r.top - 4 && point.y <= r.bottom + 4)) || rects[0] || element.getBoundingClientRect();
   const margin = 8;
+  const gap = 6;
   node.style.left = "0px";
   node.style.top = "0px";
+  node.style.bottom = "auto";
+  node.style.maxHeight = "";
   const { width, height } = node.getBoundingClientRect();
   const left = Math.min(Math.max(margin, (point ? point.x : rect.left) - 24), Math.max(margin, innerWidth - width - margin));
-  const below = rect.bottom + 6;
-  const top = below + height + margin > innerHeight && rect.top - height - 6 > margin ? rect.top - height - 6 : below;
+  const roomBelow = innerHeight - rect.bottom - gap - margin;
+  const roomAbove = rect.top - gap - margin;
   node.style.left = `${left}px`;
-  node.style.top = `${Math.max(margin, top)}px`;
+  if (height <= roomBelow) {
+    node.style.top = `${rect.bottom + gap}px`;
+  } else if (height <= roomAbove) {
+    node.style.top = `${rect.top - gap - height}px`;
+  } else if (innerWidth <= 759) {
+    // a phone, and neither side has room: a sheet at the bottom of the screen, as tall as it needs up to 60% of the screen
+    node.style.left = `${margin}px`;
+    node.style.top = "auto";
+    node.style.bottom = `${margin}px`;
+    node.style.maxHeight = `${Math.round(innerHeight * 0.6)}px`;
+  } else {
+    // a wide screen: the larger side, with the tooltip scrolling inside it
+    const below = roomBelow >= roomAbove;
+    const room = Math.max(roomBelow, roomAbove);
+    node.style.maxHeight = `${Math.max(room, 80)}px`;
+    node.style.top = below ? `${rect.bottom + gap}px` : `${Math.max(margin, rect.top - gap - Math.min(height, room))}px`;
+  }
+  // last guard: whatever side was chosen, the box ends up inside the screen (the marker itself may be at the edge of it)
+  if (node.style.bottom === "auto") {
+    const box = node.getBoundingClientRect();
+    if (box.height > innerHeight - 2 * margin) node.style.maxHeight = `${innerHeight - 2 * margin}px`;
+    const fitted = node.getBoundingClientRect();
+    const top = Math.min(Math.max(margin, fitted.top), innerHeight - fitted.height - margin);
+    node.style.top = `${Math.max(margin, top)}px`;
+  }
 }
 
 function showTip(element, point) {
@@ -114,7 +141,7 @@ function hideTip(delay = 0) {
 }
 
 function wireTips() {
-  const fact = (event) => event.target.closest?.(".fact");
+  const fact = (event) => event.target.closest?.("sup.fn")?.closest(".fact");
   const point = (event) => ({ x: event.clientX, y: event.clientY });
   document.addEventListener("pointerover", (event) => {
     const el = fact(event);
@@ -122,22 +149,21 @@ function wireTips() {
   });
   document.addEventListener("pointerout", (event) => {
     const el = fact(event);
-    if (el && event.pointerType === "mouse" && !el.contains(event.relatedTarget)) hideTip(250);
+    if (el && event.pointerType === "mouse" && !event.target.closest("sup.fn").contains(event.relatedTarget)) hideTip(250);
   });
   document.addEventListener("click", (event) => {
     const el = fact(event);
-    if (el && event.target.closest("a") && !event.target.closest("sup.fn")) return;
     if (!el) {
       if (!event.target.closest?.(".fact-tip")) hideTip();
       return;
     }
-    if (event.target.closest("sup.fn")) event.preventDefault();
+    event.preventDefault();
     if (tip.owner === el && tip.node && !tip.node.hidden && event.pointerType !== "mouse" && event.detail !== 0) hideTip();
     else showTip(el, point(event));
   });
   document.addEventListener("focusin", (event) => {
     const el = fact(event);
-    if (el?.matches(":focus-visible")) showTip(el, null);
+    if (el?.querySelector("sup.fn a:focus-visible")) showTip(el, null);
   });
   document.addEventListener("focusout", (event) => {
     if (fact(event)) hideTip(150);
@@ -174,7 +200,6 @@ function decorate({ records, numbers, list }, element) {
     }
   }
   element.classList.add("fact");
-  if (!element.matches("a, button, [tabindex]")) element.tabIndex = 0;
   if (!element.querySelector(":scope > sup.fn")) {
     const ids = element.dataset.evidence.split(/\s+/).filter((id) => numbers.has(id));
     element.append(...ids.map((id) => h("sup", { className: "fn" }, h("a", { href: `#src-${numbers.get(id)}` }, String(numbers.get(id))))));

@@ -3,7 +3,7 @@ import { html } from './html.mjs';
 import { page } from './layout.mjs';
 import { storiesPage } from './shelf.mjs';
 
-/** stories/index.html: the whole shelf. Cards of stories that are not written yet carry the anchor the home tiles link to. */
+/** stories/index.html: every published story. Stories that are not written yet are not listed. */
 export function storiesIndexPage({ shelf, evidence }) {
   const cites = createCites(evidence);
   return page({

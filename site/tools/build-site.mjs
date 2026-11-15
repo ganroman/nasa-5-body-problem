@@ -6,6 +6,7 @@ import { homePage } from './site/home-page.mjs';
 import { BuildError, danglingQuestions, loadSite } from './site/load.mjs';
 import { storyPage } from './site/story-page.mjs';
 import { storiesIndexPage } from './site/stories-index.mjs';
+import { vehiclePage } from './site/vehicle-page.mjs';
 
 /** Renders every page of the site as { path, html }, relative to the site root. */
 export function buildPages(root) {
@@ -16,6 +17,7 @@ export function buildPages(root) {
   if (mismatches.length) throw new BuildError(mismatches);
 
   const pages = [{ path: 'index.html', html: toHtml(homePage({ root, shelf, passport, stories, evidence, home })) }];
+  if (stories.get(home.id).beats.some((beat) => beat.interactive === 'fleet')) pages.push({ path: 'vehicle/index.html', html: toHtml(vehiclePage({ root, passport, stories, evidence, home })) });
   pages.push({ path: 'stories/index.html', html: toHtml(storiesIndexPage({ shelf, evidence })) });
   for (const [id, story] of stories) {
     if (id === home.id) continue;

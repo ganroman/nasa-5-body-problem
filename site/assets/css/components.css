@@ -31,7 +31,6 @@
     font: var(--fs-xs) / 1.6 var(--mono); color: var(--muted); white-space: nowrap;
   }
 
-  .tag[data-stage] { padding: 0; border: 0; color: var(--muted); }
 
   /* header */
   .top {
@@ -41,6 +40,7 @@
   }
   .brand { font: 700 var(--fs-xs) / 1 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg); text-decoration: none; }
   .brand span { color: var(--accent); }
+  .top__nav { display: flex; flex-wrap: wrap; gap: var(--space-1); }
 
   /* scene rail */
   .rail { position: fixed; z-index: 5; right: clamp(0.75rem, 2vw, 1.75rem); top: 50%; translate: 0 -50%; display: grid; gap: 0.2rem; }
@@ -92,11 +92,15 @@
   .foot__verdict { font-size: var(--fs-md); color: var(--fg); }
   .foot ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-3); }
 
-  /* facts backed by evidence: accent underline; hover, focus or tap opens the quote */
-  .fact { text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 2px; text-underline-offset: 0.22em; text-decoration-skip-ink: none; cursor: help; }
-  .fact:hover, .fact:focus-visible, .fact[aria-describedby] { background: rgb(255 140 26 / 0.16); outline: none; }
-  blockquote.fact { text-decoration: none; }
-  .fact .fn { margin-left: 0.1rem; }
+  /* facts backed by evidence: plain text; only the footnote marker is visible, hover, focus or tap on it opens the quote */
+  .fact { transition: background-color 0.12s; border-radius: 3px; }
+  .fact[aria-describedby] { background: rgb(255 140 26 / 0.08); }
+  .fact .fn { margin: 0; position: relative; }
+  .fact .fn + .fn::before { content: ","; font: 500 0.65rem / 1 var(--mono); color: var(--accent); }
+  .fact .fn a { position: relative; color: var(--accent); font-family: "JetBrains Mono", var(--mono); text-decoration: none; cursor: help; padding: 0 0.1rem; }
+  /* hit zone of at least 24 px around the number; it does not move the line */
+  .fact .fn a::after { content: ""; position: absolute; left: 50%; top: 50%; width: max(100%, 24px); height: 24px; transform: translate(-50%, -50%); }
+  .fact .fn a:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; border-radius: 3px; }
   .fact-tip {
     position: fixed; z-index: 50; left: 0; top: 0; width: min(30rem, calc(100vw - 1rem)); max-height: min(60vh, 28rem); overflow: auto;
     padding: var(--space-2); border: 1px solid var(--muted); border-radius: var(--radius); background: var(--card); color: var(--fg); font-size: var(--fs-sm); line-height: 1.5;
