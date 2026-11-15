@@ -37,7 +37,7 @@ cd backend
 uv run uvicorn serve:app --host 127.0.0.1 --port 8220
 ```
 
-The demo host runs this as a systemd unit behind a Cloudflare tunnel with `CORS_ORIGINS=https://cargo.qwadratic.me`.
+The demo host runs this as a systemd unit behind a Cloudflare tunnel with `CORS_ORIGINS=https://cargo.qwadratic.me`. A timer on the host deploys every `main` commit whose GitHub checks are all green: database dump, `uv sync --frozen`, `alembic upgrade head`, restart, `/health` check, rollback of the code on failure (migrations stay). Script: `deploy/autodeploy.sh`.
 
 ## Configuration
 
