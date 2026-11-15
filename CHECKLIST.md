@@ -42,8 +42,8 @@ Status key: `[ ]` open · `[~]` in progress (claimed) · `[!]` blocked · `[x]` 
 - [ ] T10 HUMAN (Roman): after T06–T08 and T10–T12, give the go-ahead to push to `Hantok/cargo-passport`.
 
 ### C. Media and compliance
-- [~] T11 SI watermark: `hero.png` and `team.png` (Hantok `media/`) are done locally with a visible "SI-assisted" label, in /tmp/claude-1000/-home-roman-Projects-nasa-hackathon/65a436d4-009f-4f41-9269-d3d07ae9d7a0/scratchpad/hantok/out/ (@roman-claude). The two `presentation/final/` images were Mac-only and are lost: regenerate from the live app or slides, or leave them out of the submission. Waits for T10 to push.
-- [~] T12 Typo "combustiion" in `team.png` is fixed locally (retouched the sign text, reads "combustion") in /tmp/claude-1000/-home-roman-Projects-nasa-hackathon/65a436d4-009f-4f41-9269-d3d07ae9d7a0/scratchpad/hantok/out/team.png (@roman-claude). Waits for T10 to push.
+- [x] T11 @roman-claude pushed to Hantok master 09aea91 (hero.png, team.png). presentation/final images still lost: regenerate or leave out.
+- [x] T12 @roman-claude pushed to Hantok master 09aea91.
 - [ ] T13 HUMAN (Roman): confirm that no person under 18 appears in the team image. (It shows five adult-looking illustrated people; the hero image has no people.) Note: both images are SI-generated, so mention them under "SI use" in the form.
 - [x] T14 CANCELLED: Roman has no access to the Mac, so the Mac-only files (`presentation/final/`, `docs/brag-video-review.md`, v5/v6 text, `v6/composition`) are not recoverable. Not needed for the submission.
 
