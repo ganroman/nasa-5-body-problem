@@ -204,7 +204,7 @@ def build_observations(rng: random.Random) -> list[dict]:
                 o2_min=moc, o2_max=moc, o2_raw=f"{moc * 100:g}%", pressure_kpa_min=p, pressure_kpa_max=p, pressure_raw=f"{p:g} kPa",
                 gravity_regime=GravityRegime.earth, outcome={"passed": True},
                 raw={"Material": name, "Note": "maximum O2 passed at this pressure"})
-        if rng.random() < 0.5:
+        if rng.random() < 0.12:
             loi = round(lim + 0.01 + rng.random() * 0.03, 3)
             add("mock-std-loi", f"mock#loi/{key}", test_method=TestMethod.astm_d2863, material_id=f"mock-{key}",
                 gravity_regime=GravityRegime.earth, outcome={"loi_fraction": loi}, raw={"Material": name})
