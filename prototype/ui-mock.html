@@ -1,0 +1,151 @@
+<!doctype html>
+<!-- Static design mock for docs/ui-ux.md. Rendered to docs/ui-mock.png with headless Chrome. Illustrative data only. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Cargo Passport · UI mock</title>
+<style>
+  :root { --bg:#0b1628; --card:#13233d; --line:#22385c; --fg:#ffffff; --soft:#ffd3a6; --muted:#9fb0c8; --accent:#ff8c1a;
+          --high:#ff5a45; --med:#ffb52e; --low:#3ccf8e; }
+  * { box-sizing:border-box; }
+  body { margin:0; padding:24px; background:#05080f; font:14px/1.4 "Segoe UI", system-ui, sans-serif; width:1640px; }
+  .cap { color:#8fa1ba; font-size:13px; margin:0 0 8px; letter-spacing:.04em; text-transform:uppercase; }
+  .screen { background:var(--bg); color:var(--fg); border-radius:18px; padding:20px; border:1px solid var(--line); margin-bottom:24px; }
+  .bar { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; font-size:12px; color:var(--muted); }
+  .brand { color:var(--accent); font-weight:700; letter-spacing:.08em; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; }
+  .mono { font-family:Consolas, monospace; }
+  .small { font-size:11px; color:var(--muted); }
+  /* screen 1 */
+  .ov { display:grid; grid-template-columns:1.25fr 1fr; gap:14px; height:340px; }
+  .ov .main h1 { margin:4px 0 14px; font-size:26px; }
+  .items { list-style:none; padding:0; margin:0; font-size:12px; }
+  .items li { display:flex; justify-content:space-between; padding:7px 0; border-bottom:1px dashed var(--line); color:var(--soft); }
+  .items li span:last-child { color:var(--muted); }
+  .side { display:grid; grid-template-rows:1.1fr 1fr 1fr; gap:10px; }
+  .side .card { display:flex; flex-direction:column; justify-content:center; padding:12px 16px; }
+  .side h3 { margin:0 0 4px; font-size:11px; color:var(--muted); letter-spacing:.08em; text-transform:uppercase; font-weight:600; }
+  .side .big { font-size:17px; font-weight:600; }
+  .details { border-color:var(--accent); }
+  .details .big { color:var(--accent); }
+  .pill { display:inline-block; font-size:11px; padding:1px 8px; border-radius:999px; border:1px solid currentColor; margin-top:6px; width:max-content; }
+  /* screen 2 */
+  .env { display:flex; gap:8px; align-items:center; margin-bottom:12px; }
+  .chip { border:1px solid var(--line); border-radius:999px; padding:4px 12px; font-size:12px; color:var(--soft); }
+  .chip.on { background:var(--accent); border-color:var(--accent); color:#0b1628; font-weight:700; }
+  .chip.here { border-color:var(--soft); }
+  .diff { display:flex; gap:10px; align-items:stretch; margin-bottom:14px; padding:12px 16px; }
+  .diff .lead { font-size:12px; color:var(--muted); min-width:210px; }
+  .diff .lead b { color:var(--fg); display:block; font-size:14px; }
+  .delta { border-left:1px solid var(--line); padding:0 14px; font-size:12px; color:var(--muted); }
+  .delta b { display:block; color:var(--fg); font-size:15px; margin-top:2px; }
+  .delta .up { color:var(--high); } .delta .dn { color:var(--accent); }
+  .tag { font-size:10px; padding:1px 6px; border-radius:4px; border:1px solid var(--line); color:var(--muted); margin-left:4px; }
+  .dg { display:grid; grid-template-columns:360px 1fr 1fr; gap:14px; }
+  .dg h2 { margin:0 0 10px; font-size:12px; color:var(--muted); letter-spacing:.08em; text-transform:uppercase; }
+  .legend { list-style:none; padding:0; margin:10px 0 0; font-size:12px; }
+  .legend li { display:flex; align-items:center; gap:8px; padding:3px 0; color:var(--soft); }
+  .legend i { width:10px; height:10px; border-radius:2px; display:inline-block; }
+  .legend em { margin-left:auto; font-style:normal; font-weight:700; font-size:11px; }
+  .h { color:var(--high); } .m { color:var(--med); } .l { color:var(--low); }
+  table { width:100%; border-collapse:collapse; font-size:12px; }
+  th { text-align:left; font-weight:600; color:var(--muted); font-size:11px; padding:0 4px 6px; }
+  td { padding:7px 4px; border-bottom:1px dashed var(--line); vertical-align:top; color:var(--soft); }
+  td:first-child { color:var(--fg); }
+  td.agent { color:var(--accent); font-weight:600; }
+  .ev { font-size:12px; padding:8px 0; border-bottom:1px dashed var(--line); color:var(--soft); }
+  .ev b { color:var(--accent); }
+</style>
+</head>
+<body>
+
+<p class="cap">1 · After QR scan</p>
+<div class="screen">
+  <div class="bar"><span class="brand">CARGO PASSPORT</span></div>
+  <div class="ov">
+    <div class="card main">
+      <div class="mono small">ID CP-2031-0042</div>
+      <h1>Science Resupply Kit</h1>
+      <ul class="items">
+        <li><span>Science kit case · PMMA (acrylic)</span><span>2.4 kg</span></li>
+        <li><span>Stowage bags · SIBAL cotton-fiberglass</span><span>1.1 kg</span></li>
+        <li><span>Restraint straps · Kevlar/PBI webbing</span><span>0.8 kg</span></li>
+        <li><span>Seals &amp; hoses · silicone rubber</span><span>0.6 kg</span></li>
+        <li><span>Data logger · electronics, Li-ion cell</span><span>0.5 kg</span></li>
+      </ul>
+      <div class="small" style="margin-top:10px">Total 5.4 kg</div>
+    </div>
+    <div class="side">
+      <div class="card details"><h3>More details</h3><div class="big">Fire risk &amp; response →</div><span class="pill h">HIGH at destination</span></div>
+      <div class="card"><h3>Current location</h3><div class="big">Lunar Gateway</div><div class="small">In transit · microgravity</div></div>
+      <div class="card"><h3>Final destination</h3><div class="big">Lunar surface habitat</div><div class="small">Base HAB-2 · 1/6 g</div></div>
+    </div>
+  </div>
+</div>
+
+<p class="cap">2 · More details</p>
+<div class="screen">
+  <div class="bar"><span><span class="brand">← CP-2031-0042</span> · Science Resupply Kit · Fire risk</span></div>
+  <div class="env">
+    <span class="small">Environment</span>
+    <span class="chip">ISS</span><span class="chip here">● Lunar Gateway (current)</span><span class="chip on">Lunar habitat</span><span class="chip">Mars habitat</span><span class="chip">Custom…</span>
+  </div>
+  <div class="card diff">
+    <div class="lead">Changes from current location<b>Lunar Gateway → Lunar habitat</b><span class="tag" style="margin:4px 0 0">assumed values</span></div>
+    <div class="delta">Pressure<b>101.3 → 56.5 kPa <span class="dn">▼</span></b></div>
+    <div class="delta">Oxygen<b>21 → 34 % <span class="up">▲</span></b></div>
+    <div class="delta">Gravity<b>µg → 1/6 g</b></div>
+    <div class="delta">Temperature · CO₂<b style="color:var(--muted)">22 °C · 0.4 % — no change</b></div>
+    <div class="delta">Risk changes<b><span style="color:var(--soft)">Seals &amp; hoses</span> <span class="m">MEDIUM</span> → <span class="h">HIGH</span></b></div>
+  </div>
+  <div class="dg">
+    <div class="card">
+      <h2>Cargo fire risk</h2>
+      <!-- donut: segments sized by mass share (2.4/0.5/1.1/0.8/0.6 of 5.4 kg), coloured by risk level; C = 2π·80 = 502.7, 2-unit gaps -->
+      <svg viewBox="0 0 200 200" width="200" height="200" style="display:block;margin:0 auto">
+        <g transform="rotate(-90 100 100)" fill="none" stroke-width="22">
+          <circle cx="100" cy="100" r="80" stroke="var(--high)" stroke-dasharray="221.4 281.3" stroke-dashoffset="0"/>
+          <circle cx="100" cy="100" r="80" stroke="var(--high)" stroke-opacity=".85" stroke-dasharray="44.5 458.2" stroke-dashoffset="-223.4"/>
+          <circle cx="100" cy="100" r="80" stroke="var(--high)" stroke-opacity=".65" stroke-dasharray="100.4 402.3" stroke-dashoffset="-269.9"/>
+          <circle cx="100" cy="100" r="80" stroke="var(--med)" stroke-dasharray="72.5 430.2" stroke-dashoffset="-372.3"/>
+          <circle cx="100" cy="100" r="80" stroke="var(--high)" stroke-opacity=".5" stroke-dasharray="53.9 448.8" stroke-dashoffset="-446.8"/>
+        </g>
+        <text x="100" y="104" text-anchor="middle" font-size="34" font-weight="700" fill="var(--high)">HIGH</text>
+        <text x="100" y="126" text-anchor="middle" font-size="10" letter-spacing="2" fill="var(--muted)">WHOLE CARGO</text>
+      </svg>
+      <ul class="legend">
+        <li><i style="background:var(--high)"></i>Science kit case · PMMA<em class="h">HIGH</em></li>
+        <li><i style="background:var(--high);opacity:.85"></i>Data logger · Li-ion, PCB<em class="h">HIGH</em></li>
+        <li><i style="background:var(--high);opacity:.65"></i>Stowage bags · cotton-fiberglass<em class="h">HIGH</em></li>
+        <li><i style="background:var(--med)"></i>Restraint straps · Kevlar/PBI<em class="m">MEDIUM</em></li>
+        <li><i style="background:var(--high);opacity:.5"></i>Seals &amp; hoses · silicone<em><span class="m">MED</span> → <span class="h">HIGH</span></em></li>
+      </ul>
+      <div class="small" style="margin-top:8px">Slice size = mass share. Arrows show changes from Lunar Gateway.</div>
+    </div>
+    <div class="card">
+      <h2>Extinguisher per object</h2>
+      <table>
+        <tr><th>Object</th><th>Extinguisher</th><th>Alternative</th></tr>
+        <tr><td>Science kit case</td><td class="agent">Water-based foam</td><td>CO₂</td></tr>
+        <tr><td>Data logger</td><td class="agent">CO₂</td><td>Cut power first</td></tr>
+        <tr><td>Stowage bags</td><td class="agent">Water-based foam</td><td>Water mist</td></tr>
+        <tr><td>Restraint straps</td><td class="agent">Water-based foam</td><td>Water mist</td></tr>
+        <tr><td>Seals &amp; hoses</td><td class="agent">CO₂</td><td>Water-based foam</td></tr>
+      </table>
+      <div class="small" style="margin-top:8px">Reference only — follow the vehicle's approved procedure.</div>
+    </div>
+    <div class="card">
+      <h2>Evidence · NASA PSI</h2>
+      <div class="ev"><b>BASS-II</b> <span class="tag">PSI-25</span><br>PMMA flame spread and extinction limits in low-speed airflow, microgravity.</div>
+      <div class="ev"><b>Saffire-I</b> <span class="tag">PSI-98</span><br>94 cm SIBAL cotton-fiberglass sheet burned 420 s at ~21.5 % O₂ in Cygnus.</div>
+      <div class="ev"><b>Saffire-II</b> <span class="tag">PSI-99</span><br>Silicone 0.27–1.03 mm at ~22 % O₂: negligible burn in µg; thin samples burned fully in 1 g.</div>
+      <div class="ev"><b>FLEX</b> <span class="tag">PSI-69</span><br>Extinction limits of fuel droplets with CO₂ / He suppressants.</div>
+      <div class="ev"><b>Data logger battery</b> <span class="tag">gap</span><br>No PSI run covers Li-ion cells — evidence missing.</div>
+      <div class="small" style="margin-top:8px">Observed results · tap a row for conditions &amp; DOI</div>
+    </div>
+  </div>
+  <div class="small" style="text-align:right;margin-top:10px">CONCEPT · ILLUSTRATIVE DATA · not a flight approval</div>
+</div>
+
+</body>
+</html>

@@ -32,6 +32,7 @@ Source: [NASA’s Flame in Freefall challenge details](https://www.spaceappschal
 
 ## Team resources
 
+- [Cargo Passport frontend](frontend/index.html): the screens a user sees after scanning a cargo QR code, built on the [backend API](backend/API.md); design in [UI/UX description](docs/ui-ux.md). Serve the repo with any static server, for example `python -m http.server 5500`, open `http://localhost:5500/frontend/?cargo=portable-science-instrument&route=R23`, and add `&api=<url>` to use a backend other than `http://localhost:8000`. Test: `node frontend/index.test.cjs`.
 - [Cargo & environment map](prototype/cargo-environment-map.html): standalone interactive diagram of cargo routes, cargo types, and environment dimensions. Open the HTML file in a browser; no installation is needed.
 - [Research brief](docs/research-brief.md): PSI data inventory (all 24 investigations), judging and submission rules, O₂ coverage chart, 36-hour plan
 - [Data](data/README.md): PSI combustion metadata and per-test experimental tables, plus API notes
