@@ -25,7 +25,7 @@ Not a safety verdict: Cargo Passport organises evidence for review and does not 
 
 How it works: (1) Evidence: NASA PSI experiments, drop-tower tests and material data. (2) SI assesses: compares test conditions with the cargo's journey and explains with sources. (3) People decide: how to ship, where to store, what to test next.
 
-Hook / one-line pitch: `TODO(Roman)` (must come from the team)
+Hook / one-line pitch: `TODO(Roman)`. The video opens with "In space, there's no fire department." (SI-drafted, team-approved, see SI disclosure).
 
 ## Links
 - Demo video (30 s): `TODO(Roman)` upload link
@@ -34,11 +34,14 @@ Hook / one-line pitch: `TODO(Roman)` (must come from the team)
 - Team repo: https://github.com/ganroman/nasa-5-body-problem
 
 ## Use of SI (disclosure)
-- The video narration is synthetic speech (Kokoro-82M text-to-speech). The video music is synthesized.
-- The video visuals and the images in the README (hero image, team image) were produced with SI assistance. Every video frame and both images carry a visible "SI-assisted" watermark.
-- The app's "Explain" feature uses an SI model (Eustella AI) to explain the computed evidence comparison with sources. The comparison itself is computed in code from NASA data.
-- The idea, the concept and the claims come from the team. The hook line is written by the team.
-- Parts of the code were written with SI coding assistants (Claude Code and others) and reviewed by the team. `TODO(Roman)`: confirm this sentence is accurate for the team.
+Source: `brag-output/v6/description.txt` and `docs/concept-draft.md` (both written by the team); keep this wording.
+- Idea: the concept originated in the team's brainstorm (recordings of 14 Nov, in the repo). SI tools (Claude and Codex) were used to organize the brainstorm, check data feasibility, review the concept and edit wording. The data normalization scripts were written with SI assistance. The passport framing and the prototypes were developed with SI assistance.
+- Audio: the narration is synthetic speech generated with Kokoro-82M TTS (voice af_heart) through the HyperFrames CLI. Music and sound effects were synthesized in code with SI assistance. This acknowledgement is also embedded in the MP4 metadata (comment and description tags).
+- Video: visuals, layout, animation and the narration script were produced with SI assistance (Claude, HyperFrames). **The opening line was drafted by SI in an earlier version and approved by the team.** Every frame carries a visible "SI-ASSISTED" watermark. English subtitles are burned in.
+- The cargo journey animation at 0:10 is the team's own prototype (`prototype/cargo-journey-animation.html`), rendered frame by frame inside the video.
+- Images: the README hero image and team image are SI-generated and carry a visible "SI-assisted" watermark.
+- App: the "Explain" feature uses an SI model (Eustella AI) to explain the computed evidence comparison with sources; the comparison itself is computed in code from NASA data.
+- `TODO(Roman)`: the review feedback says hooks must come from the team, not SI. The line "In space, there's no fire department." was SI-drafted and team-approved. Keep the disclosure above as is, or replace the line with one the team wrote.
 
 ## NASA data used
 NASA Physical Sciences Informatics (PSI), https://psi.nasa.gov/ , 24 investigation records and 20 experimental tables (in `data/`):
@@ -70,14 +73,20 @@ NASA Physical Sciences Informatics (PSI), https://psi.nasa.gov/ , 24 investigati
 Also: NASA-STD-6001, NASA MAPTIS (reference), NTRS papers (Hirsch 2006/2007/2010, Olson 2014, Urban & Ruff 2016, NTRS 20150022123), NASA TB 26-05, SSP 51721, JSC 20793 Rev D, OCHMO-TB-008. Exact URLs: `backend/seed/sources.yaml`.
 
 ## References and credits
-- NASA PSI, https://psi.nasa.gov/physci/repo/search?q=combustion
+- NASA Physical Science Informatics (PSI) combustion data (BASS-II, Saffire-I, Saffire-II in the video; 24 investigations in the app), https://psi.nasa.gov/physci/repo/search?q=combustion
 - ZARM Bremen flame-spread dataset, https://zenodo.org/records/18479713
 - NASA MAPTIS, https://maptis.nasa.gov/
-- Kokoro-82M (text-to-speech)
-- HyperFrames (video composition) and GSAP (animation)
-- Fonts: Space Grotesk, JetBrains Mono
-- Eustella AI (SI explanations)
-- FastAPI, PostgreSQL (backend)
+- Space Grotesk font (Florian Karsten, SIL Open Font License)
+- JetBrains Mono font (JetBrains, SIL Open Font License)
+- GSAP 3.14.2 animation library (GreenSock)
+- Kokoro-82M text-to-speech model, run with kokoro-onnx
+- HyperFrames 0.9.45 (HTML-to-video composition and rendering)
+- Eustella AI (SI explanations in the app)
+- FastAPI and PostgreSQL (backend)
+No third-party music or stock footage is used.
+
+## Data shown in the video (from description.txt)
+Material and experiment names come from the NASA PSI tables (PMMA in BASS-II at 14-22% O2, SIBAL in Saffire-I and silicone in Saffire-II at about 21% O2; none tested at the lunar 30% O2, 0.69 atm or 1/6 g). The shipment, its items and the flame animation are illustrative. The video compares evidence; it is not a safety verdict. Lunar habitat conditions (30% O2, 0.69 atm) come from the challenge brief.
 
 ## Checkboxes
 Terms and Originality: ticked by Roman's confirmation in chat, then submitted by Claude via the browser (T18).
