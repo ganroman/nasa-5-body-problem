@@ -9,7 +9,7 @@
   formulation: null
   form: sheet
   thickness_m: null
-  notes: "Enclosure material in the portable science instrument mock cargo. Thickness not stated."
+  notes: "Enclosure material in the portable science instrument example cargo. Thickness not stated."
 - id: silicone-rubber-1p5mm
   canonical_name: "Silicone rubber, ~1.5 mm"
   material_class: elastomer

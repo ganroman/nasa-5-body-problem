@@ -39,19 +39,6 @@ uv run uvicorn serve:app --host 127.0.0.1 --port 8220
 
 The demo host runs this as a systemd unit behind a Cloudflare tunnel with `CORS_ORIGINS=https://cargo.qwadratic.me`. A timer on the host deploys every `main` commit whose GitHub checks are all green: database dump, `uv sync --frozen`, `alembic upgrade head`, restart, `/health` check, rollback of the code on failure (migrations stay). Script: `deploy/autodeploy.sh`.
 
-## Mock demo data
-
-`seed/mock.py` loads invented demo data on top of the curated seed (about 50 cargo items, 12 environments, 26 routes, 440 observations, findings, share links and passport exports). Every row is marked (`mock-` ids, `MOCK-` accessions, routes `M01`..`M26`, passport snapshots with `mock_demo`), and the curated rows are never touched. Run it from `backend/` with `DATABASE_URL` set:
-
-```bash
-uv run python seed/mock.py            # replace the mock rows (idempotent, deterministic)
-uv run python seed/mock.py --dry-run  # same, rolled back
-uv run python seed/mock.py --counts   # table counts: all rows / mock rows
-uv run python seed/mock.py --purge    # delete every mock row
-```
-
-Nothing in it is a measurement or a real publication; the numbers come from a toy model.
-
 ## Configuration
 
 All configuration comes from environment variables (`.env` locally, the host's settings in production). Nothing secret is committed.
@@ -87,7 +74,7 @@ Interactive docs at `/docs` when the server runs. Frontend guide with examples a
 | `GET /health` | Liveness and database check |
 | `GET /environments`, `/environments/{id}` | Environments with per-space conditions and provenance |
 | `GET /routes`, `/materials`, `/investigations`, `/sources/{id}` | Reference data |
-| `GET /cargo`, `/cargo/{slug}` | Seeded mock cargo items |
+| `GET /cargo`, `/cargo/{slug}` | Seeded example cargo items |
 | `POST /scenarios/compare` | `{cargo_slug | cargo, scenario}` → conditions, ranked evidence per component, coverage per hazard, sources, tolerances, limitations |
 | `POST /scenarios/explain` | Same body + `component_index`, `hazard`, `question` → grounded SI explanation (`ok`, `unavailable`, `rejected` or `error`) plus the cited records |
 | `POST /passports/export`, `GET /passports/{id}` | Store and reopen an immutable passport snapshot built from the same computation as compare |

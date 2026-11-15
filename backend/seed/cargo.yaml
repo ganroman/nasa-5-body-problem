@@ -1,4 +1,4 @@
-# Mock cargo from docs/environments/material-flammability-examples.md. Objects and mass shares
+# Example cargo from docs/environments/material-flammability-examples.md. Objects and mass shares
 # are invented for demonstration (provenance illustrative). original_label is the doc's
 # "Material (tested form)" cell, verbatim. The doc's per-station verdicts, oxygen ceilings and
 # storage temperatures are deliberately not stored: comparisons are computed in code.

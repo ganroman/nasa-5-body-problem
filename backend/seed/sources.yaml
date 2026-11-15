@@ -197,7 +197,7 @@
   published_on: "2026-11-14"
 - id: doc-env-material-flammability
   kind: internal_doc
-  title: "Mock cargo and material flammability evidence"
+  title: "Example cargo and material flammability evidence"
   url: docs/environments/material-flammability-examples.md
   published_on: "2026-11-14"
 - id: doc-env-earth-aircraft
