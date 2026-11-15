@@ -35,10 +35,10 @@ Status key: `[ ]` open · `[~]` in progress (claimed) · `[!]` blocked · `[x]` 
 - [x] @roman-claude T05 Lunar base O₂ and pressure show "unknown" in the app, while the video says 30% O₂, 0.69 atm. Find the cited NASA source, fix the seed data (`backend/seed/environments.yaml`) via PR, or tell Roman the video claim has no source. RESULT: no data fix. 30% O2 / 0.69 atm is the challenge brief scenario (>=30% O2, <=10.2 psi); the app has it as environment `lunar-elevated-o2-scenario` (assumption) and keeps the NASA lunar base itself "unknown" on purpose. Only wording: call it a "scenario", not the base spec (README, form).
 
 ### B. Public repo `Hantok/cargo-passport` (prepare content, a human pushes)
-- [ ] T06 Prepare a code snapshot of the team repo without `brag-output` v1–v5 renders, in a folder outside the repo. List what is included.
-- [ ] T07 README: add the Live demo link (https://cargo.qwadratic.me) and repo QR.
-- [~] @roman-claude 17:58 T08 (DOI list is already in docs/submission-form.md; still to add to Hantok README, needs Roman go-ahead) README: add the PSI DOIs, generated from `data/investigations/*.json`. No invented DOIs.
-- [ ] T09 HUMAN (Roman): decide on `prototype/dashboard-mock.html` (contains mock data, still reachable by URL). Delete it or keep it out of the public snapshot.
+- [x] @roman-claude T06 snapshot prepared at /tmp/claude-1000/-home-roman-Projects-nasa-hackathon/65a436d4-009f-4f41-9269-d3d07ae9d7a0/scratchpad/snapshot (2 MB, from PR #49 branch): backend, frontend, data, docs, real prototypes, LICENSE. Excluded: brag-output, Braninstorming, deploy, .github, presentation decks, prototype/dashboard-mock.html, ui-mock.html. Patched in snapshot only: dead links to mock files, "Mock cargo" -> "Example cargo", serve.py skips missing dirs, landing page without Presentation card. Secrets scan clean. NOT pushed: needs Roman go-ahead (T10).
+- [x] @roman-claude T07 live demo link added to Hantok README (d244f83).
+- [x] @roman-claude T08 24 PSI DOIs added to Hantok README (d244f83).
+- [x] @roman-claude T09 dashboard-mock.html and ui-mock.html excluded from the Hantok snapshot. Still in the TEAM repo (decide there). Open question for Roman: presentation decks use a mock-style dashboard image (slide 3); excluded from snapshot.
 - [ ] T10 HUMAN (Roman): after T06–T08 and T10–T12, give the go-ahead to push to `Hantok/cargo-passport`.
 
 ### C. Media and compliance
@@ -51,7 +51,7 @@ Status key: `[ ]` open · `[~]` in progress (claimed) · `[!]` blocked · `[x]` 
 - [x] @roman-claude T15 DRAFT DONE in PR (docs/submission-form.md, branch t15-submission-form). Roman must fill: hook line, video link, confirm SI-coding sentence; merge description.txt from the Mac when it is back (T14). Original task: Draft the form text in `docs/submission-form.md`: Name, Summary, Detailed description, SI use, NASA Data (DOIs), References (fonts, GSAP, Kokoro, HyperFrames, Eustella, ZARM Zenodo). Sources: `brag-output/v6/description.txt`, the Hantok README. Only facts that exist in the repo. Note: `brag-output/v6/description.txt` is on the offline Mac (T14); draft from the Hantok README and repo now, and merge in that file when the Mac is back.
 - [ ] T16 HUMAN (Roman): upload the 30 s video and paste the Demo video link.
 - [ ] T17 Final audit (after T01–T15): no mock data anywhere, no secrets, every link in README and form opens, video is 30.0 s with watermark. Post a pass/fail list on the line.
-- [ ] T19 Check the QR code drawn inside `team.png` and `hero.png` (Hantok `media/`): it is SI-drawn and may not scan. If it does not, tell Roman; the real QR files are `brag-output/v6/cargo-passport-repo-qr.png/svg`.
+- [x] @roman-claude T19 QR in team.png scans to https://github.com/Hantok/cargo-passport. The small QR on the crate in hero.png does not decode (decoration only).
 - [ ] T18 Claude (browser) fills the form; HUMAN (Roman) confirms in chat; only then Claude presses **Submit for Judging** and ticks Terms and Originality. Target 21:00, hard limit 23:59.
 
 ## In progress
