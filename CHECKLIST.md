@@ -37,7 +37,7 @@ Status key: `[ ]` open · `[~]` in progress (claimed) · `[!]` blocked · `[x]` 
 ### B. Public repo `Hantok/cargo-passport` (prepare content, a human pushes)
 - [ ] T06 Prepare a code snapshot of the team repo without `brag-output` v1–v5 renders, in a folder outside the repo. List what is included.
 - [ ] T07 README: add the Live demo link (https://cargo.qwadratic.me) and repo QR.
-- [ ] T08 README: add the PSI DOIs, generated from `data/investigations/*.json`. No invented DOIs.
+- [~] @roman-claude 17:58 T08 (DOI list is already in docs/submission-form.md; still to add to Hantok README, needs Roman go-ahead) README: add the PSI DOIs, generated from `data/investigations/*.json`. No invented DOIs.
 - [ ] T09 HUMAN (Roman): decide on `prototype/dashboard-mock.html` (contains mock data, still reachable by URL). Delete it or keep it out of the public snapshot.
 - [ ] T10 HUMAN (Roman): after T06–T08 and T10–T12, give the go-ahead to push to `Hantok/cargo-passport`.
 
@@ -48,7 +48,7 @@ Status key: `[ ]` open · `[~]` in progress (claimed) · `[!]` blocked · `[x]` 
 - [!] T14 HUMAN (Roman): the Mac is OFFLINE, not lost (may be back in ~1 hour). When it is online, push the Mac-only files (`presentation/final/`, `docs/brag-video-review.md`, `brag-output/v5` and `v6` text, `v6/composition`) to branch `mac-files` of the team repo (see prompt in chat). Needed for T15 (`v6/description.txt`) and the two `presentation/final` images.
 
 ### D. Submission form
-- [~] @roman-claude 17:55 T15 Draft the form text in `docs/submission-form.md`: Name, Summary, Detailed description, SI use, NASA Data (DOIs), References (fonts, GSAP, Kokoro, HyperFrames, Eustella, ZARM Zenodo). Sources: `brag-output/v6/description.txt`, the Hantok README. Only facts that exist in the repo. Note: `brag-output/v6/description.txt` is on the offline Mac (T14); draft from the Hantok README and repo now, and merge in that file when the Mac is back.
+- [x] @roman-claude T15 DRAFT DONE in PR (docs/submission-form.md, branch t15-submission-form). Roman must fill: hook line, video link, confirm SI-coding sentence; merge description.txt from the Mac when it is back (T14). Original task: Draft the form text in `docs/submission-form.md`: Name, Summary, Detailed description, SI use, NASA Data (DOIs), References (fonts, GSAP, Kokoro, HyperFrames, Eustella, ZARM Zenodo). Sources: `brag-output/v6/description.txt`, the Hantok README. Only facts that exist in the repo. Note: `brag-output/v6/description.txt` is on the offline Mac (T14); draft from the Hantok README and repo now, and merge in that file when the Mac is back.
 - [ ] T16 HUMAN (Roman): upload the 30 s video and paste the Demo video link.
 - [ ] T17 Final audit (after T01–T15): no mock data anywhere, no secrets, every link in README and form opens, video is 30.0 s with watermark. Post a pass/fail list on the line.
 - [ ] T19 Check the QR code drawn inside `team.png` and `hero.png` (Hantok `media/`): it is SI-drawn and may not scan. If it does not, tell Roman; the real QR files are `brag-output/v6/cargo-passport-repo-qr.png/svg`.
