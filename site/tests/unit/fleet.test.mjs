@@ -161,7 +161,7 @@ describe('statuses come from assess()', () => {
     assert.equal(before.flagged, false);
     const card = renderFleet('overview', { ...state, selected: before.item.id }, ctx);
     assert.ok(!/class="fleet-chip"/.test(card.split('class="fleet-card"')[1].split('</article>')[0]), 'no status chip on the unregistered item card');
-    assert.ok(card.includes('No passport: not admitted'));
+    assert.ok(card.includes('No passport yet: no status'));
     const after = overviewModel({ ...state, registered: { ...state.registered, [before.item.id]: true } }, ctx).items.find((entry) => entry.item.id === before.item.id);
     assert.ok(after.result);
     assert.deepEqual(after.result.components.map((c) => c.id), before.item.components.map((c) => c.id));

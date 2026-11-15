@@ -1,24 +1,39 @@
 {
   "id": "without-a-passport",
-  "title": "Without a passport",
-  "dek": "What happens when a cargo item that passed its check in one place is carried into different air, and nobody can tell?",
+  "title": "Cargo Passport",
+  "dek": "You want to know what flies",
   "status": "partial",
-  "status_reason": "The passport for one item exists today, while registration, location tags and a watching super intelligence are concepts, and the evidence on moved items is still partial.",
+  "status_reason": "The passport for one item exists today, while registration, location tags and whole-vehicle monitoring are concepts, and the evidence on moved items is still partial.",
   "beats": [
     {
-      "id": "without",
-      "heading": "Checked here, carried there",
+      "id": "journey",
+      "heading": "Same cargo, different environment",
       "sentences": [
         {
-          "text": "A portable science instrument passes its fire-safety check, in cabin air.",
-          "evidence": [],
-          "illustrative": true
+          "text": "You have a passport to travel. Cargo that travels in space needs one too.",
+          "evidence": []
         },
         {
-          "text": "Then someone carries it into different air.",
-          "evidence": [],
-          "illustrative": true
+          "text": "Everything that flies needs evidence about its risks, and fire in microgravity is just one of them.",
+          "evidence": []
         },
+        {
+          "text": "A Cargo Passport lists the evidence about the risks of the materials in a cargo item, for each environment along its journey.",
+          "evidence": []
+        },
+        {
+          "text": "One example is a shipment from the ISS, in microgravity, to a lunar base, with lower gravity and enclosed spaces.",
+          "evidence": []
+        }
+      ],
+      "pull_quote": null,
+      "figure": null,
+      "interactive": null
+    },
+    {
+      "id": "air",
+      "heading": "The air differs by place",
+      "sentences": [
         {
           "text": "The International Space Station was designed and is operated to approximate Earth-equivalent air, at 14.7 psia with 21 percent oxygen.",
           "evidence": [
@@ -49,27 +64,6 @@
           "evidence": [
             "air-data-not-conservative-for-higher-o2-lower-pressure"
           ]
-        }
-      ],
-      "pull_quote": {
-        "evidence": "jsc29353d-24-1-acceptable-24-5-flammable"
-      },
-      "figure": null,
-      "interactive": null
-    },
-    {
-      "id": "unseen",
-      "heading": "What nobody could see",
-      "sentences": [
-        {
-          "text": "The paperwork records that the instrument passed, not in which air.",
-          "evidence": [],
-          "illustrative": true
-        },
-        {
-          "text": "Among its parts are a silicone rubber gasket and lithium-ion battery cells.",
-          "evidence": [],
-          "illustrative": true
         },
         {
           "text": "In a table of oxygen-concentration flammability limits at three total pressures, silicone is listed at 28 percent oxygen at 48.2 kPa, 23 percent at 85.3 kPa and 21 percent at 101.3 kPa.",
@@ -88,57 +82,11 @@
           "evidence": [
             "jsc29353d-liion-vs-alkaline-ignition-power"
           ]
-        },
-        {
-          "text": "None of this is written on the instrument.",
-          "evidence": [],
-          "illustrative": true
         }
       ],
-      "pull_quote": null,
-      "figure": null,
-      "interactive": null
-    },
-    {
-      "id": "stakes",
-      "heading": "Why it matters there",
-      "sentences": [
-        {
-          "text": "In the Saffire VI experiments, the smoke from the fire event was readily detected, but a typical alarm threshold was reached only at 981 seconds, and by then, the authors say, most of the hazardous gas release had occurred.",
-          "evidence": [
-            "saffire6-alarm-after-most-hazardous-gas"
-          ]
-        }
-      ],
-      "pull_quote": null,
-      "figure": null,
-      "interactive": null,
-      "link": {
-        "story": "quiet-fire",
-        "text": "Read: The quiet fire"
-      }
-    },
-    {
-      "id": "onboard",
-      "heading": "No passport, no boarding",
-      "sentences": [
-        {
-          "text": "Every item would be registered before it goes anywhere.",
-          "evidence": [],
-          "concept": true
-        },
-        {
-          "text": "Registration would record what the item is made of, in what form, and which evidence covers each part.",
-          "evidence": [],
-          "concept": true
-        },
-        {
-          "text": "An item without a passport would not be admitted.",
-          "evidence": [],
-          "concept": true
-        }
-      ],
-      "pull_quote": null,
+      "pull_quote": {
+        "evidence": "jsc29353d-24-1-acceptable-24-5-flammable"
+      },
       "figure": null,
       "interactive": null
     },
@@ -146,6 +94,10 @@
       "id": "passport",
       "heading": "The passport for one item",
       "sentences": [
+        {
+          "text": "It compares the existing tests of each material with the conditions of the place the item is going to.",
+          "evidence": []
+        },
         {
           "text": "This step is live today, for one illustrative item.",
           "evidence": []
@@ -160,6 +112,10 @@
         },
         {
           "text": "For each part, the passport says whether evidence applies, whether conditions differ, or whether there is no evidence.",
+          "evidence": []
+        },
+        {
+          "text": "People make the final call.",
           "evidence": []
         }
       ],
@@ -195,55 +151,6 @@
       "pull_quote": null,
       "figure": null,
       "interactive": "fleet"
-    },
-    {
-      "id": "watch",
-      "heading": "A situation that did not happen",
-      "sentences": [
-        {
-          "text": "Imagine the instrument is registered and stowed, switched off, in a locker.",
-          "evidence": [],
-          "illustrative": true,
-          "concept": true
-        },
-        {
-          "text": "Before a spacewalk, a crew member carries it into the airlock, still switched off, meaning to use it there.",
-          "evidence": [],
-          "illustrative": true
-        },
-        {
-          "text": "The super intelligence (SI) that watches every passport would see that the place and the air no longer match the evidence.",
-          "evidence": [],
-          "illustrative": true,
-          "concept": true
-        },
-        {
-          "text": "It would raise a flag to the crew and bring the evidence with it.",
-          "evidence": [],
-          "illustrative": true,
-          "concept": true
-        },
-        {
-          "text": "ISS safety requirements say end item materials should be tested or evaluated in the worst-case airlock environment if they intend to operate in the airlock during preparations for a spacewalk (EVA).",
-          "evidence": [
-            "ssp51721-airlock-worst-case-o2"
-          ]
-        },
-        {
-          "text": "The SI would only bring the evidence; the crew member would decide, and the instrument would go back into the locker.",
-          "evidence": [],
-          "illustrative": true,
-          "concept": true
-        },
-        {
-          "text": "This scene is imagined; it did not happen.",
-          "evidence": [],
-          "illustrative": true
-        }
-      ],
-      "pull_quote": null,
-      "figure": null,
-      "interactive": "watch"
     },
     {
       "id": "fits",
@@ -284,11 +191,24 @@
       "interactive": null
     },
     {
-      "id": "more",
-      "heading": "Explore more stories",
+      "id": "earth",
+      "heading": "Same item, new conditions, same questions",
       "sentences": [
         {
-          "text": "More stories on the shelf follow what the experiments tell us and what is still unknown.",
+          "text": "The same method can work on Earth too, in planes and submarines.",
+          "evidence": []
+        }
+      ],
+      "pull_quote": null,
+      "figure": null,
+      "interactive": null
+    },
+    {
+      "id": "more",
+      "heading": "Stories",
+      "sentences": [
+        {
+          "text": "Four stories from the shelf. Each follows what the experiments tell us and what is still unknown.",
           "evidence": []
         }
       ],
@@ -298,8 +218,8 @@
     }
   ],
   "limits": [
-    "The instrument is an illustrative item, and the situation in the watch scene is imagined, not a record.",
-    "Registration, tags that report where an item is, whole-vehicle monitoring and a watching super intelligence are concepts, and nothing here says they exist.",
+    "The instrument is an illustrative item, not a record.",
+    "Registration, tags that report where an item is and whole-vehicle monitoring are concepts, and nothing here says they exist.",
     "Each cited sentence reports what one source says, for the conditions that source names.",
     "A result for one material, thickness, pressure or atmosphere does not stand in for another.",
     "The passport flags evidence and gaps, it gives no verdict, and people decide."

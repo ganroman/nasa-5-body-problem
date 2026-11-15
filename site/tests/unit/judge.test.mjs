@@ -6,7 +6,7 @@ import { FIXTURES, REPO, listen, localEvidenceFile, removeDir, run, sourceServer
 
 const RUN = `${REPO}/tests/judge/run.mjs`;
 const SUPPORT_FILES = ['support-tea-pdf.json', 'support-tea-steep.json'];
-const COVERAGE_FILES = ['coverage-index.json', 'coverage-stories_quiet-fire_index.json'];
+const COVERAGE_FILES = ['coverage-index.json', 'coverage-stories_index.json', 'coverage-stories_quiet-fire_index.json'];
 
 let dir;
 let sources;
@@ -37,6 +37,7 @@ function writeVerdicts(target, { support = {}, coverage = {} } = {}) {
   writeFileSync(`${target}/support-tea-pdf.json`, JSON.stringify(verdict('tea-pdf', support['tea-pdf'])));
   const page = (name, change) => ({ page: name, judge: 'external-judge', assertions: [{ text: 'a claim', line: 6, evidence: ['tea-steep'] }], ...change });
   writeFileSync(`${target}/coverage-index.json`, JSON.stringify(page('index.html', coverage['index.html'])));
+  writeFileSync(`${target}/coverage-stories_index.json`, JSON.stringify(page('stories/index.html', coverage['stories/index.html'])));
   writeFileSync(`${target}/coverage-stories_quiet-fire_index.json`, JSON.stringify(page('stories/quiet-fire/index.html', coverage['stories/quiet-fire/index.html'])));
 }
 
@@ -178,7 +179,7 @@ describe('live mode against a stand-in for the Messages API', () => {
     behaviour = {};
     const { status, output } = await live();
     assert.equal(status, 0, output);
-    assert.equal(seen.length, 4);
+    assert.equal(seen.length, 5);
     const first = seen[0];
     assert.equal(first.url, '/v1/messages');
     assert.equal(first.headers['x-api-key'], 'test-key');
@@ -188,7 +189,7 @@ describe('live mode against a stand-in for the Messages API', () => {
     const report = readReport();
     assert.equal(report.model, 'claude-sonnet-5-5');
     assert.deepEqual(report.judges, ['claude-sonnet-5-5']);
-    assert.equal(report.totals.coverage.assertions, 2);
+    assert.equal(report.totals.coverage.assertions, 3);
   });
 
   it('takes the model from JUDGE_MODEL and exits 1 on an unsupported item', async () => {

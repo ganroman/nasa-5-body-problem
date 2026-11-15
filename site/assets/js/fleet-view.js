@@ -13,7 +13,7 @@ const BROWSER = typeof document !== 'undefined';
 
 export const STATUS_TEXT = { applies: 'Evidence applies', differs: 'Conditions differ', none: 'No evidence' };
 const ALL_PRESENT = 'All checks present for this place and air';
-const NOT_ADMITTED = 'No passport: not admitted';
+const NOT_ADMITTED = 'No passport yet: no status';
 const CONCEPT_NOTE = 'Concept. On this page the message is assembled from the cited records by fixed rules.';
 const CHARGING_NOTE = 'The plan has outlets only on the charging shelf, so this story does not plug the instrument in.';
 
@@ -288,7 +288,7 @@ export function overviewCard(entry, ctx) {
   if (!entry.registered) {
     return `<article class="fleet-card" data-state="none" aria-labelledby="fleet-card-title">${head}
     <p class="fleet-where"><span class="fleet-where__k">Where</span> Waiting outside the hatch</p>
-    <p class="fleet-verdict" data-state="none">${lockGlyph}<span><strong>${NOT_ADMITTED}</strong><br><span class="small">Registration at the hatch is the concept: without a passport an item is not admitted, and its components get no status.</span></span></p>
+    <p class="fleet-verdict" data-state="none">${lockGlyph}<span><strong>${NOT_ADMITTED}</strong><br><span class="small">Registration at the hatch is the concept: an item gets a status once it has a passport.</span></span></p>
     <p class="fleet-comps-note small">Components, listed but not assessed: <span data-illustrative>${item.components.map((c) => esc(`${c.name} (${c.material})`)).join('; ')}</span></p>
     <div class="fleet-actions"><button type="button" class="btn btn--primary" data-register="${esc(item.id)}">Register</button></div>
   </article>`;

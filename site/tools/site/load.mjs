@@ -12,7 +12,7 @@ const readJson = (root, path) => JSON.parse(readFileSync(join(root, path), 'utf8
 
 const isText = (value) => typeof value === 'string' && value.trim() !== '';
 
-export const INTERACTIVES = ['passport', 'fleet', 'watch'];
+export const INTERACTIVES = ['passport', 'fleet'];
 
 function shapeProblems(story, file) {
   const problems = [];

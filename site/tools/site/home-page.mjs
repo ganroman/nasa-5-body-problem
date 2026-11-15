@@ -7,21 +7,18 @@ import { fleet, rules } from './optional.mjs';
 import { passportBlock } from './passport.mjs';
 import { pad } from './parts.mjs';
 import { limitsScene } from './story-page.mjs';
-import { bornScene, citedCounts, honestScene, libraryScene } from './shelf.mjs';
+import { bornScene, citedCounts, honestScene, featuredScene } from './shelf.mjs';
 
 const SENTENCES_PER_PARAGRAPH = 3;
-const OPENING_SENTENCES = 2;
 
 const STAGE = {
-  without: 'Without a passport',
-  unseen: 'Without a passport',
-  stakes: 'Without a passport',
-  onboard: 'Onboarding',
+  journey: 'Same cargo, different environment',
+  air: 'The air differs by place',
   passport: 'The passport',
   fleet: 'The whole vehicle',
-  watch: 'The watch',
   fits: 'Where it fits',
-  more: 'Other stories',
+  earth: 'On Earth',
+  more: 'Stories',
 };
 
 const MARKS = [
@@ -68,7 +65,6 @@ const fleetBlock = (mode, ctx) => {
 const interactiveBlock = (name, ctx) => {
   if (name === 'passport') return html`<div class="beat__live">${passportBlock({ passport: ctx.site.passport, evidence: ctx.site.evidence, cites: ctx.cites, rules })}</div>`;
   if (name === 'fleet') return html`<div class="beat__live">${fleetBlock('overview', ctx)}</div>`;
-  if (name === 'watch') return html`<div class="beat__live">${fleetBlock('scenario', ctx)}</div>`;
   return '';
 };
 
@@ -90,25 +86,22 @@ const beatScene = (beat, sentences, number, ctx) => html`<section class="scene s
     </div>
   </section>`;
 
-const openingScene = (story, beat, ctx) => {
-  const first = beat.sentences.slice(0, OPENING_SENTENCES);
-  return html`<section class="scene" id="hook" aria-labelledby="hook-title">
-    <div class="scene__inner hook">
-      <div>
-        <div><span class="eyebrow">Cargo Passport · Flame in Freefall</span></div>
+const openingScene = (story) => html`<section class="scene" id="hook" aria-labelledby="hook-title">
+    <div class="scene__inner hook hook--hero">
+      <div class="hook__text">
+        <div><span class="eyebrow">Flame in Freefall</span></div>
         <h1 id="hook-title">${story.title}</h1>
-        <p class="lead">${story.dek}</p>
-        <p class="hook__def"><strong>A Cargo Passport</strong> is a record that travels with a cargo item: what it is made of, which fire-safety evidence applies to each material in the air it is going to, and what has no evidence. It flags; people decide.</p>
-        <p class="prose hook__open">${first.map((sentence) => citedSentence(sentence, ctx.cites))}</p>
-        <div>${tagsFor(first)}</div>
+        <p class="lead hook__line">${story.dek}</p>
         <div class="actions">
           <a class="btn btn--primary" href="#beat-passport">Open the passport</a>
-          <a class="btn" href="#library">Other stories</a>
+          <a class="btn" href="#library">Stories</a>
         </div>
       </div>
+      <figure class="hook__art">
+        <img src="assets/images/hero.webp" width="1500" height="1000" alt="The Five-Body Problem team around a cargo crate marked Cargo Passport, inside a space station module">
+      </figure>
     </div>
   </section>`;
-};
 
 const sourcesScene = (cites) => html`<section class="scene scene--short sources" id="sources" aria-labelledby="sources-title">
     <div class="scene__inner">
@@ -124,23 +117,22 @@ export function homePage({ root, shelf, passport, stories, evidence, home }) {
   const story = stories.get(home.id);
   const cites = createCites(evidence);
   const ctx = { cites, site: { root, shelf, passport, stories, evidence } };
-  const opening = story.beats.find((beat) => beat.id === 'without') ?? story.beats[0];
   const more = story.beats.find((beat) => beat.id === 'more');
   const scenes = [];
   const railItems = [{ id: 'hook', label: 'Start' }];
   let number = 0;
-  const openingHtml = openingScene(story, opening, ctx);
+  const openingHtml = openingScene(story);
 
   for (const beat of story.beats) {
     if (beat === more) continue;
-    const sentences = beat === opening ? beat.sentences.slice(OPENING_SENTENCES) : beat.sentences;
+    const sentences = beat.sentences;
     if (!sentences.length && !beat.interactive && !beat.pull_quote && !beat.link) continue;
     number += 1;
     scenes.push(beatScene(beat, sentences, pad(number), ctx));
     railItems.push({ id: `beat-${beat.id}`, label: STAGE[beat.id] ?? beat.heading });
   }
-  const shelfHtml = libraryScene(shelf.filter((entry) => !entry.home), more ?? { heading: 'Other stories', sentences: [] }, pad(number + 1), cites, beatLink(more?.link));
-  railItems.push({ id: 'library', label: 'Other stories' }, { id: 'born', label: 'How a story is born' }, { id: 'honest', label: 'How we keep it honest' });
+  const shelfHtml = featuredScene(shelf, more ?? { heading: 'Stories', sentences: [] }, pad(number + 1), cites);
+  railItems.push({ id: 'library', label: 'Stories' }, { id: 'born', label: 'How a story is born' }, { id: 'honest', label: 'How we keep it honest' });
   const born = bornScene(pad(number + 2));
   const honest = honestScene(citedCounts(stories, evidence), pad(number + 3));
   const limits = limitsScene(story, home.file ?? `content/stories/${home.id}.json`, 'What this page does not show');

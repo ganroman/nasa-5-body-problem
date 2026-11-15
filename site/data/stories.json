@@ -1,10 +1,10 @@
 [
   {
     "id": "without-a-passport",
-    "title": "Without a passport",
-    "premise": "What happens when a cargo item that passed a check in one place moves into different air, and nobody can see that the evidence no longer covers it?",
+    "title": "Cargo Passport",
+    "premise": "A record that travels with a cargo item: what it is made of, which fire-safety evidence applies to each material in the air it is going to, and what has no evidence.",
     "evidence_status": "partial",
-    "status_reason": "Marked partly data: related investigations are linked below; the question itself is not covered in our sources.",
+    "status_reason": "Marked partly data: related investigations are linked below; moved items are only partly covered in our sources.",
     "state": "published",
     "theme": "prevention",
     "basis": [
