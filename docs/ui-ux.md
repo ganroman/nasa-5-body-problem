@@ -26,6 +26,8 @@ The app has a single dark theme.
 - **Status colours:** every status colour also carries a text label, which keeps it readable for colour-blind users.
 - **Contrast:** text must meet WCAG AA contrast.
 
+**Layout as in the sample design:** both screens are shown on one page, each in its own framed section ("1 · After QR scan", "2 · More details"); "More details" scrolls to section 2. Clicking an object anywhere (contents list, donut legend, extinguisher table or evidence row) highlights it in every panel and selects it for *Ask about this evidence*. Evidence rows expand to show the match/differs/unknown counts, the differences and the DOI.
+
 ## 2. Screen 1: after scanning the QR code
 
 The layout uses two columns. On a phone in portrait orientation, the columns stack, with the left card first.
@@ -54,7 +56,7 @@ A header shows a back arrow, the cargo ID and the cargo name.
 
 ### Environment selector
 
-A row of chips, one per environment from `GET /environments`. The cargo's current location is marked "● (current)". The cargo's destination is selected by default.
+A row of chips with short names for the cargo's route ends and the main space environments (ISS, Lunar Gateway, NASA and ILRS lunar bases, lunar rover, Mars orbit, Mars base); the other environments from `GET /environments` are in a "More environments…" menu. The cargo's current location is marked "● (current)". The cargo's destination is selected by default.
 
 **Changes from current location.** Below the chips, a strip compares the cargo's current location with the selected environment:
 

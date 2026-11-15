@@ -38,6 +38,7 @@ const compareFor = env => {
 const routes = { '/cargo': [{ slug: 'kit' }], '/environments': [{ id: 'iss', name: 'ISS', gravity_regime: 'microgravity', spaces: { cabin: {} } }, { id: 'moon', name: 'Moon base', gravity_regime: 'partial', gravity_g: 0.17, spaces: { cabin: {} } }],
   '/routes': [{ id: 'R23', from_env: 'iss', to_env: 'moon', description: 'Hypothetical' }],
   '/materials': [{ id: 'pmma-cast-sheet', material_class: 'polymer' }],
+  '/investigations': [{ accession: 'PSI-25', acronym: 'BASS-II' }],
   '/cargo/kit': { slug: 'kit', name: 'Science kit', purpose: 'Demo', provenance: 'illustrative', config_version: 1, components: comps } };
 const calls = [], bodies = {};
 let explainReply = { explanation: { status: 'ok', cached: false, sentences: [{ text: 'PMMA LOI is 17.3%.', source_ids: ['obs-7'] }] },
@@ -56,11 +57,11 @@ const fetch = async (url, opts) => {
 };
 
 const els = new Map();
-const el = id => { if (!els.has(id)) els.set(id, { innerHTML: '', textContent: '', value: '', querySelectorAll: () => [], querySelector: () => null }); return els.get(id); };
+const el = id => { if (!els.has(id)) els.set(id, { innerHTML: '', textContent: '', value: '', querySelectorAll: () => [], querySelector: () => null, scrollIntoView() {} }); return els.get(id); };
 const location = { search: '?cargo=kit', hash: '', pathname: '/app/', origin: 'http://localhost:8000' };
 const saved = {}, clicked = [];
 const ctx = vm.createContext({ fetch, location, URLSearchParams, Promise, JSON, setTimeout,
-  document: { getElementById: el, createElement: () => ({ click() { clicked.push(this.download); } }) },
+  document: { getElementById: el, querySelectorAll: () => [], createElement: () => ({ click() { clicked.push(this.download); } }) },
   window: { addEventListener() {} }, localStorage: { getItem: k => saved[k] ?? null, setItem: (k, v) => { saved[k] = v; } },
   history: { replaceState: (a, b, url) => { location.search = url.split('?')[1]?.split('#')[0] ? '?' + url.split('?')[1].split('#')[0] : ''; } },
   navigator: { clipboard: { writeText: async () => {} } }, URL: { createObjectURL: () => 'blob:x', revokeObjectURL() {} }, Blob: class {} });
@@ -71,12 +72,14 @@ const tick = () => new Promise(r => setTimeout(r, 0));
 (async () => {
   for (let i = 0; i < 5; i++) await tick();
   // Screen 1: route R23 gives current location and destination; weights are mass shares.
-  const ov = el('app').innerHTML;
+  const ov = el('passport').innerHTML;
   assert.match(ov, /Science kit/);
-  assert.match(ov, /60 % of mass/);
+  assert.match(ov, /60 %/);
+  assert.match(el('app').innerHTML, /1 · After QR scan[\s\S]*2 · More details/); // both screens on one page, as in the mock
   assert.match(ov, /Current location<\/h3><div class="big">ISS/);
   assert.match(ov, /Final destination<\/h3><div class="big">Moon base/);
-  assert.match(el('dest-summary').textContent, /fire evidence for 1 of 2 components in manifest, 1 gap/);
+  assert.match(el('dest-summary').innerHTML, /fire evidence 1\/2 at destination/);
+  assert.match(el('dest-summary').innerHTML, /1 gap</);
 
   // Pure helpers.
   assert.equal(run("JSON.stringify(extinguisher({name:'Battery pack',original_label:'Lithium-ion cells'}, {}))"), JSON.stringify(['CO₂', 'Cut power first']));
@@ -87,10 +90,10 @@ const tick = () => new Promise(r => setTimeout(r, 0));
   assert.ok(Math.abs(segs[0].dash + segs[1].dash + 4 - 2 * Math.PI * 80) < 0.01);
 
   // Screen 2: destination selected by default; strip names changes from the current location.
-  location.hash = '#details'; run('render()');
+  run('render()');
   for (let i = 0; i < 5; i++) await tick();
   const body = el('body').innerHTML;
-  assert.match(body, /ISS → Moon base/);
+  assert.match(body, /ISS → Moon base/);  // short chip names
   assert.match(body, /Oxygen<b>21 % → unknown/);
   assert.match(body, /Gravity<b>µg → 0.17 g/);
   assert.match(body, /Temperature · CO₂<b class="same">unknown at both/);
@@ -99,9 +102,9 @@ const tick = () => new Promise(r => setTimeout(r, 0));
   assert.match(body, /1\/2<\/text>/);                       // count with denominator, never a percentage or verdict
   assert.doesNotMatch(body, /HIGH|MEDIUM|LOW|safe</);
   assert.match(body, /Water-based foam/);
-  assert.match(body, /PSI-25/);
+  assert.match(body, /BASS-II<\/b> <span class="tag mono">PSI-25/); // investigation acronym + accession, as in the mock
   assert.match(body, /Battery pack<\/b> <span class="tag">gap/);
-  assert.match(body, /Analogue records .*: 1/);
+  assert.match(body, /gas-burner analogues: 1 record,/);
   assert.equal(calls.filter(c => c === '/scenarios/compare').length, 2); // results cached per environment
   assert.match(body, /Ask about this evidence/);
   assert.match(body, /Download passport/);
@@ -116,7 +119,7 @@ const tick = () => new Promise(r => setTimeout(r, 0));
   for (let i = 0; i < 5; i++) await tick();
   assert.equal(bodies['/scenarios/compare'].scenario.overrides.o2_fraction, 0.3);
   assert.equal(bodies['/scenarios/compare'].scenario.environment_id, 'moon');
-  assert.match(el('app').innerHTML, /Custom…/);
+  assert.match(el('details').innerHTML, /Custom…/);
   assert.match(el('body').innerHTML, /Custom \(Moon base\)/);
   assert.match(el('body').innerHTML, /your values/);
 

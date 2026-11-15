@@ -7,90 +7,121 @@
 <!-- Spec: docs/ui-ux.md. Data: backend/API.md. Open with ?cargo=<slug>&route=<route id> (what the QR code encodes)
      or ?share=<slug> (a saved passport); ?api=<url> points at another backend. Served by the backend at /app. -->
 <style>
-  :root { --bg:#0b1628; --card:#13233d; --line:#22385c; --fg:#ffffff; --soft:#ffd3a6; --muted:#9fb0c8; --accent:#ff8c1a;
-          --found:#4fb3ff; --gap:#ff5a45; --none:#6b7c96; --nohaz:#3ccf8e; --match:#3ccf8e; --differs:#ff5a45; --hover:#182b4b; }
+  :root { --bg:#0b1628; --frame:#0f1d33; --card:#13233d; --line:#22385c; --fg:#ffffff; --soft:#ffd3a6; --muted:#9fb0c8; --accent:#ff8c1a;
+          --found:#4fb3ff; --gap:#ff5a45; --none:#6b7c96; --nohaz:#3ccf8e; --match:#3ccf8e; --differs:#ff5a45; --hover:#1a2e50; }
   * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
   body { margin:0; background:var(--bg); color:var(--fg); font:14px/1.45 "Segoe UI", system-ui, sans-serif; }
-  main { max-width:1280px; margin:0 auto; padding:20px; }
+  main { max-width:1320px; margin:0 auto; padding:18px 20px 28px; }
   a { color:var(--accent); }
   button, input, select, textarea { font:inherit; }
   :focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
-  .bar { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; font-size:12px; color:var(--muted); gap:12px; flex-wrap:wrap; }
-  .brand { color:var(--accent); font-weight:700; letter-spacing:.08em; text-decoration:none; }
-  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; }
   .mono { font-family:Consolas, "SF Mono", monospace; }
   .small { font-size:12px; color:var(--muted); }
-  .tag { font-size:10px; padding:1px 6px; border-radius:4px; border:1px solid var(--line); color:var(--muted); margin-left:4px; white-space:nowrap; }
   .msg { padding:40px; text-align:center; color:var(--muted); }
   .err { color:var(--gap); }
-  h2 { margin:0 0 10px; font-size:12px; color:var(--muted); letter-spacing:.08em; text-transform:uppercase; }
-  .btn { background:none; border:1px solid var(--line); border-radius:999px; padding:6px 14px; color:var(--soft); cursor:pointer; font-size:12px; }
+  .tag { font-size:10px; padding:1px 6px; border-radius:4px; border:1px solid var(--line); color:var(--muted); margin-left:4px; white-space:nowrap; }
+  .pill { display:inline-block; font-size:11px; padding:1px 9px; border-radius:999px; border:1px solid currentColor; margin:6px 6px 0 0; white-space:nowrap; }
+  /* page frame, as in docs/ui-mock.png */
+  .sec { margin:18px 0 8px; font-size:12px; letter-spacing:.06em; color:var(--muted); text-transform:uppercase; }
+  .sec:first-child { margin-top:0; }
+  .frame { background:var(--frame); border:1px solid var(--line); border-radius:20px; padding:20px; scroll-margin-top:12px; }
+  .frame-title { margin:0 0 14px; font-size:13px; font-weight:700; color:var(--accent); letter-spacing:.1em; text-transform:uppercase; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px; }
+  h2 { margin:0 0 12px; font-size:12px; color:var(--muted); letter-spacing:.1em; text-transform:uppercase; }
+  .btn { background:none; border:1px solid var(--line); border-radius:999px; padding:6px 14px; color:var(--soft); cursor:pointer; font-size:12px; transition:background .15s; }
   .btn:hover { background:var(--hover); }
   .btn.primary { background:var(--accent); border-color:var(--accent); color:#0b1628; font-weight:700; }
   .btn.primary:hover { background:#ffa143; }
   .btn:disabled { opacity:.5; cursor:wait; }
-  /* overview */
-  .ov { display:grid; grid-template-columns:1.25fr 1fr; gap:14px; }
-  .ov h1 { margin:4px 0 4px; font-size:28px; }
-  .items { list-style:none; padding:0; margin:12px 0 0; font-size:13px; }
-  .items li { display:flex; justify-content:space-between; gap:12px; padding:7px 0; border-bottom:1px dashed var(--line); color:var(--soft); }
-  .items li span:last-child { color:var(--muted); white-space:nowrap; }
+  /* 1 · overview */
+  .ov { display:grid; grid-template-columns:1.35fr 1fr; gap:14px; }
+  .ov h1 { margin:6px 0 2px; font-size:30px; letter-spacing:-.3px; }
+  .items { list-style:none; padding:0; margin:14px 0 0; font-size:13px; }
+  .items li { display:flex; justify-content:space-between; gap:12px; padding:8px 0; border-bottom:1px dashed var(--line); color:var(--soft); cursor:pointer; }
+  .items li:hover, .items li.focus { color:var(--fg); }
+  .items li span:last-child { color:var(--muted); white-space:nowrap; font-variant-numeric:tabular-nums; }
+  .mass { display:flex; height:8px; border-radius:4px; overflow:hidden; margin-top:14px; gap:2px; }
+  .mass i { display:block; height:100%; }
   .side { display:grid; grid-template-rows:auto 1fr 1fr; gap:10px; }
-  .side .card { display:flex; flex-direction:column; justify-content:center; padding:14px 16px; }
-  .side h3 { margin:0 0 4px; font-size:11px; color:var(--muted); letter-spacing:.08em; text-transform:uppercase; font-weight:600; }
-  .big { font-size:18px; font-weight:600; }
-  a.details { border-color:var(--accent); text-decoration:none; color:var(--fg); }
+  .side .card { display:flex; flex-direction:column; justify-content:center; padding:14px 18px; }
+  .side h3 { margin:0 0 6px; font-size:11px; color:var(--muted); letter-spacing:.1em; text-transform:uppercase; font-weight:600; }
+  .big { font-size:19px; font-weight:600; }
+  a.details { border-color:var(--accent); text-decoration:none; color:var(--fg); transition:background .15s; }
   a.details:hover, a.details:focus-visible { background:var(--hover); }
   a.details .big { color:var(--accent); }
-  /* details */
+  /* 2 · details */
+  .dhead { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:12px; font-size:12px; color:var(--muted); }
+  .dhead a { font-weight:700; text-decoration:none; font-family:Consolas, monospace; }
+  .dhead select, .env select { background:var(--card); color:var(--soft); border:1px solid var(--line); border-radius:999px; padding:4px 10px; font-size:12px; }
+  #more-env { width:auto; max-width:190px; }
   .env { display:flex; gap:8px; align-items:center; margin-bottom:12px; flex-wrap:wrap; }
-  .chip { background:none; border:1px solid var(--line); border-radius:999px; padding:4px 12px; font-size:12px; color:var(--soft); cursor:pointer; }
+  .chip { background:none; border:1px solid var(--line); border-radius:999px; padding:5px 14px; font-size:12px; color:var(--soft); cursor:pointer; transition:background .15s; }
   .chip:hover { background:var(--hover); }
   .chip[aria-pressed="true"] { background:var(--accent); border-color:var(--accent); color:#0b1628; font-weight:700; }
   .chip.here { border-color:var(--soft); }
-  .bar select, .env select { background:var(--card); color:var(--soft); border:1px solid var(--line); border-radius:999px; padding:4px 10px; font-size:12px; }
-  .custom { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px 18px; margin-bottom:12px; }
+  .custom { display:grid; grid-template-columns:repeat(auto-fit, minmax(170px, 1fr)); gap:12px 18px; margin-bottom:12px; }
   .custom label { font-size:12px; color:var(--muted); display:block; }
-  .custom label b { color:var(--fg); font-size:14px; }
+  .custom label b { color:var(--fg); font-size:14px; font-variant-numeric:tabular-nums; }
   .custom input[type=range] { width:100%; accent-color:var(--accent); }
   .custom .base { grid-column:1 / -1; display:flex; gap:10px; align-items:center; flex-wrap:wrap; font-size:12px; color:var(--muted); }
   .custom select { background:var(--bg); color:var(--soft); border:1px solid var(--line); border-radius:8px; padding:4px 8px; }
-  .diff { display:flex; flex-wrap:wrap; gap:10px 0; margin-bottom:14px; }
-  .diff .lead { font-size:12px; color:var(--muted); min-width:220px; padding-right:14px; }
-  .diff .lead b { color:var(--fg); display:block; font-size:14px; }
-  .delta { border-left:1px solid var(--line); padding:0 14px; font-size:12px; color:var(--muted); }
-  .delta b { display:block; color:var(--fg); font-size:15px; margin-top:2px; }
-  .delta .same { color:var(--muted); }
+  .diff { display:flex; align-items:stretch; margin-bottom:14px; padding:14px 0; }
+  .diff > div { padding:0 18px; border-left:1px solid var(--line); font-size:12px; color:var(--muted); }
+  .diff > div:first-child { border-left:0; }
+  .diff b { display:block; color:var(--fg); font-size:15px; margin-top:3px; white-space:nowrap; }
+  .diff .lead b { font-size:14px; }
+  .diff .evc { flex:1; min-width:200px; }
+  .diff .evc b { white-space:normal; font-size:13px; line-height:1.6; }
+  .diff .same { color:var(--muted); }
   .up { color:var(--gap); } .dn { color:var(--accent); }
-  .dg { display:grid; grid-template-columns:360px 1fr 1fr; gap:14px; align-items:start; }
-  .legend { list-style:none; padding:0; margin:10px 0 0; font-size:12px; }
-  .legend li { display:flex; align-items:baseline; gap:8px; padding:4px 0; color:var(--soft); }
+  .dg { display:grid; grid-template-columns:minmax(300px, .95fr) 1.1fr 1.25fr; gap:14px; align-items:stretch; }
+  .donut circle.seg { transition:stroke-width .15s, opacity .15s; cursor:pointer; }
+  .legend { list-style:none; padding:0; margin:12px 0 0; font-size:12px; }
+  .legend li { display:flex; align-items:baseline; gap:8px; padding:5px 6px; margin:0 -6px; border-radius:6px; color:var(--soft); cursor:pointer; }
+  .legend li:hover, .legend li.focus { background:var(--hover); }
   .legend i { width:10px; height:10px; border-radius:2px; flex:none; }
-  .legend em { margin-left:auto; font-style:normal; font-weight:700; font-size:11px; white-space:nowrap; }
-  table { width:100%; border-collapse:collapse; font-size:12px; }
-  th { text-align:left; font-weight:600; color:var(--muted); font-size:11px; padding:0 4px 6px; }
-  td { padding:7px 4px; border-bottom:1px dashed var(--line); vertical-align:top; color:var(--soft); }
+  .legend em { margin-left:auto; font-style:normal; font-weight:700; font-size:11px; white-space:nowrap; text-transform:uppercase; letter-spacing:.03em; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th { text-align:left; font-weight:600; color:var(--muted); font-size:11px; padding:0 6px 8px; }
+  td { padding:9px 6px; border-bottom:1px dashed var(--line); vertical-align:top; color:var(--soft); }
+  tr.focus td { background:var(--hover); }
+  tbody tr { cursor:pointer; }
   td:first-child { color:var(--fg); }
   td.agent { color:var(--accent); font-weight:600; }
-  .ev { font-size:12px; padding:8px 0; border-bottom:1px dashed var(--line); color:var(--soft); }
-  .ev b { color:var(--accent); }
+  .ev { font-size:12px; border-bottom:1px dashed var(--line); color:var(--soft); }
+  .ev summary { list-style:none; cursor:pointer; padding:9px 6px; margin:0 -6px; border-radius:6px; }
+  .ev summary::-webkit-details-marker { display:none; }
+  .ev summary:hover, .ev.focus summary { background:var(--hover); }
+  .ev summary b { color:var(--accent); font-size:13px; }
+  .ev .line { display:block; color:var(--fg); margin-top:2px; }
+  .ev .more { padding:0 0 10px; color:var(--muted); }
+  .ev .more div { margin-top:4px; }
   .c-match { color:var(--match); } .c-differs { color:var(--differs); } .c-unknown { color:var(--muted); }
-  .lim { margin:6px 0 0; padding-left:18px; font-size:11px; color:var(--muted); }
-  /* SI and actions */
-  .lower { display:grid; grid-template-columns:2fr 1fr; gap:14px; margin-top:14px; align-items:start; }
+  .lim { margin-top:10px; font-size:11px; color:var(--muted); }
+  .lim summary { cursor:pointer; color:var(--soft); }
+  .lim ul { margin:6px 0 0; padding-left:18px; }
+  .foot { text-align:right; margin-top:12px; font-size:11px; letter-spacing:.04em; color:var(--muted); }
+  /* SI and passport */
+  .lower { display:grid; grid-template-columns:2fr 1fr; gap:14px; margin-top:14px; align-items:stretch; }
   .ask { display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:10px; }
-  .ask select, .ask input { background:var(--bg); color:var(--fg); border:1px solid var(--line); border-radius:8px; padding:6px 10px; font-size:13px; }
+  .ask select, .ask input { background:var(--bg); color:var(--fg); border:1px solid var(--line); border-radius:8px; padding:7px 10px; font-size:13px; }
   .ask input { flex:1; min-width:220px; }
+  .suggest { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px; }
+  .suggest button { background:none; border:1px dashed var(--line); color:var(--muted); border-radius:999px; padding:3px 10px; font-size:11px; cursor:pointer; }
+  .suggest button:hover { color:var(--soft); border-color:var(--soft); }
   .answer p { margin:0 0 8px; color:var(--fg); }
   .answer sup a { text-decoration:none; font-size:10px; margin-left:2px; }
-  .cites { list-style:none; padding:0; margin:10px 0 0; border-top:1px solid var(--line); }
+  .cites { list-style:none; padding:0; margin:10px 0 0; border-top:1px solid var(--line); max-height:220px; overflow:auto; }
   .cites li { font-size:11px; color:var(--muted); padding:6px 0; border-bottom:1px dashed var(--line); }
   .cites li b { color:var(--accent); font-family:Consolas, monospace; }
   .cites li:target { background:var(--hover); }
   .actions { display:flex; flex-direction:column; gap:10px; }
   .actions .row { display:flex; gap:8px; flex-wrap:wrap; }
   .actions input { width:100%; background:var(--bg); color:var(--soft); border:1px solid var(--line); border-radius:8px; padding:6px 8px; font-size:12px; }
-  @media (max-width:900px) { .ov, .dg, .lower { grid-template-columns:1fr; } .side { grid-template-rows:auto; } }
+  @media (max-width:1100px) { .dg { grid-template-columns:1fr 1fr; } .dg > :first-child { grid-column:1 / -1; } }
+  @media (max-width:760px) { .ov, .dg, .lower { grid-template-columns:1fr; } .side { grid-template-rows:auto; } .diff { flex-wrap:wrap; gap:10px 0; }
+    .diff > div { border-left:0; padding:0 12px; } main { padding:12px; } .frame { padding:14px; border-radius:16px; } }
 </style>
 </head>
 <body>
@@ -108,6 +139,12 @@ const STATUS = {
   attributed_no_hazard: ['No hazard (attributed)', 'var(--nohaz)'],
 };
 const USE_STATES = ['stowed', 'operating', 'charging', 'maintenance'];
+// Short chip labels for the main space environments; everything else is in the "More environments" menu.
+const SHORT = { 'iss':'ISS', 'lunar-gateway':'Lunar Gateway', 'lunar-base-nasa':'NASA lunar base', 'lunar-base-china':'ILRS lunar base',
+  'lunar-rover-cabin':'Lunar rover', 'martian-orbital-station-nasa':'Mars orbit', 'martian-base-nasa':'Mars base' };
+const CHIP_ENVS = Object.keys(SHORT);
+const TEST_BADGES = { astm_d2863:'ASTM D2863', std6001_test1:'STD-6001 T1', std6001_test4:'STD-6001 T4' };
+const TEST_NAMES = { astm_d2863:'Limiting oxygen index', std6001_test1:'NASA-STD-6001 Test 1', std6001_test4:'NASA-STD-6001 Test 4', psi_flight:'PSI flight test', psi_ground:'PSI ground test' };
 // Custom… sliders in display units; scale converts to the API's internal units (fraction, kPa, m/s, °C).
 const SLIDERS = [
   { dim:'o2_fraction', label:'Oxygen', unit:'%', min:10, max:50, step:0.5, scale:0.01, def:21 },
@@ -125,7 +162,7 @@ const AGENTS = {
 };
 
 const state = { cargo: null, route: null, envs: {}, materials: {}, current: null, dest: null, selected: null, results: {}, error: null,
-                useState: 'stowed', custom: null, share: null, ask: { component: 0, question: '', answer: null, busy: false }, notice: '' };
+                useState: 'stowed', custom: null, share: null, focus: null, acronyms: {}, ask: { component: 0, question: '', answer: null, busy: false }, notice: '' };
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const pct = x => Math.round(x * 100) + ' %';
@@ -226,7 +263,8 @@ async function compare(envId, overrides = {}) {
 
 async function load() {
   try {
-    const [list, envs, routes, materials] = await Promise.all([call('/cargo'), call('/environments'), call('/routes'), call('/materials')]);
+    const [list, envs, routes, materials, invs] = await Promise.all([call('/cargo'), call('/environments'), call('/routes'), call('/materials'), call('/investigations').catch(() => [])]);
+    invs.forEach(i => state.acronyms[i.accession] = i.acronym || i.accession);
     envs.forEach(e => state.envs[e.id] = e);
     materials.forEach(m => state.materials[m.id] = m);
     const shareSlug = params.get('share');
@@ -260,32 +298,69 @@ function render() {
   const app = document.getElementById('app');
   if (state.error) { app.innerHTML = `<p class="msg err">${esc(state.error)}</p>`; return; }
   if (!state.cargo) return;
-  if (location.hash === '#details') renderDetails(app); else renderOverview(app);
+  // Both screens on one page, as in docs/ui-mock.png; "More details" scrolls to section 2.
+  app.innerHTML = `
+    <p class="sec">1 · After QR scan</p>
+    <section class="frame" id="passport" aria-label="Cargo passport"></section>
+    <p class="sec">2 · More details</p>
+    <section class="frame" id="details" aria-label="Fire evidence and response"></section>`;
+  renderOverview(document.getElementById('passport'));
+  renderDetails(document.getElementById('details'));
 }
 
 const cargoId = c => state.share ? `share ${esc(state.share.slug)} · v${esc(c.config_version)}` : `${esc(c.slug)} · v${esc(c.config_version)}`;
+const envName = id => state.envs[id]?.name ?? id ?? 'Not set';
+const shortName = id => SHORT[id] ?? envName(id);
+const MASS_TINTS = ['#ff8c1a', '#ffb366', '#ffd3a6', '#c97a2e', '#8a5a2b', '#5c4632'];
 
-function renderOverview(app) {
-  const c = state.cargo, env = id => state.envs[id];
-  app.innerHTML = `
-    <div class="bar"><span class="brand">CARGO PASSPORT</span><span>${esc(c.provenance)} data</span></div>
+function setFocus(i) {
+  state.focus = state.focus === i ? null : i;
+  if (state.focus != null) state.ask.component = state.focus;
+  document.querySelectorAll('[data-comp]').forEach(n => n.classList.toggle('focus', +n.dataset.comp === state.focus));
+  document.querySelectorAll('circle.seg').forEach(n => {
+    const on = state.focus == null || +n.dataset.comp === state.focus;
+    n.style.opacity = on ? 1 : 0.3; n.style.strokeWidth = state.focus != null && on ? 28 : 22;
+  });
+  const sel = document.getElementById('ask-component'); if (sel && state.focus != null) sel.value = state.focus;
+}
+
+function wireFocus(root) {
+  root.querySelectorAll('[data-comp]').forEach(n => n.addEventListener('click', ev => {
+    if (n.tagName === 'SUMMARY' || n.closest('summary')) return; // details rows toggle themselves; focus via their own handler
+    setFocus(+n.dataset.comp);
+  }));
+  root.querySelectorAll('details[data-comp]').forEach(d => d.addEventListener('toggle', () => { if (d.open) setFocus(+d.dataset.comp); }));
+}
+
+function renderOverview(el) {
+  const c = state.cargo, cur = state.envs[state.current], dest = state.envs[state.dest];
+  const total = c.components.reduce((s, k) => s + (+k.mass_share || 0), 0);
+  el.innerHTML = `
+    <h2 class="frame-title">Cargo passport</h2>
     <div class="ov">
       <section class="card" aria-label="Cargo">
         <div class="mono small">ID ${cargoId(c)}</div>
         <h1>${esc(c.name)}</h1>
         <div class="small">${esc(c.purpose)}</div>
-        <ul class="items">${c.components.map(k => `<li><span>${esc(k.name)} · ${esc(k.original_label)}</span><span>${k.mass_share != null ? pct(k.mass_share) + ' of mass' : 'mass unknown'}</span></li>`).join('')}</ul>
+        <ul class="items">${c.components.map((k, i) => `<li data-comp="${i}"><span>${esc(k.name)} · ${esc(k.original_label)}</span><span>${k.mass_share != null ? pct(k.mass_share) : 'mass unknown'}</span></li>`).join('')}</ul>
+        <div class="mass" aria-hidden="true">${c.components.map((k, i) => `<i style="flex:${+k.mass_share || 0};background:${MASS_TINTS[i % MASS_TINTS.length]}" title="${esc(k.name)} ${k.mass_share != null ? pct(k.mass_share) : ''}"></i>`).join('')}</div>
+        <div class="small" style="margin-top:8px">${c.components.length} objects · share of cargo mass${total ? ` (total ${pct(total)})` : ''} · ${esc(c.provenance)} cargo</div>
       </section>
       <div class="side">
-        <a class="card details" href="#details"><h3>More details</h3><div class="big">Fire evidence &amp; response →</div><span class="small" id="dest-summary">Loading evidence…</span></a>
-        <section class="card"><h3>Current location</h3><div class="big">${esc(env(state.current)?.name ?? 'Not set')}</div><div class="small">${esc(state.route?.description ?? '')}</div></section>
-        <section class="card"><h3>Final destination</h3><div class="big">${esc(env(state.dest)?.name ?? 'Not set')}</div><div class="small">${state.dest ? 'Gravity ' + esc(gravityText(env(state.dest))) : ''}${state.route ? ` · route ${esc(state.route.id)}` : ''}</div></section>
+        <a class="card details" href="#details"><h3>More details</h3><div class="big">Fire evidence &amp; response →</div><div id="dest-summary" class="small">Loading evidence…</div></a>
+        <section class="card"><h3>Current location</h3><div class="big">${esc(envName(state.current))}</div>
+          <div class="small">${cur ? `${esc(cur.maturity)} · gravity ${esc(gravityText(cur))}` : ''}</div></section>
+        <section class="card"><h3>Final destination</h3><div class="big">${esc(envName(state.dest))}</div>
+          <div class="small">${dest ? `${esc(dest.maturity)} · gravity ${esc(gravityText(dest))}` : ''}${state.route ? ` · route ${esc(state.route.id)} (${esc(state.route.status)})` : ''}</div></section>
       </div>
     </div>`;
+  wireFocus(el);
   if (state.dest) compare(state.dest).then(r => {
-    const s = r.coverage.fire.summary, el = document.getElementById('dest-summary');
-    if (el) el.textContent = `At destination: fire evidence for ${s.evidence_found} of ${s.denominator} ${s.denominator_label}, ${s.gap} gap(s)`;
-  }).catch(e => { const el = document.getElementById('dest-summary'); if (el) el.textContent = 'Evidence unavailable: ' + e.message; });
+    const s = r.coverage.fire.summary, box = document.getElementById('dest-summary');
+    if (box) box.innerHTML = `<span class="pill" style="color:var(--found)">fire evidence ${s.evidence_found}/${s.denominator} at destination</span>`
+      + (s.gap ? `<span class="pill" style="color:var(--gap)">${s.gap} gap${s.gap > 1 ? 's' : ''}</span>` : '')
+      + `<span class="pill" style="color:var(--gap)">assembly ${esc(STATUS[r.coverage.fire.assembly.status]?.[0].toLowerCase() ?? r.coverage.fire.assembly.status)}</span>`;
+  }).catch(e => { const box = document.getElementById('dest-summary'); if (box) box.textContent = 'Evidence unavailable: ' + e.message; });
 }
 
 function customEditor() {
@@ -309,59 +384,74 @@ function startCustom() {
   state.selected = 'custom';
 }
 
-async function renderDetails(app) {
+function envChips() {
+  // Chips for the route ends and the main space environments; the rest sit in a compact menu.
+  const ids = [...new Set([state.current, state.dest, ...CHIP_ENVS, state.selected !== 'custom' ? state.selected : null])].filter(id => id && state.envs[id]);
+  const chips = ids.map(id => `<button class="chip${id === state.current ? ' here' : ''}" aria-pressed="${id === state.selected}" data-env="${esc(id)}">${id === state.current ? '● ' : ''}${esc(shortName(id))}${id === state.current ? ' (current)' : ''}</button>`).join('');
+  const rest = Object.values(state.envs).filter(e => !ids.includes(e.id));
+  const menu = rest.length ? `<select id="more-env" aria-label="More environments"><option value="">More environments…</option>${rest.map(e => `<option value="${esc(e.id)}">${esc(e.name)}</option>`).join('')}</select>` : '';
+  return `<span class="small">Environment</span>${chips}<button class="chip" aria-pressed="${state.selected === 'custom'}" id="custom-chip">Custom…</button>${menu}`;
+}
+
+const selKey = () => JSON.stringify([state.selected, selection().envId, selection().overrides, state.useState]);
+const rerender = () => { state.ask.answer = null; renderDetails(document.getElementById('details')); };
+
+async function renderDetails(el) {
+  if (!el) return;
   const c = state.cargo, { envId, overrides } = selection();
-  const chips = Object.values(state.envs).map(e => `<button class="chip${e.id === state.current ? ' here' : ''}" aria-pressed="${e.id === state.selected}" data-env="${esc(e.id)}">${e.id === state.current ? '● ' : ''}${esc(e.name)}${e.id === state.current ? ' (current)' : ''}</button>`).join('');
-  app.innerHTML = `
-    <div class="bar"><span><a class="brand" href="#">← ${cargoId(c)}</a> · ${esc(c.name)} · Fire evidence</span>
-      <label class="small">Use state <select id="use-state" aria-label="Use state">${USE_STATES.map(u => `<option${u === state.useState ? ' selected' : ''}>${u}</option>`).join('')}</select></label></div>
-    <div class="env"><span class="small">Environment</span>${chips}<button class="chip" aria-pressed="${state.selected === 'custom'}" id="custom-chip">Custom…</button></div>
+  el.innerHTML = `
+    <div class="dhead"><span><a href="#passport">← ${cargoId(c)}</a> · ${esc(c.name)} · Fire evidence</span>
+      <label>Use state <select id="use-state" aria-label="Use state">${USE_STATES.map(u => `<option${u === state.useState ? ' selected' : ''}>${u}</option>`).join('')}</select></label></div>
+    <div class="env">${envChips()}</div>
     ${customEditor()}
     <div id="body"><p class="msg">Comparing evidence…</p></div>`;
-  app.querySelectorAll('[data-env]').forEach(b => b.addEventListener('click', () => { state.selected = b.dataset.env; state.ask.answer = null; render(); }));
-  app.querySelector('#custom-chip')?.addEventListener('click', () => { startCustom(); state.ask.answer = null; render(); });
-  app.querySelector('#use-state')?.addEventListener('change', e => { state.useState = e.target.value; state.ask.answer = null; render(); });
-  app.querySelector('#custom-base')?.addEventListener('change', e => { state.custom.base = e.target.value; state.ask.answer = null; render(); });
-  app.querySelectorAll('input[data-dim]').forEach(inp => {
+  el.querySelectorAll('[data-env]').forEach(b => b.addEventListener('click', () => { state.selected = b.dataset.env; rerender(); }));
+  el.querySelector('#more-env')?.addEventListener('change', e => { if (e.target.value) { state.selected = e.target.value; rerender(); } });
+  el.querySelector('#custom-chip')?.addEventListener('click', () => { startCustom(); rerender(); });
+  el.querySelector('#use-state')?.addEventListener('change', e => { state.useState = e.target.value; rerender(); });
+  el.querySelector('#custom-base')?.addEventListener('change', e => { state.custom.base = e.target.value; rerender(); });
+  el.querySelectorAll('input[data-dim]').forEach(inp => {
     const s = SLIDERS.find(x => x.dim === inp.dataset.dim);
     inp.addEventListener('input', () => { document.getElementById('val-' + s.dim).textContent = `${inp.value} ${s.unit}`; });
-    inp.addEventListener('change', () => { state.custom.overrides[s.dim] = +(inp.value * s.scale).toFixed(4); state.ask.answer = null; render(); });
+    inp.addEventListener('change', () => { state.custom.overrides[s.dim] = +(inp.value * s.scale).toFixed(4); rerender(); });
   });
+  const token = selKey();
   let selR, curR;
-  const token = JSON.stringify([state.selected, envId, overrides, state.useState]);
   try {
     [selR, curR] = await Promise.all([compare(envId, overrides), state.current ? compare(state.current).catch(() => null) : null]);
   } catch (e) {
-    if (JSON.stringify([state.selected, selection().envId, selection().overrides, state.useState]) === token) document.getElementById('body').innerHTML = `<p class="msg err">${esc(e.message)}</p>`;
+    if (selKey() === token) document.getElementById('body').innerHTML = `<p class="msg err">${esc(e.message)}</p>`;
     return;
   }
-  // The user moved on while loading.
-  if (JSON.stringify([state.selected, selection().envId, selection().overrides, state.useState]) !== token || location.hash !== '#details') return;
+  if (selKey() !== token) return; // the user picked something else while this was loading
   const body = document.getElementById('body');
   body.innerHTML = diffStrip(curR, selR) + `<div class="dg">${donutPanel(selR)}${extinguisherPanel(selR)}${evidencePanel(selR)}</div>
     <div class="lower">${askPanel(selR)}${actionsPanel()}</div>
-    <div class="small" style="text-align:right;margin-top:10px">${esc(c.provenance).toUpperCase()} CARGO · EVIDENCE COMPARISON · not a safety approval</div>`;
+    <div class="foot">${esc(c.provenance).toUpperCase()} CARGO · EVIDENCE COMPARISON · not a safety approval</div>`;
   wireLower(body);
+  wireFocus(body);
+  if (state.focus != null) { const f = state.focus; state.focus = null; setFocus(f); }
 }
 
 function diffStrip(cur, sel) {
-  const name = r => state.selected === 'custom' && r === sel ? `Custom (${esc(state.envs[r.environment.id]?.name ?? r.environment.id)})` : esc(state.envs[r.environment.id]?.name ?? r.environment.id);
+  const custom = state.selected === 'custom';
+  const name = r => custom && r === sel ? `Custom (${esc(shortName(r.environment.id))})` : esc(shortName(r.environment.id));
   if (!cur) return `<div class="card diff"><div class="lead">No current location known for this cargo.</div></div>`;
-  if (cur.environment.id === sel.environment.id && state.selected !== 'custom') {
+  if (cur.environment.id === sel.environment.id && !custom) {
     return `<div class="card diff"><div class="lead">This is the cargo's current location<b>${name(sel)}</b></div>${
-      conditionChanges(sel, sel).map(r => `<div class="delta">${r.label}<b>${esc(r.to)}</b></div>`).join('')}</div>`;
+      conditionChanges(sel, sel).map(r => `<div>${r.label}<b>${esc(r.to)}</b></div>`).join('')}</div>`;
   }
   const rows = conditionChanges(cur, sel), changed = rows.filter(r => !r.same);
   const same = rows.filter(r => r.same && r.to !== 'unknown'), unknownBoth = rows.filter(r => r.same && r.to === 'unknown');
   const ev = evidenceChanges(cur, sel);
-  const unknown = sel.incomplete_dimensions.length ? `<span class="tag">unknown: ${esc(sel.incomplete_dimensions.join(', '))}</span>` : '';
-  const assumed = state.selected === 'custom' ? '<span class="tag">your values</span>' : '';
+  const tags = (sel.incomplete_dimensions.length ? `<span class="tag">unknown: ${esc(sel.incomplete_dimensions.map(d => d.replace(/_.*/, '')).join(', '))}</span>` : '')
+    + (custom ? '<span class="tag">your values</span>' : '');
   return `<div class="card diff">
-    <div class="lead">Changes from current location<b>${name(cur)} → ${name(sel)}</b>${unknown}${assumed}</div>
-    ${changed.map(r => `<div class="delta">${r.label}<b>${esc(r.from)} → ${esc(r.to)}${r.dir ? ` <span class="${r.dir}" aria-label="${r.dir === 'up' ? 'increase' : 'decrease'}">${r.dir === 'up' ? '▲' : '▼'}</span>` : ''}</b></div>`).join('')}
-    ${same.length ? `<div class="delta">${same.map(r => r.label).join(' · ')}<b class="same">${same.map(r => esc(r.to)).join(' · ')} — no change</b></div>` : ''}
-    ${unknownBoth.length ? `<div class="delta">${unknownBoth.map(r => r.label).join(' · ')}<b class="same">unknown at both</b></div>` : ''}
-    <div class="delta">Evidence changes<b>${ev.length ? ev.map(e => `<span style="color:var(--soft)">${esc(e.name)}</span> ${esc(e.text)}`).join('<br>') : '<span class="same">No evidence changes</span>'}</b></div>
+    <div class="lead">Changes from current location<b>${name(cur)} → ${name(sel)}</b>${tags}</div>
+    ${changed.map(r => `<div>${r.label}<b>${esc(r.from)} → ${esc(r.to)}${r.dir ? ` <span class="${r.dir}" aria-label="${r.dir === 'up' ? 'increase' : 'decrease'}">${r.dir === 'up' ? '▲' : '▼'}</span>` : ''}</b></div>`).join('')}
+    ${same.length ? `<div>${same.map(r => r.label).join(' · ')}<b class="same">${same.map(r => esc(r.to)).join(' · ')} — no change</b></div>` : ''}
+    ${unknownBoth.length ? `<div>${unknownBoth.map(r => r.label).join(' · ')}<b class="same">unknown at both</b></div>` : ''}
+    <div class="evc">Evidence changes<b>${ev.length ? ev.map(e => `<span style="color:var(--soft)">${esc(e.name)}</span> ${esc(e.text)}`).join('<br>') : '<span class="same">No evidence changes</span>'}</b></div>
   </div>`;
 }
 
@@ -370,48 +460,62 @@ function donutPanel(r) {
   const segs = donutSegments(r.components, statuses);
   const s = cov.summary;
   return `<section class="card"><h2>Cargo fire evidence</h2>
-    <svg viewBox="0 0 200 200" width="200" height="200" style="display:block;margin:0 auto" role="img" aria-label="Fire evidence for ${s.evidence_found} of ${s.denominator} components">
+    <svg class="donut" viewBox="0 0 200 200" width="220" height="220" style="display:block;margin:0 auto" role="img" aria-label="Fire evidence for ${s.evidence_found} of ${s.denominator} components">
       <g transform="rotate(-90 100 100)" fill="none" stroke-width="22">
         <circle cx="100" cy="100" r="80" stroke="var(--line)"/>
-        ${segs.map(g => `<circle cx="100" cy="100" r="80" stroke="${STATUS[g.status]?.[1] ?? 'var(--none)'}" stroke-dasharray="${g.dash.toFixed(1)} 600" stroke-dashoffset="${g.offset.toFixed(1)}"/>`).join('')}
+        ${segs.map((g, i) => `<circle class="seg" data-comp="${i}" cx="100" cy="100" r="80" stroke="${STATUS[g.status]?.[1] ?? 'var(--none)'}" stroke-dasharray="${g.dash.toFixed(1)} 600" stroke-dashoffset="${g.offset.toFixed(1)}"><title>${esc(r.components[i].name)}: ${esc(STATUS[g.status]?.[0] ?? g.status)}</title></circle>`).join('')}
       </g>
-      <text x="100" y="104" text-anchor="middle" font-size="36" font-weight="700" fill="var(--fg)">${s.evidence_found}/${s.denominator}</text>
-      <text x="100" y="126" text-anchor="middle" font-size="10" letter-spacing="1.5" fill="var(--muted)">WITH FIRE EVIDENCE</text>
+      <text x="100" y="106" text-anchor="middle" font-size="40" font-weight="800" fill="${s.gap ? 'var(--fg)' : 'var(--found)'}">${s.evidence_found}/${s.denominator}</text>
+      <text x="100" y="128" text-anchor="middle" font-size="9.5" letter-spacing="1.6" fill="var(--muted)">WITH FIRE EVIDENCE</text>
     </svg>
     <ul class="legend">${r.components.map((k, i) => {
-      const st = cov.components[i], n = st?.counts;
-      return `<li><i style="background:${STATUS[st?.status]?.[1] ?? 'var(--none)'}"></i><span>${esc(k.name)} · ${esc(k.original_label)}<br><span class="small">${n ? `exact ${n.exact} · related ${n.related} · analogue ${n.analogue}` : ''}</span></span><em>${esc(STATUS[st?.status]?.[0] ?? st?.status)}</em></li>`;
+      const st = cov.components[i], n = st?.counts, col = STATUS[st?.status]?.[1] ?? 'var(--none)';
+      return `<li data-comp="${i}"><i style="background:${col}"></i><span>${esc(k.name)} · ${esc(k.original_label)}<br><span class="small">${n ? `exact ${n.exact} · related ${n.related} · analogue ${n.analogue}` : ''}</span></span><em style="color:${col}">${esc(STATUS[st?.status]?.[0] ?? st?.status)}</em></li>`;
     }).join('')}
-      <li><i style="background:${STATUS[cov.assembly.status]?.[1]}"></i><span>Whole assembly<br><span class="small">${esc(cov.assembly.reason)}</span></span><em>${esc(STATUS[cov.assembly.status]?.[0] ?? cov.assembly.status)}</em></li>
+      <li><i style="background:${STATUS[cov.assembly.status]?.[1]}"></i><span>Whole assembly<br><span class="small">${esc(cov.assembly.reason)}</span></span><em style="color:${STATUS[cov.assembly.status]?.[1]}">${esc(STATUS[cov.assembly.status]?.[0] ?? cov.assembly.status)}</em></li>
     </ul>
-    <div class="small" style="margin-top:8px">Slice size = mass share. ${s.gap} gap(s), ${s.unassessed} not assessed, of ${s.denominator} ${esc(s.denominator_label)}.</div>
+    <div class="small" style="margin-top:8px">Slice size = mass share · colour = evidence status. ${s.gap} gap(s), ${s.unassessed} not assessed, of ${s.denominator} ${esc(s.denominator_label)}.</div>
   </section>`;
 }
 
 function extinguisherPanel(r) {
   return `<section class="card"><h2>Extinguisher per object</h2>
-    <table><tr><th>Object</th><th>Extinguisher</th><th>Alternative</th></tr>
-    ${r.components.map(k => { const [a, b] = extinguisher(k, state.materials); return `<tr><td>${esc(k.name)}</td><td class="agent">${a}</td><td>${b}</td></tr>`; }).join('')}
-    </table>
-    <div class="small" style="margin-top:8px">Reference only — follow the vehicle's approved procedure. By material type, not from PSI data.</div>
+    <table><thead><tr><th>Object</th><th>Extinguisher</th><th>Alternative</th></tr></thead><tbody>
+    ${r.components.map((k, i) => { const [a, b] = extinguisher(k, state.materials); return `<tr data-comp="${i}"><td>${esc(k.name)}</td><td class="agent">${a}</td><td>${b}</td></tr>`; }).join('')}
+    </tbody></table>
+    <div class="small" style="margin-top:10px">Reference only — follow the vehicle's approved procedure. By material type, not from PSI data.</div>
   </section>`;
 }
 
+function outcomeText(o) {
+  const out = o.outcome;
+  if (!out) return 'outcome not recorded';
+  if (out.loi_fraction != null) return `LOI ${+(out.loi_fraction * 100).toFixed(1)} % O₂`;
+  if (out.passed != null) return `${out.passed ? 'passed' : 'failed'} at ${fmtValue('o2_fraction', { min: o.o2_min, max: o.o2_max })} O₂, ${fmtValue('pressure_kpa', { min: o.pressure_kpa_min, max: o.pressure_kpa_max })}`;
+  return Object.entries(out).filter(([k]) => !k.endsWith('_raw')).map(([k, v]) => `${k.replace(/_/g, ' ')} ${v}`).join(', ');
+}
+
 function evidencePanel(r) {
-  const link = id => { const s = r.sources[id]; return s ? `<a href="${s.doi ? 'https://doi.org/' + esc(s.doi) : esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}</a>` : esc(id); };
-  const rows = r.components.map(k => {
+  const link = id => { const s = r.sources[id]; return s ? `<a href="${s.doi ? 'https://doi.org/' + esc(s.doi) : esc(s.url)}" target="_blank" rel="noopener">${esc(s.title)}${s.doi ? ' · DOI ' + esc(s.doi) : ''}</a>` : esc(id); };
+  const gravity = g => g === 'earth' ? 'Earth, 1 g' : g === 'microgravity' ? 'microgravity' : g;
+  const rows = r.components.map((k, i) => {
     const top = k.ranked.find(x => x.evidence_class !== 'analogue');
-    if (!top) return `<div class="ev"><b>${esc(k.name)}</b> <span class="tag">gap</span><br>No PSI or material record for ${esc(k.original_label)}.</div>`;
+    if (!top) return `<details class="ev" data-comp="${i}"><summary><b>${esc(k.name)}</b> <span class="tag">gap</span><span class="line">No PSI run or material record covers ${esc(k.original_label)} — evidence missing.</span></summary>
+      <div class="more">Only different-fuel analogues, if any. Missing evidence is not evidence of no hazard.</div></details>`;
     const o = r.observations[top.observation_id] || {}, n = top.counts;
-    return `<div class="ev"><b>${esc(o.investigation_accession || 'Test record')}</b> <span class="tag">${esc(k.name)}</span><span class="tag">${esc(top.evidence_class)}</span><br>
-      <span class="c-match">${n.match} match</span> · <span class="c-differs">${n.differs} differs</span> · <span class="c-unknown">${n.unknown} unknown</span><br>
-      <span class="small">${esc(top.reasons.slice(0, 3).join('; '))}</span><br><span class="small">${link(o.source_id)}</span></div>`;
+    const title = o.investigation_accession ? (state.acronyms[o.investigation_accession] || o.investigation_accession) : (TEST_NAMES[o.test_method] || 'Test record');
+    const badge = o.investigation_accession || TEST_BADGES[o.test_method] || o.test_method;
+    return `<details class="ev" data-comp="${i}"><summary><b>${esc(title)}</b> <span class="tag mono">${esc(badge)}</span><span class="tag">${esc(k.name)}</span><span class="tag">${esc(top.evidence_class)}</span>
+        <span class="line">${esc(k.original_label)}: ${esc(outcomeText(o))}${o.gravity_regime ? ` (${esc(gravity(o.gravity_regime))})` : ''}.</span></summary>
+      <div class="more"><div><span class="c-match">${n.match} match</span> · <span class="c-differs">${n.differs} differs</span> · <span class="c-unknown">${n.unknown} unknown</span> vs this environment</div>
+        <div>${esc(top.reasons.slice(1).join('; '))}</div><div>${link(o.source_id)}</div></div></details>`;
   }).join('');
   const analogues = new Set(r.components.flatMap(k => k.ranked.filter(x => x.evidence_class === 'analogue').map(x => x.observation_id))).size;
   return `<section class="card"><h2>Evidence · NASA PSI</h2>${rows}
-    ${analogues ? `<div class="ev small">Analogue records (gas burner, not this material): ${analogues}, kept separate.</div>` : ''}
-    ${r.findings.map(f => `<div class="ev">${esc(f.claim)}<br><span class="small">${link(f.source_id)}</span></div>`).join('')}
-    <ul class="lim">${r.limitations.map(l => `<li>${esc(l)}</li>`).join('')}</ul>
+    ${analogues ? `<div class="ev small" style="padding:9px 0">ACME BRE gas-burner analogues: ${analogues} record${analogues > 1 ? 's' : ''}, kept separate — not material evidence.</div>` : ''}
+    ${r.findings.map(f => `<div class="ev" style="padding:9px 0">${esc(f.claim)}<br><span class="small">${link(f.source_id)}</span></div>`).join('')}
+    <div class="small" style="margin-top:8px">Observed results · tap a row for conditions &amp; DOI</div>
+    <details class="lim"><summary>${esc(r.limitations[0] ?? 'Limitations')}</summary><ul>${r.limitations.slice(1).map(l => `<li>${esc(l)}</li>`).join('')}</ul></details>
   </section>`;
 }
 
@@ -438,8 +542,14 @@ function askPanel(r) {
       <input id="ask-question" maxlength="500" placeholder="Optional question, e.g. Does this evidence still apply at the lunar base?" value="${esc(a.question)}" aria-label="Question">
       <button class="btn primary" type="submit"${a.busy ? ' disabled' : ''}>${a.busy ? 'Asking…' : 'Explain'}</button>
     </form>
+    <div class="suggest">${suggestions().map(q => `<button type="button" data-q="${esc(q)}">${esc(q)}</button>`).join('')}</div>
     <div id="answer">${a.busy ? '<p class="small">Asking Eustella… questions with lookups take up to ~10 s.</p>' : answerHtml(a.answer)}</div>
   </section>`;
+}
+
+function suggestions() {
+  const dest = shortName(state.dest);
+  return [`Does this evidence still apply at the ${dest}?`, 'What evidence is missing for this object?', 'Summarise the evidence for the whole cargo.'];
 }
 
 function actionsPanel() {
@@ -456,6 +566,7 @@ function actionsPanel() {
 
 function wireLower(body) {
   body.querySelector('#ask-form')?.addEventListener('submit', ev => { ev.preventDefault(); ask(); });
+  body.querySelectorAll('[data-q]').forEach(b => b.addEventListener('click', () => { document.getElementById('ask-question').value = b.dataset.q; ask(); }));
   body.querySelector('#download')?.addEventListener('click', downloadPassport);
   body.querySelector('#share')?.addEventListener('click', saveShare);
 }
@@ -464,13 +575,13 @@ async function ask() {
   const a = state.ask;
   a.component = +document.getElementById('ask-component').value;
   a.question = document.getElementById('ask-question').value.trim();
-  a.busy = true; a.answer = null; render();
+  a.busy = true; a.answer = null; renderDetails(document.getElementById('details'));
   const { envId, overrides } = selection();
   try {
     a.answer = await call('/scenarios/explain', { ...cargoRef(), scenario: scenarioFor(envId, overrides),
       component_index: a.component, hazard: 'fire', question: a.question || null });
   } catch (e) { a.answer = { error: 'Explanation failed: ' + e.message }; }
-  a.busy = false; render();
+  a.busy = false; renderDetails(document.getElementById('details'));
 }
 
 async function downloadPassport() {
@@ -507,8 +618,7 @@ async function saveShare() {
   render();
 }
 
-window.addEventListener('hashchange', render);
-load();
+load().then(() => { if (location.hash === '#details') document.getElementById('details')?.scrollIntoView(); });
 </script>
 </body>
 </html>
