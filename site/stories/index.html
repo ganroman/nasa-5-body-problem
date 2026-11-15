@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>All stories · Cargo Passport</title>
+<meta name="description" content="The whole shelf of Cargo Passport stories, with the evidence status of each and what it leaves open.">
+<meta name="si-disclosure" content="The code, layout and first drafts of text of this site were produced with SI assistance. Every numbered sentence links to a verbatim quote from its source.">
+<meta name="theme-color" content="#0b1628">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=&#39;http://www.w3.org/2000/svg&#39; viewBox=&#39;0 0 32 32&#39;%3E%3Ccircle cx=&#39;16&#39; cy=&#39;16&#39; r=&#39;14&#39; fill=&#39;none&#39; stroke=&#39;%23ff8c1a&#39; stroke-width=&#39;2&#39;/%3E%3Ccircle cx=&#39;16&#39; cy=&#39;16&#39; r=&#39;8&#39; fill=&#39;%234fb3ff&#39;/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/cosmos.css">
+<link rel="stylesheet" href="../assets/css/depth.css">
+<link rel="stylesheet" href="../assets/css/components.css">
+<link rel="stylesheet" href="../assets/css/library.css">
+<link rel="stylesheet" href="../assets/css/story.css">
+<link rel="stylesheet" href="../assets/css/home.css">
+<script type="module" src="../vendor/ui-sdk/web.js"></script>
+<script type="module" src="../assets/js/rail.js"></script>
+<script type="module" src="../assets/js/figure-host.js"></script>
+<script type="module" src="../assets/js/figure-controls.js"></script>
+<script type="module" src="../assets/js/shelf-filter.js"></script>
+<script type="module" src="../assets/js/evidence.js"></script>
+</head>
+<body>
+<a class="skip" href="#library">Skip to the content</a>
+
+<!-- A fixed backdrop: a sparse star field and one orbital diagram drawn in thin lines. No glow, no motion. -->
+<div class="cosmos" data-cosmos aria-hidden="true">
+  <div class="layer layer--stars-far"></div>
+  <div class="planet">
+    <svg viewBox="0 0 1000 1000" focusable="false">
+      <circle class="limb" cx="500" cy="500" r="360"/>
+    </svg>
+    <svg viewBox="0 0 1000 1000" focusable="false">
+      <circle class="ticks" cx="500" cy="500" r="382" pathLength="360" stroke-dasharray="0.3 4.7"/>
+      <circle class="ticks ticks--minor" cx="500" cy="500" r="379" pathLength="360" stroke-dasharray="0.15 0.85"/>
+    </svg>
+    <svg viewBox="0 0 1000 1000" focusable="false">
+      <circle class="orbit" cx="500" cy="500" r="420"/>
+      <circle class="orbit orbit--dash" cx="500" cy="500" r="458"/>
+      <circle class="orbit" cx="500" cy="500" r="494"/>
+    </svg>
+  </div>
+</div>
+
+<header class="top">
+  <a class="brand" href="../">Cargo <span>Passport</span></a>
+  <a class="btn" href="../">Cargo Passport</a>
+</header>
+
+<main>
+<section class="scene" id="library" aria-labelledby="library-title">
+    <div class="scene__inner">
+      <div class="scene__head">
+        <div><span class="eyebrow">The shelf</span></div>
+        <h2 id="library-title">All stories</h2>
+        <p class="lead">The whole shelf. Each story follows what the experiments tell us and what is still unknown. </p>
+        
+      </div>
+      <div><div class="filter" data-shelf-filter hidden role="group" aria-label="Filter the stories by evidence status">
+        <button type="button" class="chip" data-filter="all" aria-pressed="true">All <span data-computed="number of stories on the shelf in data/stories.json">11</span></button>
+        <button type="button" class="chip" data-filter="data" aria-pressed="false">Data <span data-computed="number of stories on the shelf with this evidence status in data/stories.json">4</span></button><button type="button" class="chip" data-filter="partial" aria-pressed="false">Partly data <span data-computed="number of stories on the shelf with this evidence status in data/stories.json">5</span></button><button type="button" class="chip" data-filter="hypothesis" aria-pressed="false">Hypothesis <span data-computed="number of stories on the shelf with this evidence status in data/stories.json">2</span></button>
+      </div></div>
+      <ul class="shelf" data-shelf>
+        <li class="shelf__item" data-status="partial">
+      <article class="card slab" id="story-quiet-fire" data-story="quiet-fire" data-status="partial" data-state="published">
+        <div class="card__top"><span class="status status--partial"><svg class="status__glyph" viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.5a7.5 7.5 0 0 0 0 15z" fill="currentColor"/></svg><span class="status__label">Partly data</span></span><span class="tag" data-stage>Published</span></div>
+        <h3><a href="quiet-fire/">The quiet fire</a></h3>
+        <p class="card__premise" data-computed="data/stories.json quiet-fire premise, rendered unchanged">Could a fire in weightlessness burn in a way that is easy to miss?</p>
+        <p class="card__reason small" data-computed="data/stories.json quiet-fire status_reason, rendered unchanged"><span class="visually-hidden">Why this status: </span>Marked partly data: the sources are separate experiments; whether a cool fire goes unnoticed is not covered in our sources.</p>
+        <details class="card__basis" data-computed="data/stories.json quiet-fire basis, rendered unchanged">
+        <summary><span>Rests on <span data-computed="number of basis entries of this story in data/stories.json">7</span> NASA investigations</span></summary>
+        <ul class="basis"><li>
+          <a href="https://doi.org/10.60555/4qc4-de67" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-25</span> BASS-II</a>
+          <span class="small mono">DOI 10.60555/4qc4-de67</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/cyt1-kh64" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-159</span> ACME CFI-G</a>
+          <span class="small mono">DOI 10.60555/cyt1-kh64</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/m6pj-a914" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-39</span> CFI</a>
+          <span class="small mono">DOI 10.60555/m6pj-a914</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/mbq8-0451" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-69</span> FLEX</a>
+          <span class="small mono">DOI 10.60555/mbq8-0451</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/gd4k-8h62" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-102</span> SAME</a>
+          <span class="small mono">DOI 10.60555/gd4k-8h62</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/2np7-jv14" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-101</span> SAME-R</a>
+          <span class="small mono">DOI 10.60555/2np7-jv14</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/0t15-1z43" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-98</span> SAFFIRE-I</a>
+          <span class="small mono">DOI 10.60555/0t15-1z43</span>
+        </li></ul>
+      </details>
+        <details class="card__gaps" data-computed="data/stories.json quiet-fire gaps, rendered unchanged">
+        <summary><span>Known gaps (<span data-computed="number of gaps of this story in data/stories.json">3</span>)</span></summary>
+        <ul><li>Not tested whether a cool, dim fire goes unnoticed.</li><li>Not tested on solid plastic or cargo.</li><li>Not tested with real station alarms.</li></ul>
+      </details>
+        <div class="card__foot">
+          <a class="btn btn--primary" href="quiet-fire/">Read the story</a>
+        </div>
+      </article>
+    </li><li class="shelf__item" data-status="data">
+      <article class="card slab" id="story-round-flame" data-story="round-flame" data-status="data" data-state="proposed">
+        <div class="card__top"><span class="status status--data"><svg class="status__glyph" viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="8" fill="currentColor"/></svg><span class="status__label">Data</span></span><span class="tag" data-stage>Proposed</span></div>
+        <h3>Why is a flame round in space?</h3>
+        <p class="card__premise" data-computed="data/stories.json round-flame premise, rendered unchanged">What shape does a flame take without gravity, and why does it differ from a flame on Earth?</p>
+        <p class="card__reason small" data-computed="data/stories.json round-flame status_reason, rendered unchanged"><span class="visually-hidden">Why this status: </span>Marked data: flight investigations are linked below.</p>
+        <details class="card__basis" data-computed="data/stories.json round-flame basis, rendered unchanged">
+        <summary><span>Rests on <span data-computed="number of basis entries of this story in data/stories.json">5</span> NASA investigations</span></summary>
+        <ul class="basis"><li>
+          <a href="https://doi.org/10.60555/4qc4-de67" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-25</span> BASS-II</a>
+          <span class="small mono">DOI 10.60555/4qc4-de67</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/58h4-dy80" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-26</span> BASS</a>
+          <span class="small mono">DOI 10.60555/58h4-dy80</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/k57n-p030" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-23</span> ACME s-Flame</a>
+          <span class="small mono">DOI 10.60555/k57n-p030</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/w4zy-bt45" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-10</span> ACME/Flame Design</a>
+          <span class="small mono">DOI 10.60555/w4zy-bt45</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/9kbh-e962" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-107</span> SPICE</a>
+          <span class="small mono">DOI 10.60555/9kbh-e962</span>
+        </li></ul>
+      </details>
+        <details class="card__gaps" data-computed="data/stories.json round-flame gaps, rendered unchanged">
+        <summary><span>Known gaps (<span data-computed="number of gaps of this story in data/stories.json">2</span>)</span></summary>
+        <ul><li>Not measured in lunar gravity.</li><li>Not measured for every material.</li></ul>
+      </details>
+        <div class="card__foot">
+          <p class="card__note small">Not written yet.</p>
+        </div>
+      </article>
+    </li><li class="shelf__item" data-status="data">
+      <article class="card slab" id="story-weightless-extinguish" data-story="weightless-extinguish" data-status="data" data-state="proposed">
+        <div class="card__top"><span class="status status--data"><svg class="status__glyph" viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="8" fill="currentColor"/></svg><span class="status__label">Data</span></span><span class="tag" data-stage>Proposed</span></div>
+        <h3>How do you put out a weightless fire?</h3>
+        <p class="card__premise" data-computed="data/stories.json weightless-extinguish premise, rendered unchanged">How does a flame go out when nothing lifts it away, and what helps it go out?</p>
+        <p class="card__reason small" data-computed="data/stories.json weightless-extinguish status_reason, rendered unchanged"><span class="visually-hidden">Why this status: </span>Marked data: flight investigations are linked below.</p>
+        <details class="card__basis" data-computed="data/stories.json weightless-extinguish basis, rendered unchanged">
+        <summary><span>Rests on <span data-computed="number of basis entries of this story in data/stories.json">4</span> NASA investigations</span></summary>
+        <ul class="basis"><li>
+          <a href="https://doi.org/10.60555/mbq8-0451" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-69</span> FLEX</a>
+          <span class="small mono">DOI 10.60555/mbq8-0451</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/byp8-h018" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-68</span> FLEX-2</a>
+          <span class="small mono">DOI 10.60555/byp8-h018</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/58h4-dy80" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-26</span> BASS</a>
+          <span class="small mono">DOI 10.60555/58h4-dy80</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/4qc4-de67" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-25</span> BASS-II</a>
+          <span class="small mono">DOI 10.60555/4qc4-de67</span>
+        </li></ul>
+      </details>
+        <details class="card__gaps" data-computed="data/stories.json weightless-extinguish gaps, rendered unchanged">
+        <summary><span>Known gaps (<span data-computed="number of gaps of this story in data/stories.json">2</span>)</span></summary>
+        <ul><li>Not measured with real extinguishing agents on large fires.</li><li>Not measured in lunar gravity.</li></ul>
+      </details>
+        <div class="card__foot">
+          <p class="card__note small">Not written yet.</p>
+        </div>
+      </article>
+    </li><li class="shelf__item" data-status="data">
+      <article class="card slab" id="story-cygnus-big-fires" data-story="cygnus-big-fires" data-status="data" data-state="proposed">
+        <div class="card__top"><span class="status status--data"><svg class="status__glyph" viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="8" fill="currentColor"/></svg><span class="status__label">Data</span></span><span class="tag" data-stage>Proposed</span></div>
+        <h3>What did the big Cygnus fires show?</h3>
+        <p class="card__premise" data-computed="data/stories.json cygnus-big-fires premise, rendered unchanged">What did the large fires lit in an uncrewed cargo vehicle show about fire growth in space?</p>
+        <p class="card__reason small" data-computed="data/stories.json cygnus-big-fires status_reason, rendered unchanged"><span class="visually-hidden">Why this status: </span>Marked data: flight investigations are linked below.</p>
+        <details class="card__basis" data-computed="data/stories.json cygnus-big-fires basis, rendered unchanged">
+        <summary><span>Rests on <span data-computed="number of basis entries of this story in data/stories.json">3</span> NASA investigations</span></summary>
+        <ul class="basis"><li>
+          <a href="https://doi.org/10.60555/0t15-1z43" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-98</span> SAFFIRE-I</a>
+          <span class="small mono">DOI 10.60555/0t15-1z43</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/2chp-m469" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-99</span> SAFFIRE-II</a>
+          <span class="small mono">DOI 10.60555/2chp-m469</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/040q-4h36" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-100</span> SAFFIRE-III</a>
+          <span class="small mono">DOI 10.60555/040q-4h36</span>
+        </li></ul>
+      </details>
+        <details class="card__gaps" data-computed="data/stories.json cygnus-big-fires gaps, rendered unchanged">
+        <summary><span>Known gaps (<span data-computed="number of gaps of this story in data/stories.json">2</span>)</span></summary>
+        <ul><li>Not measured inside a crewed cabin.</li><li>Not measured for materials beyond those tested.</li></ul>
+      </details>
+        <div class="card__foot">
+          <p class="card__note small">Not written yet.</p>
+        </div>
+      </article>
+    </li><li class="shelf__item" data-status="data">
+      <article class="card slab" id="story-cool-flame" data-story="cool-flame" data-status="data" data-state="proposed">
+        <div class="card__top"><span class="status status--data"><svg class="status__glyph" viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="8" fill="currentColor"/></svg><span class="status__label">Data</span></span><span class="tag" data-stage>Proposed</span></div>
+        <h3>What is a cool flame?</h3>
+        <p class="card__premise" data-computed="data/stories.json cool-flame premise, rendered unchanged">What is a cool flame, and when does it start, survive or turn into a hot flame?</p>
+        <p class="card__reason small" data-computed="data/stories.json cool-flame status_reason, rendered unchanged"><span class="visually-hidden">Why this status: </span>Marked data: flight investigations are linked below.</p>
+        <details class="card__basis" data-computed="data/stories.json cool-flame basis, rendered unchanged">
+        <summary><span>Rests on <span data-computed="number of basis entries of this story in data/stories.json">5</span> NASA investigations</span></summary>
+        <ul class="basis"><li>
+          <a href="https://doi.org/10.60555/m6pj-a914" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-39</span> CFI</a>
+          <span class="small mono">DOI 10.60555/m6pj-a914</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/cyt1-kh64" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-159</span> ACME CFI-G</a>
+          <span class="small mono">DOI 10.60555/cyt1-kh64</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/mbq8-0451" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-69</span> FLEX</a>
+          <span class="small mono">DOI 10.60555/mbq8-0451</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/gz0q-b577" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-117</span> </a>
+          <span class="small mono">DOI 10.60555/gz0q-b577</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/80qf-vj95" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-142</span> </a>
+          <span class="small mono">DOI 10.60555/80qf-vj95</span>
+        </li></ul>
+      </details>
+        <details class="card__gaps" data-computed="data/stories.json cool-flame gaps, rendered unchanged">
+        <summary><span>Known gaps (<span data-computed="number of gaps of this story in data/stories.json">2</span>)</span></summary>
+        <ul><li>Not measured on solid cargo materials.</li><li>Not measured in lunar gravity.</li></ul>
+      </details>
+        <div class="card__foot">
+          <p class="card__note small">Not written yet.</p>
+        </div>
+      </article>
+    </li><li class="shelf__item" data-status="partial">
+      <article class="card slab" id="story-smoke-alarm" data-story="smoke-alarm" data-status="partial" data-state="proposed">
+        <div class="card__top"><span class="status status--partial"><svg class="status__glyph" viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.5a7.5 7.5 0 0 0 0 15z" fill="currentColor"/></svg><span class="status__label">Partly data</span></span><span class="tag" data-stage>Proposed</span></div>
+        <h3>Do smoke alarms work without gravity?</h3>
+        <p class="card__premise" data-computed="data/stories.json smoke-alarm premise, rendered unchanged">Does smoke move and look different without gravity, and do detectors still respond to it?</p>
+        <p class="card__reason small" data-computed="data/stories.json smoke-alarm status_reason, rendered unchanged"><span class="visually-hidden">Why this status: </span>Marked partly data: related investigations are linked below; the question itself is not covered in our sources.</p>
+        <details class="card__basis" data-computed="data/stories.json smoke-alarm basis, rendered unchanged">
+        <summary><span>Rests on <span data-computed="number of basis entries of this story in data/stories.json">4</span> NASA investigations</span></summary>
+        <ul class="basis"><li>
+          <a href="https://doi.org/10.60555/gd4k-8h62" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-102</span> SAME</a>
+          <span class="small mono">DOI 10.60555/gd4k-8h62</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/2np7-jv14" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-101</span> SAME-R</a>
+          <span class="small mono">DOI 10.60555/2np7-jv14</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/ztgj-d202" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-47</span> DAFT / DAFT-2</a>
+          <span class="small mono">DOI 10.60555/ztgj-d202</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/q0v5-1v28" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-115</span> </a>
+          <span class="small mono">DOI 10.60555/q0v5-1v28</span>
+        </li></ul>
+      </details>
+        <details class="card__gaps" data-computed="data/stories.json smoke-alarm gaps, rendered unchanged">
+        <summary><span>Known gaps (<span data-computed="number of gaps of this story in data/stories.json">2</span>)</span></summary>
+        <ul><li>Not tested with every station detector.</li><li>Not tested with slow, dim fires.</li></ul>
+      </details>
+        <div class="card__foot">
+          <p class="card__note small">Not written yet.</p>
+        </div>
+      </article>
+    </li><li class="shelf__item" data-status="partial">
+      <article class="card slab" id="story-fans-off" data-story="fans-off" data-status="partial" data-state="proposed">
+        <div class="card__top"><span class="status status--partial"><svg class="status__glyph" viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.5a7.5 7.5 0 0 0 0 15z" fill="currentColor"/></svg><span class="status__label">Partly data</span></span><span class="tag" data-stage>Proposed</span></div>
+        <h3>Does switching off the fans put fire out?</h3>
+        <p class="card__premise" data-computed="data/stories.json fans-off premise, rendered unchanged">Does stopping the airflow put out a fire in weightlessness?</p>
+        <p class="card__reason small" data-computed="data/stories.json fans-off status_reason, rendered unchanged"><span class="visually-hidden">Why this status: </span>Marked partly data: related investigations are linked below; the question itself is not covered in our sources.</p>
+        <details class="card__basis" data-computed="data/stories.json fans-off basis, rendered unchanged">
+        <summary><span>Rests on <span data-computed="number of basis entries of this story in data/stories.json">4</span> NASA investigations</span></summary>
+        <ul class="basis"><li>
+          <a href="https://doi.org/10.60555/vb93-3y72" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-20</span> ACME BRE</a>
+          <span class="small mono">DOI 10.60555/vb93-3y72</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/4qc4-de67" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-25</span> BASS-II</a>
+          <span class="small mono">DOI 10.60555/4qc4-de67</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/58h4-dy80" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-26</span> BASS</a>
+          <span class="small mono">DOI 10.60555/58h4-dy80</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/e9xp-ex83" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-62</span> </a>
+          <span class="small mono">DOI 10.60555/e9xp-ex83</span>
+        </li></ul>
+      </details>
+        <details class="card__gaps" data-computed="data/stories.json fans-off gaps, rendered unchanged">
+        <summary><span>Known gaps (<span data-computed="number of gaps of this story in data/stories.json">2</span>)</span></summary>
+        <ul><li>Not tested for every material.</li><li>Not tested in a full-size cabin.</li></ul>
+      </details>
+        <div class="card__foot">
+          <p class="card__note small">Not written yet.</p>
+        </div>
+      </article>
+    </li><li class="shelf__item" data-status="partial">
+      <article class="card slab" id="story-moon-air" data-story="moon-air" data-status="partial" data-state="proposed">
+        <div class="card__top"><span class="status status--partial"><svg class="status__glyph" viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.5a7.5 7.5 0 0 0 0 15z" fill="currentColor"/></svg><span class="status__label">Partly data</span></span><span class="tag" data-stage>Proposed</span></div>
+        <h3>Does Moon-base air make space fires worse?</h3>
+        <p class="card__premise" data-computed="data/stories.json moon-air premise, rendered unchanged">How might the air planned for a Moon base change how a fire starts and spreads?</p>
+        <p class="card__reason small" data-computed="data/stories.json moon-air status_reason, rendered unchanged"><span class="visually-hidden">Why this status: </span>Marked partly data: related investigations are linked below; the question itself is not covered in our sources.</p>
+        <details class="card__basis" data-computed="data/stories.json moon-air basis, rendered unchanged">
+        <summary><span>Rests on <span data-computed="number of basis entries of this story in data/stories.json">5</span> NASA investigations</span></summary>
+        <ul class="basis"><li>
+          <a href="https://doi.org/10.60555/vb93-3y72" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-20</span> ACME BRE</a>
+          <span class="small mono">DOI 10.60555/vb93-3y72</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/cyt1-kh64" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-159</span> ACME CFI-G</a>
+          <span class="small mono">DOI 10.60555/cyt1-kh64</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/w4zy-bt45" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-10</span> ACME/Flame Design</a>
+          <span class="small mono">DOI 10.60555/w4zy-bt45</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/4qc4-de67" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-25</span> BASS-II</a>
+          <span class="small mono">DOI 10.60555/4qc4-de67</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/mbq8-0451" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-69</span> FLEX</a>
+          <span class="small mono">DOI 10.60555/mbq8-0451</span>
+        </li></ul>
+      </details>
+        <details class="card__gaps" data-computed="data/stories.json moon-air gaps, rendered unchanged">
+        <summary><span>Known gaps (<span data-computed="number of gaps of this story in data/stories.json">2</span>)</span></summary>
+        <ul><li>Not tested at the planned air mixes for every material.</li><li>Not measured in lunar gravity.</li></ul>
+      </details>
+        <div class="card__foot">
+          <p class="card__note small">Not written yet.</p>
+        </div>
+      </article>
+    </li><li class="shelf__item" data-status="partial">
+      <article class="card slab" id="story-earth-spinoffs" data-story="earth-spinoffs" data-status="partial" data-state="proposed">
+        <div class="card__top"><span class="status status--partial"><svg class="status__glyph" viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10 2.5a7.5 7.5 0 0 0 0 15z" fill="currentColor"/></svg><span class="status__label">Partly data</span></span><span class="tag" data-stage>Proposed</span></div>
+        <h3>What on Earth uses space-fire research?</h3>
+        <p class="card__premise" data-computed="data/stories.json earth-spinoffs premise, rendered unchanged">Which uses on Earth have come from research into fire in space?</p>
+        <p class="card__reason small" data-computed="data/stories.json earth-spinoffs status_reason, rendered unchanged"><span class="visually-hidden">Why this status: </span>Marked partly data: related investigations are linked below; the question itself is not covered in our sources.</p>
+        <details class="card__basis" data-computed="data/stories.json earth-spinoffs basis, rendered unchanged">
+        <summary><span>Rests on <span data-computed="number of basis entries of this story in data/stories.json">8</span> NASA investigations</span></summary>
+        <ul class="basis"><li>
+          <a href="https://doi.org/10.60555/gz0q-b577" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-117</span> </a>
+          <span class="small mono">DOI 10.60555/gz0q-b577</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/80qf-vj95" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-142</span> </a>
+          <span class="small mono">DOI 10.60555/80qf-vj95</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/e9xp-ex83" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-62</span> </a>
+          <span class="small mono">DOI 10.60555/e9xp-ex83</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/mzjm-yv57" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-60</span> </a>
+          <span class="small mono">DOI 10.60555/mzjm-yv57</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/q0v5-1v28" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-115</span> </a>
+          <span class="small mono">DOI 10.60555/q0v5-1v28</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/m6pj-a914" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-39</span> CFI</a>
+          <span class="small mono">DOI 10.60555/m6pj-a914</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/23e1-9950" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-21</span> ACME CLD Flame</a>
+          <span class="small mono">DOI 10.60555/23e1-9950</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/0t15-1z43" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-98</span> SAFFIRE-I</a>
+          <span class="small mono">DOI 10.60555/0t15-1z43</span>
+        </li></ul>
+      </details>
+        <details class="card__gaps" data-computed="data/stories.json earth-spinoffs gaps, rendered unchanged">
+        <summary><span>Known gaps (<span data-computed="number of gaps of this story in data/stories.json">1</span>)</span></summary>
+        <ul><li>Not traced from each experiment to a use.</li></ul>
+      </details>
+        <div class="card__foot">
+          <p class="card__note small">Not written yet.</p>
+        </div>
+      </article>
+    </li><li class="shelf__item" data-status="hypothesis">
+      <article class="card slab" id="story-moon-gravity" data-story="moon-gravity" data-status="hypothesis" data-state="proposed">
+        <div class="card__top"><span class="status status--hypothesis"><svg class="status__glyph" viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-dasharray="2.6 2.4"/></svg><span class="status__label">Hypothesis</span></span><span class="tag" data-stage>Proposed</span></div>
+        <h3>What burns on the Moon?</h3>
+        <p class="card__premise" data-computed="data/stories.json moon-gravity premise, rendered unchanged">How does a flame behave at Moon or Mars gravity?</p>
+        <p class="card__reason small" data-computed="data/stories.json moon-gravity status_reason, rendered unchanged"><span class="visually-hidden">Why this status: </span>No direct measurement is in our sources.</p>
+        <details class="card__basis" data-computed="data/stories.json moon-gravity basis, rendered unchanged">
+        <summary><span>Rests on <span data-computed="number of basis entries of this story in data/stories.json">2</span> NASA investigations</span></summary>
+        <ul class="basis"><li>
+          <a href="https://doi.org/10.60555/2chp-m469" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-99</span> SAFFIRE-II</a>
+          <span class="small mono">DOI 10.60555/2chp-m469</span>
+        </li><li>
+          <a href="https://doi.org/10.60555/vb93-3y72" target="_blank" rel="noopener noreferrer"><span class="mono">PSI-20</span> ACME BRE</a>
+          <span class="small mono">DOI 10.60555/vb93-3y72</span>
+        </li></ul>
+      </details>
+        <details class="card__gaps" data-computed="data/stories.json moon-gravity gaps, rendered unchanged">
+        <summary><span>Known gaps (<span data-computed="number of gaps of this story in data/stories.json">2</span>)</span></summary>
+        <ul><li>Not measured in lunar gravity.</li><li>Not measured in Mars gravity.</li></ul>
+      </details>
+        <div class="card__foot">
+          <p class="card__note small">Not written yet.</p>
+        </div>
+      </article>
+    </li><li class="shelf__item" data-status="hypothesis">
+      <article class="card slab" id="story-battery-orbit" data-story="battery-orbit" data-status="hypothesis" data-state="proposed">
+        <div class="card__top"><span class="status status--hypothesis"><svg class="status__glyph" viewBox="0 0 20 20" width="18" height="18" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="7.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-dasharray="2.6 2.4"/></svg><span class="status__label">Hypothesis</span></span><span class="tag" data-stage>Proposed</span></div>
+        <h3>What does a battery fire do in orbit?</h3>
+        <p class="card__premise" data-computed="data/stories.json battery-orbit premise, rendered unchanged">What would an overheating battery do in weightlessness?</p>
+        <p class="card__reason small" data-computed="data/stories.json battery-orbit status_reason, rendered unchanged"><span class="visually-hidden">Why this status: </span>No direct measurement is in our sources.</p>
+        <p class="card__basis small">Rests on <span data-computed="number of basis entries of this story in data/stories.json">0</span> NASA investigations yet.</p>
+        <details class="card__gaps" data-computed="data/stories.json battery-orbit gaps, rendered unchanged">
+        <summary><span>Known gaps (<span data-computed="number of gaps of this story in data/stories.json">2</span>)</span></summary>
+        <ul><li>Not measured in orbit.</li><li>Not found in the PSI repository.</li></ul>
+      </details>
+        <div class="card__foot">
+          <p class="card__note small">Not written yet.</p>
+        </div>
+      </article>
+    </li>
+      </ul>
+      <p class="shelf__empty small" data-shelf-empty hidden>No story has this status.</p>
+      <p class="visually-hidden" role="status" data-shelf-status></p>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="foot__inner">
+    <p class="foot__verdict">Not a safety verdict. This library organises evidence; people decide.</p>
+    <p>The code, layout and first drafts of text of this site were produced with SI assistance. Every numbered sentence links to a verbatim quote from its source.</p>
+    <ul>
+      <li><a href="https://cargo.qwadratic.me" rel="noopener">Live app</a></li>
+      <li><a href="https://github.com/Hantok/cargo-passport" rel="noopener">Repository</a></li>
+      <li><a href="https://github.com/Hantok/cargo-passport/blob/HEAD/LICENSE" rel="noopener">MIT License</a></li>
+    </ul>
+  </div>
+</footer>
+
+<nav class="rail" aria-label="Sections">
+  <a href="#library" aria-label="All stories" aria-current="true"></a>
+</nav>
+</body>
+</html>

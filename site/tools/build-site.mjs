@@ -5,6 +5,7 @@ import { toHtml } from './site/html.mjs';
 import { homePage } from './site/home-page.mjs';
 import { BuildError, danglingQuestions, loadSite } from './site/load.mjs';
 import { storyPage } from './site/story-page.mjs';
+import { storiesIndexPage } from './site/stories-index.mjs';
 
 /** Renders every page of the site as { path, html }, relative to the site root. */
 export function buildPages(root) {
@@ -15,6 +16,7 @@ export function buildPages(root) {
   if (mismatches.length) throw new BuildError(mismatches);
 
   const pages = [{ path: 'index.html', html: toHtml(homePage({ root, shelf, passport, stories, evidence, home })) }];
+  pages.push({ path: 'stories/index.html', html: toHtml(storiesIndexPage({ shelf, evidence })) });
   for (const [id, story] of stories) {
     if (id === home.id) continue;
     const entry = shelf.find((item) => item.id === id);

@@ -33,11 +33,10 @@ const live = (id, name, extra = {}) => ({ id, heading: name, sentences: [{ text:
 const homeStory = (extra = {}) => ({
   id: 'home', title: 'Home story', dek: 'A dek of the home story.', status: 'partial', status_reason: 'A reason.',
   beats: [
-    { id: 'without', heading: 'Without', sentences: [{ text: 'Opening one.', evidence: [], illustrative: true }, { text: 'Opening two.', evidence: [], illustrative: true }, { text: 'Cited sentence.', evidence: ['a'] }], pull_quote: null, figure: null, interactive: null },
+    { id: 'journey', heading: 'Journey', sentences: [{ text: 'Opening one.', evidence: [], illustrative: true }, { text: 'Opening two.', evidence: [], illustrative: true }, { text: 'Cited sentence.', evidence: ['a'] }], pull_quote: null, figure: null, interactive: null },
     { id: 'onboard', heading: 'Onboard', sentences: [{ text: 'Every item would be registered.', evidence: [], concept: true }], pull_quote: null, figure: null, interactive: null },
     live('passport', 'passport', { sentences: [{ text: 'Try the passport.', evidence: [] }] }),
     live('fleet', 'fleet'),
-    live('watch', 'watch'),
     { id: 'more', heading: 'More stories', sentences: [{ text: 'More stories follow.', evidence: [] }], pull_quote: null, figure: null, interactive: null, link: { story: 's', text: 'Read story s' } },
   ],
   limits: ['A limit of the home story.'], open_questions: [], ...extra,
@@ -166,6 +165,7 @@ describe('build-site output', () => {
     const root = site({ shelf: [entry('s', { title: hostile, premise: hostile })], stories: [story('s', { title: hostile, dek: hostile })] });
     for (const { path, html } of buildPages(root)) {
       assert.ok(!html.includes('<img src=x'), `${path} contains unescaped markup`);
+      if (path === 'index.html') continue; // the home page shows the shelf only through four fixed tiles, none of them in this fixture
       assert.ok(html.includes('&lt;img src=x onerror=&quot;alert(1)&quot;&gt; &amp; &quot;q&quot;'), `${path} does not show the escaped text`);
     }
   });
@@ -185,11 +185,11 @@ describe('build-site output', () => {
     assert.ok(page.includes('Source b, Example org, 2001.'));
   });
 
-  it('writes one story page per content file and a home page with a card for every shelf entry', () => {
+  it('writes one story page per content file, a home page and a page of all stories with a card for every shelf entry', () => {
     const root = site({ shelf: [entry('s'), entry('t', { state: 'proposed' })] });
     const written = writePages(root);
-    assert.deepEqual(written, ['index.html', 'stories/s/index.html']);
-    const home = readFileSync(join(root, 'index.html'), 'utf8');
+    assert.deepEqual(written, ['index.html', 'stories/index.html', 'stories/s/index.html']);
+    const home = readFileSync(join(root, 'stories/index.html'), 'utf8');
     for (const id of ['s', 't']) assert.ok(home.includes(`id="story-${id}" data-story="${id}"`), `no card for ${id}`);
     assert.match(home, /Not written yet\./);
     assert.ok(!/data-like|data-discuss|votes__count/.test(home), 'no likes or comments on the shelf');
@@ -241,19 +241,22 @@ describe('the home story', () => {
 
   it('writes no page of its own for the home story and leaves it off the shelf', () => {
     const root = site();
-    assert.deepEqual(buildPages(root).map(({ path }) => path), ['index.html', 'stories/s/index.html']);
-    const page = homePageOf(root);
+    assert.deepEqual(buildPages(root).map(({ path }) => path), ['index.html', 'stories/index.html', 'stories/s/index.html']);
+    const page = buildPages(root).find(({ path }) => path === 'stories/index.html').html;
     assert.ok(!page.includes('id="story-home"'), 'the home story has a card on the shelf');
     assert.ok(page.includes('id="story-s"'));
-    assert.match(page, /<h1 id="hook-title"[^>]*>Home story<\/h1>/);
+    assert.match(homePageOf(root), /<h1 id="hook-title"[^>]*>Home story<\/h1>/);
   });
 
-  it('shows the first two sentences of the opening beat in the opening and the rest in the scene', () => {
+  it('opens with the title, one line, the title-slide picture and two buttons, and the first beat keeps all its sentences', () => {
     const page = homePageOf(site());
-    const opening = page.slice(page.indexOf('id="hook"'), page.indexOf('id="beat-without"'));
-    assert.ok(opening.includes('Opening one.') && opening.includes('Opening two.') && !opening.includes('Cited sentence.'));
-    const scene = page.slice(page.indexOf('id="beat-without"'), page.indexOf('id="beat-onboard"'));
-    assert.ok(scene.includes('Cited sentence.') && !scene.includes('Opening one.'));
+    const opening = page.slice(page.indexOf('id="hook"'), page.indexOf('id="beat-journey"'));
+    assert.match(opening, /<h1 id="hook-title"[^>]*>Home story<\/h1>/);
+    assert.ok(opening.includes('A dek of the home story.') && opening.includes('assets/images/hero.webp'));
+    assert.equal((opening.match(/class="btn/g) ?? []).length, 2);
+    assert.ok(!opening.includes('Opening one.'));
+    const scene = page.slice(page.indexOf('id="beat-journey"'), page.indexOf('id="beat-onboard"'));
+    assert.ok(scene.includes('Opening one.') && scene.includes('Opening two.') && scene.includes('Cited sentence.'));
   });
 
   it('wraps illustrative sentences in data-illustrative and tags the scene', () => {
@@ -273,17 +276,17 @@ describe('the home story', () => {
   });
 
   it('keeps a sentence that is both illustrative and cited inside both wrappers', () => {
-    const both = withBeat('without', { sentences: [{ text: 'Both.', evidence: ['a'], illustrative: true }, { text: 'Two.', evidence: [] }, { text: 'Three.', evidence: [] }] });
+    const both = withBeat('journey', { sentences: [{ text: 'Both.', evidence: ['a'], illustrative: true }, { text: 'Two.', evidence: [] }, { text: 'Three.', evidence: [] }] });
     assert.match(homePageOf(site({ home: both })), /<span data-illustrative><span class="fact" data-evidence="a">Both\.<sup class="fn">/);
   });
 
   it('fails when a beat names an interactive that does not exist', () => {
     const problems = problemsOf(site({ home: withBeat('fleet', { interactive: 'hologram' }) }));
-    assert.ok(problems.includes('content/stories/home.json beats[3].interactive is "hologram", which is not one of passport, fleet, watch or null'), problems.join('\n'));
+    assert.ok(problems.includes('content/stories/home.json beats[3].interactive is "hologram", which is not one of passport, fleet or null'), problems.join('\n'));
   });
 
-  it('fails when the home story lacks one of the three interactives, or repeats one', () => {
-    assert.ok(problemsOf(site({ home: withBeat('watch', { interactive: null }) })).includes('content/stories/home.json must have exactly one beat with "interactive": "watch", it has 0'));
+  it('fails when the home story lacks one of the two interactives, or repeats one', () => {
+    assert.ok(problemsOf(site({ home: withBeat('fleet', { interactive: null }) })).includes('content/stories/home.json must have exactly one beat with "interactive": "fleet", it has 0'));
     assert.ok(problemsOf(site({ home: withBeat('onboard', { interactive: 'fleet' }) })).includes('content/stories/home.json must have exactly one beat with "interactive": "fleet", it has 2'));
   });
 
@@ -297,18 +300,21 @@ describe('the home story', () => {
     const flag = withBeat('onboard', { sentences: [{ text: 'X.', evidence: [], concept: 'yes' }] });
     assert.match(problemsOf(site({ home: flag }))[0], /sentences carry "concept" with a value other than true/);
     const link = withBeat('more', { link: { story: 'home', text: 'Itself' } });
-    assert.deepEqual(problemsOf(site({ home: link })), ['content/stories/home.json beats[5].link names story "home", which has no page of its own']);
+    assert.deepEqual(problemsOf(site({ home: link })), ['content/stories/home.json beats[4].link names story "home", which has no page of its own']);
   });
 
   it('shows the link of a beat as a link to the page of that story', () => {
-    assert.match(homePageOf(site()), /<a class="btn" href="stories\/s\/">Read story s<\/a>/);
+    const home = withBeat('onboard', { link: { story: 's', text: 'Read story s' } });
+    assert.match(homePageOf(site({ home })), /<a class="btn" href="stories\/s\/">Read story s<\/a>/);
   });
 
   it('shows the shelf, the method and the gates after the story, with computed counts', () => {
-    const page = homePageOf(site({ shelf: [entry('s'), entry('t', { state: 'proposed', evidence_status: 'hypothesis' })] }));
+    const shelf = [entry('s'), entry('t', { state: 'proposed', evidence_status: 'hypothesis' })];
+    const all = buildPages(site({ shelf })).find(({ path }) => path === 'stories/index.html').html;
+    assert.match(all, /All <span data-computed="[^"]+">2<\/span>/);
+    const page = homePageOf(site({ shelf }));
     assert.ok(page.indexOf('id="library"') > page.indexOf('id="beat-more"') || !page.includes('id="beat-more"'));
     assert.ok(page.indexOf('id="born"') > page.indexOf('id="library"') && page.indexOf('id="honest"') > page.indexOf('id="born"'));
-    assert.match(page, /All <span data-computed="[^"]+">2<\/span>/);
     assert.match(page, /Every sentence with a number mark links to a verbatim quote and its source\./);
     assert.ok(!page.includes('Every fact carries a verbatim quote'));
   });
@@ -323,7 +329,7 @@ describe('the home story', () => {
   });
 
   it('lists on a shelf card only the acronym, accession and DOI of an investigation', () => {
-    const page = homePageOf(site());
+    const page = buildPages(site()).find(({ path }) => path === 'stories/index.html').html;
     assert.ok(page.includes('<span class="mono">PSI-1</span> ABC') && page.includes('DOI 10.1/x'));
     assert.ok(!page.includes('Things.') && !page.includes('test rows'));
   });
@@ -340,11 +346,11 @@ describe('the home story', () => {
     assert.ok(!buildPages(root).find(({ path }) => path === 'stories/s/index.html').html.includes('fleet.css'));
   });
 
-  it('puts a fleet view, or a quiet placeholder, in the two fleet beats', () => {
+  it('puts a fleet view, or a quiet placeholder, in the fleet beat', () => {
     const page = homePageOf(site());
     const views = [...page.matchAll(/<fleet-view mode="(overview|scenario)"/g)].map((match) => match[1]);
     const placeholders = [...page.matchAll(/fleet-slot--missing" data-mode="(overview|scenario)"/g)].map((match) => match[1]);
-    assert.deepEqual([...views, ...placeholders].sort(), ['overview', 'scenario']);
+    assert.deepEqual([...views, ...placeholders].sort(), ['overview']);
   });
 });
 
