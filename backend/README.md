@@ -49,6 +49,19 @@ All configuration comes from environment variables (`.env` locally, the host's s
 | `DATABASE_URL_DIRECT` | Neon direct connection (host without `-pooler`), used by Alembic |
 | `SI_BASE_URL`, `SI_API_KEY`, `SI_MODEL` | Eustella AI, OpenAI-compatible. Unset means the SI feature reports `unavailable` |
 | `CORS_ORIGINS` | Comma-separated browser origins allowed to call the API (add the GitHub Pages origin) |
+| `ADMIN_PASSWORD` | Password of `/admin` (HTTP Basic, any user name). Unset: admin is off (503) |
+| `CARGO_ENV_FILE` | Service env file edited by the `/admin` widget (mode 600, systemd `EnvironmentFile=`) |
+| `CARGO_FLAGS_FILE` | JSON file with the feature flags (mode 600) |
+| `CARGO_RESTART_SIGNAL` | File touched to make a systemd path unit restart the service |
+| `CARGO_AUDIT_FILE` | Admin change log (JSON lines, no secret values); default `admin-audit.log` beside the env file |
+
+## Admin: env variables and feature flags
+
+`/admin` (HTTP Basic, password from `ADMIN_PASSWORD`) has a widget for the env variables listed in `app/envadmin.py` (secrets are write-only: shown as set and the last four characters) and a feature flag editor. Flags live in a JSON file, no database: `{key: {enabled, description, rollout_percent, updated_at, updated_by}}`.
+
+- Backend: `from app.flags import flag`; `flag("key")` re-reads the file when its mtime changes. For `rollout_percent < 100` pass a stable id: `flag("key", user_id)`.
+- Frontend: `<script src="/flags.js">`, then `CargoFlags.isEnabled("key")`, or `data-flag="key" hidden` on an element. `GET /api/flags?uid=...` returns the enabled keys only.
+- Host setup (path unit for the soft restart, drop-in, files): [ops/README.md](ops/README.md).
 
 Neon project `cargo-passport`: branch `dev` for development and migrations, `main` for the deployed app.
 
