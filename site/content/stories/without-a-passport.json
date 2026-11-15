@@ -1,0 +1,321 @@
+{
+  "id": "without-a-passport",
+  "title": "Without a passport",
+  "dek": "What happens when a cargo item that passed its check in one place is carried into different air, and nobody can tell?",
+  "status": "partial",
+  "status_reason": "The passport for one item exists today, while registration, location tags and a watching super intelligence are concepts, and the evidence on moved items is still partial.",
+  "beats": [
+    {
+      "id": "without",
+      "heading": "Checked here, carried there",
+      "sentences": [
+        {
+          "text": "A portable science instrument passes its fire-safety check, in cabin air.",
+          "evidence": [],
+          "illustrative": true
+        },
+        {
+          "text": "Then someone carries it into different air.",
+          "evidence": [],
+          "illustrative": true
+        },
+        {
+          "text": "The International Space Station was designed and is operated to approximate Earth-equivalent air, at 14.7 psia with 21 percent oxygen.",
+          "evidence": [
+            "iss-cabin-nominal-14-7-psia-21-o2"
+          ]
+        },
+        {
+          "text": "ISS safety requirements name a worst-case oxygen environment of 14.7 psia with 24.1 percent oxygen for all locations except the US-segment airlock, where it is 10.2 psia with 30 percent oxygen.",
+          "evidence": [
+            "ssp51721-airlock-worst-case-o2"
+          ]
+        },
+        {
+          "text": "In one report, a portable, battery-powered device that measures specific atmospheric constituents is not required by its specification to operate in oxygen concentrations other than the nominal ISS level of 21 percent.",
+          "evidence": [
+            "aga-portable-battery-powered-device",
+            "aga-end-item-spec-21-percent-o2"
+          ]
+        },
+        {
+          "text": "A white paper says material flammability limits are not expected to meet current requirements under the 34 percent oxygen and 8.2 psi planned for future lunar habitats.",
+          "evidence": [
+            "fortenberry-lunar-habitat-34pct-8-2psi"
+          ]
+        },
+        {
+          "text": "One paper concludes that data from lower-oxygen, higher-pressure air cannot be conservatively applied to higher-oxygen, lower-pressure air, despite equivalent partial pressures.",
+          "evidence": [
+            "air-data-not-conservative-for-higher-o2-lower-pressure"
+          ]
+        }
+      ],
+      "pull_quote": {
+        "evidence": "jsc29353d-24-1-acceptable-24-5-flammable"
+      },
+      "figure": null,
+      "interactive": null
+    },
+    {
+      "id": "unseen",
+      "heading": "What nobody could see",
+      "sentences": [
+        {
+          "text": "The paperwork records that the instrument passed, not in which air.",
+          "evidence": [],
+          "illustrative": true
+        },
+        {
+          "text": "Among its parts are a silicone rubber gasket and lithium-ion battery cells.",
+          "evidence": [],
+          "illustrative": true
+        },
+        {
+          "text": "In a table of oxygen-concentration flammability limits at three total pressures, silicone is listed at 28 percent oxygen at 48.2 kPa, 23 percent at 85.3 kPa and 21 percent at 101.3 kPa.",
+          "evidence": [
+            "silicone-1p5mm-moc-vs-pressure"
+          ]
+        },
+        {
+          "text": "Silicone has a different listed limit at each pressure.",
+          "evidence": [
+            "silicone-1p5mm-moc-vs-pressure"
+          ]
+        },
+        {
+          "text": "The JSC 29353D flammability guidance says small, low-voltage alkaline and coin batteries are still believed unable to deliver the powers required for ignition, although larger batteries, such as lithium-ion rechargeables for portable electronic devices, can certainly reach higher power levels.",
+          "evidence": [
+            "jsc29353d-liion-vs-alkaline-ignition-power"
+          ]
+        },
+        {
+          "text": "None of this is written on the instrument.",
+          "evidence": [],
+          "illustrative": true
+        }
+      ],
+      "pull_quote": null,
+      "figure": null,
+      "interactive": null
+    },
+    {
+      "id": "stakes",
+      "heading": "Why it matters there",
+      "sentences": [
+        {
+          "text": "In the Saffire VI experiments, the smoke from the fire event was readily detected, but a typical alarm threshold was reached only at 981 seconds, and by then, the authors say, most of the hazardous gas release had occurred.",
+          "evidence": [
+            "saffire6-alarm-after-most-hazardous-gas"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": null,
+      "interactive": null,
+      "link": {
+        "story": "quiet-fire",
+        "text": "Read: The quiet fire"
+      }
+    },
+    {
+      "id": "onboard",
+      "heading": "No passport, no boarding",
+      "sentences": [
+        {
+          "text": "Every item would be registered before it goes anywhere.",
+          "evidence": [],
+          "concept": true
+        },
+        {
+          "text": "Registration would record what the item is made of, in what form, and which evidence covers each part.",
+          "evidence": [],
+          "concept": true
+        },
+        {
+          "text": "An item without a passport would not be admitted.",
+          "evidence": [],
+          "concept": true
+        }
+      ],
+      "pull_quote": null,
+      "figure": null,
+      "interactive": null
+    },
+    {
+      "id": "passport",
+      "heading": "The passport for one item",
+      "sentences": [
+        {
+          "text": "This step is live today, for one illustrative item.",
+          "evidence": []
+        },
+        {
+          "text": "Move the instrument to another place.",
+          "evidence": []
+        },
+        {
+          "text": "Change the air.",
+          "evidence": []
+        },
+        {
+          "text": "For each part, the passport says whether evidence applies, whether conditions differ, or whether there is no evidence.",
+          "evidence": []
+        }
+      ],
+      "pull_quote": null,
+      "figure": null,
+      "interactive": "passport"
+    },
+    {
+      "id": "fleet",
+      "heading": "The whole vehicle",
+      "sentences": [
+        {
+          "text": "Suppose every item has a passport and a tag that says where it is.",
+          "evidence": [],
+          "concept": true
+        },
+        {
+          "text": "Then the whole vehicle could be seen at once.",
+          "evidence": [],
+          "concept": true
+        },
+        {
+          "text": "Picking an item would light it up with its checks.",
+          "evidence": [],
+          "concept": true
+        },
+        {
+          "text": "The same rules would run for every item each time the place or the air changes.",
+          "evidence": [],
+          "concept": true
+        }
+      ],
+      "pull_quote": null,
+      "figure": null,
+      "interactive": "fleet"
+    },
+    {
+      "id": "watch",
+      "heading": "A situation that did not happen",
+      "sentences": [
+        {
+          "text": "Imagine the instrument is registered and stowed, switched off, in a locker.",
+          "evidence": [],
+          "illustrative": true,
+          "concept": true
+        },
+        {
+          "text": "Before a spacewalk, a crew member carries it into the airlock, still switched off, meaning to use it there.",
+          "evidence": [],
+          "illustrative": true
+        },
+        {
+          "text": "The super intelligence (SI) that watches every passport would see that the place and the air no longer match the evidence.",
+          "evidence": [],
+          "illustrative": true,
+          "concept": true
+        },
+        {
+          "text": "It would raise a flag to the crew and bring the evidence with it.",
+          "evidence": [],
+          "illustrative": true,
+          "concept": true
+        },
+        {
+          "text": "ISS safety requirements say end item materials should be tested or evaluated in the worst-case airlock environment if they intend to operate in the airlock during preparations for a spacewalk (EVA).",
+          "evidence": [
+            "ssp51721-airlock-worst-case-o2"
+          ]
+        },
+        {
+          "text": "The SI would only bring the evidence; the crew member would decide, and the instrument would go back into the locker.",
+          "evidence": [],
+          "illustrative": true,
+          "concept": true
+        },
+        {
+          "text": "This scene is imagined; it did not happen.",
+          "evidence": [],
+          "illustrative": true
+        }
+      ],
+      "pull_quote": null,
+      "figure": null,
+      "interactive": "watch"
+    },
+    {
+      "id": "fits",
+      "heading": "Where it fits",
+      "sentences": [
+        {
+          "text": "The flammability standard NASA-STD-6001B says Test 1 shall evaluate a material in the worst-case atmosphere to which it could be exposed.",
+          "evidence": [
+            "std6001-test1-worst-case-atmosphere"
+          ]
+        },
+        {
+          "text": "The JSC 29353D flammability guidance says hardware designed for use on ISS is acceptable for transport in pressurized areas of vehicles with higher oxygen concentrations, provided it is unpowered and stowed in a locker or validated fire barrier stowage bag, and that unpowered metal boxes are also acceptable.",
+          "evidence": [
+            "jsc29353d-powered-hardware-higher-o2-vehicles"
+          ]
+        },
+        {
+          "text": "The same guidance says hardware not meeting these constraints is to be assessed for flammability at the higher oxygen concentration and pressure.",
+          "evidence": [
+            "jsc29353d-assess-at-higher-o2"
+          ]
+        },
+        {
+          "text": "One report says that historically, programs with up to 30 percent oxygen at 10.2 psia have accepted some flammable hardware by material usage agreement, based on the hardware being largely crew-tended while in use and stowed in a nonflammable container when not in use.",
+          "evidence": [
+            "flammable-hardware-accepted-if-crew-tended-and-stowed-in-nonflammable-container"
+          ]
+        },
+        {
+          "text": "The passport would not replace these procedures: it would carry their results with the item and flag when the place or the air no longer matches them.",
+          "evidence": [],
+          "concept": true
+        }
+      ],
+      "pull_quote": null,
+      "figure": null,
+      "interactive": null
+    },
+    {
+      "id": "more",
+      "heading": "Explore more stories",
+      "sentences": [
+        {
+          "text": "More stories on the shelf follow what the experiments tell us and what is still unknown.",
+          "evidence": []
+        }
+      ],
+      "pull_quote": null,
+      "figure": null,
+      "interactive": null
+    }
+  ],
+  "limits": [
+    "The instrument is an illustrative item, and the situation in the watch scene is imagined, not a record.",
+    "Registration, tags that report where an item is, whole-vehicle monitoring and a watching super intelligence are concepts, and nothing here says they exist.",
+    "Each cited sentence reports what one source says, for the conditions that source names.",
+    "A result for one material, thickness, pressure or atmosphere does not stand in for another.",
+    "The passport flags evidence and gaps, it gives no verdict, and people decide."
+  ],
+  "open_questions": [
+    {
+      "text": "How does a flame behave at Moon or Mars gravity?",
+      "story": "moon-gravity"
+    },
+    {
+      "text": "What would an overheating battery do in weightlessness?",
+      "story": "battery-orbit"
+    },
+    {
+      "text": "How might the air planned for a Moon base change how a fire starts and spreads?",
+      "story": "moon-air"
+    }
+  ]
+}

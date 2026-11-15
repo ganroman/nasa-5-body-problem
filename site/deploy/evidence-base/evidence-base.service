@@ -1,0 +1,25 @@
+[Unit]
+Description=Cargo Passport evidence base: fetch the cited documents, rebuild the pages, sync gbrain
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+# An unprivileged user. Use the user that owns the gbrain brain, so that gbrain finds it.
+User=gbrain
+EnvironmentFile=/etc/evidence-base/evidence-base.env
+# systemd cannot read variables in WorkingDirectory= or in the program path, so the paths of the
+# checkout and of the base come from the environment file through ${...} in the arguments below.
+# The pipeline does not depend on its working directory.
+WorkingDirectory=/
+# Node 22 or newer. If `command -v node` says another path, change it here: systemd needs the full path.
+ExecStart=/usr/bin/node ${EVIDENCE_REPO_DIR}/tools/evidence-base/run.mjs --base ${EVIDENCE_BASE_DIR}
+# Creates /var/lib/evidence-base owned by User=, which an unprivileged user could not create itself.
+# If EVIDENCE_BASE_DIR points elsewhere, create that directory for the user by hand and remove this line.
+StateDirectory=evidence-base
+# Exit code 1 (a quote is gone or a document keeps failing) and 2 (setup problem) mark the unit as failed.
+TimeoutStartSec=2h
+NoNewPrivileges=true
+PrivateTmp=true
+LockPersonality=true
+RestrictSUIDSGID=true

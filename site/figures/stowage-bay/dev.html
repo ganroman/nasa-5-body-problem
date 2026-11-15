@@ -1,0 +1,20 @@
+<form class="dev" data-dev>
+  <p class="dev-title">Developer control: calls set() with the values typed here</p>
+  <label>Air label <input name="label" placeholder="free text"></label>
+  <label>Oxygen % <input name="o2" inputmode="decimal" placeholder="0 to 40"></label>
+  <label>Pressure kPa <input name="pressure" inputmode="decimal" placeholder="0 to 110"></label>
+  <fieldset><legend>Flag places</legend><span data-flags></span></fieldset>
+  <button type="submit">Apply</button>
+  <button type="button" data-unknown>Unknown air</button>
+</form>
+<style>
+.dev{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:end;margin-top:20px;color:var(--anatomy-text);font:12px/1.4 var(--anatomy-mono)}
+.dev-title{flex-basis:100%;margin:0;color:var(--anatomy-muted)}
+.dev label{display:grid;gap:4px}
+.dev input[name]{width:9.5em;padding:6px 8px;border:1px solid var(--anatomy-mid);border-radius:0;background:var(--anatomy-card);color:var(--anatomy-strong);font:inherit}
+.dev fieldset{display:flex;gap:10px;margin:0;padding:4px 8px;border:1px solid var(--anatomy-lo)}
+.dev legend{padding:0 4px;color:var(--anatomy-muted)}
+.dev button{padding:7px 12px;border:1px solid var(--anatomy-mid);background:var(--anatomy-card);color:var(--anatomy-strong);font:inherit;cursor:pointer}
+.dev button:focus-visible,.dev input:focus-visible{outline:2px solid var(--anatomy-lit);outline-offset:2px}
+</style>
+<script type="application/json" data-places>__PLACES__</script>

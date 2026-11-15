@@ -1,0 +1,38 @@
+[
+  {
+    "id": "tea-steep",
+    "topic": "fixture: steeping",
+    "claim": "The made-up handbook says a fictional kettle sample was steeped for four minutes at eighty-five degrees.",
+    "quote": "The fictional kettle sample was steeped for four minutes at a fictional temperature of eighty-five degrees in the demonstration cup",
+    "source_title": "Fictional Tea Handbook",
+    "source_authors": ["Made-Up Author"],
+    "source_year": 2001,
+    "source_org": "Fictional Tea Institute",
+    "source_kind": "fixture",
+    "landing_url": "https://example.invalid/tea",
+    "doc_url": "https://example.invalid/tea.html",
+    "doi": null,
+    "locator": "paragraph 2",
+    "material": "fictional tea leaves",
+    "conditions": { "o2_percent": null, "pressure_text": null, "pressure_kpa": null, "gravity": null, "flow_text": null },
+    "limits": "Fixture only: it says nothing about any real material or environment."
+  },
+  {
+    "id": "tea-pdf",
+    "topic": "fixture: pdf extraction",
+    "claim": "The made-up handbook PDF says the sample was steeped in the demonstration cup.",
+    "quote": "The fictional kettle sample was steeped for four minutes in the demonstration cup at a made-up temperature",
+    "source_title": "Fictional Tea Handbook (PDF)",
+    "source_authors": "Made-Up Author",
+    "source_year": 2002,
+    "source_org": "Fictional Tea Institute",
+    "source_kind": "fixture",
+    "landing_url": "https://example.invalid/tea-pdf",
+    "doc_url": "https://example.invalid/tea.pdf",
+    "doi": "10.1234/fixture.tea",
+    "locator": "page 1",
+    "material": "fictional tea leaves",
+    "conditions": { "o2_percent": 21, "pressure_text": "made-up ambient", "pressure_kpa": null, "gravity": "1 g", "flow_text": null },
+    "limits": "Fixture only."
+  }
+]

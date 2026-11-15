@@ -1,0 +1,53 @@
+[
+  {
+    "id": "fake-alpha-1",
+    "lane": "fixture-lane",
+    "topic": "duplicate",
+    "claim": "A research copy of a published claim that must be ignored.",
+    "quote": "this copy must never be used because the published claim with the same id comes first",
+    "source_title": "Different Title",
+    "source_authors": "Nobody",
+    "source_year": 1990,
+    "source_org": "Nobody Org",
+    "source_kind": "fixture",
+    "landing_url": "{{NASA}}/alpha-landing",
+    "doc_url": "{{NASA}}/alpha.html",
+    "doi": null,
+    "locator": "none",
+    "limits": "none"
+  },
+  {
+    "id": "fake-alpha-2",
+    "lane": "fixture-lane",
+    "topic": "research",
+    "claim": "The made-up bulletin says the chamber was cleaned before the second run.",
+    "quote": "A second invented paragraph says the pretend chamber was cleaned before the second imaginary run began at noon",
+    "source_title": "Fictional Fire Bulletin",
+    "source_authors": "Made-Up Author",
+    "source_year": 2001,
+    "source_org": "Fictional Fire Institute",
+    "source_kind": "fixture-web",
+    "landing_url": "{{NASA}}/alpha-landing",
+    "doc_url": "{{NASA}}/alpha.html#section-two",
+    "doi": null,
+    "locator": "paragraph 3",
+    "limits": "Fixture only."
+  },
+  {
+    "id": "fake-tea-1",
+    "lane": "fixture-lane",
+    "topic": "research",
+    "claim": "The made-up handbook says the kettle sample was steeped for four minutes.",
+    "quote": "The fictional kettle sample was steeped for four minutes in the demonstration cup at a made-up temperature",
+    "source_title": "Fictional Tea Handbook",
+    "source_authors": "Tea Author",
+    "source_year": 2002,
+    "source_org": "Fictional Tea Institute",
+    "source_kind": "fixture-pdf",
+    "landing_url": "{{NASA}}/tea-landing",
+    "doc_url": "{{NASA}}/tea.pdf",
+    "doi": null,
+    "locator": "page 1",
+    "limits": "Fixture only."
+  }
+]

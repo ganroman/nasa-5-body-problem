@@ -1,0 +1,270 @@
+{
+  "id": "quiet-fire",
+  "title": "The quiet fire",
+  "dek": "What happens to a flame when gravity goes away, and could a harmful fire be hard to notice? This story follows the experiments and marks where the answers stop.",
+  "status": "partial",
+  "status_reason": "Each observation comes from a flight experiment or a NASA document, but none tested whether a dim or invisible fire would go unnoticed on a spacecraft, so that idea is our reading of separate pieces.",
+  "beats": [
+    {
+      "id": "hook",
+      "heading": "A flame you can barely see",
+      "sentences": [
+        {
+          "text": "On the Mir station, a candle's flame in weightlessness was nearly invisible to the naked eye.",
+          "evidence": [
+            "qf-mir-candle-nearly-invisible-lower-oxygen"
+          ]
+        },
+        {
+          "text": "It burned slowly, yet it burned down to a lower oxygen level than the identical candle would on Earth.",
+          "evidence": [
+            "qf-mir-candle-nearly-invisible-lower-oxygen"
+          ]
+        },
+        {
+          "text": "A NASA summary says smoke detectors would be unable to sense these kinds of weak, non-smoking flames, but adds that they are so weak as to be non-hazardous.",
+          "evidence": [
+            "qf-mir-weak-flames-not-sensed-by-smoke-detectors"
+          ]
+        },
+        {
+          "text": "So what else changes without gravity? And could a harmful fire be as hard to notice?",
+          "evidence": []
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "why-differs",
+      "heading": "No up, no draught",
+      "sentences": [
+        {
+          "text": "On Earth, as hot gas rises from the flame, gravity pulls cooler, denser air in at the bottom of it.",
+          "evidence": [
+            "qf-earth-hot-gas-rises-sets-flame-shape"
+          ]
+        },
+        {
+          "text": "NASA's fire-protection brief says that in microgravity this flow does not occur.",
+          "evidence": [
+            "qf-earth-hot-gas-rises-sets-flame-shape"
+          ]
+        },
+        {
+          "text": "Another candle, lit in weightlessness, began as a spherical, bright yellow flame.",
+          "evidence": [
+            "qf-shuttle-candle-yellow-to-blue"
+          ]
+        },
+        {
+          "text": "After 8 to 10 seconds the yellow disappeared, and the flame became blue and nearly hemispherical.",
+          "evidence": [
+            "qf-shuttle-candle-yellow-to-blue"
+          ]
+        }
+      ],
+      "pull_quote": {
+        "evidence": "qf-pale-blue-almost-invisible"
+      },
+      "figure": null
+    },
+    {
+      "id": "lives-on-breeze",
+      "heading": "What the air flow does to a fire",
+      "sentences": [
+        {
+          "text": "On a spacecraft, NASA's fire-protection brief says, ventilation fans replace natural convection and can supply the air a fire needs to burn.",
+          "evidence": [
+            "qf-ventilation-replaces-convection"
+          ]
+        },
+        {
+          "text": "In the BASS-II experiments, flames spread over black PMMA (acrylic) rods in weightlessness at oxygen levels as low as 17.5 percent.",
+          "evidence": [
+            "qf-bass2-lower-oxygen-than-earth"
+          ]
+        },
+        {
+          "text": "On the ground, spread was not seen below 19 percent.",
+          "evidence": [
+            "qf-bass2-lower-oxygen-than-earth"
+          ]
+        },
+        {
+          "text": "The report says this is probably due to slower air flowing against the flame in the weightless tests.",
+          "evidence": [
+            "qf-bass2-lower-oxygen-than-earth"
+          ]
+        },
+        {
+          "text": "In one test on a 100-micrometre PMMA film, the flame went out within 2 seconds of the flow being cut off.",
+          "evidence": [
+            "qf-bass2-flow-cut-flame-out-2s"
+          ]
+        },
+        {
+          "text": "Yet in one Saffire V test on thin cotton fabric, the fan was off for 70 seconds, but the flame grew back when the flow returned.",
+          "evidence": [
+            "saffire-v-cotton-fan-off-70s-regrew"
+          ]
+        },
+        {
+          "text": "Both flamelets and embers were present when imaging stopped, so the authors cannot tell whether the flame survived the next 60 seconds.",
+          "evidence": [
+            "saffire-v-cotton-flamelets-or-embers-undetermined"
+          ]
+        },
+        {
+          "text": "The Saffire flights aimed to observe fires at a range of atmospheres, including those expected for exploration missions.",
+          "evidence": [
+            "saffire-iv-v-objective-range-of-atmospheres"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": "flame-duct"
+    },
+    {
+      "id": "cool-flames",
+      "heading": "The stage you cannot see",
+      "sentences": [
+        {
+          "text": "On the space station, a burning droplet of heptane fuel appeared to go out but kept burning with no visible flame.",
+          "evidence": [
+            "fire-went-out-twice-flex",
+            "flex-heptane-dual-modes-cool-flame-second-stage"
+          ]
+        },
+        {
+          "text": "NASA says the fire went out twice, and that the second stage was sustained by what is known as cool flame chemical heat release.",
+          "evidence": [
+            "fire-went-out-twice-flex",
+            "flex-heptane-dual-modes-cool-flame-second-stage"
+          ]
+        },
+        {
+          "text": "In one decane droplet test, the colour and ultraviolet cameras were not sensitive enough to register any flame image in the cool stage.",
+          "evidence": [
+            "cameras-blind-radiometers-see-heat"
+          ]
+        },
+        {
+          "text": "Radiometers, which measure radiated heat, still recorded heat from the droplet, which the authors read as active chemical heat release.",
+          "evidence": [
+            "cameras-blind-radiometers-see-heat"
+          ]
+        }
+      ],
+      "pull_quote": {
+        "evidence": "fire-went-out-twice-flex"
+      },
+      "figure": null
+    },
+    {
+      "id": "hard-to-notice",
+      "heading": "Smoke that does not rise",
+      "sentences": [
+        {
+          "text": "In space, smoke does not rise, so detectors sit inside the ventilation system.",
+          "evidence": [
+            "tb008-smoke-detectors-go-in-the-ventilation"
+          ]
+        },
+        {
+          "text": "In about 20 years of Space Shuttle operations, five potential fire-causing incidents (overheating or electrical short circuits) occurred, and in none was the early fire signal strong enough to set off a smoke detector.",
+          "evidence": [
+            "friedman2000-shuttle-overheats-never-tripped-detector"
+          ]
+        },
+        {
+          "text": "In the Saffire VI experiments, the smoke from the fire event was readily detected.",
+          "evidence": [
+            "saffire6-alarm-after-most-hazardous-gas"
+          ]
+        },
+        {
+          "text": "But a typical alarm threshold was reached only at 981 seconds, and by then, the authors say, most of the hazardous gas release had occurred.",
+          "evidence": [
+            "saffire6-alarm-after-most-hazardous-gas"
+          ]
+        }
+      ],
+      "pull_quote": {
+        "evidence": "tb008-smoke-detectors-go-in-the-ventilation"
+      },
+      "figure": null
+    },
+    {
+      "id": "gases",
+      "heading": "In one test, the gases stood out more than the heat",
+      "sentences": [
+        {
+          "text": "In the Saffire VI tests, the authors found the rise in temperature and pressure less significant than the rise in carbon dioxide and carbon monoxide.",
+          "evidence": [
+            "saffire6-heat-and-pressure-rise-small-versus-gases"
+          ]
+        },
+        {
+          "text": "The paper says the fires were generally 1.5 to 3 kilowatts, which it calls a small fire by terrestrial standards.",
+          "evidence": [
+            "saffire6-small-fire-by-terrestrial-standards"
+          ]
+        },
+        {
+          "text": "In two PMMA tests, carbon monoxide rose by 308 and 320 parts per million (ppm), well above the 24-hour SMAC (100 ppm) and quite close to the 1-hour level (425 ppm), the authors say.",
+          "evidence": [
+            "saffire6-co-co2-over-nasa-limits"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    },
+    {
+      "id": "unknown",
+      "heading": "What we cannot yet say",
+      "sentences": [
+        {
+          "text": "Among the sources we checked, none reports a cool flame on a solid material or a cargo item.",
+          "evidence": [
+            "limit-liquid-then-gas-then-solid-programs"
+          ]
+        },
+        {
+          "text": "In 2001, a NASA ISS materials manager listed a conundrum: air flow is needed to transport smoke to traditional sensors, yet air flow is the worst thing for microgravity fires.",
+          "evidence": [
+            "pedley2001-airflow-conundrum"
+          ]
+        }
+      ],
+      "pull_quote": null,
+      "figure": null
+    }
+  ],
+  "limits": [
+    "Candle and droplet results are not results for cargo.",
+    "The Saffire VI fire tests in this story ran in an uncrewed spacecraft, not in a crewed cabin.",
+    "No test here asked whether a person or an alarm would miss a dim fire; that idea is our reading of separate results.",
+    "Nothing here is measured for the Moon or Mars.",
+    "No sentence here is a verdict on any material or item."
+  ],
+  "open_questions": [
+    {
+      "text": "How does a flame behave at Moon or Mars gravity?",
+      "story": "moon-gravity"
+    },
+    {
+      "text": "Can a cool flame burn on solid plastic or cargo, and would anyone notice?",
+      "story": "cool-flame"
+    },
+    {
+      "text": "How quickly would a real station find a slow, dim fire?",
+      "story": "smoke-alarm"
+    },
+    {
+      "text": "Does switching off the fans reliably put a fire out?",
+      "story": "fans-off"
+    }
+  ]
+}

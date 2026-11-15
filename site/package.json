@@ -1,0 +1,18 @@
+{
+  "name": "cargo-passport",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "node tools/build-site.mjs",
+    "test": "node --test --test-reporter=spec tests/evidence-schema.test.mjs tests/pages-citations.test.mjs tests/library-rules.test.mjs \"tests/unit/*.test.mjs\"",
+    "test:quotes": "node --test --test-reporter=spec tests/quotes-live.test.mjs",
+    "test:judge": "node tests/judge/run.mjs",
+    "serve": "node tools/serve.mjs",
+    "figures": "node figures/instrument/build.mjs && node figures/stowage-bay/build.mjs",
+    "evidence-base": "node tools/evidence-base/run.mjs",
+    "evidence-base:dry": "node tools/evidence-base/run.mjs --dry-run"
+  }
+}

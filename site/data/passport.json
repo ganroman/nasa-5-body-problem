@@ -1,0 +1,269 @@
+{
+  "slug": "portable-science-instrument",
+  "name": "Portable science instrument",
+  "purpose": "Handheld measuring device with its own battery.",
+  "provenance": "illustrative",
+  "provenance_note": "A demonstration manifest, not real flight hardware. Component names, mass shares and material labels are invented for the demo and are not claimed to match the tested samples; each test lists only what its cited record states.",
+  "components": [
+    {
+      "id": "enclosure",
+      "name": "Enclosure",
+      "material": "PMMA cast sheet",
+      "mass_share": 0.4,
+      "tests": [
+        {
+          "evidence": "saffire45-thick-pmma-flame-stays-at-leading-edge",
+          "result": "burned-at",
+          "o2_percent": 22.0,
+          "pressure_kpa": 100.0,
+          "gravity": "low gravity",
+          "form": "PMMA sample IV-2"
+        },
+        {
+          "evidence": "saffire45-thick-pmma-flame-stays-at-leading-edge",
+          "result": "burned-at",
+          "o2_percent": 25.4,
+          "pressure_kpa": 71.3,
+          "gravity": "low gravity",
+          "form": "PMMA sample V-3"
+        }
+      ],
+      "notes": [
+        "pmma-ignition-delay-shorter-at-58-6-kpa-and-32-o2"
+      ]
+    },
+    {
+      "id": "battery",
+      "name": "Battery pack",
+      "material": "Lithium-ion cells",
+      "mass_share": 0.3,
+      "tests": [],
+      "notes": [
+        "jsc29353d-liion-vs-alkaline-ignition-power",
+        "jsc29353d-liion-in-stowage-bags"
+      ]
+    },
+    {
+      "id": "gasket",
+      "name": "Gaskets",
+      "material": "Silicone rubber, ~1.5 mm",
+      "mass_share": 0.1,
+      "tests": [
+        {
+          "evidence": "silicone-1p5mm-moc-vs-pressure",
+          "result": "self-extinguished-up-to",
+          "o2_percent": 28,
+          "pressure_kpa": 48.2,
+          "gravity": null,
+          "form": "silicone"
+        },
+        {
+          "evidence": "silicone-1p5mm-moc-vs-pressure",
+          "result": "self-extinguished-up-to",
+          "o2_percent": 23,
+          "pressure_kpa": 85.3,
+          "gravity": null,
+          "form": "silicone"
+        },
+        {
+          "evidence": "silicone-1p5mm-moc-vs-pressure",
+          "result": "self-extinguished-up-to",
+          "o2_percent": 21,
+          "pressure_kpa": 101.3,
+          "gravity": null,
+          "form": "silicone"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "id": "wiring",
+      "name": "Wiring",
+      "material": "PTFE-insulated wire",
+      "mass_share": 0.1,
+      "tests": [],
+      "notes": [
+        "ptfe-1p5mm-moc-vs-pressure",
+        "ssp51721-ignition-source-definition"
+      ]
+    },
+    {
+      "id": "strap",
+      "name": "Carry strap",
+      "material": "Kevlar/PBI webbing, black",
+      "mass_share": 0.1,
+      "tests": [
+        {
+          "evidence": "kevlar-pbi-webbing-moc-8p2psia",
+          "result": "passed-at",
+          "o2_percent": 35,
+          "pressure_kpa": 56.5,
+          "gravity": null,
+          "form": "black webbing"
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "environments": [
+    {
+      "id": "iss-cabin",
+      "label": "ISS cabin",
+      "kind": "nominal operating atmosphere",
+      "vehicle": "iss",
+      "o2_percent": 21,
+      "o2_max_percent": 24.1,
+      "pressure_psia": 14.7,
+      "pressure_kpa": 101.4,
+      "computed": "psia times 6.895",
+      "evidence": [
+        "iss-cabin-nominal-14-7-psia-21-o2",
+        "iss-cabin-control-band-max-o2-24-1"
+      ]
+    },
+    {
+      "id": "iss-airlock",
+      "label": "ISS airlock, spacewalk preparation",
+      "kind": "certification worst case",
+      "vehicle": "iss",
+      "o2_percent": 30,
+      "o2_max_percent": null,
+      "pressure_psia": 10.2,
+      "pressure_kpa": 70.3,
+      "computed": "psia times 6.895",
+      "evidence": [
+        "ssp51721-iss-airlock-worst-case-10-2-psia-30-o2",
+        "iss-airlock-campout-10-2-psi-station-14-7"
+      ]
+    },
+    {
+      "id": "lunar-habitat",
+      "label": "Lunar habitat (planned)",
+      "kind": "planned",
+      "vehicle": "lunar-habitat",
+      "o2_percent": 34,
+      "o2_max_percent": null,
+      "pressure_psia": 8.2,
+      "pressure_kpa": 56.5,
+      "computed": null,
+      "evidence": [
+        "exploration-atmosphere-8-2-psi-34-o2-artemis-sustained"
+      ]
+    }
+  ],
+  "vehicles": [
+    {
+      "id": "iss",
+      "label": "International Space Station",
+      "environment": "iss-cabin"
+    },
+    {
+      "id": "lunar-habitat",
+      "label": "Lunar habitat (planned, not built)",
+      "environment": "lunar-habitat"
+    }
+  ],
+  "places": [
+    {
+      "id": "airlock",
+      "label": "Airlock",
+      "about": "The station airlock, used for spacewalk preparation.",
+      "flag": true,
+      "flag_in": [
+        "iss"
+      ],
+      "evidence": [
+        "ssp51721-airlock-worst-case-o2"
+      ],
+      "vehicle_evidence": {},
+      "environment": "iss-airlock",
+      "powered": false
+    },
+    {
+      "id": "vent",
+      "label": "Next to an air vent",
+      "about": "Beside a ventilation outlet.",
+      "flag": true,
+      "flag_in": [
+        "iss"
+      ],
+      "evidence": [
+        "tb008-ventilation-feeds-fire"
+      ],
+      "vehicle_evidence": {},
+      "environment": null,
+      "powered": false
+    },
+    {
+      "id": "power",
+      "label": "Charging shelf",
+      "about": "A shelf with power outlets, where the item is powered or charging.",
+      "flag": true,
+      "flag_in": [
+        "iss",
+        "lunar-habitat"
+      ],
+      "evidence": [
+        "jsc29353d-liion-vs-alkaline-ignition-power",
+        "ssp51721-ignition-source-definition"
+      ],
+      "vehicle_evidence": {
+        "iss": [
+          "jsc29353b-open-cabin-use-keep-flammables-away-from-power-outlets"
+        ],
+        "lunar-habitat": [
+          "jsc29353d-partial-g-2w-short-circuit"
+        ]
+      },
+      "environment": null,
+      "powered": true
+    },
+    {
+      "id": "locker",
+      "label": "Locker",
+      "about": "A closed stowage locker or fire-barrier bag, with the item switched off.",
+      "flag": false,
+      "flag_in": [],
+      "evidence": [
+        "jsc29353d-powered-hardware-higher-o2-vehicles"
+      ],
+      "vehicle_evidence": {},
+      "environment": null,
+      "powered": false
+    },
+    {
+      "id": "rack",
+      "label": "Open rack",
+      "about": "An open rack or shelf in the cabin.",
+      "flag": false,
+      "flag_in": [],
+      "evidence": [],
+      "vehicle_evidence": {},
+      "environment": null,
+      "powered": false
+    }
+  ],
+  "tolerances": {
+    "pressure_kpa": 1.0,
+    "pressure_kpa_basis": [
+      "moc-depends-on-geometry-thickness-pressure-gravity"
+    ]
+  },
+  "rules": {
+    "result_types": {
+      "self-extinguished-up-to": "covers_at_or_below",
+      "passed-at": "covers_at_or_below",
+      "burned-at": "never",
+      "failed-at": "never"
+    },
+    "powered_evidence": [
+      "jsc29353d-powered-in-locker"
+    ],
+    "gravity_caveat_evidence": [
+      "eclss-tm-essentially-all-flammability-test-data-1g",
+      "ruff2021-lunar-g-oxygen-limits-lower-than-1g",
+      "ferkul2026-1g-nonflammable-materials-burn-in-0g-flow-or-lunar-g"
+    ],
+    "max_evidence_per_differs": 2
+  }
+}

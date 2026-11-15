@@ -1,0 +1,495 @@
+[
+  {
+    "id": "without-a-passport",
+    "title": "Without a passport",
+    "premise": "What happens when a cargo item that passed a check in one place moves into different air, and nobody can see that the evidence no longer covers it?",
+    "evidence_status": "partial",
+    "status_reason": "Marked partly data: related investigations are linked below; the question itself is not covered in our sources.",
+    "state": "published",
+    "theme": "prevention",
+    "basis": [
+      {
+        "accession": "PSI-25",
+        "acronym": "BASS-II",
+        "doi": "10.60555/4qc4-de67",
+        "doi_url": "https://doi.org/10.60555/4qc4-de67"
+      },
+      {
+        "accession": "PSI-26",
+        "acronym": "BASS",
+        "doi": "10.60555/58h4-dy80",
+        "doi_url": "https://doi.org/10.60555/58h4-dy80"
+      },
+      {
+        "accession": "PSI-99",
+        "acronym": "SAFFIRE-II",
+        "doi": "10.60555/2chp-m469",
+        "doi_url": "https://doi.org/10.60555/2chp-m469"
+      }
+    ],
+    "gaps": [
+      "Not tested for this combination of material and air.",
+      "Not measured for an item moved between cabins.",
+      "Not covered by a record that travels with the item."
+    ],
+    "issue": null,
+    "home": true
+  },
+  {
+    "id": "quiet-fire",
+    "title": "The quiet fire",
+    "premise": "Could a fire in weightlessness burn in a way that is easy to miss?",
+    "evidence_status": "partial",
+    "status_reason": "Marked partly data: the sources are separate experiments; whether a cool fire goes unnoticed is not covered in our sources.",
+    "state": "published",
+    "theme": "behaviour",
+    "basis": [
+      {
+        "accession": "PSI-25",
+        "acronym": "BASS-II",
+        "doi": "10.60555/4qc4-de67",
+        "doi_url": "https://doi.org/10.60555/4qc4-de67"
+      },
+      {
+        "accession": "PSI-159",
+        "acronym": "ACME CFI-G",
+        "doi": "10.60555/cyt1-kh64",
+        "doi_url": "https://doi.org/10.60555/cyt1-kh64"
+      },
+      {
+        "accession": "PSI-39",
+        "acronym": "CFI",
+        "doi": "10.60555/m6pj-a914",
+        "doi_url": "https://doi.org/10.60555/m6pj-a914"
+      },
+      {
+        "accession": "PSI-69",
+        "acronym": "FLEX",
+        "doi": "10.60555/mbq8-0451",
+        "doi_url": "https://doi.org/10.60555/mbq8-0451"
+      },
+      {
+        "accession": "PSI-102",
+        "acronym": "SAME",
+        "doi": "10.60555/gd4k-8h62",
+        "doi_url": "https://doi.org/10.60555/gd4k-8h62"
+      },
+      {
+        "accession": "PSI-101",
+        "acronym": "SAME-R",
+        "doi": "10.60555/2np7-jv14",
+        "doi_url": "https://doi.org/10.60555/2np7-jv14"
+      },
+      {
+        "accession": "PSI-98",
+        "acronym": "SAFFIRE-I",
+        "doi": "10.60555/0t15-1z43",
+        "doi_url": "https://doi.org/10.60555/0t15-1z43"
+      }
+    ],
+    "gaps": [
+      "Not tested whether a cool, dim fire goes unnoticed.",
+      "Not tested on solid plastic or cargo.",
+      "Not tested with real station alarms."
+    ],
+    "issue": null
+  },
+  {
+    "id": "round-flame",
+    "title": "Why is a flame round in space?",
+    "premise": "What shape does a flame take without gravity, and why does it differ from a flame on Earth?",
+    "evidence_status": "data",
+    "status_reason": "Marked data: flight investigations are linked below.",
+    "state": "proposed",
+    "theme": "behaviour",
+    "basis": [
+      {
+        "accession": "PSI-25",
+        "acronym": "BASS-II",
+        "doi": "10.60555/4qc4-de67",
+        "doi_url": "https://doi.org/10.60555/4qc4-de67"
+      },
+      {
+        "accession": "PSI-26",
+        "acronym": "BASS",
+        "doi": "10.60555/58h4-dy80",
+        "doi_url": "https://doi.org/10.60555/58h4-dy80"
+      },
+      {
+        "accession": "PSI-23",
+        "acronym": "ACME s-Flame",
+        "doi": "10.60555/k57n-p030",
+        "doi_url": "https://doi.org/10.60555/k57n-p030"
+      },
+      {
+        "accession": "PSI-10",
+        "acronym": "ACME/Flame Design",
+        "doi": "10.60555/w4zy-bt45",
+        "doi_url": "https://doi.org/10.60555/w4zy-bt45"
+      },
+      {
+        "accession": "PSI-107",
+        "acronym": "SPICE",
+        "doi": "10.60555/9kbh-e962",
+        "doi_url": "https://doi.org/10.60555/9kbh-e962"
+      }
+    ],
+    "gaps": [
+      "Not measured in lunar gravity.",
+      "Not measured for every material."
+    ],
+    "issue": null
+  },
+  {
+    "id": "weightless-extinguish",
+    "title": "How do you put out a weightless fire?",
+    "premise": "How does a flame go out when nothing lifts it away, and what helps it go out?",
+    "evidence_status": "data",
+    "status_reason": "Marked data: flight investigations are linked below.",
+    "state": "proposed",
+    "theme": "suppression",
+    "basis": [
+      {
+        "accession": "PSI-69",
+        "acronym": "FLEX",
+        "doi": "10.60555/mbq8-0451",
+        "doi_url": "https://doi.org/10.60555/mbq8-0451"
+      },
+      {
+        "accession": "PSI-68",
+        "acronym": "FLEX-2",
+        "doi": "10.60555/byp8-h018",
+        "doi_url": "https://doi.org/10.60555/byp8-h018"
+      },
+      {
+        "accession": "PSI-26",
+        "acronym": "BASS",
+        "doi": "10.60555/58h4-dy80",
+        "doi_url": "https://doi.org/10.60555/58h4-dy80"
+      },
+      {
+        "accession": "PSI-25",
+        "acronym": "BASS-II",
+        "doi": "10.60555/4qc4-de67",
+        "doi_url": "https://doi.org/10.60555/4qc4-de67"
+      }
+    ],
+    "gaps": [
+      "Not measured with real extinguishing agents on large fires.",
+      "Not measured in lunar gravity."
+    ],
+    "issue": null
+  },
+  {
+    "id": "cygnus-big-fires",
+    "title": "What did the big Cygnus fires show?",
+    "premise": "What did the large fires lit in an uncrewed cargo vehicle show about fire growth in space?",
+    "evidence_status": "data",
+    "status_reason": "Marked data: flight investigations are linked below.",
+    "state": "proposed",
+    "theme": "behaviour",
+    "basis": [
+      {
+        "accession": "PSI-98",
+        "acronym": "SAFFIRE-I",
+        "doi": "10.60555/0t15-1z43",
+        "doi_url": "https://doi.org/10.60555/0t15-1z43"
+      },
+      {
+        "accession": "PSI-99",
+        "acronym": "SAFFIRE-II",
+        "doi": "10.60555/2chp-m469",
+        "doi_url": "https://doi.org/10.60555/2chp-m469"
+      },
+      {
+        "accession": "PSI-100",
+        "acronym": "SAFFIRE-III",
+        "doi": "10.60555/040q-4h36",
+        "doi_url": "https://doi.org/10.60555/040q-4h36"
+      }
+    ],
+    "gaps": [
+      "Not measured inside a crewed cabin.",
+      "Not measured for materials beyond those tested."
+    ],
+    "issue": null
+  },
+  {
+    "id": "cool-flame",
+    "title": "What is a cool flame?",
+    "premise": "What is a cool flame, and when does it start, survive or turn into a hot flame?",
+    "evidence_status": "data",
+    "status_reason": "Marked data: flight investigations are linked below.",
+    "state": "proposed",
+    "theme": "behaviour",
+    "basis": [
+      {
+        "accession": "PSI-39",
+        "acronym": "CFI",
+        "doi": "10.60555/m6pj-a914",
+        "doi_url": "https://doi.org/10.60555/m6pj-a914"
+      },
+      {
+        "accession": "PSI-159",
+        "acronym": "ACME CFI-G",
+        "doi": "10.60555/cyt1-kh64",
+        "doi_url": "https://doi.org/10.60555/cyt1-kh64"
+      },
+      {
+        "accession": "PSI-69",
+        "acronym": "FLEX",
+        "doi": "10.60555/mbq8-0451",
+        "doi_url": "https://doi.org/10.60555/mbq8-0451"
+      },
+      {
+        "accession": "PSI-117",
+        "acronym": null,
+        "doi": "10.60555/gz0q-b577",
+        "doi_url": "https://doi.org/10.60555/gz0q-b577"
+      },
+      {
+        "accession": "PSI-142",
+        "acronym": null,
+        "doi": "10.60555/80qf-vj95",
+        "doi_url": "https://doi.org/10.60555/80qf-vj95"
+      }
+    ],
+    "gaps": [
+      "Not measured on solid cargo materials.",
+      "Not measured in lunar gravity."
+    ],
+    "issue": null
+  },
+  {
+    "id": "smoke-alarm",
+    "title": "Do smoke alarms work without gravity?",
+    "premise": "Does smoke move and look different without gravity, and do detectors still respond to it?",
+    "evidence_status": "partial",
+    "status_reason": "Marked partly data: related investigations are linked below; the question itself is not covered in our sources.",
+    "state": "proposed",
+    "theme": "detection",
+    "basis": [
+      {
+        "accession": "PSI-102",
+        "acronym": "SAME",
+        "doi": "10.60555/gd4k-8h62",
+        "doi_url": "https://doi.org/10.60555/gd4k-8h62"
+      },
+      {
+        "accession": "PSI-101",
+        "acronym": "SAME-R",
+        "doi": "10.60555/2np7-jv14",
+        "doi_url": "https://doi.org/10.60555/2np7-jv14"
+      },
+      {
+        "accession": "PSI-47",
+        "acronym": "DAFT / DAFT-2",
+        "doi": "10.60555/ztgj-d202",
+        "doi_url": "https://doi.org/10.60555/ztgj-d202"
+      },
+      {
+        "accession": "PSI-115",
+        "acronym": null,
+        "doi": "10.60555/q0v5-1v28",
+        "doi_url": "https://doi.org/10.60555/q0v5-1v28"
+      }
+    ],
+    "gaps": [
+      "Not tested with every station detector.",
+      "Not tested with slow, dim fires."
+    ],
+    "issue": null
+  },
+  {
+    "id": "fans-off",
+    "title": "Does switching off the fans put fire out?",
+    "premise": "Does stopping the airflow put out a fire in weightlessness?",
+    "evidence_status": "partial",
+    "status_reason": "Marked partly data: related investigations are linked below; the question itself is not covered in our sources.",
+    "state": "proposed",
+    "theme": "suppression",
+    "basis": [
+      {
+        "accession": "PSI-20",
+        "acronym": "ACME BRE",
+        "doi": "10.60555/vb93-3y72",
+        "doi_url": "https://doi.org/10.60555/vb93-3y72"
+      },
+      {
+        "accession": "PSI-25",
+        "acronym": "BASS-II",
+        "doi": "10.60555/4qc4-de67",
+        "doi_url": "https://doi.org/10.60555/4qc4-de67"
+      },
+      {
+        "accession": "PSI-26",
+        "acronym": "BASS",
+        "doi": "10.60555/58h4-dy80",
+        "doi_url": "https://doi.org/10.60555/58h4-dy80"
+      },
+      {
+        "accession": "PSI-62",
+        "acronym": null,
+        "doi": "10.60555/e9xp-ex83",
+        "doi_url": "https://doi.org/10.60555/e9xp-ex83"
+      }
+    ],
+    "gaps": [
+      "Not tested for every material.",
+      "Not tested in a full-size cabin."
+    ],
+    "issue": null
+  },
+  {
+    "id": "moon-air",
+    "title": "Does Moon-base air make space fires worse?",
+    "premise": "How might the air planned for a Moon base change how a fire starts and spreads?",
+    "evidence_status": "partial",
+    "status_reason": "Marked partly data: related investigations are linked below; the question itself is not covered in our sources.",
+    "state": "proposed",
+    "theme": "prevention",
+    "basis": [
+      {
+        "accession": "PSI-20",
+        "acronym": "ACME BRE",
+        "doi": "10.60555/vb93-3y72",
+        "doi_url": "https://doi.org/10.60555/vb93-3y72"
+      },
+      {
+        "accession": "PSI-159",
+        "acronym": "ACME CFI-G",
+        "doi": "10.60555/cyt1-kh64",
+        "doi_url": "https://doi.org/10.60555/cyt1-kh64"
+      },
+      {
+        "accession": "PSI-10",
+        "acronym": "ACME/Flame Design",
+        "doi": "10.60555/w4zy-bt45",
+        "doi_url": "https://doi.org/10.60555/w4zy-bt45"
+      },
+      {
+        "accession": "PSI-25",
+        "acronym": "BASS-II",
+        "doi": "10.60555/4qc4-de67",
+        "doi_url": "https://doi.org/10.60555/4qc4-de67"
+      },
+      {
+        "accession": "PSI-69",
+        "acronym": "FLEX",
+        "doi": "10.60555/mbq8-0451",
+        "doi_url": "https://doi.org/10.60555/mbq8-0451"
+      }
+    ],
+    "gaps": [
+      "Not tested at the planned air mixes for every material.",
+      "Not measured in lunar gravity."
+    ],
+    "issue": null
+  },
+  {
+    "id": "earth-spinoffs",
+    "title": "What on Earth uses space-fire research?",
+    "premise": "Which uses on Earth have come from research into fire in space?",
+    "evidence_status": "partial",
+    "status_reason": "Marked partly data: related investigations are linked below; the question itself is not covered in our sources.",
+    "state": "proposed",
+    "theme": "earth",
+    "basis": [
+      {
+        "accession": "PSI-117",
+        "acronym": null,
+        "doi": "10.60555/gz0q-b577",
+        "doi_url": "https://doi.org/10.60555/gz0q-b577"
+      },
+      {
+        "accession": "PSI-142",
+        "acronym": null,
+        "doi": "10.60555/80qf-vj95",
+        "doi_url": "https://doi.org/10.60555/80qf-vj95"
+      },
+      {
+        "accession": "PSI-62",
+        "acronym": null,
+        "doi": "10.60555/e9xp-ex83",
+        "doi_url": "https://doi.org/10.60555/e9xp-ex83"
+      },
+      {
+        "accession": "PSI-60",
+        "acronym": null,
+        "doi": "10.60555/mzjm-yv57",
+        "doi_url": "https://doi.org/10.60555/mzjm-yv57"
+      },
+      {
+        "accession": "PSI-115",
+        "acronym": null,
+        "doi": "10.60555/q0v5-1v28",
+        "doi_url": "https://doi.org/10.60555/q0v5-1v28"
+      },
+      {
+        "accession": "PSI-39",
+        "acronym": "CFI",
+        "doi": "10.60555/m6pj-a914",
+        "doi_url": "https://doi.org/10.60555/m6pj-a914"
+      },
+      {
+        "accession": "PSI-21",
+        "acronym": "ACME CLD Flame",
+        "doi": "10.60555/23e1-9950",
+        "doi_url": "https://doi.org/10.60555/23e1-9950"
+      },
+      {
+        "accession": "PSI-98",
+        "acronym": "SAFFIRE-I",
+        "doi": "10.60555/0t15-1z43",
+        "doi_url": "https://doi.org/10.60555/0t15-1z43"
+      }
+    ],
+    "gaps": [
+      "Not traced from each experiment to a use."
+    ],
+    "issue": null
+  },
+  {
+    "id": "moon-gravity",
+    "title": "What burns on the Moon?",
+    "premise": "How does a flame behave at Moon or Mars gravity?",
+    "evidence_status": "hypothesis",
+    "status_reason": "No direct measurement is in our sources.",
+    "state": "proposed",
+    "theme": "behaviour",
+    "basis": [
+      {
+        "accession": "PSI-99",
+        "acronym": "SAFFIRE-II",
+        "doi": "10.60555/2chp-m469",
+        "doi_url": "https://doi.org/10.60555/2chp-m469"
+      },
+      {
+        "accession": "PSI-20",
+        "acronym": "ACME BRE",
+        "doi": "10.60555/vb93-3y72",
+        "doi_url": "https://doi.org/10.60555/vb93-3y72"
+      }
+    ],
+    "gaps": [
+      "Not measured in lunar gravity.",
+      "Not measured in Mars gravity."
+    ],
+    "issue": null
+  },
+  {
+    "id": "battery-orbit",
+    "title": "What does a battery fire do in orbit?",
+    "premise": "What would an overheating battery do in weightlessness?",
+    "evidence_status": "hypothesis",
+    "status_reason": "No direct measurement is in our sources.",
+    "state": "proposed",
+    "theme": "prevention",
+    "basis": [],
+    "gaps": [
+      "Not measured in orbit.",
+      "Not found in the PSI repository."
+    ],
+    "issue": null
+  }
+]

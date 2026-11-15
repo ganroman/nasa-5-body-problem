@@ -1,0 +1,61 @@
+.anatomy-figure[data-figure="stowage-bay"] {
+  --bay-flag: var(--accent, #ff8c1a);
+  margin: 0;
+}
+.anatomy-figure[data-figure="stowage-bay"]:not([data-theme="light"]) {
+  --anatomy-card: #0c1526;
+  --anatomy-paper: #0c1526;
+  --anatomy-face: #15233e;
+  --anatomy-top: #213558;
+  --anatomy-shade-0: #09101d;
+  --anatomy-shade-1: #0f1a2e;
+  --anatomy-shade-2: #152440;
+  --anatomy-shade-3: #1a2c4e;
+  --anatomy-lit-top: #3a5688;
+  --anatomy-lit-shade: #1f3358;
+  --anatomy-hi: #cddaf0;
+  --anatomy-mid: #7189b4;
+  --anatomy-lo: #3e5480;
+  --anatomy-faint: #263858;
+  --anatomy-lit: #ffffff;
+  --anatomy-halo: #02060d;
+  --anatomy-text: #9db0cf;
+  --anatomy-muted: #6a7fa4;
+}
+.anatomy-figure[data-figure="stowage-bay"] .iso-plate { padding-bottom: 60px; }
+.anatomy-figure[data-figure="stowage-bay"] .place { cursor: pointer; outline: none; }
+.anatomy-figure[data-figure="stowage-bay"] .place-hit { fill: transparent; stroke: none; pointer-events: all; }
+.anatomy-figure[data-figure="stowage-bay"] .place:focus-visible .place-hit { stroke: var(--anatomy-lit); stroke-width: 1.2px; }
+.anatomy-figure[data-figure="stowage-bay"] .instrument-shadow { fill: var(--anatomy-halo); filter: blur(3px); opacity: 0.9; }
+.anatomy-figure[data-figure="stowage-bay"] .shadow { opacity: 0; }
+.anatomy-figure[data-figure="stowage-bay"] .zone .iso-line { transition: stroke 0.4s; }
+.anatomy-figure[data-figure="stowage-bay"] .zone[data-hot] .iso-line { stroke: var(--anatomy-mid); }
+.anatomy-figure[data-figure="stowage-bay"] .zone[data-active] .iso-line { stroke: var(--anatomy-lit); }
+.anatomy-figure[data-figure="stowage-bay"] .lamp-lens { fill: var(--anatomy-faint); stroke: none; transition: fill 0.5s; }
+.anatomy-figure[data-figure="stowage-bay"] .lamp-glow { fill: var(--bay-flag); stroke: none; opacity: 0; filter: blur(4px); transition: opacity 0.6s; }
+.anatomy-figure[data-figure="stowage-bay"] .pennant { transform: translateY(9px); opacity: 0; transition: transform 0.8s var(--anatomy-ease), opacity 0.5s; }
+.anatomy-figure[data-figure="stowage-bay"] .flag-tab { fill: var(--bay-flag); stroke: var(--bay-flag); }
+.anatomy-figure[data-figure="stowage-bay"] [data-beacon][data-flag="flag"] .lamp-lens { fill: var(--bay-flag); }
+.anatomy-figure[data-figure="stowage-bay"] [data-beacon][data-flag="flag"] .lamp-glow { opacity: 0.55; }
+.anatomy-figure[data-figure="stowage-bay"] [data-beacon][data-flag="flag"] .pennant { transform: none; opacity: 1; }
+.anatomy-figure[data-figure="stowage-bay"] .charge-lens { fill: var(--anatomy-faint); stroke: none; transition: fill 0.4s; }
+.anatomy-figure[data-figure="stowage-bay"] [data-charging] .charge-lens { fill: var(--anatomy-lit); }
+.anatomy-figure[data-figure="stowage-bay"] .bay-readout {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px 16px; margin: 6px 0 0;
+  font-family: var(--anatomy-mono); font-size: 11px; letter-spacing: 0.04em; color: var(--anatomy-text);
+}
+.anatomy-figure[data-figure="stowage-bay"] .bay-readout div { min-width: 0; }
+.anatomy-figure[data-figure="stowage-bay"] .bay-readout dt { color: var(--anatomy-muted); text-transform: uppercase; letter-spacing: 0.1em; font-size: 10px; }
+.anatomy-figure[data-figure="stowage-bay"] .bay-readout dd { margin: 2px 0 0; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+@media (max-width: 560px) {
+  .anatomy-figure[data-figure="stowage-bay"] .iso-plate { overflow: hidden; }
+  .anatomy-figure[data-figure="stowage-bay"] .iso-svg { width: 118%; max-width: none; margin: -4% -9% -6%; }
+  .anatomy-figure[data-figure="stowage-bay"] .bay-readout { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .anatomy-figure[data-figure="stowage-bay"] .pennant,
+  .anatomy-figure[data-figure="stowage-bay"] .lamp-glow,
+  .anatomy-figure[data-figure="stowage-bay"] .lamp-lens,
+  .anatomy-figure[data-figure="stowage-bay"] .zone .iso-line,
+  .anatomy-figure[data-figure="stowage-bay"] .charge-lens { transition: none; }
+}

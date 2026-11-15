@@ -1,0 +1,334 @@
+{
+  "schema": 1,
+  "figure": "flame-duct",
+  "note": "Every number below is copied from the verified evidence block at the end of this file. Values marked basis 'drawing' are drawing choices, not findings.",
+  "bench": {
+    "flow_range_cm_s": {
+      "min": 0,
+      "max": 30,
+      "basis": "drawing",
+      "note": "Dial range chosen so the documented 3 to 10 cm/s region is readable. BASS-II tested 0 to 55 cm/s (qf-bass2-quenching-blue-oscillating); no behaviour above 10 cm/s is drawn."
+    },
+    "o2_pct": {
+      "0g": 17.5,
+      "1g": 19
+    },
+    "o2_ids": [
+      "qf-bass2-lower-oxygen-than-earth"
+    ],
+    "o2_note": "17.5 percent is the lowest oxygen where flame spread was seen in the weightless tests on black PMMA rods with opposed flow; 19 percent is the lowest in the ground tests of the same kind. The report says the difference is probably due to the lower air flow in the weightless tests. Neither value is an absolute limit. The dial shows the level for the gravity chosen.",
+    "o2_range_pct": {
+      "min": 10,
+      "max": 25,
+      "basis": "drawing"
+    }
+  },
+  "flow_points": [
+    {
+      "id": "fan_cut",
+      "flow_cm_s": 0,
+      "label": "fan off",
+      "result": "flame out within 2 s (thin film test)",
+      "ids": [
+        "qf-bass2-flow-cut-flame-out-2s"
+      ]
+    },
+    {
+      "id": "mir_low",
+      "flow_cm_s": 3,
+      "label": "low end of the Mir flows",
+      "result": "flames burned and strengthened as flow rose (paper and plastic samples, about 3 to 9 cm/s)",
+      "ids": [
+        "qf-mir-flow-stop-self-extinguish"
+      ]
+    },
+    {
+      "id": "ventilation",
+      "flow_cm_s": 10,
+      "label": "boundary minimum, typical spacecraft ventilation",
+      "result": "lowest oxygen that supports steady spread and fastest spread, on the order of 10 cm/s",
+      "ids": [
+        "qf-ventilation-speed-10cms"
+      ]
+    }
+  ],
+  "weightless": {
+    "burn_from_cm_s": 3,
+    "full_at_cm_s": 10,
+    "burn_from_basis": "The Mir tests that saw flames strengthen with flow ran at about 3 to 9 cm/s (qf-mir-flow-stop-self-extinguish, conditions.flow_text). BASS-II gives no speed for its quenching region, so the quench band below 3 cm/s is an illustration.",
+    "fan_cut_out_s": 2,
+    "fan_cut_ids": [
+      "qf-bass2-flow-cut-flame-out-2s"
+    ],
+    "quench_dwell_s": {
+      "value": 4,
+      "basis": "drawing",
+      "note": "How long the shrinking dome oscillates before it goes out. Not measured."
+    },
+    "standoff_mm": 7,
+    "standoff_ids": [
+      "qf-weightless-candle-standoff-7mm"
+    ],
+    "standoff_note": "Candle flame in the Space Shuttle glovebox, 'on the order of 7 mm'. Applied here as the gap between the rod tip and the blue shell.",
+    "quench_ids": [
+      "qf-bass2-quenching-blue-oscillating"
+    ]
+  },
+  "earth": {
+    "standoff_mm": [
+      1,
+      2
+    ],
+    "standoff_ids": [
+      "qf-weightless-candle-standoff-7mm"
+    ],
+    "shape_ids": [
+      "qf-eightfold-density-flame-lifts-flickers",
+      "qf-earth-hot-gas-rises-sets-flame-shape"
+    ],
+    "air_ids": [
+      "qf-earth-candle-draws-fresh-oxygen"
+    ],
+    "note": "On Earth rising hot gas draws fresh air in, so the drawn flame does not depend on the fan."
+  },
+  "illustration": "The flame outline between the documented points, its flicker, the timing of the quench and the relight by the igniter are drawn for clarity; they are not measurements. Candle stand-off is applied to a rod. The air speed dial scale is a drawing choice.",
+  "evidence": {
+    "qf-ventilation-speed-10cms": {
+      "claim": "For flame spread across solid materials, NASA's researcher guide says the minimum of the flammability-boundary curve (the lowest oxygen level that supports steady spread) lies at a gas velocity on the order of 10 cm/s, which also corresponds to a maximum in flame spread rate and is typical of spacecraft ventilation systems.",
+      "quote": "the characteristic gas velocity of the minimum in the curve is on the order of 10 cm/s and also corresponds to a maximum in the flame spread rate. To give perspective, this is the velocity typical of that of spacecraft ventilation systems.",
+      "source_title": "A Researcher's Guide to: Combustion Science (ISS Researcher's Guide series; NP-2015-10-034-JSC; NASA web page dated 2016-07-06)",
+      "source_year": 2016,
+      "locator": "p. 31, 'Low-Stretch (Low-Velocity) Flames' (refers to the schematic Figure 8)",
+      "landing_url": "https://www.nasa.gov/missions/station/a-researchers-guide-to-combustion-science/",
+      "doc_url": "https://www.nasa.gov/wp-content/uploads/2016/05/np-2015-10-034-jsc_combustion_in_reduced_gravity-iss-mini-book-011116-508.pdf",
+      "conditions": {
+        "o2_percent": null,
+        "pressure_text": null,
+        "gravity": "microgravity",
+        "flow_text": "about 10 cm/s (order of magnitude)",
+        "fuel": "solid materials (general)"
+      },
+      "limits": "The boundary curve in the guide is a schematic; '10 cm/s' is described as a characteristic value 'on the order of', not a measurement for a given material. The real boundary depends on material, thickness, geometry and oxygen level."
+    },
+    "qf-bass2-flow-cut-flame-out-2s": {
+      "claim": "In a BASS-II test on a thin plastic film, cutting off the airflow made the spreading flame go out within 2 seconds.",
+      "quote": "After the flame propagated across half the sample length at a steady spread rate of 2.2 mm/s, the flow was abruptly cut off and the flame was observed to extinguish within 2 s",
+      "source_title": "Burning and Suppression of Solids-II (BASS-II) Summary Report (NASA/TM-20210011385)",
+      "source_year": 2021,
+      "locator": "Section 2.1.2.1 (Bhattacharjee), printed p. 13 (PDF p. 21); same text repeated in section 2.2.5, printed p. 23",
+      "landing_url": "https://ntrs.nasa.gov/citations/20210011385",
+      "doc_url": "https://ntrs.nasa.gov/api/citations/20210011385/downloads/TM-20210011385.pdf",
+      "conditions": {
+        "o2_percent": "not stated in this passage; table row B1 (probably the same test) gives 22.2 calibrated",
+        "pressure_text": "about 1 atm",
+        "gravity": "microgravity (ISS Microgravity Science Glovebox)",
+        "flow_text": "opposed forced flow, speed not stated for this first test (a second test used 3 cm/s); flow then abruptly cut off",
+        "fuel": "100-micron PMMA film, 2 cm wide"
+      },
+      "limits": "A single described test (the 'first test') on a thermally thin 100-micron film, steady spread 2.2 mm/s before the cut; the report warns that flow calibration at such low velocity 'has high error bars'. The same report finds flames on 100 to 300 micron films go out at about 1 cm/s when the flow is reduced gradually. Not a cabin fire; larger or oxygen-enriched fuels may behave differently (see qf-saffire-still-air-not-rapid). Probably the same test as table row B1 (qf-bass2-row-b1)."
+    },
+    "qf-bass2-lower-oxygen-than-earth": {
+      "claim": "In BASS-II on the ISS, flames spread over PMMA rods in weightlessness at oxygen levels as low as 17.5 percent, while on the ground the same kind of flame spread was not seen below 19 percent.",
+      "quote": "While in microgravity, flame spread was observed at O2 concentrations as low as 17.5 percent, in normal gravity, flame spread was not observed below 19 percent. This result is probably due to the lower opposed-flow velocity in the microgravity tests in comparison with those induced by buoyancy in normal gravity.",
+      "source_title": "Burning and Suppression of Solids-II (BASS-II) Summary Report (NASA/TM-20210011385)",
+      "source_year": 2021,
+      "locator": "Section 4 (Fernandez-Pello), printed p. 50 (PDF p. 58)",
+      "landing_url": "https://ntrs.nasa.gov/citations/20210011385",
+      "doc_url": "https://ntrs.nasa.gov/api/citations/20210011385/downloads/TM-20210011385.pdf",
+      "conditions": {
+        "o2_percent": "17.5 (microgravity lowest) vs 19 (1g lowest)",
+        "pressure_text": "about 1 atm (ISS cabin / glovebox)",
+        "gravity": "microgravity (ISS) vs 1g ground",
+        "flow_text": "opposed flow; microgravity flows near the quenching limit, below those normally from ISS air supply",
+        "fuel": "black cast PMMA rods, 6.35 / 9.5 / 12.7 mm"
+      },
+      "limits": "Opposed-flow spread over black PMMA rods only (6.35, 9.5 and 12.7 mm), no external radiant heating. The report says the data sets do not fully overlap and 'some compromises were made'; the flow felt by the flame in the 1g tests was an order of magnitude greater than in the microgravity tests, and the authors attribute the difference 'probably' to that lower flow. 17.5 percent is the lowest oxygen in this opposed-flow spread dataset only: other BASS-II stagnation-flow tests on clear PMMA rods burned at about 14.8 percent (see qf-bass2-row-o4)."
+    },
+    "qf-weightless-candle-standoff-7mm": {
+      "claim": "A candle flame in weightlessness typically stood on the order of 7 mm from the wick, compared with 1 to 2 mm at the base of a candle flame on Earth, which the authors say implies weaker heat feedback from the flame and a smaller wax burning rate.",
+      "quote": "The microgravity candle flame has a large flame standoff distance from the wick, typically on the order of 7 mm (Figure ld) as compared to 1-2 mm for normal gravity candle flames (at the base region). This large flame standoff distance implies a weaker heat feedback from the flame and a smaller wax mass burning rate.",
+      "source_title": "Candle Flames in Microgravity (3rd International Microgravity Combustion Workshop, NTRS 19960008390)",
+      "source_year": 1995,
+      "locator": "p. 32 (PDF p. 2), 'Initial and Quasi-Steady Flame Behavior'",
+      "landing_url": "https://ntrs.nasa.gov/citations/19960008390",
+      "doc_url": "https://ntrs.nasa.gov/api/citations/19960008390/downloads/19960008390.pdf",
+      "conditions": {
+        "o2_percent": "21.7 (mole fraction 0.217)",
+        "pressure_text": "1 atm",
+        "gravity": "microgravity (Space Shuttle Columbia, USML-1)",
+        "flow_text": "quiescent air inside a perforated candle box",
+        "fuel": "candle, 5 mm diameter wax with cotton wick"
+      },
+      "limits": "Shuttle candle runs only (about 10 single candles, small sealed glovebox, 21.7% oxygen); standoff is read from video images, and the weaker-feedback/smaller-burning-rate statement is the authors' inference ('implies'), not a separate measurement."
+    },
+    "qf-bass2-quenching-blue-oscillating": {
+      "claim": "At very low forced airflow in BASS-II, the flame on a plastic (PMMA) rod shrank to a hemispherical blue flame and oscillated with increasing amplitude just before going out.",
+      "quote": "Quenching extinction occurs at very low forced flows, where the flame shrinks to a hemispherical blue flame and oscillates with increasing amplitude just before going out.",
+      "source_title": "Burning and Suppression of Solids-II (BASS-II) Summary Report (NASA/TM-20210011385)",
+      "source_year": 2021,
+      "locator": "Section 6.1.1 (Olson) abstract, printed p. 64 (PDF p. 72)",
+      "landing_url": "https://ntrs.nasa.gov/citations/20210011385",
+      "doc_url": "https://ntrs.nasa.gov/api/citations/20210011385/downloads/TM-20210011385.pdf",
+      "conditions": {
+        "o2_percent": "13.6 to 22.2",
+        "pressure_text": "about 1 atm",
+        "gravity": "microgravity (ISS)",
+        "flow_text": "very low forced flow in a 0 to 55 cm/s range",
+        "fuel": "PMMA rods, 6.35 / 9.5 / 12.7 mm"
+      },
+      "limits": "PMMA rods (6.35 to 12.7 mm, clear and black) in axial stagnation flow, 0 to 55 cm/s, 13.6 to 22.2 percent oxygen; the abstract gives no single airspeed for the quenching region and does not cover films or fabrics."
+    },
+    "qf-mir-flow-stop-self-extinguish": {
+      "claim": "In low-speed flow tests aboard Mir, stronger airflow strengthened the flames, and when the forced airflow was stopped the flames went out by themselves.",
+      "quote": "in the range of low-speed flows tested, increasing the flow rate caused the flames to strengthen significantly. When the forced air flow was stopped, the flames self-extinguished.",
+      "source_title": "The Combustion Experiments on the Mir (NASA Shuttle-Mir science summary, SP-4225 series; file is undated and cites Dietrich et al., 2000)",
+      "source_year": null,
+      "locator": "p. 5, summary text (printed page 5)",
+      "landing_url": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4225/science/combustion-summary.pdf",
+      "doc_url": "https://www.nasa.gov/wp-content/uploads/static/history/SP-4225/science/combustion-summary.pdf",
+      "conditions": {
+        "o2_percent": null,
+        "pressure_text": null,
+        "gravity": "microgravity (Mir station)",
+        "flow_text": "low-speed fan-driven flow; the summary sentence gives no speed (earlier paragraphs on the paper samples cite about 3 to 9 cm/s); forced flow then stopped",
+        "fuel": "plastic and cellulosic (paper) samples in the Mir low-speed wind tunnel; the summary does not say which samples were flow-stopped"
+      },
+      "limits": "Paper, plastic and cellulose samples in a small fan-driven wind tunnel at roughly 3 to 9 cm/s. The same source says that candle flames, with no forced flow, 'persisted in a quiescent environment' and that stopping ventilation is 'not always certain' to be 100% effective in isolation; Saffire results also say extinguishment of some fuels in still air cannot be assumed to be rapid."
+    },
+    "qf-eightfold-density-flame-lifts-flickers": {
+      "claim": "NASA's researcher guide says a flame produces an eight-fold density change over the scale of a centimetre, and the resulting strong flow makes flames on Earth lift, point upward and flicker.",
+      "quote": "This produces an eight-fold density change over the scale of a centimeter. The resultant density gradient induces a strong velocity field that dominates all but the highest flow fields. This flow field causes the flame to lift and point upward. The resultant flow instabilities cause the flicker typical of flames on Earth.",
+      "source_title": "A Researcher's Guide to: Combustion Science (ISS Researcher's Guide series; NP-2015-10-034-JSC; NASA web page dated 2016-07-06)",
+      "source_year": 2016,
+      "locator": "p. 8, 'Why Conduct Combustion Research in Microgravity?'",
+      "landing_url": "https://www.nasa.gov/missions/station/a-researchers-guide-to-combustion-science/",
+      "doc_url": "https://www.nasa.gov/wp-content/uploads/2016/05/np-2015-10-034-jsc_combustion_in_reduced_gravity-iss-mini-book-011116-508.pdf",
+      "conditions": {
+        "o2_percent": null,
+        "pressure_text": "not stated",
+        "gravity": "normal gravity",
+        "flow_text": null,
+        "fuel": null
+      },
+      "limits": "The guide's own earlier sentence gives typical flame temperature about 2,300 K against about 300 K ambient. This is an order-of-magnitude explanation for ordinary hydrocarbon flames, not a measurement of a particular fire."
+    },
+    "qf-earth-hot-gas-rises-sets-flame-shape": {
+      "claim": "NASA's fire-protection brief says that on Earth, as hot gas rises from a flame, gravity pulls cooler, denser air to the bottom of the flame, which regulates the flame's speed and size and also creates its shape and its flicker; in microgravity this flow does not occur.",
+      "quote": "As hot gasses from the flame rise, gravity pulls cooler, denser air to the bottom of the flame which regulates its speed and size. This also creates both the shape of the flame, as well as a flickering effect. In microgravity, this flow doesn't occur.",
+      "source_title": "NASA-STD-3001 Technical Brief: Fire Protection (OCHMO-TB-008 Rev A)",
+      "source_year": 2023,
+      "locator": "p. 2, 'Overview' (OCHMO-TB-008 Rev A, 11/29/2023)",
+      "landing_url": "https://www.nasa.gov/wp-content/uploads/2023/12/ochmo-tb-008-fire-protection.pdf",
+      "doc_url": "https://www.nasa.gov/wp-content/uploads/2023/12/ochmo-tb-008-fire-protection.pdf",
+      "conditions": {
+        "o2_percent": null,
+        "pressure_text": null,
+        "gravity": "normal gravity vs microgravity (general description)",
+        "flow_text": null,
+        "fuel": null
+      },
+      "limits": "General explanatory statement in a NASA technical brief derived from NASA-STD-3001; it gives no measurements and describes flames in general, not one experiment or material."
+    },
+    "qf-earth-candle-draws-fresh-oxygen": {
+      "claim": "On Earth a candle flame sustains itself because hot air rises and cooler air carrying fresh oxygen flows in to replace it at the base of the flame.",
+      "quote": "If you have a look at a candle flame, the hot air is rising upward, but replacing that at the base of the flame is cold air coming in, and that is fresh oxygen at the flame needs to sustain itself.",
+      "source_title": "Moon Material Flammability (Houston We Have a Podcast, episode 386, transcript)",
+      "source_year": 2025,
+      "locator": "Transcript, Paul Ferkul answering why gravity changes flames (no page numbers; HTML page)",
+      "landing_url": "https://www.nasa.gov/podcasts/houston-we-have-a-podcast/moon-material-flammability/",
+      "doc_url": "https://www.nasa.gov/podcasts/houston-we-have-a-podcast/moon-material-flammability/",
+      "conditions": {
+        "o2_percent": null,
+        "pressure_text": null,
+        "gravity": "normal gravity",
+        "flow_text": null,
+        "fuel": "candle (illustration)"
+      },
+      "limits": "Spoken explanation by a NASA principal investigator in a NASA podcast, transcribed by NASA; a plain-language illustration with a candle, not a measurement."
+    },
+    "qf-pale-blue-almost-invisible": {
+      "claim": "NASA's fire-protection brief says flames in nearly still or low-oxygen air are often pale blue and almost invisible.",
+      "quote": "Flames in near quiescent or low-oxygen environments are often pale blue and almost invisible.",
+      "source_title": "NASA-STD-3001 Technical Brief: Fire Protection (OCHMO-TB-008 Rev A)",
+      "source_year": 2023,
+      "locator": "p. 2, 'Overview' (text next to a NASA photo)",
+      "landing_url": "https://www.nasa.gov/wp-content/uploads/2023/12/ochmo-tb-008-fire-protection.pdf",
+      "doc_url": "https://www.nasa.gov/wp-content/uploads/2023/12/ochmo-tb-008-fire-protection.pdf",
+      "conditions": {
+        "o2_percent": "low (no value given)",
+        "pressure_text": null,
+        "gravity": null,
+        "flow_text": "near quiescent (no value given)",
+        "fuel": null
+      },
+      "limits": "The sentence names near-quiescent or low-oxygen environments, not microgravity specifically, and gives no numbers. It describes a tendency ('often'), not every fire."
+    },
+    "qf-mir-candle-nearly-invisible-lower-oxygen": {
+      "claim": "A candle flame burned in weightlessness aboard the Mir station was nearly invisible to the naked eye and burned slowly, yet it burned down to a lower oxygen level than the identical candle would on Earth.",
+      "quote": "Despite having a much lower burning rate (the microgravity flame in Figure 1 was nearly invisible to the naked eye and a very long shutter time was needed to record the image shown), the microgravity flame burned to a lower ambient oxygen mole fraction than the identical candle flame would have on Earth.",
+      "source_title": "A Researcher's Guide to: Combustion Science (ISS Researcher's Guide series; NP-2015-10-034-JSC; NASA web page dated 2016-07-06)",
+      "source_year": 2016,
+      "locator": "p. 30, 'Highlights and Lessons Learned: Flame Existence'",
+      "landing_url": "https://www.nasa.gov/missions/station/a-researchers-guide-to-combustion-science/",
+      "doc_url": "https://www.nasa.gov/wp-content/uploads/2016/05/np-2015-10-034-jsc_combustion_in_reduced_gravity-iss-mini-book-011116-508.pdf",
+      "conditions": {
+        "o2_percent": null,
+        "pressure_text": null,
+        "gravity": "microgravity (Mir station)",
+        "flow_text": "quiescent (diffusion only)",
+        "fuel": "candle"
+      },
+      "limits": "Summary of one candle experiment (cites Dietrich et al., 2000): no oxygen values are given in this passage. A candle fed only by diffusion in a large cabin is not a solid-material fire with ventilation."
+    },
+    "qf-shuttle-candle-yellow-to-blue": {
+      "claim": "A candle lit in weightlessness on the Space Shuttle started as a spherical, bright yellow flame and after 8 to 10 seconds the yellow, presumably from soot, disappeared and the flame became blue and nearly hemispherical.",
+      "quote": "Immediately after ignition, the candle flame was spherical and bright yellow. After 8-10 seconds, the yellow, presumably from soot, disappeared, and the flame became blue and nearly hemispherical",
+      "source_title": "Candle Flames in Microgravity (3rd International Microgravity Combustion Workshop, NTRS 19960008390)",
+      "source_year": 1995,
+      "locator": "p. 32 (PDF p. 2), 'Initial and Quasi-Steady Flame Behavior'",
+      "landing_url": "https://ntrs.nasa.gov/citations/19960008390",
+      "doc_url": "https://ntrs.nasa.gov/api/citations/19960008390/downloads/19960008390.pdf",
+      "conditions": {
+        "o2_percent": "21.7 (mole fraction 0.217)",
+        "pressure_text": "1 atm",
+        "gravity": "microgravity (Space Shuttle Columbia, USML-1, June 1992)",
+        "flow_text": "quiescent air inside a perforated candle box",
+        "fuel": "candle, 5 mm diameter: 80% n-paraffin wax + 20% stearic acid, cotton wick"
+      },
+      "limits": "About 10 single-candle Shuttle runs inside a small sealed glovebox; a candle does not spread flame like a fire in a solid material. The soot loss is only presumed ('presumably from soot'); the researchers' temperature explanation is itself a hypothesis (see qf-weightless-candle-blue-too-cool-for-soot). Flame lifetimes were only 40 to 60 s (one 105 s) because the finite glovebox volume ran low on oxygen."
+    },
+    "qf-bass2-rods-spread-faster-than-1g": {
+      "claim": "In BASS-II comparisons with ground tests, flame spread over cylindrical PMMA rods was appreciably faster in microgravity than in normal gravity.",
+      "quote": "It is also apparent that flame spread in microgravity is appreciably faster than in 1g for cylindrical rods of PMMA.",
+      "source_title": "Burning and Suppression of Solids-II (BASS-II) Summary Report (NASA/TM-20210011385)",
+      "source_year": 2021,
+      "locator": "Section 4 (Fernandez-Pello), printed p. 51 (PDF p. 59), after Figure 4.3",
+      "landing_url": "https://ntrs.nasa.gov/citations/20210011385",
+      "doc_url": "https://ntrs.nasa.gov/api/citations/20210011385/downloads/TM-20210011385.pdf",
+      "conditions": {
+        "o2_percent": "about 17.5 to 21 (microgravity) vs 19 and above (1g)",
+        "pressure_text": "about 1 atm",
+        "gravity": "microgravity (ISS) vs 1g ground",
+        "flow_text": "opposed flow; microgravity flows near the quenching limit",
+        "fuel": "black cast PMMA rods, 6.35 / 9.5 / 12.7 mm"
+      },
+      "limits": "Opposed-flow spread over black PMMA rods, no external radiant heating; the microgravity and 1g data sets do not fully overlap in oxygen level, rod diameter or flow ('some compromises were made'), and the 1g flow felt by the flame is about ten times higher. Does not apply to thick slabs, films or fabrics, which the report treats separately."
+    }
+  },
+  "drawing": {
+    "note": "Drawing choices, not findings. Sizes are in drawing units; only the stand-off gaps (weightless.standoff_mm, earth.standoff_mm) are taken from the evidence and are drawn 1 unit to 1 mm.",
+    "flame": {
+      "r_min": 5.4,
+      "r_max": 12.2,
+      "standoff_min": 3.2,
+      "tail_min": 5,
+      "tail_max": 21,
+      "tear_r": 7.2,
+      "tear_h": 34
+    },
+    "dial_hot_band": {
+      "from_cm_s": "weightless.burn_from_cm_s",
+      "to_cm_s": "weightless.full_at_cm_s"
+    }
+  }
+}
