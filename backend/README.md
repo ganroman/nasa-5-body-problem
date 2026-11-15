@@ -28,6 +28,17 @@ uv run uvicorn app.main:app --port 8000
 
 The API is then at `http://localhost:8000` (docs at `/docs`). Add the frontend's local origin to `CORS_ORIGINS` if it is served from another port.
 
+## Hosted demo (one origin)
+
+`serve.py` mounts the static pages (`/prototype`, `/presentation`, landing page `site/`) after the API routes, so API and frontend share one origin and no base URL or CORS setup is needed:
+
+```bash
+cd backend
+uv run uvicorn serve:app --host 127.0.0.1 --port 8220
+```
+
+The demo host runs this as a systemd unit behind a Cloudflare tunnel with `CORS_ORIGINS=https://cargo.qwadratic.me`.
+
 ## Configuration
 
 All configuration comes from environment variables (`.env` locally, the host's settings in production). Nothing secret is committed.
