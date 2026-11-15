@@ -42,15 +42,16 @@ Status key: `[ ]` open · `[~]` in progress (claimed) · `[!]` blocked · `[x]` 
 - [ ] T10 HUMAN (Roman): after T06–T08 and T10–T12, give the go-ahead to push to `Hantok/cargo-passport`.
 
 ### C. Media and compliance
-- [ ] T11 Add the SI watermark to: `presentation/final/assets/five-body-problem-team-repo-qr.png`, `cargo-passport-pitch-slide.png`, Hantok `media/hero.png`, `media/team.png` (these live on Roman's Mac and in the Hantok repo).
-- [ ] T12 Fix the spelling error "combustiion" in the team image.
-- [ ] T13 HUMAN (Roman): confirm that no person under 18 appears in the team image.
-- [ ] T14 HUMAN (Roman, from the Mac): commit the Mac-only files via a PR: `presentation/final/`, `docs/brag-video-review.md`, `brag-output/v5` and `v6` text files, `brag-output/v6/composition`.
+- [~] T11 SI watermark: `hero.png` and `team.png` (Hantok `media/`) are done locally with a visible "SI-assisted" label, in /tmp/claude-1000/-home-roman-Projects-nasa-hackathon/65a436d4-009f-4f41-9269-d3d07ae9d7a0/scratchpad/hantok/out/ (@roman-claude). The two `presentation/final/` images were Mac-only and are lost: regenerate from the live app or slides, or leave them out of the submission. Waits for T10 to push.
+- [~] T12 Typo "combustiion" in `team.png` is fixed locally (retouched the sign text, reads "combustion") in /tmp/claude-1000/-home-roman-Projects-nasa-hackathon/65a436d4-009f-4f41-9269-d3d07ae9d7a0/scratchpad/hantok/out/team.png (@roman-claude). Waits for T10 to push.
+- [ ] T13 HUMAN (Roman): confirm that no person under 18 appears in the team image. (It shows five adult-looking illustrated people; the hero image has no people.) Note: both images are SI-generated, so mention them under "SI use" in the form.
+- [x] T14 CANCELLED: Roman has no access to the Mac, so the Mac-only files (`presentation/final/`, `docs/brag-video-review.md`, v5/v6 text, `v6/composition`) are not recoverable. Not needed for the submission.
 
 ### D. Submission form
-- [ ] T15 Draft the form text in `docs/submission-form.md`: Name, Summary, Detailed description, SI use, NASA Data (DOIs), References (fonts, GSAP, Kokoro, HyperFrames, Eustella, ZARM Zenodo). Sources: `brag-output/v6/description.txt`, the Hantok README. Only facts that exist in the repo.
+- [ ] T15 Draft the form text in `docs/submission-form.md`: Name, Summary, Detailed description, SI use, NASA Data (DOIs), References (fonts, GSAP, Kokoro, HyperFrames, Eustella, ZARM Zenodo). Sources: `brag-output/v6/description.txt`, the Hantok README. Only facts that exist in the repo. Note: `brag-output/v6/description.txt` is lost with the Mac; rebuild the text from the Hantok README and the repo, and have Roman check it.
 - [ ] T16 HUMAN (Roman): upload the 30 s video and paste the Demo video link.
 - [ ] T17 Final audit (after T01–T15): no mock data anywhere, no secrets, every link in README and form opens, video is 30.0 s with watermark. Post a pass/fail list on the line.
+- [ ] T19 Check the QR code drawn inside `team.png` and `hero.png` (Hantok `media/`): it is SI-drawn and may not scan. If it does not, tell Roman; the real QR files are `brag-output/v6/cargo-passport-repo-qr.png/svg`.
 - [ ] T18 HUMAN (Roman): fill the form, tick Terms and Originality, press **Submit for Judging**. Target 21:00, hard limit 23:59.
 
 ## In progress
