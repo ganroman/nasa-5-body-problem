@@ -42,13 +42,13 @@ Status key: `[ ]` open · `[~]` in progress (claimed) · `[!]` blocked · `[x]` 
 - [ ] T10 HUMAN (Roman): after T06–T08 and T10–T12, give the go-ahead to push to `Hantok/cargo-passport`.
 
 ### C. Media and compliance
-- [x] T11 @roman-claude pushed to Hantok master 09aea91 (hero.png, team.png). presentation/final images still on the offline Mac (T14).
+- [x] @roman-claude T11 watermark done on hero.png and team.png (Hantok 09aea91) and on the two presentation/final images (PR #53, byte-identical originals).
 - [x] T12 @roman-claude pushed to Hantok master 09aea91.
 - [ ] T13 HUMAN (Roman): confirm that no person under 18 appears in the team image. (It shows five adult-looking illustrated people; the hero image has no people.) Note: both images are SI-generated, so mention them under "SI use" in the form.
-- [!] T14 HUMAN (Roman): the Mac is OFFLINE, not lost (may be back in ~1 hour). When it is online, push the Mac-only files (`presentation/final/`, `docs/brag-video-review.md`, `brag-output/v5` and `v6` text, `v6/composition`) to branch `mac-files` of the team repo (see prompt in chat). Needed for T15 (`v6/description.txt`) and the two `presentation/final` images.
+- [x] @roman-claude T14 Mac files fetched over SSH (Mac is online, host romans-mac, repo ~/dev/nasa-hackathon) and added in PR #53 (presentation/final, brag-video-review, v5/v6 text, v6 composition). The two final images in that PR are the watermarked, typo-fixed versions. Mac itself untouched. `output/` NOT copied (not requested).
 
 ### D. Submission form
-- [x] @roman-claude T15 DRAFT DONE in PR (docs/submission-form.md, branch t15-submission-form). Roman must fill: hook line, video link, confirm SI-coding sentence; merge description.txt from the Mac when it is back (T14). Original task: Draft the form text in `docs/submission-form.md`: Name, Summary, Detailed description, SI use, NASA Data (DOIs), References (fonts, GSAP, Kokoro, HyperFrames, Eustella, ZARM Zenodo). Sources: `brag-output/v6/description.txt`, the Hantok README. Only facts that exist in the repo. Note: `brag-output/v6/description.txt` is on the offline Mac (T14); draft from the Hantok README and repo now, and merge in that file when the Mac is back.
+- [x] @roman-claude T15 DRAFT in PR #51, now built from the team's own description.txt (SI disclosure, resources, data note). Roman must: confirm the hook decision (opening line "In space, there's no fire department." was SI-drafted, team-approved; review feedback says hooks must come from the team), add video link. Old note: 
 - [ ] T16 HUMAN (Roman): upload the 30 s video and paste the Demo video link.
 - [ ] T17 Final audit (after T01–T15): no mock data anywhere, no secrets, every link in README and form opens, video is 30.0 s with watermark. Post a pass/fail list on the line.
 - [x] @roman-claude T19 QR in team.png scans to https://github.com/Hantok/cargo-passport. The small QR on the crate in hero.png does not decode (decoration only).
