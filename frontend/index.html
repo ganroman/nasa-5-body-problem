@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cargo Passport</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Crect width=%2732%27 height=%2732%27 rx=%277%27 fill=%27%23101c2e%27/%3E%3Ccircle cx=%2716%27 cy=%2715%27 r=%278%27 fill=%27%23ffc878%27/%3E%3Ccircle cx=%2716%27 cy=%2715%27 r=%276%27 fill=%27%23ff8a2a%27/%3E%3C/svg%3E">
 <!-- Spec: docs/ui-ux.md. Data: backend/API.md. Open with ?cargo=<slug>&route=<route id> (what the QR code encodes)
      or ?share=<slug> (a saved passport); ?api=<url> points at another backend. Served by the backend at /app. -->
 <style>
@@ -550,7 +551,7 @@ function evidencePanel(r) {
         <div>${esc(top.reasons.slice(1).join('; '))}</div><div>${link(o.source_id)}</div></div></details>`;
   }).join('');
   const analogues = new Set(r.components.flatMap(k => k.ranked.filter(x => x.evidence_class === 'analogue').map(x => x.observation_id))).size;
-  return `<section class="card"><h2>Evidence · NASA PSI</h2>${rows}
+  return `<section class="card"><h2>Evidence · NASA sources</h2>${rows}
     ${analogues ? `<div class="ev small" style="padding:9px 0">ACME BRE gas-burner analogues: ${analogues} record${analogues > 1 ? 's' : ''}, kept separate — not material evidence.</div>` : ''}
     ${r.findings.map(f => `<div class="ev" style="padding:9px 0">${esc(f.claim)}<br><span class="small">${link(f.source_id)}</span></div>`).join('')}
     <div class="small" style="margin-top:8px">Observed results · tap a row for conditions &amp; DOI</div>

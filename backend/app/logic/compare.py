@@ -13,8 +13,8 @@ from typing import Any
 from app.enums import AssessmentStatus, Dimension, GravityRegime, Hazard, MatchConfidence, ValueStatus
 
 # Tolerances in internal units. Disclosed in every comparison result.
-O2_TOLERANCE = 0.015  # fraction = 1.5 points, same as the dashboard mock
-PRESSURE_TOLERANCE_KPA = 5.0  # ~0.05 atm, same as the dashboard mock
+O2_TOLERANCE = 0.015  # fraction = 1.5 points, same tolerance as the UI
+PRESSURE_TOLERANCE_KPA = 5.0  # ~0.05 atm, same tolerance as the UI
 AIRFLOW_TOLERANCE_MS = 0.02  # 2 cm/s, finer than the 5-20 cm/s steps flame-spread tests vary over
 _EPS = 1e-9  # float slack so a delta of exactly the tolerance counts as a match
 
