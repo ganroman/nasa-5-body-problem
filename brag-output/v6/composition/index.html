@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1920, height=1080" />
+<title>Cargo Passport v6</title>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>
+@font-face { font-family: "SG"; src: url("assets/SpaceGrotesk.ttf") format("truetype"); font-weight: 300 700; }
+@font-face { font-family: "JBM"; src: url("assets/JetBrainsMono.ttf") format("truetype"); font-weight: 100 800; }
+:root { --bg:#060a14; --panel:#0d1424; --line:#1e2a42; --ink:#eef2f8; --dim:#8a96ad; --amber:#ffb020; --red:#ff4d3d; --green:#34d399; --blue:#5aa9ff; }
+body { margin:0; background:var(--bg); color:var(--ink); font-family:"SG", sans-serif; }
+#root { position:relative; width:100%; height:100%; overflow:hidden; background:var(--bg); }
+#stars, #earth-wrap { position:absolute; inset:0; }
+.star { position:absolute; border-radius:50%; background:#fff; }
+#earth { position:absolute; left:-10%; width:120%; height:1400px; top:860px; border-radius:50%;
+  background: radial-gradient(ellipse at 50% 0%, #2f6fd6 0%, #123a7a 22%, #07152f 48%, #060a14 70%);
+  box-shadow: 0 -30px 120px rgba(90,169,255,.45), inset 0 18px 40px rgba(170,215,255,.5); }
+.clip { position:absolute; inset:0; }
+.sub { z-index:60; inset:auto 0 30px 0; text-align:center; pointer-events:none; }
+.sub span { display:inline-block; max-width:1500px; padding:8px 22px; border-radius:10px; background:rgba(0,0,0,.72); color:#fff; font-size:38px; font-weight:500; line-height:1.25; }
+.cap { position:absolute; left:120px; top:100px; font-size:72px; font-weight:600; letter-spacing:-1.5px; line-height:1.05; width:1680px; }
+.cap em { font-style:normal; color:var(--amber); }
+.kicker { font-family:"JBM", monospace; font-size:26px; letter-spacing:5px; color:var(--amber); text-transform:uppercase; }
+.card { position:absolute; background:rgba(13,20,36,.92); border:2px solid var(--line); border-radius:28px; box-shadow:0 40px 100px rgba(0,0,0,.6); }
+.note { position:absolute; left:120px; bottom:60px; font-family:"JBM", monospace; font-size:24px; color:#8a96ad; letter-spacing:1px; }
+
+/* SI watermark: visible on every frame */
+#si { position:absolute; right:40px; top:34px; z-index:50; font-family:"JBM", monospace; font-size:22px; letter-spacing:3px; color:#c9d3e6;
+  border:2px solid rgba(201,211,230,.55); border-radius:30px; padding:8px 20px; background:rgba(6,10,20,.6); }
+
+/* S1 team */
+#s1-box { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; padding-bottom:120px; }
+#s1-team { font-size:140px; font-weight:700; letter-spacing:-3px; margin-top:20px; }
+#s1-names { display:flex; gap:44px; margin-top:34px; font-size:36px; color:#d6deeb; }
+#s1-place { font-family:"JBM", monospace; font-size:24px; color:var(--dim); letter-spacing:4px; margin-top:26px; }
+
+/* S2 challenge */
+#s2-box { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+#s2-title { font-size:150px; font-weight:700; letter-spacing:-4px; margin-top:24px; }
+#s2-title span { color:var(--blue); }
+#s2-sub { font-size:42px; color:#d6deeb; margin-top:24px; width:1500px; }
+
+/* S3 title + passport */
+#s3-word { position:absolute; left:120px; top:200px; font-size:150px; font-weight:700; letter-spacing:-4px; line-height:.92; }
+#s3-word span { color:var(--amber); }
+#s3-tag { position:absolute; left:124px; top:520px; font-size:40px; color:#d6deeb; width:640px; line-height:1.25; }
+.crate { position:absolute; width:340px; height:240px; border-radius:20px; background:linear-gradient(160deg,#3a4458,#1c2333 70%);
+  border:3px solid #4a5672; box-shadow: 0 40px 90px rgba(0,0,0,.6), inset 0 2px 0 rgba(255,255,255,.12); }
+.crate .stripe { position:absolute; left:0; right:0; top:96px; height:38px; background: repeating-linear-gradient(-45deg, var(--amber) 0 20px, #111 20px 40px); opacity:.9; }
+.crate .lbl { position:absolute; left:24px; top:22px; font-family:"JBM", monospace; font-size:18px; color:#c8d0e0; letter-spacing:2px; }
+.crate .lbl b { display:block; color:var(--amber); font-size:26px; margin-top:4px; }
+.crate .tag { position:absolute; right:22px; bottom:18px; width:90px; height:90px; background:#f5f1e6; border-radius:8px; display:grid; place-items:center; }
+#s3-crate { left:124px; top:700px; }
+.qr { display:block; }
+#s3-card { left:900px; top:150px; width:880px; height:820px; padding:46px 54px; box-sizing:border-box; }
+#s3-card .id { font-family:"JBM", monospace; font-size:24px; color:var(--dim); margin-top:14px; }
+#s3-card .route { font-family:"JBM", monospace; font-size:24px; color:var(--blue); margin-top:8px; }
+.rows { margin-top:28px; border-top:2px solid var(--line); }
+.row { padding:16px 0; border-bottom:2px solid var(--line); font-size:34px; }
+.mat { display:block; font-family:"JBM", monospace; font-size:24px; color:var(--blue); margin-top:6px; }
+#s3-qr-box { position:absolute; right:54px; bottom:44px; width:150px; height:150px; background:#f5f1e6; border-radius:14px; display:grid; place-items:center; }
+#s3-sig { position:absolute; left:54px; bottom:62px; font-family:"JBM", monospace; font-size:22px; color:#8a96ad; width:520px; line-height:1.5; }
+
+/* S4 prototype map */
+#s4-frame { position:absolute; left:335px; top:232px; width:1250px; height:747px; border-radius:20px; overflow:hidden; border:2px solid #2a3a50; box-shadow:0 40px 100px rgba(0,0,0,.7); background:#0b1018; }
+#s4-bar { position:absolute; left:0; right:0; top:0; height:44px; background:#121c29; border-bottom:1px solid #2a3a50; display:flex; align-items:center; gap:10px; padding-left:18px; z-index:2; }
+#s4-bar i { width:13px; height:13px; border-radius:50%; background:#2a3a50; display:block; }
+#s4-bar span { font-family:"JBM", monospace; font-size:18px; color:#8a96ad; margin-left:16px; }
+#s4-canvas { position:absolute; left:0; top:44px; width:1250px; height:703px; display:block; }
+#s4-label { position:absolute; left:335px; top:190px; font-family:"JBM", monospace; font-size:24px; color:var(--blue); letter-spacing:2px; }
+
+/* S5 evidence */
+.dash { position:absolute; left:80px; right:80px; top:240px; bottom:120px; }
+.dhead { position:absolute; left:0; right:0; top:0; height:70px; display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid var(--line); }
+.dhead .t { font-family:"JBM", monospace; font-size:24px; letter-spacing:3px; color:var(--amber); }
+.dhead .env { font-family:"JBM", monospace; font-size:24px; color:var(--dim); }
+.dhead .env b { color:var(--ink); font-weight:500; }
+#s5-table { position:absolute; left:0; right:0; top:100px; padding:20px 50px; box-sizing:border-box; }
+.tr { display:grid; grid-template-columns: 480px 1fr 500px; align-items:center; padding:20px 0; border-bottom:2px solid var(--line); font-size:32px; }
+.tr.th { font-family:"JBM", monospace; font-size:22px; letter-spacing:3px; color:var(--dim); padding:10px 0 14px; }
+.chip { display:inline-block; font-family:"JBM", monospace; font-size:22px; letter-spacing:2px; padding:6px 14px; border-radius:8px; margin-right:16px; vertical-align:middle; }
+.ok { color:var(--green); border:2px solid var(--green); }
+.gap { color:var(--amber); border:2px solid var(--amber); }
+.miss { color:var(--red); border:2px solid var(--red); }
+.src { color:var(--blue); }
+#s5-note { position:absolute; left:80px; bottom:200px; font-family:"JBM", monospace; font-size:24px; color:#8a96ad; }
+
+/* S6 future */
+#s6-sim { position:absolute; left:120px; top:300px; width:1000px; height:560px; padding:40px 44px; box-sizing:border-box; }
+#s6-slab { position:absolute; left:44px; right:44px; top:130px; height:260px; border-radius:16px; background:linear-gradient(180deg,#26324c,#1a2338); overflow:hidden; border:2px solid #33415f; }
+#s6-burnt { position:absolute; left:0; top:0; bottom:0; width:100%; background:linear-gradient(90deg,#08090d,#141a2c 80%,#1f3a7a); transform-origin:left center; }
+#s6-flame { position:absolute; top:-30px; width:260px; height:320px; left:0;
+  background: radial-gradient(ellipse at 50% 50%, #eaf6ff 0%, #7cc4ff 22%, #2f6fff 46%, rgba(30,70,255,0) 72%); filter: blur(7px); }
+#s6-lab { position:absolute; left:44px; right:44px; bottom:40px; font-family:"JBM", monospace; font-size:24px; color:#9fb0c8; line-height:1.5; }
+#s6-steps { position:absolute; left:1160px; top:300px; width:680px; height:560px; padding:36px 36px; box-sizing:border-box; }
+.step { display:flex; gap:16px; align-items:center; font-size:30px; line-height:1.2; margin-bottom:20px; }
+.step .k { width:48px; height:48px; border-radius:50%; flex:none; display:grid; place-items:center; font-family:"JBM", monospace; font-size:24px; font-weight:700; color:var(--blue); border:2px solid var(--blue); }
+
+/* S7 outro */
+#s7-box { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; gap:120px; }
+#s7-main { display:flex; flex-direction:column; align-items:center; }
+#s7-qr { display:flex; flex-direction:column; align-items:center; gap:18px; }
+#s7-qr .plate { background:#f5f1e6; border-radius:20px; padding:26px; }
+#s7-qr .plate img { display:block; width:300px; height:300px; }
+#s7-qr .url { font-family:"JBM", monospace; font-size:24px; color:#c9d3e6; letter-spacing:1px; }
+#s7-logo { display:flex; align-items:center; gap:44px; }
+#s7-icon { width:150px; height:190px; border-radius:22px; background:linear-gradient(160deg,#1c2a4a,#0d1424); border:4px solid var(--amber); position:relative; }
+#s7-icon .qr-mini { position:absolute; left:33px; bottom:28px; width:84px; height:84px; background:#f5f1e6; border-radius:8px; display:grid; place-items:center; }
+#s7-icon .bars { position:absolute; left:28px; right:28px; top:30px; }
+#s7-icon .bars i { display:block; height:10px; border-radius:5px; background:var(--amber); margin-bottom:12px; opacity:.85; }
+#s7-word { font-size:132px; font-weight:700; letter-spacing:-3px; line-height:.95; }
+#s7-word span { color:var(--amber); }
+#s7-tag { font-size:52px; margin-top:56px; font-weight:500; }
+#s7-meta { font-family:"JBM", monospace; font-size:26px; color:#9fb0c8; margin-top:30px; letter-spacing:3px; }
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="30">
+  <div id="stars"></div>
+  <div id="earth-wrap"><div id="earth" data-layout-allow-overflow></div></div>
+  <audio id="music" src="assets/mix.wav" data-start="0" data-duration="30" data-volume="1"></audio>
+
+  <!-- 0:00 team -->
+  <section id="s1" class="clip" data-start="0" data-duration="2.6" data-track-index="1">
+    <div id="s1-box">
+      <div class="kicker" id="s1-k">Team</div>
+      <div id="s1-team">Five-Body Problem</div>
+      <div id="s1-names"><span class="nm">Roman Slysh</span><span class="nm">Roman Ganopolskyi</span><span class="nm">Ivan Kotelnikov</span><span class="nm">Gjergj Brestovci</span><span class="nm">Sophie Ganopolska</span></div>
+      <div id="s1-place">VIENNA, AUSTRIA</div>
+    </div>
+  </section>
+
+  <!-- 0:02 challenge -->
+  <section id="s2" class="clip" data-start="2.6" data-duration="2.6" data-track-index="1">
+    <div id="s2-box">
+      <div class="kicker" id="s2-k">Space Apps Challenge 2026 · Challenge</div>
+      <div id="s2-title">Flame in <span>Freefall</span></div>
+      <div id="s2-sub">SI-Powered Fire Safety Insights from Microgravity Combustion Data</div>
+    </div>
+  </section>
+
+  <!-- 0:05 title + passport -->
+  <section id="s3" class="clip" data-start="5.2" data-duration="4.8" data-track-index="1">
+    <div id="s3-word"><div>Cargo</div><div><span>Passport</span></div></div>
+    <div id="s3-tag">Every shipment lists each item, and what it's made of.</div>
+    <div id="s3-crate" class="crate"><div class="lbl">CARGO<b>CP-0042</b></div><div class="stripe"></div><div class="tag"><img class="qr" src="assets/repo-qr.svg" width="72" height="72" alt=""></div></div>
+    <div id="s3-card" class="card">
+      <div class="kicker">Cargo Passport</div>
+      <div class="id">ID CP-2031-0042 · illustrative shipment</div>
+      <div class="route">EARTH → ISS → MOON BASE</div>
+      <div class="rows">
+        <div class="row s3-row">Instrument case<span class="mat">PMMA (acrylic)</span></div>
+        <div class="row s3-row">Stowage bag<span class="mat">SIBAL cotton-fiberglass</span></div>
+        <div class="row s3-row">Seals<span class="mat">Silicone rubber</span></div>
+        <div class="row s3-row">Battery pack<span class="mat">Lithium-ion cells</span></div>
+      </div>
+      <div id="s3-sig">Declared by shipper · linked to NASA PSI data</div>
+      <div id="s3-qr-box"><img class="qr" src="assets/repo-qr.svg" width="126" height="126" alt="QR code: github.com/Hantok/cargo-passport"></div>
+    </div>
+  </section>
+
+  <!-- 0:10 idea: team prototype -->
+  <section id="s4" class="clip" data-start="10" data-duration="4.6" data-track-index="1">
+    <div class="cap" id="s4-cap">Follow the cargo. <em>Compare every stop.</em></div>
+    <div id="s4-label">TEAM PROTOTYPE · CARGO JOURNEY</div>
+    <div id="s4-frame">
+      <div id="s4-bar"><i></i><i></i><i></i><span>prototype/cargo-journey-animation.html</span></div>
+      <canvas id="s4-canvas" width="1600" height="900" role="img" aria-label="Team prototype: cargo travels from Earth via the ISS and Gateway to the NASA lunar base"></canvas>
+    </div>
+  </section>
+
+  <!-- idea: evidence -->
+  <section id="s5" class="clip" data-start="14.6" data-duration="5.6" data-track-index="1">
+    <div class="cap s5-in">See what evidence applies, <em>and what's missing.</em></div>
+    <div class="dash">
+      <div class="dhead s5-in"><span class="t">CP-2031-0042 · EVIDENCE</span><span class="env">Destination <b>Lunar habitat</b> · 30% O₂ · 0.69 atm · 1/6 g</span></div>
+      <div id="s5-table" class="card s5-in">
+        <div class="tr th"><span>ITEM · MATERIAL</span><span>NASA PSI EVIDENCE</span><span>UNTESTED AT DESTINATION</span></div>
+        <div class="tr s5-row"><span>Instrument case <span class="src">· PMMA</span></span><span><span class="chip gap">CONDITIONS DIFFER</span>BASS-II · 14–22% O₂</span><span>30% O₂ · 0.69 atm · 1/6 g</span></div>
+        <div class="tr s5-row"><span>Stowage bag <span class="src">· SIBAL</span></span><span><span class="chip gap">CONDITIONS DIFFER</span>Saffire-I · ~21% O₂</span><span>30% O₂ · 0.69 atm · 1/6 g</span></div>
+        <div class="tr s5-row"><span>Seals <span class="src">· silicone</span></span><span><span class="chip gap">CONDITIONS DIFFER</span>Saffire-II · ~21% O₂</span><span>30% O₂ · 0.69 atm · 1/6 g</span></div>
+        <div class="tr s5-row"><span>Battery pack <span class="src">· Li-ion</span></span><span><span class="chip miss">NONE</span>Not in PSI</span><span>Battery evidence missing</span></div>
+      </div>
+    </div>
+    <div id="s5-note">Evidence comparison, not a safety verdict · lunar conditions from challenge brief</div>
+  </section>
+
+  <!-- 0:20 future -->
+  <section id="s6" class="clip" data-start="20.2" data-duration="5.7" data-track-index="1">
+    <div class="cap s6-in">Next: <em>predict the flame.</em></div>
+    <div id="s6-sim" class="card s6-in">
+      <div class="kicker" style="color:#7cc4ff">Future · flame spread in microgravity</div>
+      <div id="s6-slab"><div id="s6-burnt"></div><div id="s6-flame" data-layout-allow-overflow></div></div>
+      <div id="s6-lab">Concept animation · hypothesis, not a result</div>
+    </div>
+    <div id="s6-steps" class="card s6-in">
+      <div class="kicker" style="color:var(--blue);margin-bottom:26px">Roadmap</div>
+      <div class="step s6-step"><span class="k">1</span><span>Combine evidences (PSI, drop-tower &amp; MAPTIS)</span></div>
+      <div class="step s6-step"><span class="k">2</span><span>Flag risky routes &amp; storage spots</span></div>
+      <div class="step s6-step"><span class="k">3</span><span>Predict flame spread</span></div>
+      <div class="step s6-step"><span class="k">4</span><span>Link fire-response steps</span></div>
+      <div class="step s6-step"><span class="k">5</span><span>Extend to Moon &amp; Mars</span></div>
+    </div>
+  </section>
+
+  <!-- outro -->
+  <section id="s7" class="clip" data-start="25.9" data-duration="4.1" data-track-index="1">
+    <div id="s7-box">
+      <div id="s7-main">
+      <div id="s7-logo">
+        <div id="s7-icon"><div class="bars"><i></i><i style="width:70%"></i></div><div class="qr-mini"><img class="qr" src="assets/repo-qr.svg" width="66" height="66" alt=""></div></div>
+        <div id="s7-word"><div>CARGO</div><div><span>PASSPORT</span></div></div>
+      </div>
+      <div id="s7-tag">Know what flies.</div>
+      <div id="s7-meta">FIVE-BODY PROBLEM · FLAME IN FREEFALL · VIENNA</div>
+      </div>
+      <div id="s7-qr"><div class="plate"><img src="assets/repo-qr.svg" alt="QR code: github.com/Hantok/cargo-passport"></div><div class="url">github.com/Hantok/cargo-passport</div></div>
+    </div>
+  </section>
+
+  <div class="clip sub" data-start="0.3" data-duration="2.2" data-track-index="3"><span>In space, there's no fire department.</span></div>
+  <div class="clip sub" data-start="2.8" data-duration="2.0" data-track-index="3"><span>Our challenge: Flame in Freefall.</span></div>
+  <div class="clip sub" data-start="5.4" data-duration="1.4" data-track-index="3"><span>Meet Cargo Passport:</span></div>
+  <div class="clip sub" data-start="6.8" data-duration="2.9" data-track-index="3"><span>every shipment lists each item, and what it's made of.</span></div>
+  <div class="clip sub" data-start="10.2" data-duration="4.0" data-track-index="3"><span>Follow the cargo to the Moon, and compare the conditions at every stop.</span></div>
+  <div class="clip sub" data-start="14.8" data-duration="2.3" data-track-index="3"><span>Scan it to see which NASA tests apply,</span></div>
+  <div class="clip sub" data-start="17.1" data-duration="2.8" data-track-index="3"><span>what differs, and what evidence is still missing.</span></div>
+  <div class="clip sub" data-start="20.4" data-duration="1.7" data-track-index="3"><span>Next: predict flame spread,</span></div>
+  <div class="clip sub" data-start="22.1" data-duration="3.3" data-track-index="3"><span>checked against real NASA runs, for the Moon and Mars.</span></div>
+  <div class="clip sub" data-start="26.4" data-duration="2.1" data-track-index="3"><span>Cargo Passport. Know what flies.</span></div>
+
+  <div id="si">SI-ASSISTED · VIDEO &amp; VOICE</div>
+</div>
+
+<script>
+let seed = 42;
+const rnd = () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 4294967296);
+const stars = document.getElementById("stars");
+for (let i = 0; i < 220; i++) {
+  const s = document.createElement("div"); s.className = "star";
+  const z = rnd(); const sz = 1 + z * 2.6;
+  Object.assign(s.style, { left: rnd() * 1920 + "px", top: rnd() * 1080 + "px", width: sz + "px", height: sz + "px", opacity: 0.25 + z * 0.65 });
+  stars.appendChild(s);
+}
+// Drawing code copied from prototype/cargo-journey-animation.html (player controls removed)
+const drawJourney = (() => {
+const canvas=document.getElementById('s4-canvas'),c=canvas.getContext('2d');
+const ink='#18233d',white='#f4f2e9',amber='#ffbf56',muted='#a4b4d0';
+const nodes={earth:[195,540,'Earth logistics','Packing & receiving','earth'],iss:[180,285,'ISS','Operating · microgravity','station'],disposal:[430,350,'Disposal vehicle','Destructive re-entry','ship'],gateway:[840,265,'Lunar Gateway','Earlier design · microgravity','station'],moon:[725,465,'NASA lunar base','Planned · 0.17g','moon'],ilrs:[950,465,'China-led ILRS','Planned · 0.17g','moon'],rover:[735,625,'Lunar rover cabin','Illustrative · 0.17g','rover'],outside:[960,625,'Lunar exterior','Illustrative · vacuum','outside'],orbit:[1350,285,'Mars orbital habitat','Study concept · microgravity','station'],mars:[1350,565,'Mars surface base','Study concept · 0.38g','mars']};
+const bodies={moon:{x:840,y:555,r:225,surface:['moon','ilrs','rover','outside'],orbital:['gateway']},mars:{x:1350,y:565,r:158,surface:['mars'],orbital:['orbit']}};
+const routes=[['R01','earth','iss','operating','box',0,30],['R02','iss','earth','operating','sample',0,-35],['R03','iss','disposal','operating','waste',0,-30],['R04','earth','gateway','reference','water',1,30],['R06','gateway','moon','reference','battery',1,-35],['R08','earth','moon','reference','box',1,90],['R17','moon','rover','illustrative','battery',2,-15],['R18','rover','moon','illustrative','sample',2,-40],['R19','moon','outside','illustrative','battery',2,-10],['R20','outside','moon','illustrative','battery',2,-35],['R10','earth','ilrs','reference','box',3,120],['R12','earth','orbit','reference','water',3,25],['R14','earth','mars','reference','box',3,150],['R15','orbit','mars','reference','battery',3,-20],['R16','mars','orbit','reference','sample',3,-35]];
+const chapters=[['Cargo moves. Conditions change.','01 / EARTH & ORBIT','Supplies go up. Selected samples come home.','Operating ISS logistics'],['Next stop: the Moon.','02 / LUNAR LOGISTICS','Tools, water and equipment travel into new conditions.','Planning references · Gateway uses an earlier architecture'],['Outside. Inside. Changed.','03 / FIELDWORK','The same instrument returns with a different exposure history.','Illustrative local transfers · vacuum, dust and cabin conditions'],['Further from Earth. More to track.','04 / THE NEXT FRONTIER','Surface bases and orbital habitats need their own evidence.','Planning / study references · no operating Mars base'],['Same cargo. New environment.','FIVE-BODY PROBLEM / FLAME IN FREEFALL','Check again. Let the cargo passport tell its story.','Concept visualization · not a safety assessment']];
+function line(points,color=ink,w=4){c.beginPath();c.moveTo(...points[0]);for(const p of points.slice(1))c.lineTo(...p);c.strokeStyle=color;c.lineWidth=w;c.lineCap='round';c.lineJoin='round';c.stroke()}
+function round(x,y,w,h,r,fill,stroke=ink){c.beginPath();c.roundRect(x,y,w,h,r);c.fillStyle=fill;c.fill();if(stroke){c.strokeStyle=stroke;c.lineWidth=1.5;c.stroke()}}
+function oval(x,y,rx,ry,fill,stroke=ink){c.beginPath();c.ellipse(x,y,rx,ry,0,0,Math.PI*2);c.fillStyle=fill;c.fill();if(stroke){c.strokeStyle=stroke;c.lineWidth=1.5;c.stroke()}}
+function text(s,x,y,size=20,color=white,align='center',weight=600){c.fillStyle=color;c.font=`${weight} ${size}px SG, sans-serif`;c.textAlign=align;c.fillText(s,x,y)}
+function panel(x,y,w=38,h=56){round(x,y,w,h,1,'#234a73','#7a9eb9');for(let i=1;i<4;i++)line([[x+w*i/4,y],[x+w*i/4,y+h]],'#7392ac',.7);for(let i=1;i<5;i++)line([[x,y+h*i/5],[x+w,y+h*i/5]],'#7392ac',.7)}
+function sphere(radius,color,land=false){const g=c.createRadialGradient(-radius*.4,-radius*.4,3,0,0,radius);g.addColorStop(0,color);g.addColorStop(.7,land?'#255477':color);g.addColorStop(1,'#172538');oval(0,0,radius,radius,g,'#8bacc250');if(land){c.save();c.beginPath();c.arc(0,0,radius-2,0,7);c.clip();c.fillStyle='#6a9b9b';for(const points of [[[-68,-31],[-49,-51],[-25,-45],[-9,-26],[-29,-9],[-23,13],[-46,3]],[[-22,15],[-4,22],[1,45],[-14,64],[-26,36]],[[12,-43],[44,-42],[65,-12],[44,4],[30,-8],[14,3],[2,-15]],[[38,34],[64,33],[69,47],[45,51]]]){c.beginPath();c.moveTo(...points[0]);for(const p of points.slice(1))c.lineTo(...p);c.closePath();c.fill()}c.strokeStyle='#dceef54a';c.lineWidth=3;for(let i=0;i<3;i++){c.beginPath();c.ellipse(-9,i*22-26,60,10,-.3,.2,2.6);c.stroke()}c.restore()}}
+function habitat(color){oval(0,22,87,22,color,'#a8b9c044');for(const [x,y,r] of [[-54,22,12],[51,28,9],[32,13,5]])oval(x,y,r,r*.25,'#24334944',null);line([[-41,17],[-41,29],[42,29],[42,17]],'#8097a7',3);round(-51,-19,104,42,6,'#c4ced4','#526c7f');round(-18,-42,45,64,5,'#dce2e4','#526c7f');round(-9,-23,27,20,2,'#263f55','#7798ae');round(-6,3,20,20,2,'#849aa8');for(const x of [-43,35]){round(x,-10,12,12,1,'#314c62');line([[x-2,12],[x+13,12]],'#8297a7',1)}line([[63,15],[63,-36]],'#b3c5d1',2);c.beginPath();c.ellipse(63,-40,16,5,-.5,0,7);c.fillStyle='#cbd5db';c.fill();line([[72,-45],[79,-54]],'#cbd5db',1);panel(-83,-17,24,30)}
+function planetaryBody(id){const b=bodies[id];c.save();c.translate(b.x,b.y);sphere(b.r,id==='moon'?'#7f8b99':'#ba7859');c.save();c.beginPath();c.arc(0,0,b.r-2,0,7);c.clip();if(id==='moon'){for(const [x,y,r] of [[-130,-90,30],[75,-145,22],[145,-40,35],[-60,30,40],[35,160,20],[-140,135,23],[145,140,30],[40,-60,12]]){oval(x,y,r,r*.72,'#34465b40','#bcc7cd35');oval(x+3,y+3,r*.65,r*.44,'#33425630',null)}}else{for(const [x,y,rx,ry] of [[-70,-45,55,17],[45,65,60,20],[80,-50,35,30],[-50,105,30,12]])oval(x,y,rx,ry,'#764a3e55',null);oval(-5,-147,50,12,'#d9d9d0aa',null);line([[-100,17],[-45,32],[0,20],[55,36],[100,27]],'#643e3755',6)}c.restore();c.restore();c.save();c.setLineDash([4,9]);c.strokeStyle='#95abc344';c.lineWidth=1;c.beginPath();c.ellipse(b.x,b.y,b.r+35,b.r+64,0,Math.PI*1.04,Math.PI*1.96);c.stroke();c.restore()}
+function environment(id,t,active){const [x,y,name,sub,type]=nodes[id];c.save();c.translate(x,y);c.save();if(id!=='earth')c.scale(.7,.7);if(active){oval(0,0,105,76,'#ffbf5606',null)}
+if(type==='earth')sphere(95,'#5b9dc2',true);
+if(type==='station'){c.save();c.rotate(-.12);line([[-100,0],[100,0]],'#96acbb',5);for(const x of [-102,-60,51,93]){panel(x,-55,27,44);panel(x,11,27,44)}round(-42,-14,83,28,4,'#cbd7de','#738b9e');round(-17,-37,28,74,4,id==='gateway'?'#c3b9ad':'#dce3e6','#738b9e');round(-13,-19,20,37,3,'#acbac4');for(const x of [-35,23]){line([[x,-13],[x,13]],'#617f95',1);round(x+3,-6,8,12,1,'#2b4d64')}line([[10,-26],[33,-46]],'#c4d7df',2);oval(37,-48,10,4,'#c3d0d9');round(-9,37,13,12,2,'#8299ac');c.restore()}
+if(type==='moon'||type==='mars')habitat(type==='mars'?'#a66f54':'#6b7889');
+if(type==='outside'){oval(0,25,80,22,'#6b7889','#8999aa');for(const [x,y,r] of [[-47,25,15],[48,20,11],[10,35,8]])oval(x,y,r,r*.3,'#465567',null);round(-20,-26,43,36,3,'#a9bac5','#50697b');round(-15,-20,18,24,1,'#273d50');line([[20,-12],[38,-22],[48,-9],[48,20]],'#c2cdd4',4);line([[-12,11],[-23,30]],'#c2cdd4',3);line([[13,11],[21,28]],'#c2cdd4',3);line([[4,-27],[4,-53]],'#9eb2bf',2);round(-2,-57,14,7,1,'#d0d9dc');panel(-43,-20,19,29)}
+if(type==='rover'){for(const x of [-45,0,45]){oval(x,23,15,19,'#26313d','#8e9eaa');oval(x,23,7,10,'#758795')}round(-63,-17,127,37,5,'#bec9d0','#718899');round(-35,-49,75,36,6,'#d5dcde','#718899');round(-25,-42,49,20,2,'#2b4c62');line([[0,-42],[0,-22]],'#9aacb9',2);round(-57,-9,21,19,1,'#8c9d27');line([[48,-17],[54,-57]],'#c5d3dc',2);oval(57,-58,11,4,'#bdcbd2');round(42,-7,14,8,1,'#e5d6ac');line([[-62,16],[65,16]],'#617889',2)}
+if(type==='ship'){c.save();c.rotate(-.35);panel(-8,-62,25,37);panel(-8,25,25,37);round(-48,-24,83,48,7,'#bac9d2','#7b93a5');round(-57,-15,10,30,2,'#617c92');round(33,-19,15,38,4,'#e0e5e7');for(const x of [-28,10])line([[x,-23],[x,23]],'#7c95a5',1);round(-14,-9,24,18,2,'#677e92');c.restore()}
+c.restore();text(name,0,id==='earth'?125:65,id==='earth'?24:19);text(sub,0,id==='earth'?148:86,13,muted,'center',400);c.restore()}
+function cargo(kind,x,y,t,scale=1){c.save();c.translate(x,y);c.scale(scale,scale);c.shadowColor='#030915';c.shadowBlur=14;c.shadowOffsetY=5;
+if(kind==='battery'){round(-23,-31,46,62,3,'#8eaaa3','#d0dbd6');c.shadowBlur=0;round(-12,-37,8,6,1,'#d9dfe0');round(5,-37,8,6,1,'#d9dfe0');round(-15,-22,30,27,1,'#334b51');text('+',0,-3,21,'#b5d1c3');for(let y=13;y<25;y+=5)line([[-13,y],[13,y]],'#526e70',1)}
+else if(kind==='water'){round(-20,-31,40,62,10,'#88a8bf','#c3d5df');c.shadowBlur=0;round(-9,-39,18,9,2,'#d0d8db');line([[-18,-14],[18,-14]],'#bed5e2',2);line([[-18,16],[18,16]],'#bed5e2',2);text('H₂O',0,7,13,'#15344b')}
+else if(kind==='sample'){round(-25,-28,50,57,3,'#b3a892','#d4d1c8');c.shadowBlur=0;round(-27,-33,54,10,2,'#d0d4d3');round(-17,-16,34,24,1,'#364a59');text('SAMPLE',0,-1,8,'#dfebec');line([[-18,19],[18,19]],'#6c777c',2)}
+else{round(-33,-26,66,52,4,kind==='waste'?'#7a8996':'#b99962','#e1d1b0');c.shadowBlur=0;round(-13,-34,26,8,2,'#6f7d87');round(-27,-18,54,35,1,kind==='waste'?'#566471':'#806d50');for(const x of [-23,20])round(x,-28,6,12,1,'#d5d8d6');round(-12,-11,24,20,1,'#e4e0d3');text(kind==='waste'?'USED':'CARGO',0,1,7,ink);for(let i=0;i<8;i++)line([[-9+i*2,4],[-9+i*2,8]],ink,i%3===0?2:1)}c.restore()}
+function point(r,p){const a=nodes[r[1]],b=nodes[r[2]],mx=(a[0]+b[0])/2,my=(a[1]+b[1])/2-r[6];return [(1-p)**2*a[0]+2*(1-p)*p*mx+p*p*b[0],(1-p)**2*a[1]+2*(1-p)*p*my+p*p*b[1]]}
+function draw(t){t=Math.max(0,Math.min(30,t));const chapter=Math.min(4,Math.floor(t/6)),copy=chapters[chapter];c.fillStyle='#0a1225';c.fillRect(0,0,1600,900);const g=c.createRadialGradient(900,450,60,900,450,900);g.addColorStop(0,'#253451');g.addColorStop(1,'#0a1225');c.fillStyle=g;c.fillRect(0,0,1600,900);for(let i=0;i<125;i++){const x=(i*307+41)%1600,y=(i*i*73+17)%900;oval(x,y,i%4===0?1.8:1,1,'#cbd9f0',null)}
+text('FIVE-BODY PROBLEM  /  FLAME IN FREEFALL',65,44,15,amber,'left');text(copy[0],65,108,48,white,'left');text('CARGO / ENVIRONMENT / EXPOSURE',1535,44,13,muted,'right');
+planetaryBody('moon');planetaryBody('mars');text('EARTH',195,782,18,muted);text('MOON',840,792,18,white);text('MARS',1350,782,18,white);
+for(const r of routes){const active=chapter===4||r[5]===chapter;c.globalAlpha=active?.65:.08;c.beginPath();c.moveTo(...point(r,0));const a=nodes[r[1]],b=nodes[r[2]];c.quadraticCurveTo((a[0]+b[0])/2,(a[1]+b[1])/2-r[6],b[0],b[1]);c.strokeStyle=r[3]==='operating'?'#7fddbb':r[3]==='reference'?amber:'#c7b4f0';c.lineWidth=active?3:2;c.setLineDash(r[3]==='operating'?[]:r[3]==='reference'?[10,9]:[2,9]);c.stroke();c.setLineDash([])}c.globalAlpha=1;
+for(const id of Object.keys(nodes))environment(id,t,routes.some(r=>(chapter===4||r[5]===chapter)&&(r[1]===id||r[2]===id)));
+for(let i=0;i<routes.length;i++){const r=routes[i];if(chapter!==4&&r[5]!==chapter)continue;const p=((t%6)/6*1.35+i*.23)%1;const [x,y]=point(r,p*p*(3-2*p));cargo(r[4],x,y,t+i,.72);}
+round(54,810,1492,70,18,'#101c33','#344563');text(copy[1],78,839,13,amber,'left');text(copy[2],78,864,22,white,'left');text(copy[3],1520,839,14,muted,'right');
+const colors=['#7fddbb',amber,'#c7b4f0'];['Operating','Planning / study','Illustrative'].forEach((s,i)=>{oval(72+i*200,154,4,4,colors[i],null);text(s,85+i*200,159,15,muted,'left',400)});c.fillStyle=amber;c.fillRect(0,896,1600*t/30,4);
+}
+return draw;
+})();
+
+const tl = gsap.timeline({ paused: true });
+const E = "power3.out";
+const up = (sel, at, o = {}) => tl.fromTo(sel, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.55, ease: E, ...o }, at);
+const outAt = (sel, at) => tl.to(sel, { opacity: 0, duration: 0.3, ease: "power2.in" }, at);
+
+tl.fromTo("#stars", { x: 0 }, { x: -120, duration: 30, ease: "none" }, 0);
+tl.fromTo("#earth", { y: 0 }, { y: 240, duration: 5.2, ease: "power1.in" }, 0);
+tl.to("#earth-wrap", { opacity: 0, duration: 0.8 }, 4.6);
+tl.fromTo("#si", { opacity: 0 }, { opacity: 1, duration: 0.3 }, 0);
+
+// S1 team 0–2.6
+up("#s1-k", 0.05); up("#s1-team", 0.15);
+up(".nm", 0.45, { stagger: 0.1, duration: 0.45 });
+up("#s1-place", 0.9);
+outAt("#s1-box", 2.3);
+
+// S2 challenge 2.6–5.2
+up("#s2-k", 2.62); up("#s2-title", 2.66); up("#s2-sub", 2.68);
+outAt("#s2-box", 4.98);
+
+// S3 title + passport 5.2–10
+tl.fromTo("#s3-word", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.6, ease: E }, 5.25);
+up("#s3-tag", 5.6);
+tl.fromTo("#s3-crate", { opacity: 0, y: 40, rotation: -6 }, { opacity: 1, y: 0, rotation: 0, duration: 0.7, ease: E }, 5.7);
+tl.fromTo("#s3-card", { opacity: 0, x: -360, scale: 0.7 }, { opacity: 1, x: 0, scale: 1, duration: 0.9, ease: "expo.out" }, 6.0);
+tl.fromTo(".s3-row", { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: 0.4, ease: E, stagger: 0.4 }, 6.5);
+tl.fromTo("#s3-qr-box, #s3-sig", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 6.9);
+outAt("#s3 > *", 9.7);
+
+// S4 prototype 10–14.6
+up("#s4-cap", 10.05);
+tl.fromTo("#s4-label", { opacity: 0 }, { opacity: 1, duration: 0.4 }, 10.2);
+tl.fromTo("#s4-frame", { opacity: 0, y: 60, scale: 0.96 }, { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: E }, 10.1);
+// journey time 3→11.6 s: end of "Earth & orbit" into "Next stop: the Moon", matching the narration
+const jt = { t: 3 }; drawJourney(3);
+tl.fromTo(jt, { t: 3 }, { t: 11.6, duration: 4.6, ease: "none", onUpdate: () => drawJourney(jt.t) }, 10);
+outAt("#s4 > *", 14.3);
+
+// S5 evidence 14.6–20.2
+up("#s5 .s5-in", 14.6, { stagger: 0.1 });
+tl.fromTo(".s5-row", { opacity: 0, x: 30 }, { opacity: 1, x: 0, duration: 0.45, ease: E, stagger: 0.5 }, 15.5);
+tl.fromTo("#s5-note", { opacity: 0 }, { opacity: 1, duration: 0.5 }, 16.0);
+outAt("#s5 > *", 19.9);
+
+// S6 future 20.2–25.9
+up("#s6 .s6-in", 20.2, { stagger: 0.12 });
+const SIM = 4.4;
+tl.fromTo("#s6-burnt", { scaleX: 0.02 }, { scaleX: 0.82, duration: SIM, ease: "power1.in" }, 20.8);
+tl.fromTo("#s6-flame", { x: -110, scale: 0.4, opacity: 0 }, { x: 700, scale: 1.2, opacity: 1, duration: SIM, ease: "power1.in" }, 20.8);
+tl.fromTo("#s6-flame", { scaleY: 0.97 }, { scaleY: 1.03, duration: 0.3, yoyo: true, repeat: 13, ease: "sine.inOut" }, 20.8);
+tl.fromTo(".s6-step", { opacity: 0, x: 24 }, { opacity: 1, x: 0, duration: 0.4, ease: E, stagger: 0.6 }, 21.0);
+outAt("#s6 > *", 25.6);
+
+// S7 outro 25.9–30
+tl.fromTo("#s7-icon", { opacity: 0, scale: 0.6, rotation: -8 }, { opacity: 1, scale: 1, rotation: 0, duration: 0.7, ease: "back.out(1.8)" }, 25.95);
+tl.fromTo("#s7-word", { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.7, ease: E }, 26.1);
+up("#s7-tag", 26.5);
+tl.fromTo("#s7-qr", { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.6, ease: E }, 26.3); tl.fromTo("#s7-meta", { opacity: 0 }, { opacity: 1, duration: 0.5 }, 26.8);
+tl.to("#s7-box", { scale: 1.03, duration: 4.1, ease: "none" }, 25.9);
+
+window.__timelines["main"] = tl;
+</script>
+</body>
+</html>
